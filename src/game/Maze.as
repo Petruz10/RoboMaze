@@ -4,7 +4,7 @@
 	
 	public class Maze extends DisplayStateLayer
 	{
-		private var m_lvlArray:Array;
+		private var _lvlArray:Array;
 		
 		public function Maze()
 		{
