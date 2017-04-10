@@ -3,14 +3,17 @@ package state
 	import flash.display.MovieClip;
 	
 	import se.lnu.stickossdk.display.DisplayState;
+	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.system.Session;
 	
 	import state.Menu;
 	
 	public class SplashScreen extends DisplayState {
 		private const TIMER:int = 300; // 5 sec
-		private var counter:int = 0; // counter
-		private var backgroundImg:MovieClip;
+		private const LAYER_BACKGROUND:String = "background_layer"
+		private var _counter:int = 0; // counter
+		private var _layerBackground:DisplayStateLayer;
+		private var _backgroundImg:MovieClip;
 		
 		public function SplashScreen(){
 			super();
@@ -20,8 +23,8 @@ package state
 			initLayers();
 		}
 		override public function update():void {
-			counter++
-			if (counter == 300) {
+			_counter++
+			if (_counter == 300) {
 				Session.application.displayState = new Menu;
 			}
 			// put "timer" here
@@ -30,8 +33,14 @@ package state
 			trace("dispose");
 		}
 		private function initLayers():void {
-			backgroundImg = new SplashBgImgTest;
-			addChild(backgroundImg);
+			_backgroundImg = new SplashBgImgTest;
+			_layerBackground = layers.add(LAYER_BACKGROUND);
+			
+			_layerBackground.x = 0;
+			_layerBackground.y = 600;
+			_layerBackground
+			
+			_layerBackground.addChild(_backgroundImg);
 		}
 	}
 }

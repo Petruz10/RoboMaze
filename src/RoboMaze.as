@@ -15,7 +15,7 @@ package
 		{
 			initId = 28;
 			initDebugger = true;
-			//initDisplayState = SplashScreen; <--- opens SplashScreen that leads to Menu State
+			initDisplayState = SplashScreen; // <--- opens SplashScreen that leads to Menu State
 		}
 	}
 }
