@@ -1,4 +1,4 @@
-package game
+﻿package game
 {
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	
@@ -13,7 +13,7 @@ package game
 		
 		private function initMaze():void
 		{
-			
+			trace("init");
 		}
 		
 		private function initTiles():void
