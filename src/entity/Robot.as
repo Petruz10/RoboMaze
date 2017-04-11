@@ -9,6 +9,7 @@ package entity
 		public function Robot(controls:int, x:int, y:int)
 		{
 			super();
+			super.update();
 		}
 		
 		private function moveUp():void

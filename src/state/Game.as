@@ -9,6 +9,7 @@ package state
 		
 		public function Game()
 		{
+			trace("game");
 		}
 		
 		override public function init():void

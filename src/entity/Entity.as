@@ -21,7 +21,7 @@ package entity
 		
 		override public function update():void
 		{
-			
+			trace("update");
 		}
 		
 		override public function dispose():void
