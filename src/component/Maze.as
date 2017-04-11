@@ -8,11 +8,15 @@
 		/*
 		* maze design
 		*/
-		private var mazeVector:Vector.<int>;
+		private var _mazeVector:Vector.<int>;
 		/*
-		* the tiles
+		* 
 		*/
-		private var tiles:Object;
+		private const MAZE_HEIGHT:int = 600; 	// total height 
+		private const MAZE_WIDTH:int = 800; 	// total width
+		private const TILE_HEIGHT:int = 100; // tile height
+		private const TILE_WIDTH:int = 100; // tile width
+		
 		//------------------------------------------------------------------------
 		// Constructor
 		//------------------------------------------------------------------------
@@ -25,7 +29,7 @@
 		// create Vector
 		//------------------------------------------------------------------------
 		private function initMaze():void {
-			mazeVector = new Vector.<int>[
+			_mazeVector = new Vector.<int>[
 				3,2,14,2,2,2,2,4,
 				1,0,1,0,0,0,0,1,
 				1,0,10,0,3,2,2,12,
@@ -40,9 +44,12 @@
 		//------------------------------------------------------------------------
 		private function initTiles():void {
 			var tile:MovieClip;
-			
-			for (var i:int = 0; i < mazeVector.length; i++) {
-				tile = rotateTile(mazeVector[i]);
+			var tileX:int = 0; // tile placement x
+			var tileY:int = 0; // tile placement y
+			for (var i:int = 0; i < _mazeVector.length; i++) {
+				tile = rotateTile(_mazeVector[i]);
+				tile.x = tileX;
+				tile.y = tileY;
 				this.addChild(tile);
 			}
 		}
