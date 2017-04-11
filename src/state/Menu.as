@@ -5,25 +5,44 @@ package state
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.system.Session;
+	import se.lnu.stickossdk.input.Input;
+	import se.lnu.stickossdk.system.Session;
+	import state.Game;
 	
 	public class Menu extends DisplayState
 	{	
 		private var _layerBackground:DisplayStateLayer;
 		
 		public function Menu(){
-			super();
+			//super();
+			trace("konstruktor menu");
 		}
 		override public function init():void {
+
 			trace("menu");
 			var maze:Maze = new Maze;
 			_layerBackground = layers.add("maze");
 			_layerBackground.addChild(maze);
+			trace("menu1");
 		}
-		override public function update():void {
-
+		
+		override public function update():void 
+		{
+			//trace("Update Menu");
+			//super.update();
+			updateControls();
+			
 		}
 		override public function dispose():void {
-			trace("dispose");
+			trace("dispose menu");
+		}
+		
+		private function updateControls():void
+		{
+			if(Input.keyboard.justPressed("SPACE") == true)
+			{
+				Session.application.displayState = new Game;
+			}
 		}
 	}
 }
