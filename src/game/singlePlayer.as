@@ -7,6 +7,7 @@ package game
 		public function SinglePlayer()
 		{
 			super.addMaze(1);
+			trace("hej hej");
 		}
 	}
 }
