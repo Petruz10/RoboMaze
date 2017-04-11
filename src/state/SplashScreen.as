@@ -13,7 +13,7 @@ package state
 		private const LAYER_BACKGROUND:String = "background_layer"
 		private var _counter:int = 0; // counter
 		private var _layerBackground:DisplayStateLayer;
-		private var _backgroundImg:MovieClip;
+		private var _backgroundImg:Splashscreen;
 		
 		public function SplashScreen(){
 			super();
@@ -33,7 +33,7 @@ package state
 			trace("dispose");
 		}
 		private function initLayers():void {
-			_backgroundImg = new SplashBgImgTest;
+			_backgroundImg = new Splashscreen;
 			_layerBackground = layers.add(LAYER_BACKGROUND);
 			
 			_layerBackground.x = 0;
