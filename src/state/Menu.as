@@ -20,10 +20,10 @@ package state
 		override public function init():void {
 
 			trace("menu");
-			var maze:Maze = new Maze;
+		/*	var maze:Maze = new Maze;
 			_layerBackground = layers.add("maze");
 			_layerBackground.addChild(maze); 
-			trace("menu1");
+			trace("menu1");*/
 		}
 		
 		override public function update():void 
