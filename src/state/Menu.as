@@ -10,7 +10,7 @@ package state
 	{	
 		public function Menu(){
 			//super();
-			trace("konstruktor");
+			trace("konstruktor menu");
 		}
 		override public function init():void {
 			trace("menu1");
@@ -18,8 +18,8 @@ package state
 		
 		override public function update():void 
 		{
-			trace("Update Menu");
-			super.update();
+			//trace("Update Menu");
+			//super.update();
 			updateControls();
 			
 		}
@@ -31,7 +31,6 @@ package state
 		{
 			if(Input.keyboard.justPressed("SPACE") == true)
 			{
-				trace("menu space");
 				Session.application.displayState = new Game;
 			}
 		}
