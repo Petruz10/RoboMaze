@@ -2,7 +2,6 @@ package state
 {
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
-	import se.lnu.stickossdk.system.Session;
 
 	public class Game extends DisplayState
 	{
