@@ -38,33 +38,33 @@ package entity
 		
 		private function moveUp():void
 		{
-			
+			m_skin.y--;
 		}
 		
 		private function moveDown():void
 		{
-			
+			m_skin.y++;
 		}
 		
 		private function moveLeft():void
 		{
-			
+			m_skin.x--;
 		}
 		
 		private function moveRight():void
 		{
-			
+			m_skin.x ++;
 		}
 		
 		private function initSkin():void
 		{
 			m_skin = new Avatar();
 			
-			m_skin.x = 200;
-			m_skin.y = 300;
-			trace(m_skin);
+			m_skin.x = 100;
+			m_skin.y = 100;
+			
 			addChild(m_skin);
-			trace("initSkin Robot m. addChild");
+			
 		}
 	}
 }
