@@ -13,13 +13,13 @@ package state
 		private const LAYER_BACKGROUND:String = "background_layer"
 		private var _counter:int = 0; // counter
 		private var _layerBackground:DisplayStateLayer;
-		private var _backgroundImg:Splashscreen;
+		private var _backgroundImg:Splashscreen_test;
 		
 		public function SplashScreen(){
 			super();
 		}
 		override public function init():void {
-			trace("splashscreen");
+			trace("splashscreen splashscreen");
 			initLayers();
 		}
 		override public function update():void {
@@ -33,12 +33,11 @@ package state
 			trace("dispose");
 		}
 		private function initLayers():void {
-			_backgroundImg = new Splashscreen;
+			_backgroundImg = new Splashscreen_test;
 			_layerBackground = layers.add(LAYER_BACKGROUND);
 			
 			_layerBackground.x = 0;
-			_layerBackground.y = 600;
-			_layerBackground
+			_layerBackground.y = 0;
 			
 			_layerBackground.addChild(_backgroundImg);
 		}
