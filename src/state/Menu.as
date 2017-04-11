@@ -4,9 +4,9 @@ package state
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
-	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
+	
 	import state.Game;
 	
 	public class Menu extends DisplayState
@@ -18,12 +18,12 @@ package state
 			trace("konstruktor menu");
 		}
 		override public function init():void {
-
 			trace("menu");
-		/*	var maze:Maze = new Maze;
+			var maze:Maze = new Maze;
 			_layerBackground = layers.add("maze");
 			_layerBackground.addChild(maze); 
-			trace("menu1");*/
+			_layerBackground.x = 0;
+			_layerBackground.y = 0;
 		}
 		
 		override public function update():void 

@@ -2,7 +2,7 @@ package state
 {
 	import entity.Robot;
 	
-//	import game.Singleplayer;
+	import game.Singleplayer;
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
@@ -21,8 +21,10 @@ package state
 		
 		override public function init():void
 		{
-			trace("Game init");
+			trace("game1");
 			initLayers();
+		//	m_testSinglePlayer = new Singleplayer();
+			
 		}
 		
 		override public function update():void
@@ -37,16 +39,15 @@ package state
 		
 		private function initLayers():void
 		{
-			trace("layer");
-			m_layer = layers.add("bakgroundLayer");
+			m_layer = layers.add("bakground_test_layer");
 			m_robot = new Robot();
 			
 			m_layer.addChild(m_robot);
 		}
 		
-		/*protected function addMaze(players:int):void
+		protected function addMaze(players:int):void
 		{
 			
-		}*/
+		}
 	}
 }

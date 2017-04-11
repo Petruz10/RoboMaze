@@ -2,7 +2,6 @@ package entity
 {
 	import flash.display.MovieClip;
 	
-	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 
@@ -10,11 +9,12 @@ package entity
 	{
 		private var m_controls:EvertronControls = new EvertronControls();
 		private var m_skin:MovieClip;
-		private var m_layer:DisplayStateLayer;
 		
 		public function Robot()
 		{
-			
+			super();
+			//super.update();
+			trace("robot");
 		}
 		
 		override public function init():void
@@ -23,12 +23,6 @@ package entity
 		}
 		
 		override public function update():void
-		{
-			//super.update();
-			updateControls();
-		}
-		
-		private function updateControls():void
 		{
 			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft();
 			else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
@@ -66,5 +60,6 @@ package entity
 			addChild(m_skin);
 			
 		}
+
 	}
 }
