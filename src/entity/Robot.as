@@ -6,10 +6,11 @@ package entity
 	{
 		private var m_controls:EvertronControls;
 		
-		public function Robot(controls:int, x:int, y:int)
+		public function Robot()
 		{
 			super();
 			super.update();
+			trace("robot");
 		}
 		
 		private function moveUp():void
