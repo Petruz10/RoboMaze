@@ -9,7 +9,7 @@ package state
 	import state.Menu;
 	
 	public class SplashScreen extends DisplayState {
-		private const TIMER:int = 60; // 5 sec
+		private const TIMER:int = 300; // 5 sec
 		private const LAYER_BACKGROUND:String = "background_layer"
 		private var _counter:int = 0; // counter
 		private var _layerBackground:DisplayStateLayer;
