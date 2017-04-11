@@ -2,9 +2,9 @@ package game
 {
 	import state.Game;
 	
-	public class multiplayer extends Game
+	public class Multiplayer extends Game
 	{
-		public function multiplayer()
+		public function Multiplayer()
 		{
 			super.addMaze(2);
 		}

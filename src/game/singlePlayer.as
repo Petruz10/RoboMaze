@@ -2,9 +2,9 @@ package game
 {
 	import state.Game;
 
-	public class singlePlayer extends Game
+	public class SinglePlayer extends Game
 	{
-		public function singlePlayer()
+		public function SinglePlayer()
 		{
 			super.addMaze(1);
 		}
