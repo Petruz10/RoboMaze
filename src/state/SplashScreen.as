@@ -33,7 +33,7 @@ package state
 			trace("dispose");
 		}
 		private function initLayers():void {
-			_backgroundImg = new SplashBgImgTest;
+			_backgroundImg = new SplashBgImgTest();
 			_layerBackground = layers.add(LAYER_BACKGROUND);
 			
 			_layerBackground.x = 0;
