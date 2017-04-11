@@ -7,7 +7,7 @@
 		/*
 		* maze design
 		*/
-		private var _mazeVector:Vector.<int>;
+		private var _mazeArray:Array;
 		/*
 		* 
 		*/
@@ -20,6 +20,7 @@
 		// Constructor
 		//------------------------------------------------------------------------
 		public function Maze(){
+			trace("Maze constructor");
 			initMaze();
 			initTiles();
 		}
@@ -27,16 +28,15 @@
 		// create Vector
 		//------------------------------------------------------------------------
 		private function initMaze():void {
-			_mazeVector = new Vector.<int>();
-			
-			_mazeVector.push([
+			trace("initMaze");
+			/*_mazeVector = new Vector.<int>([
 				[3,2,14,2,2,2,2,4],
 				[1,0,1,0,0,0,0,1],
 				[1,0,10,0,3,2,2,12],
 				[1,0,0,0,10,0,0,1],
 				[1,0,0,0,0,0,0,1],
 				[5,0,0,0,0,0,0,6]
-			]);	
+			]);*/
 		} 
 		//------------------------------------------------------------------------
 		// fill object with tiles based on mazeVector
@@ -45,54 +45,32 @@
 		// https://gamedevelopment.tutsplus.com/tutorials/an-introduction-to-creating-a-tile-map-engine--gamedev-10900
 		private function initTiles():void {
 			var tile:MovieClip;
-			
-			for (var i:int = 0; i < _mazeVector[0].length; i++) {
-				tile = rotateTile(_mazeVector[0][i]);
-				tile.y = 0;
-				if (i != 0) {
-					tile.x += 100;
+			trace("initTiles()");
+		/*	_mazeArray = [
+				[3,3,3,3,3,3,3,3],
+				[2,2,2,2,2,2,2,2],
+				[2,2,2,2,2,2,2,2],
+				[2,2,2,2,2,2,2,2],
+				[2,2,2,2,2,2,2,2],
+				[2,2,2,2,2,2,2,2]
+			]; */
+			_mazeArray = [
+				[1,1,1,1,1,1,1,1],
+				[1,0,1,0,0,0,0,1],
+				[1,0,1,0,1,1,1,1],
+				[1,0,0,0,1,0,0,1],
+				[1,0,0,0,0,0,0,1],
+				[1,1,1,1,1,1,1,20]
+			]; 
+			for (var i:int = 0; i <_mazeArray.length; i++ ){
+				for (var j:int = 0; j < _mazeArray[i].length; j++) {
+					tile = rotateTile(_mazeArray[i][j]);
+					tile.y = i * 100;
+					tile.x = j * 100;
+					tile.width = 100;
+					tile.height = 100;
+					this.addChild(tile);
 				}
-				this.addChild(tile);
-			}
-			for (var j:int = 0; j < _mazeVector[1].length; i++) {
-				tile = rotateTile(_mazeVector[1][j]);
-				tile.y += 100;
-				if (j != 0) {
-					tile.x += 100;
-				}
-				this.addChild(tile);
-			}
-			for (var k:int = 0; k < _mazeVector[2].length; i++) {
-				tile = rotateTile(_mazeVector[2][k]);
-				tile.y += 200;
-				if (k != 0) {
-					tile.x += 100;
-				}
-				this.addChild(tile);
-			}
-			for (var l:int = 0; l < _mazeVector[3].length; i++) {
-				tile = rotateTile(_mazeVector[3][l]);
-				tile.y += 300;
-				if (l != 0) {
-					tile.x += 100;
-				}
-				this.addChild(tile);
-			}
-			for (var m:int = 0; m < _mazeVector[4].length; i++) {
-				tile = rotateTile(_mazeVector[4][m]);
-				tile.y += 400;
-				if (m != 0) {
-					tile.x += 100;
-				}
-				this.addChild(tile);
-			}
-			for (var n:int = 0; n < _mazeVector[1].length; i++) {
-				tile = rotateTile(_mazeVector[1][n]);
-				tile.y += 500;
-				if (n != 0) {
-					tile.x += 100;
-				}
-				this.addChild(tile);
 			}
 		}
 		//------------------------------------------------------------------------
@@ -116,7 +94,7 @@
 				break;
 				case 4:
 					tile = new Turn;
-					tile.rotation = 90; 	// turn left up 
+					tile.rotation = -180; 	// turn left up 
 				break;
 				case 5:
 					tile = new Turn;
@@ -159,6 +137,9 @@
 				case 15:
 					tile = new FourwayIntersection;
 				break;
+				case 20:
+					tile = new Avatar;
+					break;
 			}
 			return tile;
 		}

@@ -42,7 +42,7 @@ package state
 			m_layer = layers.add("bakground_test_layer");
 			//m_robot = new Robot();
 			
-			m_layer.addChild(m_testSinglePlayer);
+			//m_layer.addChild(m_testSinglePlayer);
 		}
 		
 		protected function addMaze(players:int):void
