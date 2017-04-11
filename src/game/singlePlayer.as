@@ -4,11 +4,11 @@ package game
 	
 	import state.Game;
 
-	public class SinglePlayer extends Game
+	public class Singleplayer extends Game
 	{
 		private var m_robot:Robot;
 		
-		public function SinglePlayer()
+		public function Singleplayer()
 		{
 			//super.addMaze(1);
 		//	trace("hej hej");
