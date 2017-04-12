@@ -1,6 +1,7 @@
 package
 {
 	import se.lnu.stickossdk.system.Engine;
+	import state.Menu; // during testing
 	import state.SplashScreen;
 	
 	[SWF(width="800", height="600", frameRate="60")]
@@ -15,7 +16,8 @@ package
 		{
 			initId = 28;
 			initDebugger = true;
-			initDisplayState = SplashScreen; // <--- opens SplashScreen that leads to Menu State
+			//initDisplayState = SplashScreen; // <--- opens SplashScreen that leads to Menu State
+			initDisplayState = Menu;
 		}
 	}
 }

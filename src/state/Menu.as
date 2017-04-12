@@ -19,11 +19,11 @@ package state
 		}
 		override public function init():void {
 			trace("menu");
-			var maze:Maze = new Maze;
-			_layerBackground = layers.add("maze");
+			// var maze:Maze = new Maze;
+		/*	_layerBackground = layers.add("maze");
 			_layerBackground.addChild(maze); 
-			_layerBackground.x = 0;
-			_layerBackground.y = 0;
+			_layerBackground.x = 50;
+			_layerBackground.y = 50; */
 		}
 		
 		override public function update():void 
