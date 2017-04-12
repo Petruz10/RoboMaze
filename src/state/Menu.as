@@ -1,7 +1,5 @@
 package state
-{
-	import component.Maze;
-	
+{	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.Input;
@@ -18,12 +16,7 @@ package state
 			trace("konstruktor menu");
 		}
 		override public function init():void {
-			trace("menu");
-			// var maze:Maze = new Maze;
-		/*	_layerBackground = layers.add("maze");
-			_layerBackground.addChild(maze); 
-			_layerBackground.x = 50;
-			_layerBackground.y = 50; */
+			trace("init menu");
 		}
 		
 		override public function update():void 

@@ -44,7 +44,7 @@
 			_mazeArray = [
 				[3,2,14,2,2,2,2,4],
 				[1,0,1,0,0,0,0,1],
-				[1,0,10,0,3,2,2,12],
+				[1,0,10,0,3,2,2,11],
 				[1,0,0,0,10,0,0,1],
 				[1,0,0,0,0,0,0,1],
 				[5,2,2,2,2,2,2,6]
@@ -64,9 +64,10 @@
 			for (var i:int = 0; i <_mazeArray.length; i++ ){
 				for (var j:int = 0; j < _mazeArray[i].length; j++) {
 					tile = createTileFromIndex(_mazeArray[i][j]);
-						tile.y = i * 100;
-						tile.x = j * 100;
-								
+					tile.y = i * 100;
+					tile.x = j * 100;
+				/*	tile.width = 100;
+					tile.height = 100;*/
 					this.addChild(tile);
 				}
 			}
@@ -96,7 +97,7 @@
 				break;
 				case 4:
 					tile = new Turn;
-					tile = rotateTileAroundCenter(tile, 90);// turn left up 
+					tile = rotateTileAroundCenter(tile, -180);// turn left up 
 				break;
 				case 5:
 					tile = new Turn;
@@ -137,7 +138,7 @@
 					tile = rotateTileAroundCenter(tile, 90); // T-section down	
 					break;
 				case 15:
-					tile = new Fourway_Intersection;
+					tile = new FourwayIntersection;
 				break;
 				case 20:
 					tile = new Avatar;
@@ -148,15 +149,14 @@
 		// http://stackoverflow.com/questions/15789168/as3-rotate-an-object-around-its-center-point
 		private function rotateTileAroundCenter(tile:MovieClip, degrees:int):MovieClip {
 			trace("rotate");
-			tile.rotation = degrees;
 			//tile.rotation = Math.round(tile.rotation);
-		/*	var matrix:Matrix = tile.transform.matrix;
+			var matrix:Matrix = tile.transform.matrix;
 			var rect:Rectangle = tile.getBounds(tile.parent);
 
 			matrix.translate(- (rect.left + (rect.width/2)), - (rect.top + (rect.height/2)));
-			matrix.rotate((degrees/180)*Math.PI);
+			matrix.rotate = ((degrees/180)*Math.PI);
 			matrix.translate(rect.left + (rect.width / 2), rect.top + (rect.height / 2));
-			tile.transform.matrix = matrix; */
+			tile.transform.matrix = matrix;
 
 			return tile;	
 		}
