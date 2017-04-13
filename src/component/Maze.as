@@ -28,6 +28,8 @@
 		*/
 		private const TILE_WIDTH:int = 50; // tile width
 		
+		public var holder:Sprite = new Sprite();
+		
 		//------------------------------------------------------------------------
 		// Constructor
 		//------------------------------------------------------------------------
@@ -73,6 +75,8 @@
 			* the tile to add 
 			*/
 			var tile:MovieClip;
+			
+			addChild(holder);
 
 			for (var i:int = 0; i <_mazeArray.length; i++ ){
 				for (var j:int = 0; j < _mazeArray[i].length; j++) {
@@ -81,7 +85,7 @@
 					tile.x = j * TILE_HEIGHT;
 					tile.scaleX = 0.5;
 					tile.scaleY = 0.5;
-					this.addChild(tile);
+					holder.addChild(tile);
 				}
 			}
 		}
