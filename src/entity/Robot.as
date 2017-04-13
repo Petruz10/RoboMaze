@@ -4,25 +4,34 @@ package entity
 	
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
+	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
 
-	public class Robot extends Entity
+	public class Robot extends DisplayStateLayerSprite
 	{
 		private var m_controls:EvertronControls = new EvertronControls();
-		private var m_skin:MovieClip;
+		private var m_skin:Avatar;
+		private var speed:int = 100;
 		
+		public var hit:Boolean;
+				
 		public function Robot()
 		{
-			super();
-			//super.update();
-			trace("robot");
+			//super.init();
+			
 		}
 		
 		override public function init():void
 		{
 			initSkin();
+			trace("HHHHH");
 		}
 		
 		override public function update():void
+		{
+			updateControls()
+		}
+		
+		private function updateControls():void
 		{
 			if(Input.keyboard.justPressed(m_controls.PLAYER_LEFT)) this.moveLeft();
 			else if(Input.keyboard.justPressed(m_controls.PLAYER_RIGHT)) this.moveRight();
@@ -32,33 +41,35 @@ package entity
 		
 		private function moveUp():void
 		{
-			m_skin.y-=100;
+			 this.y -= speed;
 		}
 		
 		private function moveDown():void
 		{
-			m_skin.y+=100;
+			this.y += speed;
 		}
 		
 		private function moveLeft():void
 		{
-			m_skin.x-=100;
+			this.x -= speed;
 		}
 		
 		private function moveRight():void
 		{
-			m_skin.x +=100;
+			this.x += speed;
 		}
 		
 		private function initSkin():void
 		{
 			m_skin = new Avatar();
 			
-			//m_skin.x = 100;
-			//m_skin.y = 100;
+			//this.x = 100;
+			//this.y = 100;
 			
-			addChild(m_skin);
-			
+			this.addChild(m_skin);
+			trace("this: " + this.x, this.y);
+			trace("m_skin: " + m_skin.x, m_skin.y);
+			trace(this);
 		}
 
 	}
