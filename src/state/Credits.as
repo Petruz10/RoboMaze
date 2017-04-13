@@ -8,7 +8,7 @@ package state
 			super();
 		}
 		override public function init():void {
-			trace("highscore");
+			trace("credits");
 		}
 		override public function update():void {
 			

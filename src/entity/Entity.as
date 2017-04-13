@@ -1,12 +1,12 @@
 package entity
 {
-	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	
 	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
 
 	public class Entity extends DisplayStateLayerSprite
 	{
-		protected var _skin:DisplayObject;
+		protected var _skin:MovieClip;
 		protected var x:int;
 		protected var y:int;
 		
