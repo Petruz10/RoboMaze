@@ -11,9 +11,9 @@ package entity
 		private var m_controls:EvertronControls = new EvertronControls();
 		private var m_skin:Avatar;
 		private var speed:int = 5;
+		private var hitSide:String;
 		
 		public var hit:Boolean;
-		public var hitRight:Boolean;
 				
 		public function Robot()
 		{
@@ -24,12 +24,12 @@ package entity
 		override public function init():void
 		{
 			initSkin();
-			trace("HHHHH");
 		}
 		
 		override public function update():void
 		{
 			updateControls()
+			if(hit) hitt();
 		}
 		
 		private function updateControls():void
@@ -38,73 +38,47 @@ package entity
 			else if(Input.keyboard.justPressed(m_controls.PLAYER_RIGHT)) this.moveRight();
 			else if(Input.keyboard.justPressed(m_controls.PLAYER_DOWN)) this.moveDown();
 			else if(Input.keyboard.justPressed(m_controls.PLAYER_UP)) this.moveUp();
-			trace(hit);
 		}
 		
 		private function moveUp():void
 		{	
-			if(hit)this.y = this.y + speed;
-			
+			hitSide = "up";
 			if(!hit) this.y -= speed;
-			else
-			{
-				hit = false;
-			}
-			
-			
-			//this.y -= speed;
 		}
 		
 		private function moveDown():void
 		{
-			if(hit) this.y = this.y - speed;
-			
+			hitSide = "down";
 			if(!hit) this.y += speed;
-			else
-			{
-				hit = false;
-				//
-			}
-			
-			//this.y += speed;
-			//else this.y -= speed; return;
 		}
 		
 		private function moveLeft():void
 		{
+			hitSide = "left";
 			if(!hit) this.x -= speed;
-			else
-			{
-				hit = false;
-				this.x = this.x + speed;
-			}
-			//else this.x += speed; return;
-			//this.x -= speed;
 		}
 		
 		private function moveRight():void
 		{
+			hitSide = "right";
 			if(!hit) this.x += speed;
-			else
-			{
-				hit = false;
-				this.x = this.x - speed;
-			}
-			//else this.x -= speed; return;
-			//this.x += speed;
 		}
 		
-		private function hitt(x):void
+		private function hitt():void
 		{
-			if(x == "up") trace("träff uppe");
+			if(hitSide == "up") this.y = this.y + speed;
+			if(hitSide == "down") this.y = this.y - speed;
+			if(hitSide == "left") this.x = this.x + speed; 
+			if(hitSide == "right") this.x = this.x - speed;
+			
+			hit = false;
+			
+			return;
 		}
 		
 		private function initSkin():void
 		{
 			m_skin = new Avatar();
-			
-			//this.x = 100;w
-			//this.y = 100;
 			
 			this.addChild(m_skin);
 		}

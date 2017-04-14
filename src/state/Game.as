@@ -84,8 +84,8 @@ package state
 				if(m_robot.hitTestObject(children[i]))
 				{
 					m_robot.hit = true;
-
 				}
+				//else m_robot.hit = false;
 			}
 
 		}
