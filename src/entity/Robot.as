@@ -14,6 +14,11 @@ package entity
 		private var hitSide:String;
 		
 		public var hit:Boolean;
+		
+		private var hitUp:Boolean;
+		private var hitDown:Boolean;
+		private var hitLeft:Boolean;
+		private var hitRight:Boolean;
 				
 		public function Robot()
 		{
@@ -28,8 +33,11 @@ package entity
 		
 		override public function update():void
 		{
-			updateControls()
+			trace(hit);
+			updateControls();
 			if(hit) hitt();
+			else notHit();
+			
 		}
 		
 		private function updateControls():void
@@ -43,37 +51,47 @@ package entity
 		private function moveUp():void
 		{	
 			hitSide = "up";
-			if(!hit) this.y -= speed;
+			//if(hitUp) return;
+			if(!hitUp) this.y -= speed;
 		}
 		
 		private function moveDown():void
 		{
 			hitSide = "down";
-			if(!hit) this.y += speed;
+			if(!hitDown) this.y += speed;
 		}
 		
 		private function moveLeft():void
 		{
 			hitSide = "left";
-			if(!hit) this.x -= speed;
+			if(!hitLeft) this.x -= speed;
 		}
 		
 		private function moveRight():void
 		{
 			hitSide = "right";
-			if(!hit) this.x += speed;
+			if(!hitRight) this.x += speed;
 		}
 		
 		private function hitt():void
 		{
-			if(hitSide == "up") this.y = this.y + speed;
-			if(hitSide == "down") this.y = this.y - speed;
-			if(hitSide == "left") this.x = this.x + speed; 
-			if(hitSide == "right") this.x = this.x - speed;
+			if(hitSide == "up") hitUp = true;
+			if(hitSide == "down") hitDown = true;
+			if(hitSide == "left") hitLeft = true; 
+			if(hitSide == "right") hitRight = true;
 			
 			hit = false;
 			
 			return;
+		}
+		
+		private function notHit():void
+		{
+			hitUp = false;
+			hitDown = false;
+			hitLeft = false;
+			hitRight = false;
+			
 		}
 		
 		private function initSkin():void

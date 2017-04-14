@@ -49,7 +49,7 @@ package state
 			m_layer2 = layers.add("robot lager");
 			
 			m_robot = new Robot();
-			m_robot.opaqueBackground = 0xFFFFFF;
+		//	m_robot.opaqueBackground = 0xFFFFFF;
 			m_robot.scaleX = 0.4;
 			m_robot.scaleY = 0.4;
 			m_robot.x = 55;
