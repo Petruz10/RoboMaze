@@ -19,7 +19,6 @@
 		/*
 		* 
 		*/
-<<<<<<< HEAD
 		private const TILE_HEIGHT:int = 50; // tile height
 		/*
 		* 
@@ -28,8 +27,6 @@
 		
 		public var holder:Sprite = new Sprite();
 		
-=======
->>>>>>> origin/master
 		//------------------------------------------------------------------------
 		// Constructor
 		//------------------------------------------------------------------------
@@ -65,13 +62,10 @@
 			/*
 			* the tile to add 
 			*/
-<<<<<<< HEAD
-			var tile:MovieClip;
 			
 			addChild(holder);
-=======
+
 			var tile:Tile;
->>>>>>> origin/master
 
 			for (var i:int = 0; i <_mazeArray.length; i++ ){
 				for (var j:int = 0; j < _mazeArray[i].length; j++) {

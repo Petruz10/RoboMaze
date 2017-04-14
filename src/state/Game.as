@@ -50,57 +50,43 @@ package state
 			
 			m_robot = new Robot();
 			m_robot.opaqueBackground = 0xFFFFFF;
-			
-			m_robot.x = 100;
-			m_robot.y = 100;
+			m_robot.scaleX = 0.4;
+			m_robot.scaleY = 0.4;
+			m_robot.x = 55;
+			m_robot.y = 55;
 			
 			m_maze = new Maze();
-			m_maze.opaqueBackground = 0xFF2200;
+			m_maze.opaqueBackground = 0x333333;
 			
 			//m_maze.holder.opaqueBackground = 0xFFFFFF;
 			
-			m_maze.x = 50;
-			m_maze.y = 50;
+			m_maze.x = 25;
+			m_maze.y = 25;
 			
 			m_layer.addChild(m_maze);
 			m_layer2.addChild(m_robot);
-			
-			
 			
 			for (var i:uint = 0; i < m_maze.holder.numChildren; i++)
 			{
 				children.push(m_maze.holder.getChildAt(i));
 			}
 				
-			trace(children);
-			for (var j:int = 0; j<children.length; j++)
-			{
-				//trace("children: " + children[j].x, children[j].y);
-			}
-
-				
 		}
 		
 		private function hitTest():void
 		{	
-			//var children:Array = [];
-			//trace(m_maze.holder);
-		//	trace("robo coord:" + m_robot.x, m_robot.y);
 			
 			//loopar igenom lvl array, hitTestPoint  (4 markörer)
 			
-			
 			for (var i:int = 0; i<children.length; i++)
 			{
-				//trace(m_robot.hitTestObject(children[i]));
-				trace("children: " + children[i].x, children[i].y);
-				trace("robot: " + m_robot.x, m_robot.y);
-				trace(children[i].hitTestObject(m_robot));
+				
+				if(m_robot.hitTestObject(children[i]))
+				{
+					m_robot.hit = true;
+
+				}
 			}
-			
-		//	trace(m_robot.x);
-			
-			
 
 		}
 		

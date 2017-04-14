@@ -50,7 +50,7 @@ package entity
 		private function setSkin():void {	
 			switch(type) {
 				case 0:
-					_skin = new Path; 		// path
+					//_skin = new Path; 		// path
 				break;
 				case 1:
 					_skin = new Wall; 		// vertical wall
@@ -111,7 +111,7 @@ package entity
 					_skin = new Avatar;
 				break;
 			}
-			addChild(_skin);
+			if(_skin)addChild(_skin);
 		}
 		//------------------------------------------------------------------------
 		// rotate tile (_skin)
