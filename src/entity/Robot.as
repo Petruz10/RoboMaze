@@ -2,17 +2,23 @@ package entity
 {
 	import flash.display.MovieClip;
 	
+	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
-	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
 
 	public class Robot extends DisplayStateLayerSprite
 	{
 		private var m_controls:EvertronControls = new EvertronControls();
 		private var m_skin:Avatar;
-		private var speed:int = 100;
+		private var speed:int = 5;
+		private var hitSide:String;
 		
 		public var hit:Boolean;
+		
+		private var hitUp:Boolean;
+		private var hitDown:Boolean;
+		private var hitLeft:Boolean;
+		private var hitRight:Boolean;
 				
 		public function Robot()
 		{
@@ -23,12 +29,15 @@ package entity
 		override public function init():void
 		{
 			initSkin();
-			trace("HHHHH");
 		}
 		
 		override public function update():void
 		{
-			updateControls()
+			trace(hit);
+			updateControls();
+			if(hit) hitt();
+			else notHit();
+			
 		}
 		
 		private function updateControls():void
@@ -40,36 +49,56 @@ package entity
 		}
 		
 		private function moveUp():void
-		{
-			 this.y -= speed;
+		{	
+			hitSide = "up";
+			//if(hitUp) return;
+			if(!hitUp) this.y -= speed;
 		}
 		
 		private function moveDown():void
 		{
-			this.y += speed;
+			hitSide = "down";
+			if(!hitDown) this.y += speed;
 		}
 		
 		private function moveLeft():void
 		{
-			this.x -= speed;
+			hitSide = "left";
+			if(!hitLeft) this.x -= speed;
 		}
 		
 		private function moveRight():void
 		{
-			this.x += speed;
+			hitSide = "right";
+			if(!hitRight) this.x += speed;
+		}
+		
+		private function hitt():void
+		{
+			if(hitSide == "up") hitUp = true;
+			if(hitSide == "down") hitDown = true;
+			if(hitSide == "left") hitLeft = true; 
+			if(hitSide == "right") hitRight = true;
+			
+			hit = false;
+			
+			return;
+		}
+		
+		private function notHit():void
+		{
+			hitUp = false;
+			hitDown = false;
+			hitLeft = false;
+			hitRight = false;
+			
 		}
 		
 		private function initSkin():void
 		{
 			m_skin = new Avatar();
 			
-			//this.x = 100;
-			//this.y = 100;
-			
 			this.addChild(m_skin);
-			trace("this: " + this.x, this.y);
-			trace("m_skin: " + m_skin.x, m_skin.y);
-			trace(this);
 		}
 
 	}
