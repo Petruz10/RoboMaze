@@ -35,7 +35,7 @@ package entity
 		{
 			updateControls();
 			if(hit) hitt();
-			else notHit();
+			//else notHit();
 			
 		}
 		
@@ -43,7 +43,7 @@ package entity
 		{
 			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft();
 			else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
-			else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) this.moveDown();
+			else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) this.moveDown(); 
 			else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) this.moveUp();
 		}
 		
@@ -100,14 +100,14 @@ package entity
 			return;
 		}
 		
-		private function notHit():void
+		/*private function notHit():void
 		{
 			hitUp = false;
 			hitDown = false;
 			hitLeft = false;
 			hitRight = false;
 			
-		}
+		}*/
 		
 		private function initSkin():void
 		{
