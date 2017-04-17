@@ -33,7 +33,6 @@ package entity
 		
 		override public function update():void
 		{
-			trace(hit);
 			updateControls();
 			if(hit) hitt();
 			else notHit();
@@ -42,10 +41,10 @@ package entity
 		
 		private function updateControls():void
 		{
-			if(Input.keyboard.justPressed(m_controls.PLAYER_LEFT)) this.moveLeft();
-			else if(Input.keyboard.justPressed(m_controls.PLAYER_RIGHT)) this.moveRight();
-			else if(Input.keyboard.justPressed(m_controls.PLAYER_DOWN)) this.moveDown();
-			else if(Input.keyboard.justPressed(m_controls.PLAYER_UP)) this.moveUp();
+			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft();
+			else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
+			else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) this.moveDown();
+			else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) this.moveUp();
 		}
 		
 		private function moveUp():void
@@ -75,10 +74,26 @@ package entity
 		
 		private function hitt():void
 		{
-			if(hitSide == "up") hitUp = true;
-			if(hitSide == "down") hitDown = true;
-			if(hitSide == "left") hitLeft = true; 
-			if(hitSide == "right") hitRight = true;
+			if(hitSide == "up")
+			{
+				//hitUp = true;
+				this.y += speed;
+			}
+			if(hitSide == "down") 
+			{
+				//hitDown = true;
+				this.y -= speed;
+			}
+			if(hitSide == "left") 
+			{
+				this.x += speed;
+				//hitLeft = true; 
+			}
+			if(hitSide == "right") 
+			{
+				//hitRight = true;
+				this.x -= speed;
+			}
 			
 			hit = false;
 			
