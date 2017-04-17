@@ -6,7 +6,7 @@ package entity
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 
-	public class Robot extends DisplayStateLayerSprite
+	public class Robot extends Entity
 	{
 		private var m_controls:EvertronControls = new EvertronControls();
 		private var m_skin:Avatar;
@@ -51,25 +51,25 @@ package entity
 		{	
 			hitSide = "up";
 			//if(hitUp) return;
-			if(!hitUp) this.y -= speed;
+			if(!hitUp) m_skin.y -= speed;
 		}
 		
 		private function moveDown():void
 		{
 			hitSide = "down";
-			if(!hitDown) this.y += speed;
+			if(!hitDown) m_skin.y += speed;
 		}
 		
 		private function moveLeft():void
 		{
 			hitSide = "left";
-			if(!hitLeft) this.x -= speed;
+			if(!hitLeft) m_skin.x -= speed;
 		}
 		
 		private function moveRight():void
 		{
 			hitSide = "right";
-			if(!hitRight) this.x += speed;
+			if(!hitRight) m_skin.x += speed;
 		}
 		
 		private function hitt():void
@@ -77,22 +77,22 @@ package entity
 			if(hitSide == "up")
 			{
 				//hitUp = true;
-				this.y += speed;
+				m_skin.y += speed;
 			}
 			if(hitSide == "down") 
 			{
 				//hitDown = true;
-				this.y -= speed;
+				m_skin.y -= speed;
 			}
 			if(hitSide == "left") 
 			{
-				this.x += speed;
+				m_skin.x += speed;
 				//hitLeft = true; 
 			}
 			if(hitSide == "right") 
 			{
 				//hitRight = true;
-				this.x -= speed;
+				m_skin.x -= speed;
 			}
 			
 			hit = false;
