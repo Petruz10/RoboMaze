@@ -79,9 +79,13 @@ package state
 		// init background
 		//------------------------------------------------------------------------
 		private function initBackground():void {
+			var bgImg:BgImgTest = new BgImgTest();
+			
 			_layerBackground = layers.add("MENU_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
+			
+			_layerBackground.addChild(bgImg);
 		}
 		//------------------------------------------------------------------------
 		// init Byttons
@@ -114,7 +118,6 @@ package state
 		// test method. places a maze.
 		//------------------------------------------------------------------------
 		override public function dispose():void {
-			trace("dispose menu");
 		}
 		//------------------------------------------------------------------------
 		// updates menu. default choice = 0 <--- singleplayer
@@ -124,18 +127,8 @@ package state
 			* menu btn tracker
 			*/
 			var choosenBtn:MenuButton;
-			if(Input.keyboard.justPressed("S")) {
-				if (_menuBtn < 3) {
-					this.menuBtn++;
-					trace(menuBtn);
-				}
-			}
-			if(Input.keyboard.justPressed("W")) {
-				if (menuBtn != 0) {
-					this.menuBtn--;
-					trace(menuBtn);
-				} 
-			}
+			if(Input.keyboard.justPressed("S")) { if (_menuBtn < 3) { this.menuBtn++; }}
+			if(Input.keyboard.justPressed("W")) { if (menuBtn != 0) { this.menuBtn--;}}
 			choosenBtn = _btnArray[_menuBtn];
 			//------------------------------------------------------------------------
 			// activation // deactivation
@@ -147,14 +140,13 @@ package state
 		// update controls
 		//------------------------------------------------------------------------
 		private function changeState():void {
-
 			if(Input.keyboard.justPressed("SPACE") == true){
 				switch (_menuBtn) {
 					case 0:
-						Session.application.displayState = new Singleplayer;
+					//	Session.application.displayState = new Singleplayer;
 					break;
 					case 1:
-						Session.application.displayState = new Multiplayer;
+						//Session.application.displayState = new Multiplayer;
 					break;
 					case 2: 
 						Session.application.displayState = new Highscore;
