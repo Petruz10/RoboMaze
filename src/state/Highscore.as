@@ -72,6 +72,7 @@ package state
 		//------------------------------------------------------------------------
 		private function initButton():void {
 			var btn:BackButton = new BackButton();
+			var circuitBoard:CircuitBoard_mc = new CircuitBoard_mc;
 			var battery:BatteryRefill_mc = new BatteryRefill_mc();
 			_layerBtn = layers.add("BACK_BTN");
 			_layerBtn.x = 0;
@@ -80,7 +81,10 @@ package state
 			btn.y = 540;
 			battery.x = 200;
 			battery.y = 540;
+			circuitBoard.x = 100;
+			circuitBoard.y = 540;
 			_layerBtn.addChild(battery);
+			_layerBtn.addChild(circuitBoard);
 			_layerBtn.addChild(btn);
 
 		}
