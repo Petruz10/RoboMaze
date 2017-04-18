@@ -6,7 +6,7 @@ package entity
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 
-	public class Robot extends DisplayStateLayerSprite
+	public class Robot extends Entity
 	{
 		private var m_controls:EvertronControls = new EvertronControls();
 		private var m_skin:Avatar;
@@ -33,66 +33,81 @@ package entity
 		
 		override public function update():void
 		{
-			trace(hit);
 			updateControls();
 			if(hit) hitt();
-			else notHit();
+			//else notHit();
 			
 		}
 		
 		private function updateControls():void
 		{
-			if(Input.keyboard.justPressed(m_controls.PLAYER_LEFT)) this.moveLeft();
-			else if(Input.keyboard.justPressed(m_controls.PLAYER_RIGHT)) this.moveRight();
-			else if(Input.keyboard.justPressed(m_controls.PLAYER_DOWN)) this.moveDown();
-			else if(Input.keyboard.justPressed(m_controls.PLAYER_UP)) this.moveUp();
+			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft();
+			else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
+			else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) this.moveDown(); 
+			else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) this.moveUp();
 		}
 		
 		private function moveUp():void
 		{	
 			hitSide = "up";
 			//if(hitUp) return;
-			if(!hitUp) this.y -= speed;
+			if(!hitUp) m_skin.y -= speed;
 		}
 		
 		private function moveDown():void
 		{
 			hitSide = "down";
-			if(!hitDown) this.y += speed;
+			if(!hitDown) m_skin.y += speed;
 		}
 		
 		private function moveLeft():void
 		{
 			hitSide = "left";
-			if(!hitLeft) this.x -= speed;
+			if(!hitLeft) m_skin.x -= speed;
 		}
 		
 		private function moveRight():void
 		{
 			hitSide = "right";
-			if(!hitRight) this.x += speed;
+			if(!hitRight) m_skin.x += speed;
 		}
 		
 		private function hitt():void
 		{
-			if(hitSide == "up") hitUp = true;
-			if(hitSide == "down") hitDown = true;
-			if(hitSide == "left") hitLeft = true; 
-			if(hitSide == "right") hitRight = true;
+			if(hitSide == "up")
+			{
+				//hitUp = true;
+				m_skin.y += speed;
+			}
+			if(hitSide == "down") 
+			{
+				//hitDown = true;
+				m_skin.y -= speed;
+			}
+			if(hitSide == "left") 
+			{
+				m_skin.x += speed;
+				//hitLeft = true; 
+			}
+			if(hitSide == "right") 
+			{
+				//hitRight = true;
+				m_skin.x -= speed;
+			}
 			
 			hit = false;
 			
 			return;
 		}
 		
-		private function notHit():void
+		/*private function notHit():void
 		{
 			hitUp = false;
 			hitDown = false;
 			hitLeft = false;
 			hitRight = false;
 			
-		}
+		}*/
 		
 		private function initSkin():void
 		{
