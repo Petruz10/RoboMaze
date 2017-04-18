@@ -8,9 +8,11 @@ package state
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
-	
+	import entity.MenuButton;
 	import state.*;
-
+	//------------------------------------------------------------------------
+	// MAIN MENU
+	//------------------------------------------------------------------------
 	public class Menu extends DisplayState {			
 		/*
 		* background layer
@@ -89,7 +91,7 @@ package state
 			_layerButtons.y = 0;
 
 			for (var i:int = 0; i < _menuBtnIndexArray.length; i++) {
-				_btn = new Button(i);
+				_btn = new MenuButton(i);
 				_btn.x = 100;
 				_btn.y = posY + (i * 100);
 				_btnArray.push(_btn);
@@ -119,8 +121,7 @@ package state
 			/*
 			* menu btn tracker
 			*/
-			var choosenBtn:Button;
-
+			var choosenBtn:MenuButton;
 			if(Input.keyboard.justPressed("S")) {
 				if (_menuBtn < 3) {
 					this.menuBtn++;
@@ -148,10 +149,10 @@ package state
 			if(Input.keyboard.justPressed("SPACE") == true){
 				switch (_menuBtn) {
 					case 0:
-						Session.application.displayState = new Game;
+						Session.application.displayState = new Singleplayer;
 					break;
 					case 1:
-						Session.application.displayState = new Game;
+						Session.application.displayState = new Multiplayer;
 					break;
 					case 2: 
 						Session.application.displayState = new Highscore;
@@ -159,7 +160,6 @@ package state
 					case 3: 
 						Session.application.displayState = new Credits;
 					break; 
-
 				}
 			}
 		}

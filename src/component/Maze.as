@@ -11,11 +11,19 @@
 		/*
 		* 
 		*/
-		private const MAZE_HEIGHT:int = 560; 	// total height 
+		private const ONEPLAYER_MAZE_HEIGHT:int = 560; 	// total height 
 		/*
 		* 
 		*/
-		private const MAZE_WIDTH:int = 800; 	// total width
+		private const ONEPLAYER_MAZE_WIDTH:int = 800; 	// total width oneplayer maze.
+		/*
+		* 
+		*/
+		private const TWOPLAYER_MAZE_HEIGHT:int = 560; 	// total height 
+		/*
+		* 
+		*/
+		private const TWOPLAYER_MAZE_WIDTH:int = 400; 	// total width oneplayer maze.
 		/*
 		* 
 		*/

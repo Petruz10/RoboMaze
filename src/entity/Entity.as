@@ -7,8 +7,6 @@ package entity
 	public class Entity extends DisplayStateLayerSprite
 	{
 		protected var _skin:MovieClip;
-		protected var x:int;
-		protected var y:int;
 		
 		public function Entity()
 		{
@@ -18,18 +16,12 @@ package entity
 		{
 			
 		}
-		
 		override public function update():void
 		{
 			trace("update");
 		}
 		
 		override public function dispose():void
-		{
-			
-		}
-		
-		protected function place():void
 		{
 			
 		}
