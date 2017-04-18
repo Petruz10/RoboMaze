@@ -1,29 +1,23 @@
 package entity
 {
+	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.timer.Timer;
+	import se.lnu.stickossdk.timer.Timers;
 
 	public class Battery extends Entity
 	{
-		private var HP:int = 100;
+		public var HP:int = 100;
 		
 		private var m_timer:Timer;
 		
-		public function Battery(x:int, y:int)
+		public function Battery()
 		{
-			super();
+			//super();
+			trace("battery konstruktor");
+			HPtimer();
 		}
 		
-		override public function init():void
-		{
-			timer();
-		}
-		
-		override public function update():void
-		{
-			
-		}
-		
-		private function timer():void
+		private function HPtimer():void
 		{
 			m_timer = Session.timer.create(100, removeHP);
 		}
@@ -43,7 +37,8 @@ package entity
 			if(HP != 0) 
 			{
 				HP--;
-				timer();
+				HPtimer();
+				trace(HP);
 			}
 			else trace("dead");
 		}

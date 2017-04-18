@@ -19,6 +19,8 @@ package entity
 		private var hitDown:Boolean;
 		private var hitLeft:Boolean;
 		private var hitRight:Boolean;
+		
+		private var m_battery:Battery;
 				
 		public function Robot()
 		{
@@ -51,25 +53,25 @@ package entity
 		{	
 			hitSide = "up";
 			//if(hitUp) return;
-			if(!hitUp) m_skin.y -= speed;
+			if(!hitUp && m_battery.HP != 0) m_skin.y -= speed;
 		}
 		
 		private function moveDown():void
 		{
 			hitSide = "down";
-			if(!hitDown) m_skin.y += speed;
+			if(!hitDown && m_battery.HP != 0) m_skin.y += speed;
 		}
 		
 		private function moveLeft():void
 		{
 			hitSide = "left";
-			if(!hitLeft) m_skin.x -= speed;
+			if(!hitLeft && m_battery.HP != 0) m_skin.x -= speed;
 		}
 		
 		private function moveRight():void
 		{
 			hitSide = "right";
-			if(!hitRight) m_skin.x += speed;
+			if(!hitRight && m_battery.HP != 0) m_skin.x += speed;
 		}
 		
 		private function hitt():void
@@ -112,6 +114,7 @@ package entity
 		private function initSkin():void
 		{
 			m_skin = new Avatar();
+			m_battery = new Battery();
 			
 			this.addChild(m_skin);
 		}

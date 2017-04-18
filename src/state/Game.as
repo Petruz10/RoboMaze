@@ -1,10 +1,10 @@
 package state
 {
-	import flash.display.MovieClip;
-	import flash.geom.ColorTransform;
+	//------------------------------------------------------------------------
+	// imports
+	//------------------------------------------------------------------------
 	
 	import component.Maze;
-	
 	import entity.Robot;
 	
 	import game.Singleplayer;
@@ -12,8 +12,14 @@ package state
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 
+	//------------------------------------------------------------------------
+	// Public class Game
+	//------------------------------------------------------------------------
 	public class Game extends DisplayState
 	{
+		//------------------------------------------------------------------------
+		// private properties 
+		//------------------------------------------------------------------------
 		private var m_layer:DisplayStateLayer;
 		private var m_layer2:DisplayStateLayer;
 		private var m_robot:Robot;
@@ -22,12 +28,18 @@ package state
 		
 		private var children:Array = [];
 		
+		//------------------------------------------------------------------------
+		// constructor
+		//------------------------------------------------------------------------
 		public function Game()
 		{
 			super();
 			trace("game konstruktor");
 		}
 		
+		//------------------------------------------------------------------------
+		// public methods
+		//------------------------------------------------------------------------
 		override public function init():void
 		{
 			initLayers();
@@ -43,13 +55,16 @@ package state
 			
 		}
 		
+		//------------------------------------------------------------------------
+		// private methods
+		//------------------------------------------------------------------------
 		private function initLayers():void
 		{	
 			m_layer = layers.add("bakground_test_layer");
 			m_layer2 = layers.add("robot lager");
 			
 			m_robot = new Robot();
-		//	m_robot.opaqueBackground = 0xFFFFFF;
+
 			m_robot.scaleX = 0.4;
 			m_robot.scaleY = 0.4;
 			m_robot.x = 55;
@@ -58,13 +73,15 @@ package state
 			m_maze = new Maze();
 			m_maze.opaqueBackground = 0x333333;
 			
-			//m_maze.holder.opaqueBackground = 0xFFFFFF;
-			
 			m_maze.x = 25;
 			m_maze.y = 25;
 			
 			m_layer.addChild(m_maze);
 			m_layer2.addChild(m_robot);
+			
+			/*
+			* eventuellt skippa holder!!
+			*/
 			
 			for (var i:uint = 0; i < m_maze.holder.numChildren; i++)
 			{
@@ -75,8 +92,6 @@ package state
 		
 		private function hitTest():void
 		{	
-			
-			//loopar igenom lvl array, hitTestPoint  (4 markörer)
 			
 			for (var i:int = 0; i<children.length; i++)
 			{
@@ -90,6 +105,9 @@ package state
 
 		}
 		
+		//------------------------------------------------------------------------
+		// protected methods
+		//------------------------------------------------------------------------
 		protected function addMaze(players:int):void
 		{	
 			
