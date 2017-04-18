@@ -10,6 +10,8 @@ package state
 	import se.lnu.stickossdk.system.Session;
 	
 	import state.*;
+	import game.Singleplayer;
+	import game.Multiplayer;
 
 	public class Menu extends DisplayState {			
 		/*
@@ -148,10 +150,10 @@ package state
 			if(Input.keyboard.justPressed("SPACE") == true){
 				switch (_menuBtn) {
 					case 0:
-						Session.application.displayState = new Game;
+						Session.application.displayState = new Singleplayer;
 					break;
 					case 1:
-						Session.application.displayState = new Game;
+						Session.application.displayState = new Multiplayer;
 					break;
 					case 2: 
 						Session.application.displayState = new Highscore;

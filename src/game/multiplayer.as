@@ -6,7 +6,8 @@ package game
 	{
 		public function Multiplayer()
 		{
-			super.addMaze(2);
+			super(2);
+			trace("multiplayer");
 		}
 	}
 }

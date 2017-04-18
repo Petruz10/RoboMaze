@@ -24,13 +24,14 @@ package entity
 				
 		public function Robot()
 		{
-			//super.init();
-			
+			super();
+			trace("konstruktor Robot");
 		}
 		
 		override public function init():void
 		{
 			initSkin();
+			trace("init Robot");
 		}
 		
 		override public function update():void

@@ -7,10 +7,9 @@ package state
 	import component.Maze;
 	import entity.Robot;
 	
-	import game.Singleplayer;
-	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
+	import flash.display.Sprite;
 
 	//------------------------------------------------------------------------
 	// Public class Game
@@ -22,19 +21,25 @@ package state
 		//------------------------------------------------------------------------
 		private var m_layer:DisplayStateLayer;
 		private var m_layer2:DisplayStateLayer;
+		
 		private var m_robot:Robot;
 		private var m_maze:Maze;
 		//private var m_testSinglePlayer:Singleplayer;
 		
 		private var children:Array = [];
 		
+		private var m_players:int;
+				
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
-		public function Game()
+		public function Game(players:int)
 		{
-			super();
+			m_players = players;
 			trace("game konstruktor");
+			trace("players: " + players);
+			/*if(players ==1) new Singleplayer();
+			else new Multiplayer();*/
 		}
 		
 		//------------------------------------------------------------------------
@@ -43,6 +48,8 @@ package state
 		override public function init():void
 		{
 			initLayers();
+			getChildren();
+			
 		}
 		
 		override public function update():void
@@ -60,34 +67,19 @@ package state
 		//------------------------------------------------------------------------
 		private function initLayers():void
 		{	
-			m_layer = layers.add("bakground_test_layer");
-			m_layer2 = layers.add("robot lager");
+			m_layer = layers.add("maze layer");
+			m_layer2 = layers.add("robot layer");
 			
-			m_robot = new Robot();
-
-			m_robot.scaleX = 0.4;
-			m_robot.scaleY = 0.4;
-			m_robot.x = 55;
-			m_robot.y = 55;
-			
-			m_maze = new Maze(1);
-			m_maze.opaqueBackground = 0x333333;
-			
-			m_maze.x = 25;
-			m_maze.y = 25;
-			
-			m_layer.addChild(m_maze);
-			m_layer2.addChild(m_robot);
-			
-			/*
-			* eventuellt skippa holder!!
-			*/
-			
+			if(m_maze) m_layer.addChild(m_maze);
+			if(m_robot) m_layer2.addChild(m_robot);	
+		}
+		
+		private function getChildren():void
+		{
 			for (var i:uint = 0; i < m_maze.numChildren; i++)
 			{
 				children.push(m_maze.getChildAt(i));
 			}
-				
 		}
 		
 		private function hitTest():void
@@ -95,12 +87,7 @@ package state
 			
 			for (var i:int = 0; i<children.length; i++)
 			{
-				
-				if(m_robot.hitTestObject(children[i]))
-				{
-					m_robot.hit = true;
-				}
-				//else m_robot.hit = false;
+				if(m_robot.hitTestObject(children[i])) m_robot.hit = true;
 			}
 
 		}
@@ -108,9 +95,17 @@ package state
 		//------------------------------------------------------------------------
 		// protected methods
 		//------------------------------------------------------------------------
-		protected function addMaze(players:int):void
+		protected function addMaze(maze:Maze):void
 		{	
-			
+			m_maze = maze
+			trace(m_maze);
+			getChildren();
+		}
+		
+		protected function addAvatar(Avatar:Robot):void
+		{
+			m_robot = Avatar;
+			trace(m_robot);
 		}
 	}
 }
