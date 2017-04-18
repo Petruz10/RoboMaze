@@ -3,20 +3,15 @@ package state
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
-	
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
+
+	import flash.display.IGraphicsData;
+	import flash.display.Shape;
 	
 	import component.Maze;
-	
 	import entity.Robot;
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
-	import se.lnu.stickossdk.util.ObjectUtils;
 
 //	import flash.display.MovieClip;
 
@@ -39,7 +34,8 @@ package state
 		private var children:Array = [];
 		
 		private var m_players:int;
-				
+		
+		private var shapecopy:Shape;
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -78,7 +74,7 @@ package state
 			m_layer2 = layers.add("robot layer");
 			
 			if(m_maze) m_layer.addChild(m_maze);
-			if(m_maze2) m_layer.addChild(m_maze2);
+			if(shapecopy) m_layer.addChild(shapecopy);
 			if(m_robot) m_layer2.addChild(m_robot);	
 			
 		}
@@ -106,22 +102,24 @@ package state
 		protected function addMaze(maze:Maze):void
 		{	
 			m_maze = maze;
-			trace(m_maze);
-			
-		//	var b:DisplayObject;
-			
+
 			getChildren();
 			
 			if(m_players == 2) 
 			{
-				m_maze2 = m_maze;
-				//trace("b: ", b);
-				//m_maze2 = m_maze;
-				m_maze2.x = 425;
+				//http://stackoverflow.com/questions/10436701/as3-is-it-possible-to-duplicate-a-shape-object
+				var g:Vector.<IGraphicsData> = m_maze.graphics.readGraphicsData();
+				
+				shapecopy = new Shape();
+				shapecopy.graphics.drawGraphicsData(g)
+				shapecopy.x = 420;
+				shapecopy.y = 100;
+				shapecopy.opaqueBackground = 0x333333;
+				trace(shapecopy);
 			}
 						
 		}
-		
+			
 		protected function addAvatar(Avatar:Robot):void
 		{
 			m_robot = Avatar;

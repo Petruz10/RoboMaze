@@ -115,7 +115,7 @@ package entity
 					_skin = new Avatar;
 				break;
 			}
-			this.addChild(_skin);
+			if(_skin)this.addChild(_skin);
 		}
 		//------------------------------------------------------------------------
 		// rotate tile (_skin)
