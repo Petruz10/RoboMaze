@@ -38,8 +38,6 @@ package entity
 		{
 			updateControls();
 			if(hit) hitt();
-			//else notHit();
-			
 		}
 		
 		private function updateControls():void
@@ -53,7 +51,6 @@ package entity
 		private function moveUp():void
 		{	
 			hitSide = "up";
-			//if(hitUp) return;
 			if(!hitUp && m_battery.HP != 0) m_skin.y -= speed;
 		}
 		
@@ -77,41 +74,16 @@ package entity
 		
 		private function hitt():void
 		{
-			if(hitSide == "up")
-			{
-				//hitUp = true;
-				m_skin.y += speed;
-			}
-			if(hitSide == "down") 
-			{
-				//hitDown = true;
-				m_skin.y -= speed;
-			}
-			if(hitSide == "left") 
-			{
-				m_skin.x += speed;
-				//hitLeft = true; 
-			}
-			if(hitSide == "right") 
-			{
-				//hitRight = true;
-				m_skin.x -= speed;
-			}
+			if(hitSide == "up") m_skin.y += speed;
+			if(hitSide == "down") m_skin.y -= speed;
+			if(hitSide == "left") m_skin.x += speed;
+			if(hitSide == "right") m_skin.x -= speed;
 			
 			hit = false;
 			
 			return;
 		}
-		
-		/*private function notHit():void
-		{
-			hitUp = false;
-			hitDown = false;
-			hitLeft = false;
-			hitRight = false;
-			
-		}*/
-		
+
 		private function initSkin():void
 		{
 			m_skin = new Avatar();

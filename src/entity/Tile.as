@@ -1,9 +1,11 @@
 package entity
 {
-	import flash.geom.Rectangle;
+	import flash.display.MovieClip;
 	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
+	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
 
-	public class Tile extends Entity {
+	public class Tile extends DisplayStateLayerSprite {
 		/*
 		* 
 		*/
@@ -20,6 +22,8 @@ package entity
 		* used to determin rotation
 		*/
 		private var type:int;
+		
+		protected var _skin:MovieClip;
 		//------------------------------------------------------------------------
 		// update controls
 		//------------------------------------------------------------------------

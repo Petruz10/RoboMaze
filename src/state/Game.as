@@ -4,12 +4,21 @@ package state
 	// imports
 	//------------------------------------------------------------------------
 	
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
+	
 	import component.Maze;
+	
 	import entity.Robot;
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
-	import flash.display.Sprite;
+	import se.lnu.stickossdk.util.ObjectUtils;
+
+//	import flash.display.MovieClip;
 
 	//------------------------------------------------------------------------
 	// Public class Game
@@ -24,11 +33,13 @@ package state
 		
 		private var m_robot:Robot;
 		private var m_maze:Maze;
+		private var m_maze2:Maze;
 		//private var m_testSinglePlayer:Singleplayer;
 		
 		private var children:Array = [];
 		
 		private var m_players:int;
+				
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -38,8 +49,6 @@ package state
 			m_players = players;
 			trace("game konstruktor");
 			trace("players: " + players);
-			/*if(players ==1) new Singleplayer();
-			else new Multiplayer();*/
 		}
 		
 		//------------------------------------------------------------------------
@@ -47,9 +56,7 @@ package state
 		//------------------------------------------------------------------------
 		override public function init():void
 		{
-			initLayers();
-			getChildren();
-			
+			initLayers();	
 		}
 		
 		override public function update():void
@@ -71,7 +78,9 @@ package state
 			m_layer2 = layers.add("robot layer");
 			
 			if(m_maze) m_layer.addChild(m_maze);
+			if(m_maze2) m_layer.addChild(m_maze2);
 			if(m_robot) m_layer2.addChild(m_robot);	
+			
 		}
 		
 		private function getChildren():void
@@ -84,7 +93,6 @@ package state
 		
 		private function hitTest():void
 		{	
-			
 			for (var i:int = 0; i<children.length; i++)
 			{
 				if(m_robot.hitTestObject(children[i])) m_robot.hit = true;
@@ -97,9 +105,21 @@ package state
 		//------------------------------------------------------------------------
 		protected function addMaze(maze:Maze):void
 		{	
-			m_maze = maze
+			m_maze = maze;
 			trace(m_maze);
+			
+		//	var b:DisplayObject;
+			
 			getChildren();
+			
+			if(m_players == 2) 
+			{
+				m_maze2 = m_maze;
+				//trace("b: ", b);
+				//m_maze2 = m_maze;
+				m_maze2.x = 425;
+			}
+						
 		}
 		
 		protected function addAvatar(Avatar:Robot):void
