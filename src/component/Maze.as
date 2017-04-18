@@ -85,17 +85,14 @@
 			* the tile to add 
 			*/
 			var tile:Tile;
-
-			if (_mode == 1) {
-				for (var i:int = 0; i <_mazeArray.length; i++ ){
-					for (var j:int = 0; j < _mazeArray[i].length; j++) {
-						tile = new Tile(_mazeArray[i][j]);
-						tile.width = TILE_WIDTH;
-						tile.height = TILE_HEIGHT;
-						tile.y = i * tile.height;
-						tile.x = j * tile.width;
-						this.addChild(tile);
-					}
+			for (var i:int = 0; i <_mazeArray.length; i++ ){
+				for (var j:int = 0; j < _mazeArray[i].length; j++) {
+					tile = new Tile(_mazeArray[i][j]);
+					tile.width = TILE_WIDTH;
+					tile.height = TILE_HEIGHT;
+					tile.y = i * tile.height;
+					tile.x = j * tile.width;
+					this.addChild(tile);
 				}
 			}
 		}
