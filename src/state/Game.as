@@ -55,7 +55,7 @@ package state
 			m_robot.x = 55;
 			m_robot.y = 55;
 			
-			m_maze = new Maze();
+			m_maze = new Maze(1);
 			m_maze.opaqueBackground = 0x333333;
 			
 			//m_maze.holder.opaqueBackground = 0xFFFFFF;
@@ -66,9 +66,9 @@ package state
 			m_layer.addChild(m_maze);
 			m_layer2.addChild(m_robot);
 			
-			for (var i:uint = 0; i < m_maze.holder.numChildren; i++)
+			for (var i:uint = 0; i < m_maze.numChildren; i++)
 			{
-				children.push(m_maze.holder.getChildAt(i));
+				children.push(m_maze.getChildAt(i));
 			}
 				
 		}
