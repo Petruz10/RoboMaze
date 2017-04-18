@@ -10,16 +10,11 @@ package state
 	import se.lnu.stickossdk.system.Session;
 	import entity.MenuButton;
 	import state.*;
-		import game.Singleplayer;
+	import game.Singleplayer;
 	import game.Multiplayer;
-
 	//------------------------------------------------------------------------
 	// MAIN MENU
 	//------------------------------------------------------------------------
-
-
-
-
 	public class Menu extends DisplayState {			
 		/*
 		* background layer
