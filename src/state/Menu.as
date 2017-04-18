@@ -50,7 +50,6 @@ package state
 			initMenu();
 			initLayers();
 			initSound();
-		 //	testMaze(); // <---- places a maze and a "robot"
 		}
 		//------------------------------------------------------------------------
 		// init menu array
@@ -96,13 +95,6 @@ package state
 				_btnArray.push(_btn);
 				_layerButtons.addChild(_btn);
 			}
-
-			testArray();
-		}
-		private function testArray():void {
-			for (var i:int = 0; i < _btnArray.length; i++) {
-				//trace(_btnArray[i].id);
-			} 
 		}
 		//------------------------------------------------------------------------
 		// inti state-sound
@@ -110,23 +102,6 @@ package state
 		private function initSound():void {
 			
 		}
-		//------------------------------------------------------------------------
-		// test method. places a maze.
-		//------------------------------------------------------------------------
-		private function testMaze():void {
-			trace("test maze");
-			var maze:Maze = new Maze();
-					
-			_layerBackground = layers.add("maze");
-			
-			_layerBackground.x = 25;
-			_layerBackground.y = 25;
-			
-			_layerBackground.addChild(maze);
-		}
-		//------------------------------------------------------------------------
-		// test method. places a maze.
-		//------------------------------------------------------------------------
 		override public function update():void {
 			updateMenu();
 			changeState();
