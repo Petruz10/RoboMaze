@@ -15,6 +15,7 @@ package entity
 		// public properties 
 		//------------------------------------------------------------------------
 		public var hit:Boolean;
+		public var hitBattery:Boolean = false;
 		
 		//------------------------------------------------------------------------
 		// private properties 
@@ -50,6 +51,7 @@ package entity
 		{
 			updateControls();
 			if(hit) hitt();
+			checkHit();
 		}
 		
 		override public function dispose():void
@@ -103,6 +105,11 @@ package entity
 			hit = false;
 			
 			return;
+		}
+		
+		private function checkHit():void
+		{
+			if(hitBattery) m_battery.HP += 25; hitBattery=false;
 		}
 
 		private function initSkin():void

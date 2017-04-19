@@ -6,6 +6,8 @@ package state
 	import flash.display.DisplayObject;
 	
 	import component.Maze;
+	
+	import entity.BatteryRefill;
 	import entity.Robot;
 	import entity.Tile;
 	
@@ -22,12 +24,15 @@ package state
 		//------------------------------------------------------------------------
 		private var m_layer:DisplayStateLayer;
 		private var m_layer2:DisplayStateLayer;
+		private var m_layer3:DisplayStateLayer;
 		
 		private var m_robot:Robot;
 		private var m_robot2:Robot;
 		
 		private var m_maze:Maze;
 		private var m_maze2:Maze;
+		
+		private var m_battery:BatteryRefill;
 		
 		private var children:Vector.<Tile> = new Vector.<Tile>(); 
 		
@@ -52,7 +57,8 @@ package state
 		//------------------------------------------------------------------------
 		override public function init():void
 		{
-			initLayers();	
+			initBattery();
+			initLayers();
 		}
 		
 		override public function update():void
@@ -71,15 +77,24 @@ package state
 		//------------------------------------------------------------------------
 		// private methods
 		//------------------------------------------------------------------------
+		private function initBattery():void
+		{
+			m_battery = new BatteryRefill();
+		}
+		
 		private function initLayers():void
 		{	
 			m_layer = layers.add("maze layer");
 			m_layer2 = layers.add("robot layer");
+			m_layer3 = layers.add("battery layer");
 			
 			if(m_maze) m_layer.addChild(m_maze);
 			if(m_maze2) m_layer.addChild(m_maze2);
+			
 			if(m_robot) m_layer2.addChild(m_robot);	
 			if(m_robot2) m_layer2.addChild(m_robot2);
+			trace(m_battery);
+			m_layer3.addChild(m_battery);
 			
 		}
 		
@@ -109,7 +124,15 @@ package state
 				}
 			//	trace(m_robot2.hitTestObject(m_maze2));
 			}
-
+			
+			if(m_robot.hitTestObject(m_battery))
+			{
+				trace("hit");
+				m_layer3.removeChild(m_battery);
+				m_robot.hitBattery = true;
+				return;
+			}
+			
 		}
 		
 		//------------------------------------------------------------------------
