@@ -2,7 +2,6 @@ package entity
 {
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.timer.Timer;
-	import se.lnu.stickossdk.timer.Timers;
 
 	public class Battery extends Entity
 	{
@@ -19,7 +18,7 @@ package entity
 		
 		private function HPtimer():void
 		{
-			m_timer = Session.timer.create(100, removeHP);
+			m_timer = Session.timer.create(1000, removeHP);
 		}
 		
 		public function getHP():void

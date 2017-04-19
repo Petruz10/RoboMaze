@@ -40,7 +40,7 @@
 		// Constructor
 		// @param mode:int // 1 or 2, singleplayer or multiplayer.
 		//------------------------------------------------------------------------
-		public function Maze(mode:int){
+		public function Maze(mode:int=2){
 			trace("Maze constructor");
 			this._mode = mode;
 			initMaze();

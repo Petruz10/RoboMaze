@@ -22,10 +22,11 @@ package entity
 		
 		private var m_battery:Battery;
 				
-		public function Robot()
+		public function Robot(controls:int=0)
 		{
 			super();
 			trace("konstruktor Robot");
+			m_controls.player = controls;
 		}
 		
 		override public function init():void

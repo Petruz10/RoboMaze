@@ -26,7 +26,7 @@ package game
 		
 		private function initAvatar():void
 		{
-			m_robot = new Robot();
+			m_robot = new Robot(0);
 			
 			m_robot.scaleX = 0.35;
 			m_robot.scaleY = 0.35;
