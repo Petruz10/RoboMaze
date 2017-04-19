@@ -18,10 +18,11 @@ package game
 		{
 			super(2);
 			trace("multiplayer");
-			initAvatar();
 			initAvatar2();
-			initMaze();
+			initAvatar();
+			
 			initMaze2();
+			initMaze();
 		}
 		
 		private function initAvatar():void
