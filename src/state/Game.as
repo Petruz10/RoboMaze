@@ -3,20 +3,14 @@ package state
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
-
-	import flash.display.IGraphicsData;
-	import flash.display.Shape;
+	import flash.display.DisplayObject;
 	
 	import component.Maze;
-	
 	import entity.Robot;
+	import entity.Tile;
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
-	import flash.display.DisplayObject;
-	import flash.geom.Rectangle;
-
-//	import flash.display.MovieClip;
 
 	//------------------------------------------------------------------------
 	// Public class Game
@@ -35,7 +29,7 @@ package state
 		private var m_maze:Maze;
 		private var m_maze2:Maze;
 		
-		private var children:Array = [];
+		private var children:Vector.<Tile> = new Vector.<Tile>(); 
 		
 		private var m_players:int;
 		
@@ -68,7 +62,10 @@ package state
 		
 		override public function dispose():void
 		{
-			
+			disposeMaze();
+			disposeAvatar();
+			disposeChildren();
+			disposeLayers();	
 		}
 		
 		//------------------------------------------------------------------------
@@ -124,29 +121,27 @@ package state
 
 			//return m_maze;
 			
-			if(m_players == 2) 
+			/*if(m_players == 2) 
 			{
 				//http://stackoverflow.com/questions/10436701/as3-is-it-possible-to-duplicate-a-shape-object
-				/*var g:Vector.<IGraphicsData> = m_maze.graphics.readGraphicsData();
+				var g:Vector.<IGraphicsData> = m_maze.graphics.readGraphicsData();
 				
 				m_maze2 = new Shape();
 				m_maze2.graphics.drawGraphicsData(g)
 				m_maze2.x = 420;
 				m_maze2.y = 100;
-				m_maze2.opaqueBackground = 0x333333;*/
+				m_maze2.opaqueBackground = 0x333333;
 				//duplicateDisplayObject(m_maze);
-			}	
+			}	*/
 			getChildren();
 		}
 		
 		protected function addMaze2(maze:Maze):void
 		{	
-			m_maze2 = maze;
-			trace(m_maze2);
-			
-			
+			m_maze2 = maze;			
 		}
 		
+		/*
 		//https://www.kirupa.com/forum/showthread.php?223798-ActionScript-3-Tip-of-the-Day&p=1939827#post1939827
 		public function duplicateDisplayObject(target:DisplayObject):void 
 		{
@@ -160,12 +155,12 @@ package state
 			duplicate.cacheAsBitmap = target.cacheAsBitmap;
 			duplicate.opaqueBackground = target.opaqueBackground;
 			
-			/*if (target.scale9Grid) {
+			if (target.scale9Grid) {
 				var rect:Rectangle = target.scale9Grid;
 				// WAS Flash 9 bug where returned scale9Grid is 20x larger than assigned
 				// rect.x /= 20, rect.y /= 20, rect.width /= 20, rect.height /= 20;
 				duplicate.scale9Grid = rect;
-			}*/
+			}
 			
 			duplicate.x += 400;
 			duplicate.y = 100;
@@ -175,7 +170,7 @@ package state
 			trace("Children maze: ", m_maze.numChildren);
 			
 			//return duplicate;
-		}
+		}*/
 			
 		protected function addAvatar(Avatar:Robot):void
 		{
@@ -186,6 +181,38 @@ package state
 		protected function addMultiplayer(robot:Robot):void
 		{
 			m_robot2 = robot;
+		}
+		
+		
+		//------------------------------------------------------------------------
+		// public methods
+		//------------------------------------------------------------------------
+		
+		public function disposeLayers():void
+		{
+			m_layer = null;
+			m_layer2 = null;
+		}
+		
+		public function disposeChildren():void
+		{
+			for (var i:uint = 0; i < children.length; i++)
+			{
+				children[i] = null;
+			}
+			children = null;
+		}
+		
+		public function disposeMaze():void
+		{
+			m_maze = null;
+			if(m_maze2) m_maze2 = null;
+		}
+		
+		public function disposeAvatar():void
+		{
+			m_robot = null;
+			if(m_robot2) m_robot2 = null;
 		}
 	}
 }

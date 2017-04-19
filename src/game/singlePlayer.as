@@ -1,19 +1,22 @@
 package game
 {
+	//------------------------------------------------------------------------
+	// imports
+	//------------------------------------------------------------------------
 	import component.Maze;
-	
-	import entity.Robot;
-	
+	import entity.Robot;	
 	import state.Game;
-	import flash.display.Sprite;
 
+	//------------------------------------------------------------------------
+	// Public class Singleplayer
+	//------------------------------------------------------------------------
 	public class Singleplayer extends Game
 	{
+		//------------------------------------------------------------------------
+		// private properties 
+		//------------------------------------------------------------------------
 		private var m_robot:Robot;
 		private var m_maze:Maze;
-		
-		//private var m_holderRobot:Sprite;
-		//private var m_holderMaze:Sprite;
 		
 		public function Singleplayer()
 		{
@@ -24,6 +27,9 @@ package game
 			initAvatar();
 		}
 		
+		//------------------------------------------------------------------------
+		// private methods 
+		//------------------------------------------------------------------------
 		private function initAvatar():void
 		{
 			m_robot = new Robot(0);
@@ -46,6 +52,22 @@ package game
 			m_maze.y = 100;
 			
 			super.addMaze(m_maze);
+		}
+		
+		override public function dispose():void
+		{
+			disposeAvatar();
+			disposeMaze(); 
+		}
+		
+		private function disposeMaze():void
+		{
+			m_maze = null;
+		}
+		
+		private function disposeAvatar():void
+		{
+			m_robot = null;
 		}
 
 	}

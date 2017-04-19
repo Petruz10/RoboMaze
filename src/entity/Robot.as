@@ -1,20 +1,29 @@
 package entity
 {
-	import flash.display.MovieClip;
-	
-	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
+	//------------------------------------------------------------------------
+	// imports
+	//------------------------------------------------------------------------
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 
+	//------------------------------------------------------------------------
+	// Public class Robot
+	//------------------------------------------------------------------------
 	public class Robot extends Entity
 	{
+		//------------------------------------------------------------------------
+		// public properties 
+		//------------------------------------------------------------------------
+		public var hit:Boolean;
+		
+		//------------------------------------------------------------------------
+		// private properties 
+		//------------------------------------------------------------------------
 		private var m_controls:EvertronControls = new EvertronControls();
 		private var m_skin:Avatar;
 		private var speed:int = 5;
 		private var hitSide:String;
-		
-		public var hit:Boolean;
-		
+	
 		private var hitUp:Boolean;
 		private var hitDown:Boolean;
 		private var hitLeft:Boolean;
@@ -28,7 +37,9 @@ package entity
 			trace("konstruktor Robot");
 			m_controls.player = controls;
 		}
-		
+		//------------------------------------------------------------------------
+		// public methods
+		//------------------------------------------------------------------------
 		override public function init():void
 		{
 			initSkin();
@@ -41,6 +52,15 @@ package entity
 			if(hit) hitt();
 		}
 		
+		override public function dispose():void
+		{
+			//disposeControls();
+			disposeSkin();
+		}
+		
+		//------------------------------------------------------------------------
+		// private methods
+		//------------------------------------------------------------------------
 		private function updateControls():void
 		{
 			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft();
@@ -91,6 +111,13 @@ package entity
 			m_battery = new Battery();
 			
 			this.addChild(m_skin);
+		}
+		
+		private function disposeSkin():void
+		{
+			m_controls = null;
+			m_skin = null;
+			m_battery = null;
 		}
 
 	}

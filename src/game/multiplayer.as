@@ -1,13 +1,20 @@
 package game
 {
+	//------------------------------------------------------------------------
+	// imports
+	//------------------------------------------------------------------------
 	import component.Maze;
-	
 	import entity.Robot;
-	
 	import state.Game;
 	
+	//------------------------------------------------------------------------
+	// Public class Multiplayer
+	//------------------------------------------------------------------------
 	public class Multiplayer extends Game
 	{
+		//------------------------------------------------------------------------
+		// private properties 
+		//------------------------------------------------------------------------
 		private var m_robot:Robot;
 		private var m_robot2:Robot;
 		
@@ -25,6 +32,9 @@ package game
 			initMaze();
 		}
 		
+		//------------------------------------------------------------------------
+		// private methods 
+		//------------------------------------------------------------------------
 		private function initAvatar():void
 		{
 			m_robot = new Robot(0);
@@ -71,6 +81,24 @@ package game
 			m_maze2.y = 100;
 			
 			super.addMaze2(m_maze2);
+		}
+		
+		override public function dispose():void
+		{
+			disposeAvatar();
+			disposeMaze();
+		}
+		
+		private function disposeAvatar():void
+		{
+			m_robot = null;
+			m_robot2 = null;
+		}
+		
+		private function disposeMaze():void
+		{
+			m_maze = null;
+			m_maze2 = null;
 		}
 
 	}
