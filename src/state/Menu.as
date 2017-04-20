@@ -171,10 +171,10 @@ package state
 			if(Input.keyboard.justPressed(_controls.PLAYER_BUTTON_1) == true){
 				switch (_menuBtn) {
 					case 0:
-						//Session.application.displayState = new Singleplayer;
+						Session.application.displayState = new Singleplayer;
 					break;
 					case 1:
-						//Session.application.displayState = new Multiplayer;
+						Session.application.displayState = new Multiplayer;
 					break;
 					case 2: 
 						Session.application.displayState = new Highscore;
