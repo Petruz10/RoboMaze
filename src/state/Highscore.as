@@ -16,15 +16,26 @@ package state
 		*/
 		private var _layerHighscoreTable:DisplayStateLayer;
 		/*
-		*	btn layer -> back-btn leading to main menu
+		* back btn
 		*/
-		private var _layerBtn:DisplayStateLayer;
+		private var _btn:BackButton;
+		/*
+		* test animation
+		*/
+		private var _circuitBoard:CircuitBoard_mc;
+		/*
+		* test animation
+		*/
+		private var _battery:BatteryRefill_mc;
+		/*
+		* background image
+		*/
+		private var _bgImg:BgImgTest;
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
 		public function Highscore(){
 			trace("HIGHSCORE");
-			super();
 		}
 		//------------------------------------------------------------------------
 		// init
@@ -42,7 +53,8 @@ package state
 		// dispose
 		//------------------------------------------------------------------------
 		override public function dispose():void {
-			trace("dispose");
+			disposeBackground();
+			disposeHighscoreTable();
 		}
 		//------------------------------------------------------------------------
 		// constructor
@@ -50,48 +62,62 @@ package state
 		private function initLayers():void {
 			initBackground();
 			initHighscoreTable();
-			initButton();
 		}
 		//------------------------------------------------------------------------
 		// init background
 		//------------------------------------------------------------------------
 		private function initBackground():void {
-			var bgImg:BgImgTest = new BgImgTest();
+			_bgImg = new BgImgTest();
 			_layerBackground = layers.add("HIGHSCORE_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
-			_layerBackground.addChild(bgImg);
+			_layerBackground.addChild(_bgImg);
 		}
+		//------------------------------------------------------------------------
+		// init background
+		//------------------------------------------------------------------------
 		private function initHighscoreTable():void {
+			_btn = new BackButton();
+			_circuitBoard = new CircuitBoard_mc;
+			_battery = new BatteryRefill_mc();
+
 			_layerHighscoreTable = layers.add("HIGHSCORE_TABLE");
 			_layerHighscoreTable.x = 0;
 			_layerHighscoreTable.y = 0;
-		}
-		//------------------------------------------------------------------------
-		// init "menu" --> back btn
-		//------------------------------------------------------------------------
-		private function initButton():void {
-			var btn:BackButton = new BackButton();
-			var circuitBoard:CircuitBoard_mc = new CircuitBoard_mc;
-			var battery:BatteryRefill_mc = new BatteryRefill_mc();
-			_layerBtn = layers.add("BACK_BTN");
-			_layerBtn.x = 0;
-			_layerBtn.y = 0;
-			btn.x = 0;
-			btn.y = 540;
-			battery.x = 200;
-			battery.y = 540;
-			circuitBoard.x = 100;
-			circuitBoard.y = 540;
-			_layerBtn.addChild(battery);
-			_layerBtn.addChild(circuitBoard);
-			_layerBtn.addChild(btn);
 
+			_btn.x = 0;
+			_btn.y = 540;
+			_battery.x = 200;
+			_battery.y = 540;
+			_circuitBoard.x = 100;
+			_circuitBoard.y = 540;
+			_layerHighscoreTable.addChild(_battery);
+			_layerHighscoreTable.addChild(_circuitBoard);
+			_layerHighscoreTable.addChild(_btn);
 		}
+		//------------------------------------------------------------------------
+		// making sure that the player can return to menu
+		//------------------------------------------------------------------------
 		private function changeState():void {
 			if(Input.keyboard.justPressed("SPACE") == true){
 				Session.application.displayState = new Menu; 
 			}
+		}
+		//------------------------------------------------------------------------
+		// dispose highscore table
+		//------------------------------------------------------------------------
+		private function disposeHighscoreTable():void {
+			trace("dispose highscore table");
+			_btn = null;
+			_layerHighscoreTable = null;
+		}
+		//------------------------------------------------------------------------
+		// dispose background
+		//------------------------------------------------------------------------
+		private function disposeBackground():void {
+			trace("dispose highscore background");
+			_bgImg = null;
+			_layerBackground = null;		
 		}
 	}
 }

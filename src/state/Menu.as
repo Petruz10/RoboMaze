@@ -12,6 +12,8 @@ package state
 	import state.*;
 	import game.Singleplayer;
 	import game.Multiplayer;
+	import se.lnu.stickossdk.input.EvertronControls;
+
 	//------------------------------------------------------------------------
 	// MAIN MENU
 	//------------------------------------------------------------------------
@@ -40,6 +42,14 @@ package state
 		* current menu choice
 		*/
 		private var _btn:Button;
+		/*
+		* 	current button 
+		*/
+		private var choosenBtn:MenuButton;
+		/*
+		* Evertron controls
+		*/
+		private var _controls:EvertronControls = new EvertronControls();
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -118,6 +128,9 @@ package state
 		// test method. places a maze.
 		//------------------------------------------------------------------------
 		override public function dispose():void {
+			_controls = null;
+			disposeButtons();
+			disposeBackground();
 		}
 		//------------------------------------------------------------------------
 		// updates menu. default choice = 0 <--- singleplayer
@@ -140,7 +153,7 @@ package state
 		// update controls
 		//------------------------------------------------------------------------
 		private function changeState():void {
-			if(Input.keyboard.justPressed("SPACE") == true){
+			if(Input.keyboard.justPressed(_controls.PLAYER_BUTTON_1) == true){
 				switch (_menuBtn) {
 					case 0:
 						Session.application.displayState = new Singleplayer;
@@ -157,5 +170,11 @@ package state
 				}
 			}
 		}
-	}
+		private function disposeBackground():void {
+
+		}
+		private function disposeButtons():void {
+
+		}
+}
 }
