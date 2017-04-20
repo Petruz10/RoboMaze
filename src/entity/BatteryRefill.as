@@ -3,6 +3,7 @@ package entity
 	public class BatteryRefill extends Entity
 	{
 		public var batteryX:int;
+		public var batteryY:int;
 		
 		public function BatteryRefill()
 		{
@@ -14,17 +15,21 @@ package entity
 		private function initSkin():void
 		{
 			_skin = new BatteryRefill_mc();
-			super.place(_skin);
 			
-			trace("Battery refill x",_skin.x);
-			batteryX = _skin.x;
-			trace("batteryx var", batteryX);
 			this.addChild(_skin);
 		}
 		
 		public function placeBattery():void
 		{
 			super.place(_skin);
+			batteryX = _skin.x;
+			batteryY = _skin.y;
+		}
+		
+		public function placeBattery2(x:int, y:int):void
+		{
+			_skin.x = x;
+			_skin.y = y;
 		}
 	}
 }

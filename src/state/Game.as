@@ -26,6 +26,7 @@ package state
 		private var m_layer:DisplayStateLayer;
 		private var m_layer2:DisplayStateLayer;
 		private var m_layer3:DisplayStateLayer;
+		private var m_layer4:DisplayStateLayer
 		
 		private var m_robot:Robot;
 		private var m_robot2:Robot;
@@ -34,6 +35,7 @@ package state
 		private var m_maze2:Maze;
 		
 		private var m_battery:BatteryRefill;
+		private var m_battery2:BatteryRefill;
 		
 		private var children:Vector.<Tile> = new Vector.<Tile>(); 
 		
@@ -62,6 +64,7 @@ package state
 		{
 			initLayers();
 			initBattery();
+			if(m_players == 2) initBattery2();
 	
 		}
 		
@@ -87,6 +90,13 @@ package state
 		{
 			m_battery = new BatteryRefill();
 			addBattery();
+			m_battery.placeBattery();
+		}
+		
+		private function initBattery2():void
+		{
+			m_battery2 = new BatteryRefill();
+			addBattery2();
 		}
 		
 		private function placeBattery():void
@@ -96,24 +106,28 @@ package state
 			{
 				if(m_players == 2)
 				{
-					if(m_battery.hitTestObject(children[i])) 
+					if(m_battery.hitTestObject(children[i]) || m_battery.batteryX <= 400) 
 					{
 						m_battery.placeBattery(); 
-						trace("hamnar fel", m_battery.x); 
 					}
+					
 				}
 				else
 				{
 					if(m_battery.hitTestObject(children[i])) 
 					{
 						m_battery.placeBattery(); 
-						trace("hamnar fel", m_battery.x); 
+						//trace("hamnar fel", m_battery.x); 
 					}
 				}
-				
 			}
 			
-			//trace("x", m_battery.batteryX);
+			if(m_players == 2)
+			{
+				m_battery2.placeBattery2(m_battery.batteryX - 400,  m_battery.batteryY);
+			}
+			
+			
 		}
 		
 		private function initLayers():void
@@ -134,8 +148,19 @@ package state
 		
 		private function addBattery():void
 		{
+			m_battery.opaqueBackground = 0xFFFFFF;
 			m_layer3.addChild(m_battery);
-			trace("addBAttery");
+		}
+		
+		private function addBattery2():void
+		{
+			m_layer4 = layers.add("battery layer2");
+			
+			//m_battery2.batteryX = m_battery.batteryX - 400; 
+			//m_battery2.batteryY = m_battery.batteryY;
+			
+			m_layer4.addChild(m_battery2);
+			trace("addBAttery2", m_battery2);
 		}
 		
 		private function getChildren():void
@@ -174,15 +199,28 @@ package state
 			if(m_players == 2)
 			{
 				
-				if(m_robot2) if(m_robot2.hitTestObject(m_battery)) m_robot2.hitBattery = true;
+				if(m_robot2) if(m_robot2.hitTestObject(m_battery)) 
 				
 				if(m_robot2.hitTestObject(m_battery))
 				{
 					trace("hit");
+					m_robot2.hitBattery = true;
+				}
+				
+				if(m_robot.hitTestObject(m_battery2))
+				{
+					trace("hit");
+					m_robot.hitBattery = true;
+				}
+				if(m_robot.hitBattery  || m_robot2.hitBattery )
+				{
 					m_layer3.removeChild(m_battery);
+					m_layer4.removeChild(m_battery2);
 					initBattery();
+					initBattery2();
 					return;
 				}
+				
 			}
 			
 				if(m_robot.hitTestObject(m_battery))

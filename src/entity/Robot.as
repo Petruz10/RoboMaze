@@ -130,8 +130,7 @@ package entity
 		{
 			_skin = new Robot1_mc();
 			_skin.gotoAndStop(1);
-			_skin.width = 35;
-			_skin.height = 35;
+
 			m_battery = new Battery();
 			
 			this.addChild(_skin);
