@@ -100,6 +100,7 @@ package state
 		
 		private function getChildren():void
 		{
+			trace("get Children", m_maze.numChildren);
 			for (var i:uint = 0; i < m_maze.numChildren; i++)
 			{
 				children.push(m_maze.getChildAt(i));
@@ -111,13 +112,16 @@ package state
 					children.push(m_maze2.getChildAt(j));
 				}
 			}
+			
+			trace("children = ", children);
 		}
 		
 		private function hitTest():void
 		{	
 			for (var i:int = 0; i<children.length; i++)
 			{
-				if(m_robot.hitTestObject(children[i])) m_robot.hit = true;
+				trace("hitTest: ", children[i]);
+				if(m_robot.hitTestObject(children[i])) m_robot.hit = true; trace("hit wall");
 				if(m_robot2)
 				{
 					if(m_robot2.hitTestObject(children[i])) m_robot2.hit = true;
@@ -141,6 +145,7 @@ package state
 		protected function addMaze(maze:Maze):void
 		{	
 			m_maze = maze;
+			getChildren();
 
 			//return m_maze;
 			
@@ -156,7 +161,7 @@ package state
 				m_maze2.opaqueBackground = 0x333333;
 				//duplicateDisplayObject(m_maze);
 			}	*/
-			getChildren();
+			
 		}
 		
 		protected function addMaze2(maze:Maze):void
