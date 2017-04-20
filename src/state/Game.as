@@ -42,6 +42,8 @@ package state
 	//	private var shapecopy:Shape;
 		
 		private var duplicate:DisplayObject;
+		
+		private var a:Boolean;
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -87,6 +89,7 @@ package state
 		
 		private function placeBattery():void
 		{
+			
 			for (var i:int = 0; i<children.length; i++)
 			{
 				if(m_battery.hitTestObject(children[i])) 
@@ -94,11 +97,8 @@ package state
 					m_battery.placeBattery(); 
 					trace("hamnar fel", m_battery.x); 
 				}
-				else
-				{
-					addBattery();
-				}
-			}	
+			}
+			addBattery();
 		}
 		
 		private function initLayers():void
@@ -149,11 +149,13 @@ package state
 			//	trace(m_robot2.hitTestObject(m_maze2));
 			}
 			
-			if(m_robot.hitTestObject(m_battery))
+			if(m_robot.hitTestObject(m_battery)) m_robot.hitBattery = true;
+			if(m_robot2.hitTestObject(m_battery)) m_robot2.hitBattery = true;
+				
+			if(m_robot.hitTestObject(m_battery)|| m_robot2.hitTestObject(m_battery))
 			{
 				trace("hit");
 				m_layer3.removeChild(m_battery);
-				m_robot.hitBattery = true;
 				initBattery();
 				return;
 			}
