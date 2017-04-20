@@ -21,7 +21,7 @@ package entity
 		// private properties 
 		//------------------------------------------------------------------------
 		private var m_controls:EvertronControls = new EvertronControls();
-		private var m_skin:Avatar;
+		private var m_skin:Robot1_mc;
 		private var speed:int = 5;
 		private var hitSide:String;
 	
@@ -74,25 +74,25 @@ package entity
 		private function moveUp():void
 		{	
 			hitSide = "up";
-			if(!hitUp && m_battery.HP != 0) m_skin.y -= speed;
+			if(!hitUp && m_battery.HP != 0) m_skin.y -= speed; m_skin.gotoAndStop(1);
 		}
 		
 		private function moveDown():void
 		{
 			hitSide = "down";
-			if(!hitDown && m_battery.HP != 0) m_skin.y += speed;
+			if(!hitDown && m_battery.HP != 0) m_skin.y += speed; m_skin.gotoAndStop(2);
 		}
 		
 		private function moveLeft():void
 		{
 			hitSide = "left";
-			if(!hitLeft && m_battery.HP != 0) m_skin.x -= speed;
+			if(!hitLeft && m_battery.HP != 0) m_skin.x -= speed;m_skin.gotoAndStop(3);
 		}
 		
 		private function moveRight():void
 		{
 			hitSide = "right";
-			if(!hitRight && m_battery.HP != 0) m_skin.x += speed;
+			if(!hitRight && m_battery.HP != 0) m_skin.x += speed; m_skin.gotoAndStop(3);
 		}
 		
 		private function hitt():void
@@ -119,7 +119,7 @@ package entity
 
 		private function initSkin():void
 		{
-			m_skin = new Avatar();
+			m_skin = new Robot1_mc();
 			m_battery = new Battery();
 			
 			this.addChild(m_skin);
