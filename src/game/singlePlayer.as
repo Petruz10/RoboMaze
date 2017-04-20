@@ -34,9 +34,6 @@ package game
 		{
 			m_robot = new Robot(0);
 			
-			m_robot.scaleX = 0.35;
-			m_robot.scaleY = 0.35;
-			
 			m_robot.x = 43;
 			m_robot.y = 125;
 			
