@@ -108,6 +108,8 @@ package state
 		//------------------------------------------------------------------------
 		private function disposeHighscoreTable():void {
 			trace("dispose highscore table");
+			var numCh:int = _layerHighscoreTable.numChildren;
+			while (numCh > 0) { _layerHighscoreTable.removeChildAt(0); trace("removing"); }
 			_btn = null;
 			_layerHighscoreTable = null;
 		}
@@ -115,9 +117,13 @@ package state
 		// dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
-			trace("dispose highscore background");
+			var numCh:int = _layerBackground.numChildren;
+			while (numCh > 0) { _layerBackground.removeChildAt(0); }
+
 			_bgImg = null;
 			_layerBackground = null;		
+
+			trace("dispose highscore background");
 		}
 	}
 }

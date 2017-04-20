@@ -1,9 +1,10 @@
 ﻿package component
 {
-	import flash.display.Sprite;
 	import entity.Tile;
+	
+	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
 
-	public class Maze extends Sprite {
+	public class Maze extends DisplayStateLayerSprite {
 		/*
 		* maze design
 		*/
@@ -41,10 +42,17 @@
 		// @param mode:int // 1 or 2, singleplayer or multiplayer.
 		//------------------------------------------------------------------------
 		public function Maze(mode:int=2){
-			trace("Maze constructor");
 			this._mode = mode;
+		}
+		override public function init():void {
 			initMaze();
-			initTiles();
+			initTiles();	
+		}
+		override public function update():void {
+			
+		}
+		override public function dispose():void {
+			disposeTiles();
 		}
 		//------------------------------------------------------------------------
 		// create Vector
@@ -103,6 +111,19 @@
 					this.addChild(tile);
 				}
 			}
+		}
+		private function disposeTiles():void {
+			_mazeArray = null;
+			var numCh:int = this.numChildren;
+			var child;
+			for(var i:int = 0; i < numCh; i++) {
+				child = this.getChildAt(i);  
+				child = null;
+			}
+			while (numCh > 0) {
+				this.removeChildAt(0);
+			}
+			trace("dispose tiles");
 		}
 	}
 }

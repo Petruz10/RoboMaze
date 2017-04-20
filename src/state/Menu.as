@@ -9,7 +9,7 @@ package state
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
 	import entity.MenuButton;
-	import state.*;
+	import state.*;		
 	import game.Singleplayer;
 	import game.Multiplayer;
 	import se.lnu.stickossdk.input.EvertronControls;
@@ -156,10 +156,10 @@ package state
 			if(Input.keyboard.justPressed(_controls.PLAYER_BUTTON_1) == true){
 				switch (_menuBtn) {
 					case 0:
-						Session.application.displayState = new Singleplayer;
+						//Session.application.displayState = new Singleplayer;
 					break;
 					case 1:
-						Session.application.displayState = new Multiplayer;
+						//Session.application.displayState = new Multiplayer;
 					break;
 					case 2: 
 						Session.application.displayState = new Highscore;
