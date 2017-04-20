@@ -95,14 +95,10 @@ package state
 		// 	init menu array
 		//------------------------------------------------------------------------
 		private function initMenu():void {
+			trace("init menu");
 			_menuBtnIndexArray = [0, 1, 2 ,3 ] // 0 = oneplayer, 1 = twoplayer, 2 = highscore, 3 = credits
-			this.menuBtn = _menuBtnIndexArray[0];
-		}
-		private function set menuBtn(btn:int):void {
-			_menuBtn = btn;
-		} 
-		private function get menuBtn():int {
-			return _menuBtn;
+			_menuBtn = _menuBtnIndexArray[0];
+			trace("_menuBtn = " + _menuBtn);
 		}
 		//------------------------------------------------------------------------
 		// 	init state-layeres
@@ -150,31 +146,23 @@ package state
 		// 	updates menu. default choice = 0 <--- singleplayer
 		//------------------------------------------------------------------------
 		private function updateMenu():void {
-			/*
-			* menu btn tracker
-			*/
-			var choosenBtn:MenuButton;
 			if(Input.keyboard.justPressed(_controls.PLAYER_DOWN)) { 
-				if (_menuBtn < 3) { 
-					this.menuBtn++; 
-				}
+				if(_menuBtn < 3) { _menuBtn++ ;}
+				toggleActivation();
 			}
 			if(Input.keyboard.justPressed(_controls.PLAYER_UP)) { 
-				if (menuBtn != 0) { 
-					this.menuBtn--;
-				}
+				if (_menuBtn > 0) { _menuBtn--; }
+				toggleActivation();
 			}
-			choosenBtn = _btnArray[_menuBtn];
-			//------------------------------------------------------------------------
-			// activation // deactivation
-			// TAR FÖR MYCKET MINNE // FIXA!!!!
-			//------------------------------------------------------------------------
-			for (var i:int = 0; i < _btnArray.length; i++) { 
-				_btnArray[i].deactivate(); 
-			}
-			if (choosenBtn.id == _menuBtn ) { 
-				choosenBtn.activate(); 
-			} 
+		}
+		//------------------------------------------------------------------------
+		// 	activate // deactivate links
+		//------------------------------------------------------------------------
+		private function toggleActivation():void {
+				var choosenBtn:MenuButton;
+				choosenBtn = _btnArray[_menuBtn];
+				for (var i:int = 0; i < _btnArray.length; i++) { _btnArray[i].deactivate(); }
+				if (choosenBtn.id == _menuBtn ) { choosenBtn.activate(); } 
 		}
 		//------------------------------------------------------------------------
 		// 	update controls
