@@ -144,7 +144,7 @@ package state
 		// 	init state-sound
 		//------------------------------------------------------------------------
 		private function initSound():void {
-
+			trace("init sound");
 		}
 		//------------------------------------------------------------------------
 		// 	updates menu. default choice = 0 <--- singleplayer
