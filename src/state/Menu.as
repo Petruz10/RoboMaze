@@ -13,6 +13,8 @@ package state
 	import game.Singleplayer;
 	import game.Multiplayer;
 	import se.lnu.stickossdk.input.EvertronControls;
+	import flash.media.Sound;
+	import se.lnu.stickossdk.media.SoundObject;
 
 	//------------------------------------------------------------------------
 	// MAIN MENU
@@ -50,11 +52,16 @@ package state
 		* Evertron controls
 		*/
 		private var _controls:EvertronControls = new EvertronControls();
+		/*
+		* 	music
+		*/ 
+		[Embed(source="asset/sound/music_WFMU_Gumbel_8-bit_Love_Machine_Gumbel_-_01_-_8-bit_Love_Machine.mp3")] 
+		private var sound:Class;
+		private var sound_mp3:SoundObject;
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
 		public function Menu(){
-			//super();
 			trace("MENU");
 		}
 		//------------------------------------------------------------------------
@@ -64,6 +71,19 @@ package state
 			initMenu();
 			initLayers();
 			initSound();
+		}
+		override public function update():void {
+			updateMenu();
+			changeState();
+		}
+		//------------------------------------------------------------------------
+		// test method. places a maze.
+		//------------------------------------------------------------------------
+		override public function dispose():void {
+			_controls = null;
+			disposeButtons();
+			disposeSound();
+			disposeBackground();
 		}
 		//------------------------------------------------------------------------
 		// init menu array
@@ -118,19 +138,11 @@ package state
 		// inti state-sound
 		//------------------------------------------------------------------------
 		private function initSound():void {
+			Session.sound.musicChannel.sources.add("hej", sound);
 			
-		}
-		override public function update():void {
-			updateMenu();
-			changeState();
-		}
-		//------------------------------------------------------------------------
-		// test method. places a maze.
-		//------------------------------------------------------------------------
-		override public function dispose():void {
-			_controls = null;
-			disposeButtons();
-			disposeBackground();
+			sound_mp3 = Session.sound.musicChannel.get("hej");
+			sound_mp3.volume = 0.5;
+			sound_mp3.play();
 		}
 		//------------------------------------------------------------------------
 		// updates menu. default choice = 0 <--- singleplayer
@@ -140,14 +152,27 @@ package state
 			* menu btn tracker
 			*/
 			var choosenBtn:MenuButton;
-			if(Input.keyboard.justPressed("S")) { if (_menuBtn < 3) { this.menuBtn++; }}
-			if(Input.keyboard.justPressed("W")) { if (menuBtn != 0) { this.menuBtn--;}}
+			if(Input.keyboard.justPressed(_controls.PLAYER_DOWN)) { 
+				if (_menuBtn < 3) { 
+					this.menuBtn++; 
+				}
+			}
+			if(Input.keyboard.justPressed(_controls.PLAYER_UP)) { 
+				if (menuBtn != 0) { 
+					this.menuBtn--;
+				}
+			}
 			choosenBtn = _btnArray[_menuBtn];
 			//------------------------------------------------------------------------
 			// activation // deactivation
+			// TAR FÖR MYCKET MINNE // FIXA!!!!
 			//------------------------------------------------------------------------
-			for (var i:int = 0; i < _btnArray.length; i++) { _btnArray[i].deactivate(); }
-			if (choosenBtn.id == _menuBtn ) { choosenBtn.activate(); }
+			for (var i:int = 0; i < _btnArray.length; i++) { 
+				_btnArray[i].deactivate(); 
+			}
+			if (choosenBtn.id == _menuBtn ) { 
+				choosenBtn.activate(); 
+			} 
 		}
 		//------------------------------------------------------------------------
 		// update controls
@@ -170,10 +195,22 @@ package state
 				}
 			}
 		}
+		//------------------------------------------------------------------------
+		// remove background
+		//------------------------------------------------------------------------
 		private function disposeBackground():void {
 
 		}
+		//------------------------------------------------------------------------
+		// remove menu buttons
+		//------------------------------------------------------------------------
 		private function disposeButtons():void {
+
+		}
+		//------------------------------------------------------------------------
+		// remove sound
+		//------------------------------------------------------------------------
+		private function disposeSound():void {
 
 		}
 }

@@ -4,6 +4,7 @@ package state
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.input.Input;
+	import se.lnu.stickossdk.input.EvertronControls;
 	import entity.BackButton;
 	
 	public class Highscore extends DisplayState {
@@ -31,6 +32,11 @@ package state
 		* background image
 		*/
 		private var _bgImg:BgImgTest;
+		/*
+		* Evertron Controls
+		*/
+		private var _controls:EvertronControls = new EvertronControls;
+			
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -53,6 +59,7 @@ package state
 		// dispose
 		//------------------------------------------------------------------------
 		override public function dispose():void {
+			_controls = null;
 			disposeBackground();
 			disposeHighscoreTable();
 		}
@@ -99,7 +106,7 @@ package state
 		// making sure that the player can return to menu
 		//------------------------------------------------------------------------
 		private function changeState():void {
-			if(Input.keyboard.justPressed("SPACE") == true){
+			if(Input.keyboard.justPressed(_controls.PLAYER_BUTTON_1) == true){
 				Session.application.displayState = new Menu; 
 			}
 		}
@@ -107,21 +114,24 @@ package state
 		// dispose highscore table
 		//------------------------------------------------------------------------
 		private function disposeHighscoreTable():void {
-			trace("dispose highscore table");
-			var numCh:int = _layerHighscoreTable.numChildren;
+			
+		/*	var numCh:int = _layerHighscoreTable.numChildren;
 			while (numCh > 0) { _layerHighscoreTable.removeChildAt(0); trace("removing"); }
 			_btn = null;
-			_layerHighscoreTable = null;
+			_layerHighscoreTable = null; */
+			
+			trace("dispose highscore table");
 		}
 		//------------------------------------------------------------------------
 		// dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
+		 	/*	
 			var numCh:int = _layerBackground.numChildren;
 			while (numCh > 0) { _layerBackground.removeChildAt(0); }
 
 			_bgImg = null;
-			_layerBackground = null;		
+			_layerBackground = null; */		
 
 			trace("dispose highscore background");
 		}

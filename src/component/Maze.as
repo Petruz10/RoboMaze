@@ -113,17 +113,17 @@
 			}
 		}
 		private function disposeTiles():void {
-			_mazeArray = null;
+			/*	_mazeArray = null;
 			var numCh:int = this.numChildren;
-			var child;
+			var tile:Tile;
 			for(var i:int = 0; i < numCh; i++) {
-				child = this.getChildAt(i);  
-				child = null;
+				tile = this.getChildAt(i);  
+				tile = null;
 			}
 			while (numCh > 0) {
 				this.removeChildAt(0);
-			}
-			trace("dispose tiles");
+			} */
+			trace("dispose tiles"); 
 		}
 	}
 }
