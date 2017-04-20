@@ -109,7 +109,12 @@ package entity
 		
 		private function checkHit():void
 		{
-			if(hitBattery) m_battery.HP += 25; hitBattery=false;
+			if(hitBattery)
+			{
+				m_battery.HP += 25; 
+				if(m_battery.HP > 100) m_battery.HP = 100;
+				hitBattery=false;
+			}
 		}
 
 		private function initSkin():void

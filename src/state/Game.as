@@ -7,6 +7,7 @@ package state
 	
 	import component.Maze;
 	
+	import entity.Battery;
 	import entity.BatteryRefill;
 	import entity.Robot;
 	import entity.Tile;
@@ -57,12 +58,14 @@ package state
 		//------------------------------------------------------------------------
 		override public function init():void
 		{
-			initBattery();
 			initLayers();
+			initBattery();
+	
 		}
 		
 		override public function update():void
 		{
+			placeBattery();
 			hitTest();
 		}
 		
@@ -82,6 +85,22 @@ package state
 			m_battery = new BatteryRefill();
 		}
 		
+		private function placeBattery():void
+		{
+			for (var i:int = 0; i<children.length; i++)
+			{
+				if(m_battery.hitTestObject(children[i])) 
+				{
+					m_battery.placeBattery(); 
+					trace("hamnar fel", m_battery.x); 
+				}
+				else
+				{
+					addBattery();
+				}
+			}	
+		}
+		
 		private function initLayers():void
 		{	
 			m_layer = layers.add("maze layer");
@@ -93,9 +112,14 @@ package state
 			
 			if(m_robot) m_layer2.addChild(m_robot);	
 			if(m_robot2) m_layer2.addChild(m_robot2);
-			trace(m_battery);
-			m_layer3.addChild(m_battery);
+			//trace(m_battery);
+			//m_layer3.addChild(m_battery);
 			
+		}
+		
+		private function addBattery():void
+		{
+			m_layer3.addChild(m_battery);
 		}
 		
 		private function getChildren():void
@@ -130,6 +154,7 @@ package state
 				trace("hit");
 				m_layer3.removeChild(m_battery);
 				m_robot.hitBattery = true;
+				initBattery();
 				return;
 			}
 			
