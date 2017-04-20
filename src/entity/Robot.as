@@ -21,8 +21,8 @@ package entity
 		// private properties 
 		//------------------------------------------------------------------------
 		private var m_controls:EvertronControls = new EvertronControls();
-		private var m_skin:Robot1_mc;
-		private var speed:int = 5;
+	//	private var m_skin:Robot1_mc;
+		private var speed:int = 3;
 		private var hitSide:String;
 	
 		private var hitUp:Boolean;
@@ -74,33 +74,42 @@ package entity
 		private function moveUp():void
 		{	
 			hitSide = "up";
-			if(!hitUp && m_battery.HP != 0) m_skin.y -= speed; m_skin.gotoAndStop(1);
+			if(!hitUp && m_battery.HP != 0) _skin.y -= speed; _skin.gotoAndStop(2);
 		}
 		
 		private function moveDown():void
 		{
 			hitSide = "down";
-			if(!hitDown && m_battery.HP != 0) m_skin.y += speed; m_skin.gotoAndStop(2);
+			if(!hitDown && m_battery.HP != 0) _skin.y += speed; _skin.gotoAndStop(1);
 		}
 		
 		private function moveLeft():void
 		{
 			hitSide = "left";
-			if(!hitLeft && m_battery.HP != 0) m_skin.x -= speed;m_skin.gotoAndStop(3);
+			if(!hitLeft && m_battery.HP != 0) 
+			{
+				_skin.x -= speed; 
+				//m_skin.gotoAndStop(3);
+			}
 		}
 		
 		private function moveRight():void
 		{
 			hitSide = "right";
-			if(!hitRight && m_battery.HP != 0) m_skin.x += speed; m_skin.gotoAndStop(3);
+			if(!hitRight && m_battery.HP != 0) 
+			{
+				_skin.x += speed; 
+				//m_skin.gotoAndStop(3);
+			//	m_skin.width = 38;
+			}
 		}
 		
 		private function hitt():void
 		{
-			if(hitSide == "up") m_skin.y += speed;
-			if(hitSide == "down") m_skin.y -= speed;
-			if(hitSide == "left") m_skin.x += speed;
-			if(hitSide == "right") m_skin.x -= speed;
+			if(hitSide == "up") _skin.y += speed;
+			if(hitSide == "down") _skin.y -= speed;
+			if(hitSide == "left") _skin.x += speed;
+			if(hitSide == "right") _skin.x -= speed;
 			
 			hit = false;
 			
@@ -119,16 +128,19 @@ package entity
 
 		private function initSkin():void
 		{
-			m_skin = new Robot1_mc();
+			_skin = new Robot1_mc();
+			_skin.gotoAndStop(1);
+			_skin.width = 35;
+			_skin.height = 35;
 			m_battery = new Battery();
 			
-			this.addChild(m_skin);
+			this.addChild(_skin);
 		}
 		
 		private function disposeSkin():void
 		{
 			m_controls = null;
-			m_skin = null;
+			_skin = null;
 			m_battery = null;
 		}
 

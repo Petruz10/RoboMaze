@@ -69,6 +69,7 @@ package state
 		{
 			placeBattery();
 			hitTest();
+			hitBattery();
 		}
 		
 		override public function dispose():void
@@ -85,6 +86,7 @@ package state
 		private function initBattery():void
 		{
 			m_battery = new BatteryRefill();
+			addBattery();
 		}
 		
 		private function placeBattery():void
@@ -92,13 +94,26 @@ package state
 			
 			for (var i:int = 0; i<children.length; i++)
 			{
-				if(m_battery.hitTestObject(children[i])) 
+				if(m_players == 2)
 				{
-					m_battery.placeBattery(); 
-					trace("hamnar fel", m_battery.x); 
+					if(m_battery.hitTestObject(children[i])) 
+					{
+						m_battery.placeBattery(); 
+						trace("hamnar fel", m_battery.x); 
+					}
 				}
+				else
+				{
+					if(m_battery.hitTestObject(children[i])) 
+					{
+						m_battery.placeBattery(); 
+						trace("hamnar fel", m_battery.x); 
+					}
+				}
+				
 			}
-			addBattery();
+			
+			//trace("x", m_battery.batteryX);
 		}
 		
 		private function initLayers():void
@@ -120,6 +135,7 @@ package state
 		private function addBattery():void
 		{
 			m_layer3.addChild(m_battery);
+			trace("addBAttery");
 		}
 		
 		private function getChildren():void
@@ -149,16 +165,34 @@ package state
 			//	trace(m_robot2.hitTestObject(m_maze2));
 			}
 			
-			if(m_robot.hitTestObject(m_battery)) m_robot.hitBattery = true;
-			if(m_robot2.hitTestObject(m_battery)) m_robot2.hitBattery = true;
-				
-			if(m_robot.hitTestObject(m_battery)|| m_robot2.hitTestObject(m_battery))
+			
+			
+		}
+		
+		private function hitBattery():void
+		{
+			if(m_players == 2)
 			{
-				trace("hit");
-				m_layer3.removeChild(m_battery);
-				initBattery();
-				return;
+				
+				if(m_robot2) if(m_robot2.hitTestObject(m_battery)) m_robot2.hitBattery = true;
+				
+				if(m_robot2.hitTestObject(m_battery))
+				{
+					trace("hit");
+					m_layer3.removeChild(m_battery);
+					initBattery();
+					return;
+				}
 			}
+			
+				if(m_robot.hitTestObject(m_battery))
+				{
+					m_robot.hitBattery = true;
+					m_layer3.removeChild(m_battery);
+					initBattery();
+					return;
+				}
+	
 			
 		}
 		
