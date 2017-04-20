@@ -1,20 +1,45 @@
 package state
 {
-	import entity.BackButton;
-	
+	//------------------------------------------------------------------------
+	// 	Evertron SDK
+	//------------------------------------------------------------------------
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
-	
+	import se.lnu.stickossdk.input.EvertronControls;
+	//------------------------------------------------------------------------
+	// 	entity
+	//------------------------------------------------------------------------
+	import entity.BackButton;
+	//------------------------------------------------------------------------
+	// 	Game Over State
+	//------------------------------------------------------------------------
 	public class GameOver extends DisplayState {
+		/*
+		*	background layer
+		*/
 		private var _layerBackground:DisplayStateLayer;
-		private var _layerGameOverHUD:DisplayStateLayer;
+		/*
+		*	overlay containing text and graphics
+		*/
+		private var _layerOverlay:DisplayStateLayer;
+		/*
+		*	back btn
+		*/
+		private var _btn:BackButton;
+		/*
+		*	background image
+		*/
+		private var _bgImg:BgImgTest;
+		/*
+		* 	Evertron Controls
+		*/
+		private var _controls:EvertronControls = new EvertronControls;
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
 		public function GameOver(){
-			super();
 		}
 		//------------------------------------------------------------------------
 		// init
@@ -34,40 +59,55 @@ package state
 		//------------------------------------------------------------------------
 		override public function dispose():void {
 			disposeBackground();
-            disposeGameOverHUD();
+            disposeOverlay();
 		}
 		//------------------------------------------------------------------------
 		// init layers
 		//------------------------------------------------------------------------
 		private function initLayers():void {
 			initBackground();
-			initHUD();
+			initOverlay();
 		}
 		private function initBackground():void {
-			var bgImg:BgImgTest = new BgImgTest();
+			_bgImg = new BgImgTest();
 			
 			_layerBackground = layers.add("MENU_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
 			
-			_layerBackground.addChild(bgImg);
+			_layerBackground.addChild(_bgImg);
 		}
 		//------------------------------------------------------------------------
 		// init "menu" --> back btn
 		//------------------------------------------------------------------------
-		private function initHUD():void {
-			var btn:BackButton = new BackButton();
+		private function initOverlay():void {
+			_btn = new BackButton();
 			_layerHUD = layers.add("BACK_BTN");
-			_layerHUD.x = 0;
-			_layerHUD.y = 0;
-			btn.x = 0;
-			btn.y = 540;
-			_layerHUD.addChild(btn);
+			_layerOverlay.x = 0;
+			_layerOverlay.y = 0;
+			_btn.x = 0;
+			_btn.y = 540;
+			_layerHUD.addChild(_btn);
 		}
+		//------------------------------------------------------------------------
+		// change state -- > back to menu
+		//------------------------------------------------------------------------
 		private function changeState():void {
-			if(Input.keyboard.justPressed(_controlls.PLAYER_BUTTON_1) == true){
+			if(Input.keyboard.justPressed(_controls.PLAYER_BUTTON_1) == true){
 				Session.application.displayState = new Menu; 
 			}
+		}
+		//------------------------------------------------------------------------
+		// dispose background
+		//------------------------------------------------------------------------
+		private function disposeBackground():void {
+			trace("dispose game over background");
+		}
+		//------------------------------------------------------------------------
+		// dispose overlay
+		//------------------------------------------------------------------------
+		private function disposeOverlay():void {
+			trace("dispose game over overlay");
 		}
 	}
 }

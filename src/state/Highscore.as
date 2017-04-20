@@ -1,39 +1,47 @@
 package state
 {
+	//------------------------------------------------------------------------
+	// 	Evertron SDK
+	//------------------------------------------------------------------------
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.input.EvertronControls;
+	//------------------------------------------------------------------------
+	// 	entity
+	//------------------------------------------------------------------------
 	import entity.BackButton;
-	
+	//------------------------------------------------------------------------
+	// 	Highscore State
+	//------------------------------------------------------------------------
 	public class Highscore extends DisplayState {
 		/*
-		* background img.
+		*	background img.
 		*/
 		private var _layerBackground:DisplayStateLayer;
 		/*
-		* layer for higscore display
+		* 	layer for higscore display
 		*/
 		private var _layerHighscoreTable:DisplayStateLayer;
 		/*
-		* back btn
+		* 	back btn
 		*/
 		private var _btn:BackButton;
 		/*
-		* test animation
+		* 	test animation
 		*/
 		private var _circuitBoard:CircuitBoard_mc;
 		/*
-		* test animation
+		* 	test animation
 		*/
 		private var _battery:BatteryRefill_mc;
 		/*
-		* background image
+		* 	background image
 		*/
 		private var _bgImg:BgImgTest;
 		/*
-		* Evertron Controls
+		* 	Evertron Controls
 		*/
 		private var _controls:EvertronControls = new EvertronControls;
 			

@@ -1,71 +1,77 @@
 package state
 {	
-	import component.Maze;
-	
-	import entity.Button;
-	
+	//------------------------------------------------------------------------
+	// 	Evertron SDK
+	//------------------------------------------------------------------------
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
-	import entity.MenuButton;
-	import state.*;		
+	import se.lnu.stickossdk.input.EvertronControls;
+	import se.lnu.stickossdk.media.SoundObject;
+	//------------------------------------------------------------------------
+	// 	game states
+	//------------------------------------------------------------------------
 	import game.Singleplayer;
 	import game.Multiplayer;
-	import se.lnu.stickossdk.input.EvertronControls;
-	import flash.media.Sound;
-	import se.lnu.stickossdk.media.SoundObject;
-
 	//------------------------------------------------------------------------
-	// MAIN MENU
+	// 	menu states
+	//------------------------------------------------------------------------
+	import state.Singleplayer;
+	import state.Multiplayer;
+	import state.Highscore;
+	import state.Credits;		
+	//------------------------------------------------------------------------
+	// 	enity
+	//------------------------------------------------------------------------
+	import entity.MenuButton;
+	//------------------------------------------------------------------------
+	//	Menu state
 	//------------------------------------------------------------------------
 	public class Menu extends DisplayState {			
 		/*
-		* background layer
+		* 	background layer
 		*/
 		private var _layerBackground:DisplayStateLayer;
 		/*
-		* button layer
+		* 	button layer
 		*/
 		private var _layerButtons:DisplayStateLayer;
 		/*
-		* array representing links ( indexes )
+		* 	array representing links ( indexes )
 		*/
 		private var _menuBtnIndexArray:Array;
 		/*
-		* array representing links ( btns )
+		* 	array representing links ( btns )
 		*/
 		private var _btnArray:Array = new Array; 
 		/*
-		* current menu choice
+		* 	current menu choice
 		*/
 		private var _menuBtn:int; // index representation
 		/*
-		* current menu choice
+		* 	current menu choice
 		*/
-		private var _btn:Button;
+		private var _btn:MenuButton;
 		/*
 		* 	current button 
-		*/
+		*/	
 		private var choosenBtn:MenuButton;
 		/*
-		* Evertron controls
+		* 	Evertron controls
 		*/
 		private var _controls:EvertronControls = new EvertronControls();
 		/*
 		* 	music
 		*/ 
-		[Embed(source="asset/sound/music_WFMU_Gumbel_8-bit_Love_Machine_Gumbel_-_01_-_8-bit_Love_Machine.mp3")] 
-		private var sound:Class;
-		private var sound_mp3:SoundObject;
 		//------------------------------------------------------------------------
-		// constructor
+		// 	constructor
 		//------------------------------------------------------------------------
 		public function Menu(){
 			trace("MENU");
 		}
 		//------------------------------------------------------------------------
-		// init
+		// 	init
 		//------------------------------------------------------------------------
 		override public function init():void {
 			initMenu();
@@ -77,7 +83,7 @@ package state
 			changeState();
 		}
 		//------------------------------------------------------------------------
-		// test method. places a maze.
+		// 	test method. places a maze.
 		//------------------------------------------------------------------------
 		override public function dispose():void {
 			_controls = null;
@@ -86,7 +92,7 @@ package state
 			disposeBackground();
 		}
 		//------------------------------------------------------------------------
-		// init menu array
+		// 	init menu array
 		//------------------------------------------------------------------------
 		private function initMenu():void {
 			_menuBtnIndexArray = [0, 1, 2 ,3 ] // 0 = oneplayer, 1 = twoplayer, 2 = highscore, 3 = credits
@@ -99,14 +105,14 @@ package state
 			return _menuBtn;
 		}
 		//------------------------------------------------------------------------
-		// init state-layeres
+		// 	init state-layeres
 		//------------------------------------------------------------------------
 		private function initLayers():void {
 			initBackground();
 			initButtons();
 		}
 		//------------------------------------------------------------------------
-		// init background
+		// 	init background
 		//------------------------------------------------------------------------
 		private function initBackground():void {
 			var bgImg:BgImgTest = new BgImgTest();
@@ -118,7 +124,7 @@ package state
 			_layerBackground.addChild(bgImg);
 		}
 		//------------------------------------------------------------------------
-		// init Byttons
+		// 	init Byttons
 		//------------------------------------------------------------------------
 		private function initButtons():void {
 			var posY:int = 100;
@@ -135,17 +141,13 @@ package state
 			}
 		}
 		//------------------------------------------------------------------------
-		// inti state-sound
+		// 	init state-sound
 		//------------------------------------------------------------------------
 		private function initSound():void {
-			Session.sound.musicChannel.sources.add("hej", sound);
-			
-			sound_mp3 = Session.sound.musicChannel.get("hej");
-			sound_mp3.volume = 0.5;
-			sound_mp3.play();
+
 		}
 		//------------------------------------------------------------------------
-		// updates menu. default choice = 0 <--- singleplayer
+		// 	updates menu. default choice = 0 <--- singleplayer
 		//------------------------------------------------------------------------
 		private function updateMenu():void {
 			/*
@@ -175,7 +177,7 @@ package state
 			} 
 		}
 		//------------------------------------------------------------------------
-		// update controls
+		// 	update controls
 		//------------------------------------------------------------------------
 		private function changeState():void {
 			if(Input.keyboard.justPressed(_controls.PLAYER_BUTTON_1) == true){
@@ -196,19 +198,19 @@ package state
 			}
 		}
 		//------------------------------------------------------------------------
-		// remove background
+		// 	remove background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
 
 		}
 		//------------------------------------------------------------------------
-		// remove menu buttons
+		// 	remove menu buttons
 		//------------------------------------------------------------------------
 		private function disposeButtons():void {
 
 		}
 		//------------------------------------------------------------------------
-		// remove sound
+		// 	remove sound
 		//------------------------------------------------------------------------
 		private function disposeSound():void {
 
