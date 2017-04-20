@@ -55,7 +55,7 @@ package state
 		/*
 		* 	music
 		*/ 
-		[Embed(source="asset/sound/music_WFMU_Gumbel_8-bit_Love_Machine_Gumbel_-_01_-_8-bit_Love_Machine.mp3")] 
+		//[Embed(source="asset/sound/music_WFMU_Gumbel_8-bit_Love_Machine_Gumbel_-_01_-_8-bit_Love_Machine.mp3")] 
 		private var sound:Class;
 		private var sound_mp3:SoundObject;
 		//------------------------------------------------------------------------
@@ -70,7 +70,7 @@ package state
 		override public function init():void {
 			initMenu();
 			initLayers();
-			initSound();
+			//initSound();
 		}
 		override public function update():void {
 			updateMenu();
@@ -137,13 +137,13 @@ package state
 		//------------------------------------------------------------------------
 		// inti state-sound
 		//------------------------------------------------------------------------
-		private function initSound():void {
+		/*private function initSound():void {
 			Session.sound.musicChannel.sources.add("hej", sound);
 			
 			sound_mp3 = Session.sound.musicChannel.get("hej");
 			sound_mp3.volume = 0.5;
 			sound_mp3.play();
-		}
+		}*/
 		//------------------------------------------------------------------------
 		// updates menu. default choice = 0 <--- singleplayer
 		//------------------------------------------------------------------------

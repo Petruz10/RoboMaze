@@ -56,8 +56,8 @@ package game
 		
 		override public function dispose():void
 		{
-			disposeAvatar();
-			disposeMaze(); 
+			//disposeAvatar();
+			//disposeMaze(); 
 		}
 		
 		private function disposeMaze():void
