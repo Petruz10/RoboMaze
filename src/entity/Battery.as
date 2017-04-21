@@ -3,8 +3,11 @@ package entity
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import game.Singleplayer;
+	
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.timer.Timer;
+	import state.GameOver;
 
 	//------------------------------------------------------------------------
 	// Public class Battery
@@ -57,7 +60,17 @@ package entity
 				HPtimer();
 				trace(HP);
 			}
-			else trace("dead");
+			else dead();
+		}
+		
+		private function dead():void
+		{
+			Session.timer.create(1000, gameOver);
+		}
+		
+		private function gameOver():void
+		{
+			Session.application.displayState = new GameOver;
 		}
 		
 		override public function dispose():void

@@ -93,7 +93,7 @@ package entity
 			{
 				_skin.x -= speed; 
 				
-				//_skin.gotoAndStop("side");
+				_skin.gotoAndStop("side");
 			}
 		}
 		
@@ -104,7 +104,7 @@ package entity
 			{
 				_skin.x += speed; 
 				
-				//_skin.gotoAndStop("side");
+				_skin.gotoAndStop("side");
 			}
 		}
 		
@@ -140,7 +140,7 @@ package entity
 			_skin.gotoAndStop("front");
 			
 			var square:Sprite = new Sprite();
-			//square.graphics.beginFill(0xCCFF00);
+			square.graphics.beginFill(0xCCFF00);
 			square.graphics.drawRect(100, 130, 230, 250);
 			
 			_skin.hitArea = square;

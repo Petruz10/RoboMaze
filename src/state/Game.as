@@ -4,6 +4,7 @@ package state
 	// imports
 	//------------------------------------------------------------------------
 	import flash.display.Sprite;
+	import flash.net.SharedObject;
 	
 	import component.Maze;
 	
@@ -55,6 +56,7 @@ package state
 			initLayers();
 			initBattery();
 			if(m_players == 2) initBattery2();
+			initSharedObject();
 	
 		}
 		
@@ -77,6 +79,16 @@ package state
 		//------------------------------------------------------------------------
 		// private methods
 		//------------------------------------------------------------------------
+		private function initSharedObject():void
+		{
+			var players:SharedObject;
+			
+			players = SharedObject.getLocal("players");
+			m_players = players.data.highScore;
+			players.flush();
+			
+		}
+		
 		private function initBattery():void
 		{
 			m_battery = new BatteryRefill();
@@ -97,7 +109,7 @@ package state
 			{
 				if(m_players == 2)
 				{
-					if(m_battery.hitTestObject(children[i]) || m_battery.batteryX <= 400) m_battery.placeBattery(); 
+					if(m_battery.hitTestObject(children[i]) || m_battery.batteryX <= 400) m_battery.placeBattery();
 					
 				}
 				else
@@ -217,7 +229,6 @@ package state
 		{
 			m_robot2 = robot;
 		}
-		
 		
 		//------------------------------------------------------------------------
 		// dispose methods
