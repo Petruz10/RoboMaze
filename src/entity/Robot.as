@@ -5,6 +5,7 @@ package entity
 	//------------------------------------------------------------------------
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
+	import flash.display.Sprite;
 
 	//------------------------------------------------------------------------
 	// Public class Robot
@@ -31,6 +32,8 @@ package entity
 		private var hitRight:Boolean;
 		
 		private var m_battery:Battery;
+		
+		public var area:Sprite;
 				
 		public function Robot(controls:int=0)
 		{
@@ -89,6 +92,7 @@ package entity
 			if(!hitLeft && m_battery.HP != 0) 
 			{
 				_skin.x -= speed; 
+				
 				//_skin.gotoAndStop("side");
 			}
 		}
@@ -99,6 +103,7 @@ package entity
 			if(!hitRight && m_battery.HP != 0) 
 			{
 				_skin.x += speed; 
+				
 				//_skin.gotoAndStop("side");
 			}
 		}
@@ -127,14 +132,26 @@ package entity
 
 		private function initSkin():void
 		{
+			//var hitArea;
+			
 			_skin = new Robot1_mc();
 			_skin.width = 35;
 			_skin.height = 35;
 			_skin.gotoAndStop("front");
-
+			
+			var square:Sprite = new Sprite();
+			//square.graphics.beginFill(0xCCFF00);
+			square.graphics.drawRect(100, 130, 230, 250);
+			
+			_skin.hitArea = square;
+			
+			area = _skin.hitArea;
+			
 			m_battery = new Battery();
 			
 			this.addChild(_skin);
+			_skin.addChild(_skin.hitArea);
+			trace("hitskin", _skin.hit);
 		}
 		
 		private function disposeSkin():void

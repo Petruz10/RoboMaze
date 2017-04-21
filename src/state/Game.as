@@ -3,6 +3,8 @@ package state
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import flash.display.Sprite;
+	
 	import component.Maze;
 	
 	import entity.BatteryRefill;
@@ -149,22 +151,25 @@ package state
 		
 		private function hitTest():void
 		{	
+			
 			for (var i:int = 0; i<children.length; i++)
 			{
-				if(m_robot.hitTestObject(children[i])) m_robot.hit = true;
+				if(children[i].hitTestObject(m_robot.area)) m_robot.hit = true;
 				if(m_robot2)
 				{
-					if(m_robot2.hitTestObject(children[i])) m_robot2.hit = true;
+					if(children[i].hitTestObject(m_robot2.area)) m_robot2.hit = true;
 				}
 			}
+			
+			
 		}
 		
 		private function hitBattery():void
 		{
 			if(m_players == 2)
 			{	
-				if(m_robot2.hitTestObject(m_battery)) m_robot2.hitBattery = true;
-				if(m_robot.hitTestObject(m_battery2)) m_robot.hitBattery = true;
+				if(m_battery.hitTestObject(m_robot2.area)) m_robot2.hitBattery = true;
+				if(m_battery2.hitTestObject(m_robot.area)) m_robot.hitBattery = true;
 				
 				if(m_robot.hitBattery  || m_robot2.hitBattery)
 				{
@@ -178,7 +183,7 @@ package state
 			
 			else
 			{
-				if(m_robot.hitTestObject(m_battery))
+				if(m_battery.hitTestObject(m_robot.area))
 				{
 					m_robot.hitBattery = true;
 					m_layer3.removeChild(m_battery);
