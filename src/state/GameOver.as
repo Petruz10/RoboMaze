@@ -82,12 +82,12 @@ package state
 		//------------------------------------------------------------------------
 		private function initOverlay():void {
 			_btn = new BackButton();
-			_layerHUD = layers.add("BACK_BTN");
+			_layerOverlay = layers.add("BACK_BTN");
 			_layerOverlay.x = 0;
 			_layerOverlay.y = 0;
 			_btn.x = 0;
 			_btn.y = 540;
-			_layerHUD.addChild(_btn);
+			_layerOverlay.addChild(_btn);
 		}
 		//------------------------------------------------------------------------
 		// change state -- > back to menu
