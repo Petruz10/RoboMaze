@@ -36,7 +36,7 @@ package entity
 		//------------------------------------------------------------------------
 		private function HPtimer():void
 		{
-			m_timer = Session.timer.create(300, removeHP);
+			m_timer = Session.timer.create(100, removeHP);
 		}
 		
 		//------------------------------------------------------------------------

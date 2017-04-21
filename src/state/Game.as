@@ -84,9 +84,11 @@ package state
 			var players:SharedObject;
 			
 			players = SharedObject.getLocal("players");
-			m_players = players.data.highScore;
+			players.data.players = 	m_players;
 			players.flush();
 			
+			trace("sharedObj", players.data.players);
+			return;
 		}
 		
 		private function initBattery():void
@@ -98,6 +100,7 @@ package state
 		
 		private function initBattery2():void
 		{
+			trace("battery2");
 			m_battery2 = new BatteryRefill();
 			addBattery2();
 		}

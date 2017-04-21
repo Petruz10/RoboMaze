@@ -12,6 +12,8 @@ package state
 	// 	entity
 	//------------------------------------------------------------------------
 	import entity.BackButton;
+	import flash.net.SharedObject;
+
 	//------------------------------------------------------------------------
 	// 	Game Over State
 	//------------------------------------------------------------------------
@@ -47,6 +49,7 @@ package state
 		override public function init():void {
             trace("GAME OVER");
 			initLayers();
+			initSharedObj();
 		}
 		//------------------------------------------------------------------------
 		// update
@@ -67,6 +70,13 @@ package state
 		private function initLayers():void {
 			initBackground();
 			initOverlay();
+		}
+		
+		private function initSharedObj():void
+		{
+			var players:SharedObject = SharedObject.getLocal("players");
+			var game:int = players.data.players;
+			trace(game);
 		}
 		private function initBackground():void {
 			_bgImg = new BgImgTest();
