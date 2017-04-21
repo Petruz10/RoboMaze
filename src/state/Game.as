@@ -3,11 +3,8 @@ package state
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
-	import flash.display.DisplayObject;
-	
 	import component.Maze;
 	
-	import entity.Battery;
 	import entity.BatteryRefill;
 	import entity.Robot;
 	import entity.Tile;
@@ -26,7 +23,6 @@ package state
 		private var m_layer:DisplayStateLayer;
 		private var m_layer2:DisplayStateLayer;
 		private var m_layer3:DisplayStateLayer;
-		private var m_layer4:DisplayStateLayer
 		
 		private var m_robot:Robot;
 		private var m_robot2:Robot;
@@ -40,12 +36,6 @@ package state
 		private var children:Vector.<Tile> = new Vector.<Tile>(); 
 		
 		private var m_players:int;
-		
-	//	private var shapecopy:Shape;
-		
-		private var duplicate:DisplayObject;
-		
-		private var a:Boolean;
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -53,8 +43,6 @@ package state
 		public function Game(players:int)
 		{
 			m_players = players;
-			trace("game konstruktor");
-			trace("players: " + players);
 		}
 		
 		//------------------------------------------------------------------------
@@ -107,28 +95,16 @@ package state
 			{
 				if(m_players == 2)
 				{
-					if(m_battery.hitTestObject(children[i]) || m_battery.batteryX <= 400) 
-					{
-						m_battery.placeBattery(); 
-					}
+					if(m_battery.hitTestObject(children[i]) || m_battery.batteryX <= 400) m_battery.placeBattery(); 
 					
 				}
 				else
 				{
-					if(m_battery.hitTestObject(children[i])) 
-					{
-						m_battery.placeBattery(); 
-						//trace("hamnar fel", m_battery.x); 
-					}
+					if(m_battery.hitTestObject(children[i])) m_battery.placeBattery(); 
 				}
 			}
 			
-			if(m_players == 2)
-			{
-				m_battery2.placeBattery2(m_battery.batteryX - 400,  m_battery.batteryY);
-			}
-			
-			
+			if(m_players == 2) m_battery2.placeBattery2(m_battery.batteryX - 400,  m_battery.batteryY);
 		}
 		
 		private function initLayers():void
@@ -142,9 +118,6 @@ package state
 			
 			if(m_robot) m_layer2.addChild(m_robot);	
 			if(m_robot2) m_layer2.addChild(m_robot2);
-			//trace(m_battery);
-			//m_layer3.addChild(m_battery);
-			
 		}
 		
 		private function addBattery():void
@@ -154,11 +127,8 @@ package state
 		}
 		
 		private function addBattery2():void
-		{
-			//m_layer4 = layers.add("battery layer2");
-			
+		{	
 			m_layer3.addChild(m_battery2);
-			trace("addBAttery2", m_battery2);
 		}
 		
 		private function getChildren():void
@@ -167,6 +137,7 @@ package state
 			{
 				children.push(m_maze.getChildAt(i));
 			}
+			
 			if(m_maze2)
 			{
 				for (var j:uint = 0; j < m_maze2.numChildren; j++)
@@ -186,9 +157,6 @@ package state
 					if(m_robot2.hitTestObject(children[i])) m_robot2.hit = true;
 				}
 			}
-			
-			
-			
 		}
 		
 		private function hitBattery():void
@@ -201,10 +169,9 @@ package state
 				if(m_robot.hitBattery  || m_robot2.hitBattery)
 				{
 					m_layer3.removeChildren();
-					m_battery = null;
-					m_battery2 = null;
-					initBattery();
-					initBattery2();
+					m_battery.placeBattery();
+					addBattery();
+					addBattery2();
 					return;
 				}
 			}
@@ -215,8 +182,8 @@ package state
 				{
 					m_robot.hitBattery = true;
 					m_layer3.removeChild(m_battery);
-					m_battery = null;
-					initBattery();
+					m_battery.placeBattery();
+					addBattery();
 					return;
 				}
 			}
@@ -228,21 +195,6 @@ package state
 		protected function addMaze(maze:Maze):void
 		{	
 			m_maze = maze;
-
-			//return m_maze;
-			
-			/*if(m_players == 2) 
-			{
-				//http://stackoverflow.com/questions/10436701/as3-is-it-possible-to-duplicate-a-shape-object
-				var g:Vector.<IGraphicsData> = m_maze.graphics.readGraphicsData();
-				
-				m_maze2 = new Shape();
-				m_maze2.graphics.drawGraphicsData(g)
-				m_maze2.x = 420;
-				m_maze2.y = 100;
-				m_maze2.opaqueBackground = 0x333333;
-				//duplicateDisplayObject(m_maze);
-			}	*/
 			getChildren();
 		}
 		
@@ -250,42 +202,10 @@ package state
 		{	
 			m_maze2 = maze;			
 		}
-		
-		/*
-		//https://www.kirupa.com/forum/showthread.php?223798-ActionScript-3-Tip-of-the-Day&p=1939827#post1939827
-		public function duplicateDisplayObject(target:DisplayObject):void 
-		{
-			// create duplicate
-			var targetClass:Class = Object(target).constructor;
-			duplicate = new targetClass();
-			
-			// duplicate properties
-			duplicate.transform = target.transform;
-			duplicate.filters = target.filters;
-			duplicate.cacheAsBitmap = target.cacheAsBitmap;
-			duplicate.opaqueBackground = target.opaqueBackground;
-			
-			if (target.scale9Grid) {
-				var rect:Rectangle = target.scale9Grid;
-				// WAS Flash 9 bug where returned scale9Grid is 20x larger than assigned
-				// rect.x /= 20, rect.y /= 20, rect.width /= 20, rect.height /= 20;
-				duplicate.scale9Grid = rect;
-			}
-			
-			duplicate.x += 400;
-			duplicate.y = 100;
-			
-			trace("double: ", duplicate);
-			trace("targetClass children: ", targetClass.numChildren);
-			trace("Children maze: ", m_maze.numChildren);
-			
-			//return duplicate;
-		}*/
 			
 		protected function addAvatar(Avatar:Robot):void
 		{
 			m_robot = Avatar;
-			//trace(m_robot);
 		}
 		
 		protected function addMultiplayer(robot:Robot):void
@@ -295,17 +215,21 @@ package state
 		
 		
 		//------------------------------------------------------------------------
-		// public methods
+		// dispose methods
 		//------------------------------------------------------------------------
 		
-		public function disposeLayers():void
+		private function disposeLayers():void
 		{
+			m_layer.removeChildren();
+			m_layer2.removeChildren();
+			m_layer3.removeChildren();
+			
 			m_layer = null;
 			m_layer2 = null;
 			m_layer3 = null;
 		}
 		
-		public function disposeChildren():void
+		private function disposeChildren():void
 		{
 			for (var i:uint = 0; i < children.length; i++)
 			{
@@ -314,19 +238,19 @@ package state
 			children = null;
 		}
 		
-		public function disposeMaze():void
+		private function disposeMaze():void
 		{
 			m_maze = null;
 			if(m_maze2) m_maze2 = null;
 		}
 		
-		public function disposeAvatar():void
+		private function disposeAvatar():void
 		{
 			m_robot = null;
 			if(m_robot2) m_robot2 = null;
 		}
 		
-		public function disposeBattery():void
+		private function disposeBattery():void
 		{
 			m_battery = null;
 			if(m_battery2) m_battery2 = null;

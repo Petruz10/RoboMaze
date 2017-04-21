@@ -74,13 +74,13 @@ package entity
 		private function moveUp():void
 		{	
 			hitSide = "up";
-			if(!hitUp && m_battery.HP != 0) _skin.y -= speed; _skin.gotoAndStop(2);
+			if(!hitUp && m_battery.HP != 0) _skin.y -= speed; _skin.gotoAndStop("back");
 		}
 		
 		private function moveDown():void
 		{
 			hitSide = "down";
-			if(!hitDown && m_battery.HP != 0) _skin.y += speed; _skin.gotoAndStop(1);
+			if(!hitDown && m_battery.HP != 0) _skin.y += speed; _skin.gotoAndStop("front");
 		}
 		
 		private function moveLeft():void
@@ -89,7 +89,7 @@ package entity
 			if(!hitLeft && m_battery.HP != 0) 
 			{
 				_skin.x -= speed; 
-				//m_skin.gotoAndStop(3);
+				//_skin.gotoAndStop("side");
 			}
 		}
 		
@@ -99,8 +99,7 @@ package entity
 			if(!hitRight && m_battery.HP != 0) 
 			{
 				_skin.x += speed; 
-				//m_skin.gotoAndStop(3);
-			//	m_skin.width = 38;
+				//_skin.gotoAndStop("side");
 			}
 		}
 		
@@ -129,7 +128,9 @@ package entity
 		private function initSkin():void
 		{
 			_skin = new Robot1_mc();
-			_skin.gotoAndStop(1);
+			_skin.width = 35;
+			_skin.height = 35;
+			_skin.gotoAndStop("front");
 
 			m_battery = new Battery();
 			
