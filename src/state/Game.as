@@ -81,6 +81,7 @@ package state
 			disposeAvatar();
 			disposeChildren();
 			disposeLayers();	
+			disposeBattery()
 		}
 		
 		//------------------------------------------------------------------------
@@ -154,12 +155,9 @@ package state
 		
 		private function addBattery2():void
 		{
-			m_layer4 = layers.add("battery layer2");
+			//m_layer4 = layers.add("battery layer2");
 			
-			//m_battery2.batteryX = m_battery.batteryX - 400; 
-			//m_battery2.batteryY = m_battery.batteryY;
-			
-			m_layer4.addChild(m_battery2);
+			m_layer3.addChild(m_battery2);
 			trace("addBAttery2", m_battery2);
 		}
 		
@@ -187,7 +185,6 @@ package state
 				{
 					if(m_robot2.hitTestObject(children[i])) m_robot2.hit = true;
 				}
-			//	trace(m_robot2.hitTestObject(m_maze2));
 			}
 			
 			
@@ -197,41 +194,32 @@ package state
 		private function hitBattery():void
 		{
 			if(m_players == 2)
-			{
+			{	
+				if(m_robot2.hitTestObject(m_battery)) m_robot2.hitBattery = true;
+				if(m_robot.hitTestObject(m_battery2)) m_robot.hitBattery = true;
 				
-				if(m_robot2) if(m_robot2.hitTestObject(m_battery)) 
-				
-				if(m_robot2.hitTestObject(m_battery))
+				if(m_robot.hitBattery  || m_robot2.hitBattery)
 				{
-					trace("hit");
-					m_robot2.hitBattery = true;
-				}
-				
-				if(m_robot.hitTestObject(m_battery2))
-				{
-					trace("hit");
-					m_robot.hitBattery = true;
-				}
-				if(m_robot.hitBattery  || m_robot2.hitBattery )
-				{
-					m_layer3.removeChild(m_battery);
-					m_layer4.removeChild(m_battery2);
+					m_layer3.removeChildren();
+					m_battery = null;
+					m_battery2 = null;
 					initBattery();
 					initBattery2();
 					return;
 				}
-				
 			}
 			
+			else
+			{
 				if(m_robot.hitTestObject(m_battery))
 				{
 					m_robot.hitBattery = true;
 					m_layer3.removeChild(m_battery);
+					m_battery = null;
 					initBattery();
 					return;
 				}
-	
-			
+			}
 		}
 		
 		//------------------------------------------------------------------------
@@ -314,6 +302,7 @@ package state
 		{
 			m_layer = null;
 			m_layer2 = null;
+			m_layer3 = null;
 		}
 		
 		public function disposeChildren():void
@@ -335,6 +324,12 @@ package state
 		{
 			m_robot = null;
 			if(m_robot2) m_robot2 = null;
+		}
+		
+		public function disposeBattery():void
+		{
+			m_battery = null;
+			if(m_battery2) m_battery2 = null;
 		}
 	}
 }
