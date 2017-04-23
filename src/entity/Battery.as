@@ -3,8 +3,6 @@ package entity
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
-	import game.Singleplayer;
-	
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.timer.Timer;
 	import state.GameOver;
@@ -60,10 +58,10 @@ package entity
 				HPtimer();
 				trace(HP);
 			}
-			else dead();
+		//	else dead();
 		}
 		
-		private function dead():void
+		/*	private function dead():void
 		{
 			Session.timer.create(1000, gameOver);
 		}
@@ -71,7 +69,7 @@ package entity
 		private function gameOver():void
 		{
 			Session.application.displayState = new GameOver;
-		}
+		}*/
 		
 		override public function dispose():void
 		{

@@ -1,7 +1,13 @@
 package entity
 {
+	//------------------------------------------------------------------------
+	// public class BatteryRefill
+	//------------------------------------------------------------------------
 	public class BatteryRefill extends Entity
 	{
+		//------------------------------------------------------------------------
+		// public properties
+		//------------------------------------------------------------------------
 		public var batteryX:int;
 		public var batteryY:int;
 		
@@ -12,6 +18,9 @@ package entity
 			trace("BatteryRefill Constructor")
 		}
 		
+		//------------------------------------------------------------------------
+		// private methods
+		//------------------------------------------------------------------------
 		private function initSkin():void
 		{
 			_skin = new BatteryRefill_mc();
@@ -19,6 +28,9 @@ package entity
 			this.addChild(_skin);
 		}
 		
+		//------------------------------------------------------------------------
+		// public methods
+		//------------------------------------------------------------------------
 		public function placeBattery():void
 		{
 			super.place(_skin);
@@ -30,6 +42,19 @@ package entity
 		{
 			_skin.x = x;
 			_skin.y = y;
+		}
+		
+		//------------------------------------------------------------------------
+		// dispose methods
+		//------------------------------------------------------------------------
+		override public function dispose():void
+		{
+			disposeSkin();
+		}
+		
+		private function disposeSkin():void
+		{
+			_skin = null;
 		}
 	}
 }

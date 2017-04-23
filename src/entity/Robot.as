@@ -9,6 +9,8 @@ package entity
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
+	
+	import state.GameOver;
 
 	//------------------------------------------------------------------------
 	// Public class Robot
@@ -128,18 +130,15 @@ package entity
 			if(hitBattery)
 			{
 				m_battery.HP += 25; 
-				hitBattery=false;
+				hitBattery = false;
 				if(m_battery.HP > 100) m_battery.HP = 100;
 			}
-			if(m_battery.HP == 0) die(); return;
+			if(m_battery.HP == 0) Session.timer.create(1000, gameOver);
 		}
 		
-		private function die():void
+		private function gameOver():void
 		{
-			trace("DEAD!!");
-			var flash:Flash;
-			
-			return;
+			Session.application.displayState = new GameOver;
 		}
 
 		private function initSkin():void
@@ -152,11 +151,10 @@ package entity
 			_skin.gotoAndStop("front");
 			
 			var square:Sprite = new Sprite();
-			square.graphics.beginFill(0xCCFF00);
+			//square.graphics.beginFill(0xCCFF00);
 			square.graphics.drawRect(100, 130, 230, 250);
 			
 			_skin.hitArea = square;
-			
 			area = _skin.hitArea;
 			
 			m_battery = new Battery();
@@ -169,6 +167,7 @@ package entity
 		private function disposeSkin():void
 		{
 			m_controls = null;
+			_skin.hitArea = null;
 			_skin = null;
 			m_battery = null;
 		}

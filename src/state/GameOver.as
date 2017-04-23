@@ -12,11 +12,10 @@ package state
 	// 	entity
 	//------------------------------------------------------------------------
 	import entity.BackButton;
-<<<<<<< HEAD
-	import flash.net.SharedObject;
-=======
+
 	import entity.Button;
->>>>>>> origin/master
+	import flash.net.SharedObject;
+
 
 	//------------------------------------------------------------------------
 	// 	Game Over State

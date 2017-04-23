@@ -65,6 +65,7 @@ package state
 			placeBattery();
 			hitTest();
 			hitBattery();
+			//if(m_battery.HP == 0)
 		}
 		
 		override public function dispose():void
@@ -139,7 +140,7 @@ package state
 		
 		private function addBattery():void
 		{
-			m_battery.opaqueBackground = 0xFFFFFF;
+		//	m_battery.opaqueBackground = 0xFFFFFF;
 			m_layer3.addChild(m_battery);
 		}
 		
