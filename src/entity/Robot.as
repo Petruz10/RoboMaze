@@ -23,11 +23,13 @@ package entity
 		public var hit:Boolean;
 		public var hitBattery:Boolean = false;
 		
+		public var area:Sprite;
 		//------------------------------------------------------------------------
 		// private properties 
 		//------------------------------------------------------------------------
 		private var m_controls:EvertronControls = new EvertronControls();
-	//	private var m_skin:Robot1_mc;
+		private var m_battery:Battery;
+		
 		private var speed:int = 3;
 		private var hitSide:String;
 	
@@ -36,14 +38,12 @@ package entity
 		private var hitLeft:Boolean;
 		private var hitRight:Boolean;
 		
-		private var m_battery:Battery;
-		
-		public var area:Sprite;
-				
+		//------------------------------------------------------------------------
+		// Constructor methods
+		//------------------------------------------------------------------------		
 		public function Robot(controls:int=0)
 		{
 			super();
-			trace("konstruktor Robot");
 			m_controls.player = controls;
 		}
 		//------------------------------------------------------------------------
@@ -64,7 +64,6 @@ package entity
 		
 		override public function dispose():void
 		{
-			//disposeControls();
 			disposeSkin();
 		}
 		
@@ -82,13 +81,21 @@ package entity
 		private function moveUp():void
 		{	
 			hitSide = "up";
-			if(!hitUp && m_battery.HP != 0) _skin.y -= speed; _skin.gotoAndStop("back");
+			if(!hitUp && m_battery.HP != 0) 
+			{
+				_skin.y -= speed; 
+				_skin.gotoAndPlay("back");
+			}
 		}
 		
 		private function moveDown():void
 		{
 			hitSide = "down";
-			if(!hitDown && m_battery.HP != 0) _skin.y += speed; _skin.gotoAndStop("front");
+			if(!hitDown && m_battery.HP != 0)
+			{
+				_skin.y += speed; 
+				_skin.gotoAndPlay("front");
+			}
 		}
 		
 		private function moveLeft():void
@@ -97,8 +104,7 @@ package entity
 			if(!hitLeft && m_battery.HP != 0) 
 			{
 				_skin.x -= speed; 
-				
-				_skin.gotoAndStop("side");
+				_skin.gotoAndPlay("side");
 			}
 		}
 		
@@ -108,8 +114,8 @@ package entity
 			if(!hitRight && m_battery.HP != 0) 
 			{
 				_skin.x += speed; 
-				
-				_skin.gotoAndStop("side");
+				_skin.gotoAndPlay("side");
+			//	if (_skin.currentLabel == "side") _skin.play();
 			}
 		}
 		
@@ -161,7 +167,6 @@ package entity
 			
 			this.addChild(_skin);
 			_skin.addChild(_skin.hitArea);
-			trace("hitskin", _skin.hit);
 		}
 		
 		private function disposeSkin():void
