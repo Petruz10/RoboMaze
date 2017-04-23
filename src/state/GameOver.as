@@ -12,7 +12,11 @@ package state
 	// 	entity
 	//------------------------------------------------------------------------
 	import entity.BackButton;
+<<<<<<< HEAD
 	import flash.net.SharedObject;
+=======
+	import entity.Button;
+>>>>>>> origin/master
 
 	//------------------------------------------------------------------------
 	// 	Game Over State
@@ -31,6 +35,10 @@ package state
 		*/
 		private var _btn:BackButton;
 		/*
+		*	retry the game
+		*/
+		private var _retryBtn:Button;1
+		/*
 		*	background image
 		*/
 		private var _bgImg:BgImgTest;
@@ -38,6 +46,10 @@ package state
 		* 	Evertron Controls
 		*/
 		private var _controls:EvertronControls = new EvertronControls;
+		/*
+		*	current menu choice
+		*/
+		private var _menuBtn:int; 
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------

@@ -17,23 +17,23 @@ package component
 		/*
 		* Battery representation
 		*/
-		protected var battery:Battery;
+		protected var _battery:Battery_mc;
 		/*
 		* current higscore #1
 		*/
-		protected var highscore:int;
+		protected var _highscore:int;
 		/*
 		* Visual representation of highscore
 		*/
-		protected var highscoreField:TextField;
+		protected var _highscoreField:TextField;
 		/*
-		* game score
+		* game score measured in time.
 		*/
-		protected var points:int;
+		protected var _points:int;
 		/*
 		* Visual representation of game score
 		*/
-		protected var pointsField:TextField
+		protected var _pointsField:TextField
 		//------------------------------------------------------------------------
 		// Constructor
 		//------------------------------------------------------------------------

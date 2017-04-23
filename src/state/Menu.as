@@ -36,7 +36,11 @@ package state
 		/*
 		* 	button layer
 		*/
-		private var _layerButtons:DisplayStateLayer;
+		private var _layerOverlay:DisplayStateLayer;
+		/*
+		*
+		*/
+		private var _logo:MenuLogo_mc;
 		/*
 		* 	array representing links ( indexes )
 		*/
@@ -87,7 +91,7 @@ package state
 		//------------------------------------------------------------------------
 		override public function dispose():void {
 			_controls = null;
-			disposeButtons();
+			disposeOverlay();
 			disposeSound();
 			disposeBackground();
 		}
@@ -95,17 +99,15 @@ package state
 		// 	init menu array
 		//------------------------------------------------------------------------
 		private function initMenu():void {
-			trace("init menu");
 			_menuBtnIndexArray = [0, 1, 2 ,3 ] // 0 = oneplayer, 1 = twoplayer, 2 = highscore, 3 = credits
 			_menuBtn = _menuBtnIndexArray[0];
-			trace("_menuBtn = " + _menuBtn);
 		}
 		//------------------------------------------------------------------------
 		// 	init state-layeres
 		//------------------------------------------------------------------------
 		private function initLayers():void {
 			initBackground();
-			initButtons();
+			initOverlay();
 		}
 		//------------------------------------------------------------------------
 		// 	init background
@@ -120,20 +122,45 @@ package state
 			_layerBackground.addChild(bgImg);
 		}
 		//------------------------------------------------------------------------
-		// 	init Byttons
+		// 	init Buttons
 		//------------------------------------------------------------------------
-		private function initButtons():void {
+		private function initOverlay():void {
 			var posY:int = 100;
-			_layerButtons = layers.add("BUTTONS");
-			_layerButtons.x = 0;
-			_layerButtons.y = 0;
+			_layerOverlay = layers.add("BUTTONS");
+			_layerOverlay.x = 0;
+			_layerOverlay.y = 0;
+			//------------------------------------------------------------------------
+			//	logo
+			//------------------------------------------------------------------------
+			_logo = new MenuLogo_mc();
+			_logo.x = 0;
+			_logo.y = 0;
 
+			_layerOverlay.addChild(_logo);
+			//------------------------------------------------------------------------
+			//	buttons
+			//------------------------------------------------------------------------
 			for (var i:int = 0; i < _menuBtnIndexArray.length; i++) {
 				_btn = new MenuButton(i);
-				_btn.x = 100;
-				_btn.y = posY + (i * 100);
+				_btn.x = 50;
+				switch (i) {
+					case 0:
+						_btn.y = 230;
+					break;
+					case 1:
+						_btn.y = 330;
+					break;
+					case 2:
+						_btn.y = 430;
+					break;
+					case 3:
+						_btn.y = 500;
+					break;
+				}
+				
 				_btnArray.push(_btn);
-				_layerButtons.addChild(_btn);
+				_layerOverlay.addChild(_btn);
+				toggleActivation();
 			}
 		}
 		//------------------------------------------------------------------------
@@ -194,7 +221,7 @@ package state
 		//------------------------------------------------------------------------
 		// 	remove menu buttons
 		//------------------------------------------------------------------------
-		private function disposeButtons():void {
+		private function disposeOverlay():void {
 
 		}
 		//------------------------------------------------------------------------

@@ -38,16 +38,16 @@ package entity
 		private function initUI():void {
             switch(id) {
 				case 0:
-					_skin = new OnePlayerBtn; 
+					_skin = new OnePlayerBtn_mc(); 
 				break;
 				case 1:
-					_skin = new TwoPlayerBtn;
+					_skin = new TwoPlayerBtn_mc();
 				break;
 				case 2:
-					_skin = new HighscoreBtn;
+					_skin = new HighscoreBtn_mc();
 				break;
 				case 3:
-					_skin = new CreditsBtn;
+					_skin = new CreditsBtn_mc();
 			}	
 			_skin.stop();
 			this.addChild(_skin);
