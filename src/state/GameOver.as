@@ -80,7 +80,7 @@ package state
 		}
 		private function initBackground():void {
 			_bgImg = new BgImgTest();
-			
+		
 			_layerBackground = layers.add("MENU_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;

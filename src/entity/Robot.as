@@ -3,9 +3,12 @@ package entity
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import flash.display.Sprite;
+	
+	import se.lnu.stickossdk.fx.Flash;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
-	import flash.display.Sprite;
+	import se.lnu.stickossdk.system.Session;
 
 	//------------------------------------------------------------------------
 	// Public class Robot
@@ -125,9 +128,18 @@ package entity
 			if(hitBattery)
 			{
 				m_battery.HP += 25; 
-				if(m_battery.HP > 100) m_battery.HP = 100;
 				hitBattery=false;
+				if(m_battery.HP > 100) m_battery.HP = 100;
 			}
+			if(m_battery.HP == 0) die(); return;
+		}
+		
+		private function die():void
+		{
+			trace("DEAD!!");
+			var flash:Flash;
+			
+			return;
 		}
 
 		private function initSkin():void
