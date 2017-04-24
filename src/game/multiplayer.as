@@ -46,7 +46,7 @@ package game
 			m_robot.x = 41;
 			m_robot.y = 125;
 			
-			m_robot.opaqueBackground = 0xFFFFFF;
+	//		m_robot.opaqueBackground = 0xFFFFFF;
 			
 			super.addAvatar(m_robot);
 		}
