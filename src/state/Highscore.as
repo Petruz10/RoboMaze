@@ -29,14 +29,6 @@ package state
 		*/
 		private var _btn:BackButton;
 		/*
-		* 	test animation
-		*/
-		private var _circuitBoard:CircuitBoard_mc;
-		/*
-		* 	test animation
-		*/
-		private var _battery:BatteryRefill_mc;
-		/*
 		* 	background image
 		*/
 		private var _bgImg:BgImgTest;
@@ -93,8 +85,6 @@ package state
 		//------------------------------------------------------------------------
 		private function initHighscoreTable():void {
 			_btn = new BackButton();
-			_circuitBoard = new CircuitBoard_mc;
-			_battery = new BatteryRefill_mc();
 
 			_layerHighscoreTable = layers.add("HIGHSCORE_TABLE");
 			_layerHighscoreTable.x = 0;
@@ -102,12 +92,6 @@ package state
 
 			_btn.x = 0;
 			_btn.y = 540;
-			_battery.x = 200;
-			_battery.y = 540;
-			_circuitBoard.x = 100;
-			_circuitBoard.y = 540;
-			_layerHighscoreTable.addChild(_battery);
-			_layerHighscoreTable.addChild(_circuitBoard);
 			_layerHighscoreTable.addChild(_btn);
 		}
 		//------------------------------------------------------------------------
@@ -122,26 +106,19 @@ package state
 		// dispose highscore table
 		//------------------------------------------------------------------------
 		private function disposeHighscoreTable():void {
-			
-		/*	var numCh:int = _layerHighscoreTable.numChildren;
-			while (numCh > 0) { _layerHighscoreTable.removeChildAt(0); trace("removing"); }
+			_layerHighscoreTable.removeChild(_btn) = null; 
+			_laterHighscoreTable = null;
 			_btn = null;
-			_layerHighscoreTable = null; */
-			
 			trace("dispose highscore table");
 		}
 		//------------------------------------------------------------------------
 		// dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
-		 	/*	
-			var numCh:int = _layerBackground.numChildren;
-			while (numCh > 0) { _layerBackground.removeChildAt(0); }
-
-			_bgImg = null;
-			_layerBackground = null; */		
-
+			_layerBackground.removeChild(_bgImg);
+			_layerBackground = null;
+			_bgImg = null;	
 			trace("dispose highscore background");
 		}
 	}
-}
+}1

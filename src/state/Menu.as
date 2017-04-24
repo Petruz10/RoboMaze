@@ -62,6 +62,10 @@ package state
 		*/	
 		private var choosenBtn:MenuButton;
 		/*
+		* 	robot animation
+		*/
+		private var _robot:Menu_Robot_mc;
+		/*
 		* 	Evertron controls
 		*/
 		private var _controls:EvertronControls = new EvertronControls();
@@ -108,6 +112,7 @@ package state
 		private function initLayers():void {
 			initBackground();
 			initOverlay();
+			initRobot();
 		}
 		//------------------------------------------------------------------------
 		// 	init background
@@ -162,6 +167,14 @@ package state
 				_layerOverlay.addChild(_btn);
 				toggleActivation();
 			}
+		}
+		private function initRobot():void {
+			_robot = new Menu_Robot_mc();
+			_robot.y = 350;
+			_robot.x = 530;
+			_robot.scaleY = 2.3;
+			_robot.scaleX = 2.3;
+			_layerOverlay.addChild(_robot);
 		}
 		//------------------------------------------------------------------------
 		// 	init state-sound
@@ -223,6 +236,13 @@ package state
 		//------------------------------------------------------------------------
 		private function disposeOverlay():void {
 
+		}
+		//------------------------------------------------------------------------
+		// 	remove robot
+		//------------------------------------------------------------------------
+		private function disposeRobot():void {
+			_robot = null;
+			_layerOverlay.removeChild(_robot);
 		}
 		//------------------------------------------------------------------------
 		// 	remove sound
