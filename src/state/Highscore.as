@@ -106,8 +106,8 @@ package state
 		// dispose highscore table
 		//------------------------------------------------------------------------
 		private function disposeHighscoreTable():void {
-			_layerHighscoreTable.removeChild(_btn) = null; 
-			_laterHighscoreTable = null;
+			_layerHighscoreTable.removeChild(_btn); 
+			_layerHighscoreTable = null;
 			_btn = null;
 			trace("dispose highscore table");
 		}

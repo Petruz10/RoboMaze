@@ -3,28 +3,22 @@ package state
 	//------------------------------------------------------------------------
 	// 	Evertron SDK
 	//------------------------------------------------------------------------
+	import entity.MenuButton;
+	
+	import game.Multiplayer;
+	import game.Singleplayer;
+	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
-	import se.lnu.stickossdk.input.Input;
-	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.input.EvertronControls;
+	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.media.SoundObject;
-	//------------------------------------------------------------------------
-	// 	game states
-	//------------------------------------------------------------------------
-	import game.Singleplayer;
-	import game.Multiplayer;
-	//------------------------------------------------------------------------
-	// 	menu states
-	//------------------------------------------------------------------------
-	import state.Singleplayer;
-	import state.Multiplayer;
+	import se.lnu.stickossdk.system.Session;
+	
+	import state.Credits;
 	import state.Highscore;
-	import state.Credits;		
-	//------------------------------------------------------------------------
-	// 	enity
-	//------------------------------------------------------------------------
-	import entity.MenuButton;
+	import state.Multiplayer;
+	import state.Singleplayer;
 	//------------------------------------------------------------------------
 	//	Menu state
 	//------------------------------------------------------------------------
@@ -72,6 +66,7 @@ package state
 		/*
 		* 	music
 		*/ 
+		private var _backgroundMusic:SoundObject;
 		//------------------------------------------------------------------------
 		// 	constructor
 		//------------------------------------------------------------------------
@@ -181,6 +176,10 @@ package state
 		//------------------------------------------------------------------------
 		private function initSound():void {
 			trace("init sound");
+			Session.sound.musicChannel.sources.add("menu_bgmusic", MenuBackgroundMusic);
+			_backgroundMusic = Session.sound.musicChannel.get("menu_bgmusic");
+			_backgroundMusic.volume = 0.5;
+			_backgroundMusic.play();
 		}
 		//------------------------------------------------------------------------
 		// 	updates menu. default choice = 0 <--- singleplayer
