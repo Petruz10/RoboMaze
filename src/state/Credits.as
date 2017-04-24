@@ -1,6 +1,7 @@
 package state
 {
 	import entity.BackButton;
+	import component.HUD;
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
@@ -42,6 +43,7 @@ package state
 		// update
 		//------------------------------------------------------------------------
 		override public function update():void {
+
 			changeState();
 		}
 		//------------------------------------------------------------------------
@@ -61,12 +63,14 @@ package state
 		}
 		private function initBackground():void {
 			var bgImg:BgImgTest = new BgImgTest();
-			
+			var hud:HUD = new HUD();
+
 			_layerBackground = layers.add("MENU_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
 			
 			_layerBackground.addChild(bgImg);
+			_layerBackground.addChild(hud);
 		}
 		//------------------------------------------------------------------------
 		// init "menu" --> back btn
