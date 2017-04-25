@@ -2,12 +2,14 @@ package state
 {
 	import entity.BackButton;
 	import component.HUD;
+	import component.MultiplayerHUD;
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
+
 	
 	public class Credits extends DisplayState {
 		/*
@@ -19,6 +21,10 @@ package state
 		*/
 		private var _layerOverlay:DisplayStateLayer;
 		/*
+		* 	background layer
+		*/
+		private var _bgImg:BgImgTest;
+		/*
 		*	back btn 
 		*/
 		private var _btn:BackButton;
@@ -26,6 +32,7 @@ package state
 		*	controls
 		*/
 		private var _controls:EvertronControls = new EvertronControls;
+		private var hud:MultiplayerHUD = new MultiplayerHUD();
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -36,14 +43,12 @@ package state
 		// init
 		//------------------------------------------------------------------------
 		override public function init():void {
-			trace("credits");
 			initLayers();
 		}
 		//------------------------------------------------------------------------
 		// update
 		//------------------------------------------------------------------------
 		override public function update():void {
-
 			changeState();
 		}
 		//------------------------------------------------------------------------
@@ -62,14 +67,13 @@ package state
 			initOverlay();
 		}
 		private function initBackground():void {
-			var bgImg:BgImgTest = new BgImgTest();
-			var hud:HUD = new HUD();
+			_bgImg = new BgImgTest();
 
 			_layerBackground = layers.add("MENU_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
 			
-			_layerBackground.addChild(bgImg);
+			_layerBackground.addChild(_bgImg);
 			_layerBackground.addChild(hud);
 		}
 		//------------------------------------------------------------------------
@@ -92,28 +96,19 @@ package state
 				Session.application.displayState = new Menu; 
 			}
 		}
-		//------------------------------------------------------------------------
+		//-------------------------------------eed-----------------------------------
 		// dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
-			/*var numCh:int = _layerBackground.numChildren;
-			while (numCh > 0) { _layerBackground.removeChildAt(0); }
-			
-			_layerBackground = null;*/
-			
-			trace("dispose credits background");
+			_bgImg = null;
+			_layerBackground = null;
 		}
 		//------------------------------------------------------------------------
 		// dispose overlay
 		//------------------------------------------------------------------------
 		private function disposeOverlay():void {
-			/*var numCh:int = _layerOverlay.numChildren;
-			while (numCh > 0) { _layerOverlay.removeChildAt(0); }
-			
 			_btn = null;
 			_layerOverlay = null;
-			*/
-			trace("dispose credits overlay");
 		}
 	}
 }

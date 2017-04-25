@@ -79,7 +79,7 @@ package state
 		override public function init():void {
 			initMenu();
 			initLayers();
-			initSound();
+			//initSound();
 		}
 		override public function update():void {
 			updateMenu();
@@ -175,7 +175,6 @@ package state
 		// 	init state-sound
 		//------------------------------------------------------------------------
 		private function initSound():void {
-			trace("init sound");
 			Session.sound.musicChannel.sources.add("menu_bgmusic", MenuBackgroundMusic);
 			_backgroundMusic = Session.sound.musicChannel.get("menu_bgmusic");
 			_backgroundMusic.volume = 0.5;
