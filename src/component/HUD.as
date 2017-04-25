@@ -190,7 +190,7 @@ package component
 		// set time-string
 		//-----------------------------------------------------------------------------
 		public function set time(time:String):void {
-			trace(time);
+			trace("time: " + time);
 			this._time = time;
 		}
 		//-----------------------------------------------------------------------------
@@ -205,6 +205,7 @@ package component
 		protected function updateTime():void {
 			if (_timeT != null) {
 				_timeT.text = this._time;
+				_timeT.setTextFormat(_timeF);
 			}
 		}
 		//------------------------------------------------------------------------
