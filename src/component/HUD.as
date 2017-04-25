@@ -35,7 +35,7 @@ package component
 		/*
 		* 	time 
 		*/
-		protected var _time:int; 
+		protected var _time:String; 
 		/*
 		* 	Visual representation of time
 		*/
