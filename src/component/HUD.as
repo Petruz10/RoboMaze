@@ -76,7 +76,7 @@ package component
 		//------------------------------------------------------------------------
 		override public function update():void {
 			updateBattery(1, battery1Lvl, _battery1);
-			//updateTime();
+			updateTime();
 		}
 		//------------------------------------------------------------------------
 		// 	dispose
@@ -202,7 +202,7 @@ package component
 		//------------------------------------------------------------------------
 		// 	update time graphics
 		//------------------------------------------------------------------------
-		protected function updateTime(t:uint):void {
+		protected function updateTime():void {
 			if (_timeT != null) {
 				_timeT.text = this._time;
 			}
