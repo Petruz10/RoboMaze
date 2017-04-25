@@ -5,7 +5,6 @@ package entity
 	//------------------------------------------------------------------------
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.timer.Timer;
-	import state.GameOver;
 
 	//------------------------------------------------------------------------
 	// Public class Battery
