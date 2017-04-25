@@ -85,7 +85,7 @@ package entity
 			if(!hitUp && m_battery.HP != 0) 
 			{
 				_skin.y -= speed; 
-			//	_skin.gotoAndPlay("back");
+				_skin.gotoAndStop("back");
 			}
 		}
 		
@@ -105,7 +105,9 @@ package entity
 			if(!hitLeft && m_battery.HP != 0) 
 			{
 				_skin.x -= speed; 
+				//_skin.scaleX *=- 1;
 				_skin.gotoAndStop("side");
+				
 			}
 		}
 		
@@ -115,9 +117,8 @@ package entity
 			if(!hitRight && m_battery.HP != 0) 
 			{
 				_skin.x += speed; 
+			//	_skin.scaleX *= 1;
 				_skin.gotoAndStop("side");
-			//	if(_skin.currentLabel == "side") _skin.play(); trace("if sats"); 
-				return;
 			}
 		}
 		
@@ -137,7 +138,7 @@ package entity
 		{
 			if(hitBattery)
 			{
-				m_battery.HP += 25; 
+				m_battery.HP += 30; 
 				hitBattery = false;
 				if(m_battery.HP > 100) m_battery.HP = 100;
 			}

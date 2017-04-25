@@ -15,6 +15,7 @@ package state
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
+	import flash.display.DisplayObject;
 
 	//------------------------------------------------------------------------
 	// Public class Game
@@ -41,7 +42,7 @@ package state
 		
 		private var m_players:int;
 		
-		private var m_hud:HUD;
+		private var m_hud;
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -69,6 +70,8 @@ package state
 			hitTest();
 			hitBattery();
 			//if(m_battery.HP == 0)
+			updateHUD();
+			//trace(m_robot.m_battery.HP, "batteriliv");
 		}
 		
 		override public function dispose():void
@@ -215,6 +218,15 @@ package state
 			}
 		}
 		
+		private function updateHUD():void
+		{
+			m_hud.battery1Lvl = m_robot.m_battery.HP;
+			if(m_players == 2) m_hud.battery2Lvl = m_robot2.m_battery.HP;
+			
+			/*trace("battery 1", m_hud.battery1Lvl);
+			trace("battery 2", m_hud.battery2Lvl);*/
+		}
+		
 		//------------------------------------------------------------------------
 		// protected methods
 		//------------------------------------------------------------------------
@@ -239,7 +251,7 @@ package state
 			m_robot2 = robot;
 		}
 		
-		protected function addHUD(hud:HUD):void
+		protected function addHUD(hud):void
 		{
 			m_hud = hud;
 			trace(hud);

@@ -34,7 +34,7 @@ package entity
 		//------------------------------------------------------------------------
 		private function HPtimer():void
 		{
-			m_timer = Session.timer.create(100, removeHP);
+			m_timer = Session.timer.create(1000, removeHP);
 		}
 		
 		//------------------------------------------------------------------------
@@ -54,7 +54,7 @@ package entity
 		{
 			if(HP != 0) 
 			{
-				HP--;
+				HP -= 10;
 				HPtimer();
 				trace(HP);
 			}
