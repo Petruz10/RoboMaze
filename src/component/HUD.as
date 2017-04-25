@@ -202,7 +202,7 @@ package component
 		// 	update time graphics
 		//------------------------------------------------------------------------
 		protected function updateTime():void {
-			if (_timeT != null) {
+			if (_time != null) {
 				_timeT.text = this._time;
 				_timeT.setTextFormat(_timeF);
 			} else {
