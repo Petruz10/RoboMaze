@@ -29,8 +29,6 @@ package entity
 		//------------------------------------------------------------------------
 		private var m_controls:EvertronControls = new EvertronControls();
 		
-		public var m_battery:Battery;
-		
 		private var speed:int = 3;
 		private var hitSide:String;
 	
@@ -39,6 +37,10 @@ package entity
 		private var hitLeft:Boolean;
 		private var hitRight:Boolean;
 		
+		private var m_player:int;
+		
+		
+		public var battery:Battery;
 		//------------------------------------------------------------------------
 		// Constructor methods
 		//------------------------------------------------------------------------		
@@ -46,6 +48,8 @@ package entity
 		{
 			super();
 			m_controls.player = controls;
+			
+			m_player = controls;
 		}
 		//------------------------------------------------------------------------
 		// public methods
@@ -73,53 +77,70 @@ package entity
 		//------------------------------------------------------------------------
 		private function updateControls():void
 		{
-			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft();
-			else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
-			else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) this.moveDown(); 
-			else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) this.moveUp();
+			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) 
+			{
+				this.moveLeft(); 
+				return;
+			}
+			else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) 
+			{
+				this.moveRight(); return;
+			}
+			else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) 
+			{
+				this.moveDown(); return;
+			}
+			else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) 
+			{
+				this.moveUp(); return;
+			}
 		}
 		
 		private function moveUp():void
 		{	
 			hitSide = "up";
-			if(!hitUp && m_battery.HP != 0) 
+			if(!hitUp && battery.HP != 0) 
 			{
 				_skin.y -= speed; 
 				_skin.gotoAndStop("back");
+				return;
 			}
 		}
 		
 		private function moveDown():void
 		{
 			hitSide = "down";
-			if(!hitDown && m_battery.HP != 0)
+			if(!hitDown && battery.HP != 0)
 			{
 				_skin.y += speed; 
 				_skin.gotoAndStop("front");
+				return;
 			}
 		}
 		
 		private function moveLeft():void
 		{
 			hitSide = "left";
-			if(!hitLeft && m_battery.HP != 0) 
+			if(!hitLeft && battery.HP != 0) 
 			{
 				_skin.x -= speed; 
 				//_skin.scaleX *=- 1;
 				_skin.gotoAndStop("side");
-				
+				return;	
 			}
 		}
 		
 		private function moveRight():void
 		{
 			hitSide = "right";
-			if(!hitRight && m_battery.HP != 0) 
+			if(!hitRight && battery.HP != 0) 
 			{
 				_skin.x += speed; 
 			//	_skin.scaleX *= 1;
 				_skin.gotoAndStop("side");
+				return;
 			}
+			
 		}
 		
 		private function hitt():void
@@ -138,11 +159,11 @@ package entity
 		{
 			if(hitBattery)
 			{
-				m_battery.HP += 30; 
+				battery.HP += 30; 
 				hitBattery = false;
-				if(m_battery.HP > 100) m_battery.HP = 100;
+				if(battery.HP > 100) battery.HP = 100;
 			}
-			if(m_battery.HP == 0) Session.timer.create(1000, gameOver);
+			if(battery.HP == 0) Session.timer.create(1000, gameOver);
 		}
 		
 		private function gameOver():void
@@ -152,7 +173,9 @@ package entity
 
 		private function initSkin():void
 		{
-			_skin = new Robot1_mc();
+			if(m_player == 0)_skin = new Robot1_mc();
+			else if(m_player == 1) _skin = new Robot2_mc();
+			
 			_skin.width = 35;
 			_skin.height = 35;
 			_skin.gotoAndStop("front");
@@ -164,7 +187,7 @@ package entity
 			_skin.hitArea = square;
 			area = _skin.hitArea;
 			
-			m_battery = new Battery();
+			battery = new Battery();
 			
 			this.addChild(_skin);
 			_skin.addChild(_skin.hitArea);
@@ -175,7 +198,7 @@ package entity
 			m_controls = null;
 			_skin.hitArea = null;
 			_skin = null;
-			m_battery = null;
+			battery = null;
 			trace("dispose Robot");
 		}
 

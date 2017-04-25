@@ -3,6 +3,7 @@ package state
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.net.SharedObject;
 	
@@ -15,7 +16,9 @@ package state
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
-	import flash.display.DisplayObject;
+	import se.lnu.stickossdk.system.Session;
+	import se.lnu.stickossdk.timer.Timer;
+
 
 	//------------------------------------------------------------------------
 	// Public class Game
@@ -43,6 +46,12 @@ package state
 		private var m_players:int;
 		
 		private var m_hud;
+		
+		private var m_gameTime:Number = 0;
+		
+		private var sek:Number = 0;
+		
+		private var m_time:String;
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -61,7 +70,7 @@ package state
 			initBattery();
 			if(m_players == 2) initBattery2();
 			initSharedObject();
-	
+			initTimer();
 		}
 		
 		override public function update():void
@@ -69,9 +78,7 @@ package state
 			placeBattery();
 			hitTest();
 			hitBattery();
-			//if(m_battery.HP == 0)
-			updateHUD();
-			//trace(m_robot.m_battery.HP, "batteriliv");
+			updateHUDBattery();
 		}
 		
 		override public function dispose():void
@@ -81,6 +88,7 @@ package state
 			disposeChildren();
 			disposeLayers();	
 			disposeBattery()
+			disposeHUD();
 		}
 		
 		//------------------------------------------------------------------------
@@ -98,6 +106,38 @@ package state
 			return;
 		}
 		
+		private function initTimer():void
+		{
+			var timer:Timer = Session.timer.create(1, updateTimer);
+		}
+		
+		private function updateTimer():void
+		{
+			var hundraSek:Number;
+			var min:Number;
+			
+			m_gameTime += 1.666666666666667;
+			hundraSek = Math.round(m_gameTime);
+			
+			if(hundraSek == 100)
+			{
+				sek++; 
+				m_gameTime =0;
+				if(sek == 60)
+				{
+					sek = 0;
+					min ++;
+				}
+			}
+			
+			if(!min) min = 0;
+			if(m_robot.battery.HP > 0) initTimer();
+			
+			m_time = min+":"+ sek + ":" +hundraSek;
+		//	trace(time);
+			m_hud.time = m_time;
+		}
+		
 		private function initBattery():void
 		{
 			m_battery = new BatteryRefill();
@@ -109,7 +149,7 @@ package state
 		{
 			trace("battery2");
 			m_battery2 = new BatteryRefill();
-			addBattery2();
+			addBattery();
 		}
 		
 		private function placeBattery():void
@@ -120,7 +160,6 @@ package state
 				if(m_players == 2)
 				{
 					if(m_battery.hitTestObject(children[i]) || m_battery.batteryX <= 400) m_battery.placeBattery();
-					
 				}
 				else
 				{
@@ -148,13 +187,8 @@ package state
 		
 		private function addBattery():void
 		{
-		//	m_battery.opaqueBackground = 0xFFFFFF;
 			m_layer3.addChild(m_battery);
-		}
-		
-		private function addBattery2():void
-		{	
-			m_layer3.addChild(m_battery2);
+			if(m_battery2) m_layer3.addChild(m_battery2);
 		}
 		
 		private function getChildren():void
@@ -184,8 +218,6 @@ package state
 					if(children[i].hitTestObject(m_robot2.area)) m_robot2.hit = true;
 				}
 			}
-			
-			
 		}
 		
 		private function hitBattery():void
@@ -200,7 +232,6 @@ package state
 					m_layer3.removeChildren();
 					m_battery.placeBattery();
 					addBattery();
-					addBattery2();
 					return;
 				}
 			}
@@ -218,13 +249,10 @@ package state
 			}
 		}
 		
-		private function updateHUD():void
+		private function updateHUDBattery():void
 		{
-			m_hud.battery1Lvl = m_robot.m_battery.HP;
-			if(m_players == 2) m_hud.battery2Lvl = m_robot2.m_battery.HP;
-			
-			/*trace("battery 1", m_hud.battery1Lvl);
-			trace("battery 2", m_hud.battery2Lvl);*/
+			m_hud.battery1Lvl = m_robot.battery.HP;
+			if(m_players == 2) m_hud.battery2Lvl = m_robot2.battery.HP;
 		}
 		
 		//------------------------------------------------------------------------
@@ -254,7 +282,6 @@ package state
 		protected function addHUD(hud):void
 		{
 			m_hud = hud;
-			trace(hud);
 		}
 		
 		//------------------------------------------------------------------------
@@ -297,6 +324,13 @@ package state
 		{
 			m_battery = null;
 			if(m_battery2) m_battery2 = null;
+		}
+		
+		private function disposeHUD():void
+		{
+			m_hud.battery1Lvl = null;
+			if(m_hud.battery2Lvl) m_hud.battery2Lvl = null;
+			m_hud = null;
 		}
 	}
 }
