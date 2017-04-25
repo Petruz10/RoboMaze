@@ -28,7 +28,8 @@ package entity
 		// private properties 
 		//------------------------------------------------------------------------
 		private var m_controls:EvertronControls = new EvertronControls();
-		private var m_battery:Battery;
+		
+		public var m_battery:Battery;
 		
 		private var speed:int = 3;
 		private var hitSide:String;
@@ -94,7 +95,7 @@ package entity
 			if(!hitDown && m_battery.HP != 0)
 			{
 				_skin.y += speed; 
-			//	_skin.gotoAndPlay("front");
+				_skin.gotoAndStop("front");
 			}
 		}
 		
@@ -104,7 +105,7 @@ package entity
 			if(!hitLeft && m_battery.HP != 0) 
 			{
 				_skin.x -= speed; 
-			//	_skin.gotoAndPlay("side");
+				_skin.gotoAndStop("side");
 			}
 		}
 		
@@ -114,7 +115,7 @@ package entity
 			if(!hitRight && m_battery.HP != 0) 
 			{
 				_skin.x += speed; 
-				_skin.gotoAndPlay("side");
+				_skin.gotoAndStop("side");
 			//	if(_skin.currentLabel == "side") _skin.play(); trace("if sats"); 
 				return;
 			}
@@ -150,12 +151,10 @@ package entity
 
 		private function initSkin():void
 		{
-			//var hitArea;
-			
 			_skin = new Robot1_mc();
 			_skin.width = 35;
 			_skin.height = 35;
-			_skin.gotoAndPlay("front");
+			_skin.gotoAndStop("front");
 			
 			var square:Sprite = new Sprite();
 			//square.graphics.beginFill(0xCCFF00);
@@ -176,6 +175,7 @@ package entity
 			_skin.hitArea = null;
 			_skin = null;
 			m_battery = null;
+			trace("dispose Robot");
 		}
 
 	}
