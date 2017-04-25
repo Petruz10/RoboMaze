@@ -79,6 +79,7 @@ package state
 			hitTest();
 			hitBattery();
 			updateHUDBattery();
+			updateHUDTime();
 		}
 		
 		override public function dispose():void
@@ -134,8 +135,8 @@ package state
 			if(m_robot.battery.HP > 0) initTimer();
 			
 			m_time = min+":"+ sek + ":" +hundraSek;
-		//	trace(time);
-			m_hud.time = m_time;
+		//	
+			
 		}
 		
 		private function initBattery():void
@@ -253,6 +254,12 @@ package state
 		{
 			m_hud.battery1Lvl = m_robot.battery.HP;
 			if(m_players == 2) m_hud.battery2Lvl = m_robot2.battery.HP;
+		}
+		
+		private function updateHUDTime():void
+		{
+			m_hud.time = m_time;
+			trace("time" + m_time);
 		}
 		
 		//------------------------------------------------------------------------
