@@ -39,6 +39,7 @@ package entity
 		private var hitLeft:Boolean;
 		private var hitRight:Boolean;
 		
+		private var player:int;
 		//------------------------------------------------------------------------
 		// Constructor methods
 		//------------------------------------------------------------------------		
@@ -46,6 +47,8 @@ package entity
 		{
 			super();
 			m_controls.player = controls;
+			
+			player = controls;
 		}
 		//------------------------------------------------------------------------
 		// public methods
@@ -152,7 +155,9 @@ package entity
 
 		private function initSkin():void
 		{
-			_skin = new Robot1_mc();
+			if(player == 0)_skin = new Robot1_mc();
+			else if(player == 1) _skin = new Robot2_mc();
+			
 			_skin.width = 35;
 			_skin.height = 35;
 			_skin.gotoAndStop("front");
