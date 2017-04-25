@@ -51,7 +51,7 @@ package state
 		
 		private var sek:Number = 0;
 		
-		public var time:String;
+		private var m_time:String;
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -133,8 +133,9 @@ package state
 			if(!min) min = 0;
 			if(m_robot.battery.HP > 0) initTimer();
 			
-			time = min+":"+ sek + ":" +hundraSek;
-			trace(time);
+			m_time = min+":"+ sek + ":" +hundraSek;
+		//	trace(time);
+			m_hud.time = m_time;
 		}
 		
 		private function initBattery():void
