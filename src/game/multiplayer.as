@@ -3,8 +3,12 @@ package game
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import component.HUD;
 	import component.Maze;
+	import component.MultiplayerHUD;
+	
 	import entity.Robot;
+	
 	import state.Game;
 	
 	//------------------------------------------------------------------------
@@ -21,6 +25,8 @@ package game
 		private var m_maze:Maze;
 		private var m_maze2:Maze;
 		
+		private var m_hud:MultiplayerHUD;
+		
 		public function Multiplayer()
 		{
 			super(2);
@@ -30,6 +36,8 @@ package game
 			
 			initMaze2();
 			initMaze();
+			
+			initHUD();
 		}
 				
 		//------------------------------------------------------------------------
@@ -83,22 +91,41 @@ package game
 			super.addMaze2(m_maze2);
 		}
 		
+		private function initHUD():void
+		{
+			m_hud = new MultiplayerHUD();
+			
+			m_hud.x = 0;
+			m_hud.y=0;
+			
+			super.addHUD(m_hud);
+		}
+		
 		override public function dispose():void
 		{
 			disposeAvatar();
 			disposeMaze();
+			disposeHUD();
 		}
 		
 		private function disposeAvatar():void
 		{
 			m_robot = null;
 			m_robot2 = null;
+			trace("dispose Avatar");
 		}
 		
 		private function disposeMaze():void
 		{
 			m_maze = null;
 			m_maze2 = null;
+			trace("dispose maze");
+		}
+		
+		private function disposeHUD():void
+		{
+			m_hud = null;
+			trace("dispose hud");
 		}
 
 	}

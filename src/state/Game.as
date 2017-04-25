@@ -6,6 +6,7 @@ package state
 	import flash.display.Sprite;
 	import flash.net.SharedObject;
 	
+	import component.HUD;
 	import component.Maze;
 	
 	import entity.BatteryRefill;
@@ -39,6 +40,8 @@ package state
 		private var children:Vector.<Tile> = new Vector.<Tile>(); 
 		
 		private var m_players:int;
+		
+		private var m_hud:HUD;
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -136,6 +139,8 @@ package state
 			
 			if(m_robot) m_layer2.addChild(m_robot);	
 			if(m_robot2) m_layer2.addChild(m_robot2);
+			
+			m_layer.addChild(m_hud);
 		}
 		
 		private function addBattery():void
@@ -232,6 +237,12 @@ package state
 		protected function addMultiplayer(robot:Robot):void
 		{
 			m_robot2 = robot;
+		}
+		
+		protected function addHUD(hud:HUD):void
+		{
+			m_hud = hud;
+			trace(hud);
 		}
 		
 		//------------------------------------------------------------------------

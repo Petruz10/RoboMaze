@@ -3,8 +3,11 @@ package game
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import component.HUD;
 	import component.Maze;
-	import entity.Robot;	
+	
+	import entity.Robot;
+	
 	import state.Game;
 
 	//------------------------------------------------------------------------
@@ -17,14 +20,15 @@ package game
 		//------------------------------------------------------------------------
 		private var m_robot:Robot;
 		private var m_maze:Maze;
+		private var m_hud:HUD;
 		
 		public function Singleplayer()
 		{
 			super(1);
-			trace("singleplayer");
 
 			initMaze();
 			initAvatar();
+			initHUD();
 		}
 		
 		//------------------------------------------------------------------------
@@ -51,20 +55,51 @@ package game
 			super.addMaze(m_maze);
 		}
 		
+		private function initHUD():void
+		{
+			m_hud = new HUD();
+			
+			m_hud.x = 0;
+			m_hud.y=0;
+			
+			super.addHUD(m_hud);
+		}
+		
+		/*override public function update():void
+		{
+			//trace("update singleplayer");
+			//updateHUD();
+		}*/
+		
+		private function updateHUD():void
+		{
+			//m_hud.battery1Lvl = m_robot.m_battery.HP;
+			//trace(m_hud.battery1Lvl);
+		}
+		
 		override public function dispose():void
 		{
 			disposeAvatar();
 			disposeMaze(); 
+			disposeHUD();
 		}
 		
 		private function disposeMaze():void
 		{
 			m_maze = null;
+			trace("dispose maze");
 		}
 		
 		private function disposeAvatar():void
 		{
 			m_robot = null;
+			trace("dispose avatar");
+		}
+		
+		private function disposeHUD():void
+		{
+			m_hud = null;
+			trace("dispose hud");
 		}
 
 	}

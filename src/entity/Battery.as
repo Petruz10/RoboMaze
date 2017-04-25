@@ -79,6 +79,7 @@ package entity
 		private function disposeTimer():void
 		{
 			m_timer = null;
+			trace("dispose battery timer");
 		}
 	}
 }
