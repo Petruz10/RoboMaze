@@ -84,7 +84,7 @@ package entity
 			if(!hitUp && m_battery.HP != 0) 
 			{
 				_skin.y -= speed; 
-				_skin.gotoAndPlay("back");
+			//	_skin.gotoAndPlay("back");
 			}
 		}
 		
@@ -94,7 +94,7 @@ package entity
 			if(!hitDown && m_battery.HP != 0)
 			{
 				_skin.y += speed; 
-				_skin.gotoAndPlay("front");
+			//	_skin.gotoAndPlay("front");
 			}
 		}
 		
@@ -104,7 +104,7 @@ package entity
 			if(!hitLeft && m_battery.HP != 0) 
 			{
 				_skin.x -= speed; 
-				_skin.gotoAndPlay("side");
+			//	_skin.gotoAndPlay("side");
 			}
 		}
 		
@@ -115,7 +115,8 @@ package entity
 			{
 				_skin.x += speed; 
 				_skin.gotoAndPlay("side");
-			//	if (_skin.currentLabel == "side") _skin.play();
+			//	if(_skin.currentLabel == "side") _skin.play(); trace("if sats"); 
+				return;
 			}
 		}
 		
@@ -154,7 +155,7 @@ package entity
 			_skin = new Robot1_mc();
 			_skin.width = 35;
 			_skin.height = 35;
-			_skin.gotoAndStop("front");
+			_skin.gotoAndPlay("front");
 			
 			var square:Sprite = new Sprite();
 			//square.graphics.beginFill(0xCCFF00);
