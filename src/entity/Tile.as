@@ -57,62 +57,59 @@ package entity
 					//_skin = new Path; 		// path
 				break;
 				case 1:
-					_skin = new Wall; 		// vertical wall
+					_skin = new Tile_Straight_mc; 		// vertical wall
 				break;
 				case 2:
-					_skin = new Wall; 		// horizontal wall
+					_skin = new Tile_Straight_mc; 		// horizontal wall
 					setRotation(90);
 				break;
 				case 3:
-					_skin = new Turn; 		// turn right up
+					_skin = new Tile_Turn_mc; 		// turn right up
 				break;
 				case 4:
-					_skin = new Turn;
+					_skin = new Tile_Turn_mc;
 					setRotation(90);// turn left up
 				break;
 				case 5:
-					_skin = new Turn;
+					_skin = new Tile_Turn_mc;
 					setRotation(270); // turn right down
 				break;
 				case 6:
-					_skin = new Turn;
+					_skin = new Tile_Turn_mc;
 					setRotation(180); // turn left down
 				break;
 				case 7:
-					_skin = new End; 		// end right
+					_skin = new Tile_End_mc; 		// end right
 				break;
 				case 8:
-					_skin = new End;
+					_skin = new Tile_End_mc;
 					setRotation(180); // end left
 				break;
 				case 9:
-					_skin = new End;
+					_skin = new Tile_End_mc;
 					setRotation(-90); // end up
 				break;
 				case 10:
-					_skin = new End;
+					_skin = new Tile_End_mc;
 					setRotation(90); // end down
 				break;
 				case 11:
-					_skin = new T_Intersection; 	// T-section right
+					_skin = new Tile_T_mc; 	// T-section right
 				break;
 				case 12:
-					_skin = new T_Intersection;
+					_skin = new Tile_T_mc;
 					setRotation(180); // T-section left
 				break;
 				case 13:
-					_skin = new T_Intersection;
+					_skin = new Tile_T_mc;
 					setRotation(-90); // T-section up
 					break;
 				case 14:
-					_skin = new T_Intersection;
+					_skin = new Tile_T_mc;
 					setRotation(90); // T-section down	
 					break;
 				case 15:
-					_skin = new Fourway_Intersection;
-				break;
-				case 20:
-					_skin = new Avatar;
+					_skin = new Tile_Fourway_mc;
 				break;
 			}
 			if(_skin)this.addChild(_skin);

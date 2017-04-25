@@ -76,7 +76,7 @@ package component
 		//------------------------------------------------------------------------
 		override public function update():void {
 			updateBattery(1, battery1Lvl, _battery1);
-			updateTime();
+			//updateTime();
 		}
 		//------------------------------------------------------------------------
 		// 	dispose
@@ -186,11 +186,26 @@ package component
 			_aboveHighscoreT.setTextFormat(_aboveHighscoreF); 
 			this.addChild(_aboveHighscoreT);
 		}
+		//-----------------------------------------------------------------------------
+		// set time-string
+		//-----------------------------------------------------------------------------
+		public function set time(time:String):void {
+			trace(time);
+			this._time = time;
+		}
+		//-----------------------------------------------------------------------------
+		// get time string
+		//-----------------------------------------------------------------------------
+		public function get time():String {
+			return this._time;
+		} 
 		//------------------------------------------------------------------------
 		// 	update time graphics
 		//------------------------------------------------------------------------
-		protected function updateTime():void {
-			
+		protected function updateTime(t:uint):void {
+			if (_timeT != null) {
+				_timeT.text = this._time;
+			}
 		}
 		//------------------------------------------------------------------------
 		//
