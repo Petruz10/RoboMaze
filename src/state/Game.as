@@ -252,7 +252,7 @@ package state
 		private function updateHUDTime():void
 		{
 			m_hud.time = m_time;
-			trace("time" + m_time);
+		//	trace("time" + m_time);
 		}
 		
 		//------------------------------------------------------------------------
@@ -287,7 +287,6 @@ package state
 		//------------------------------------------------------------------------
 		// dispose methods
 		//------------------------------------------------------------------------
-		
 		private function disposeLayers():void
 		{
 			m_layer.removeChildren();
