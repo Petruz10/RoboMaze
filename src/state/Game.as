@@ -48,10 +48,9 @@ package state
 		private var m_hud;
 		
 		private var m_gameTime:Number = 0;
-		
-		private var sek:Number = 0;
-		
 		private var m_time:String;
+		private var min:int = 0;
+		private var sek:Number = 0;
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -115,15 +114,14 @@ package state
 		private function updateTimer():void
 		{
 			var hundraSek:Number;
-			var min:Number;
 			
 			m_gameTime += 1.666666666666667;
 			hundraSek = Math.round(m_gameTime);
 			
-			if(hundraSek == 100)
+			if(hundraSek == 98)
 			{
 				sek++; 
-				m_gameTime =0;
+				m_gameTime = 0;
 				if(sek == 60)
 				{
 					sek = 0;
@@ -131,12 +129,8 @@ package state
 				}
 			}
 			
-			if(!min) min = 0;
-			if(m_robot.battery.HP > 0) initTimer();
-			
 			m_time = min+":"+ sek + ":" +hundraSek;
-		//	
-			
+			if(m_robot.battery.HP > 0) initTimer();	
 		}
 		
 		private function initBattery():void
@@ -148,7 +142,6 @@ package state
 		
 		private function initBattery2():void
 		{
-			trace("battery2");
 			m_battery2 = new BatteryRefill();
 			addBattery();
 		}
