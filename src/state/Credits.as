@@ -1,5 +1,8 @@
 package state
 {
+	import component.HUD;
+	import component.SingleplayerHUD;
+	
 	import entity.BackButton;
 	
 	import se.lnu.stickossdk.display.DisplayState;
@@ -7,7 +10,6 @@ package state
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
-	import component.HUD;
 
 	
 	public class Credits extends DisplayState {
@@ -83,6 +85,9 @@ package state
 			_layerOverlay.y = 0;
 			_btn.x = 0;
 			_btn.y = 540;
+			
+			var hud:SingleplayerHUD = new SingleplayerHUD();
+			_layerOverlay.addChild(hud);
 			_layerOverlay.addChild(_btn);
 		}
 		//------------------------------------------------------------------------
