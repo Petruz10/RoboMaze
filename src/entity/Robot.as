@@ -5,7 +5,9 @@ package entity
 	//------------------------------------------------------------------------
 	import flash.display.Sprite;
 	
+	import se.lnu.stickossdk.fx.Effect;
 	import se.lnu.stickossdk.fx.Flash;
+	import se.lnu.stickossdk.fx.Flicker;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
@@ -24,23 +26,17 @@ package entity
 		public var hitBattery:Boolean = false;
 		
 		public var area:Sprite;
+		public var battery:Battery;
 		//------------------------------------------------------------------------
 		// private properties 
 		//------------------------------------------------------------------------
 		private var m_controls:EvertronControls = new EvertronControls();
 		
 		private var speed:int = 3;
-		private var hitSide:String;
-	
-		private var hitUp:Boolean;
-		private var hitDown:Boolean;
-		private var hitLeft:Boolean;
-		private var hitRight:Boolean;
-		
+		private var hitSide:String;		
 		private var m_player:int;
 		
-		
-		public var battery:Battery;
+		private var flickr:Flicker;
 		//------------------------------------------------------------------------
 		// Constructor methods
 		//------------------------------------------------------------------------		
@@ -70,6 +66,7 @@ package entity
 		override public function dispose():void
 		{
 			disposeSkin();
+			disposeGameOver();
 		}
 		
 		//------------------------------------------------------------------------
@@ -99,7 +96,7 @@ package entity
 		private function moveUp():void
 		{	
 			hitSide = "up";
-			if(!hitUp && battery.HP != 0) 
+			if(battery.HP != 0) 
 			{
 				_skin.y -= speed; 
 				_skin.gotoAndStop("back");
@@ -110,7 +107,7 @@ package entity
 		private function moveDown():void
 		{
 			hitSide = "down";
-			if(!hitDown && battery.HP != 0)
+			if(battery.HP != 0)
 			{
 				_skin.y += speed; 
 				_skin.gotoAndStop("front");
@@ -121,7 +118,7 @@ package entity
 		private function moveLeft():void
 		{
 			hitSide = "left";
-			if(!hitLeft && battery.HP != 0) 
+			if(battery.HP != 0) 
 			{
 				_skin.x -= speed; 
 				//_skin.scaleX *=- 1;
@@ -133,7 +130,7 @@ package entity
 		private function moveRight():void
 		{
 			hitSide = "right";
-			if(!hitRight && battery.HP != 0) 
+			if(battery.HP != 0) 
 			{
 				_skin.x += speed; 
 			//	_skin.scaleX *= 1;
@@ -163,7 +160,18 @@ package entity
 				hitBattery = false;
 				if(battery.HP > 100) battery.HP = 100;
 			}
-			if(battery.HP == 0) Session.timer.create(1000, gameOver);
+			
+			if(battery.HP == 0)
+			{
+				Session.timer.create(1000, gameOver);
+				initGameOver();
+			}
+		}
+		
+		private function initGameOver():void
+		{			
+			flickr = new Flicker(_skin, 1000, 30); //obj, tid (hur länge), intervall
+			Session.effects.add(flickr);
 		}
 		
 		private function gameOver():void
@@ -200,6 +208,12 @@ package entity
 			_skin = null;
 			battery = null;
 			trace("dispose Robot");
+		}
+		
+		private function disposeGameOver():void
+		{
+			flickr = null;
+			trace("dispose gameOver, flickr effekt");
 		}
 
 	}
