@@ -79,7 +79,7 @@ package state
 		override public function init():void {
 			initMenu();
 			initLayers();
-			//initSound();
+			initSound();
 		}
 		override public function update():void {
 			updateMenu();

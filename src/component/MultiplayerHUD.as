@@ -4,24 +4,32 @@ package component
 	{
 		private var _battery2:Battery_mc;
 		private var _battery2Lvl:int;
+		//------------------------------------------------------------------------
+		// 	Constructor
+		//------------------------------------------------------------------------
+		public function MultiplayerHUD() {
 
-		public function MultiplayerHUD()
-		{
-			trace("multiplayer");
-			super();
 		}
+		override public function init():void {
+			super.init();
+		}
+		//------------------------------------------------------------------------
+		// 	update
+		//------------------------------------------------------------------------
 		override public function update():void {
 			super.update();
 			super.updateBattery(2, battery2Lvl, _battery2);
 		}
+		//------------------------------------------------------------------------
+		// dispose
+		//------------------------------------------------------------------------
 		override public function dispose():void {
 			super.dispose();
 			disposeBattery();
 		}
-		override protected function initBackground():void {
-			super.initBackground();
-			trace("add bg");
-		}
+		//------------------------------------------------------------------------
+		// 	init battery
+		//------------------------------------------------------------------------
 		override protected function initBattery():void {
 			super.initBattery();
 			trace("add battery 2");
@@ -44,16 +52,14 @@ package component
 			return this._battery2Lvl;
 		}
 		//------------------------------------------------------------------------
-		// 
-		//------------------------------------------------------------------------
-		override protected function initHighscore():void{
-			trace("highscore på multiplayer?");
-		}
-		//------------------------------------------------------------------------
-		// 
+		// dispose battery 2
 		//------------------------------------------------------------------------
 		override protected function disposeBattery():void {
-			trace("dispose battery 2");
+			if(_battery2 != null){
+				super.disposeBattery();
+				this.removeChild(_battery2);
+				_battery2 = null;
+			}
 		}
 	}
 }

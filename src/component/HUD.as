@@ -48,7 +48,7 @@ package component
 		/*
 		* 	current higscore #1
 		*/
-		private var _highscore:int;
+		private var _highscore:String;
 		/*
 		* 	Visual representation of highscore
 		*/
@@ -77,6 +77,7 @@ package component
 		override public function update():void {
 			updateBattery(1, battery1Lvl, _battery1);
 			updateTime();
+			updateHighscore();
 		}
 		//------------------------------------------------------------------------
 		// 	dispose
@@ -86,12 +87,6 @@ package component
 			disposeBattery();
 			disposeTime();
 			disposeHighscore();
-		}
-		public function set battery1Lvl(batteryLvl:int):void {
-			this._battery1Lvl = batteryLvl;
-		}
-		public function get battery1Lvl():int {
-			return this._battery1Lvl;
 		}
 		protected function initFont():void {
 			_gameFont = new GameFont();
@@ -142,7 +137,7 @@ package component
 			
 		}
 		//------------------------------------------------------------------------
-		// 	init highscore graphics
+		// 	init highscore graphics // only one player
 		//------------------------------------------------------------------------
 		protected function initHighscore():void {
 			//-----------------------------------------------------------------------------
@@ -187,6 +182,23 @@ package component
 			this.addChild(_aboveHighscoreT);
 		}
 		//-----------------------------------------------------------------------------
+		// 
+		// 	SETTERS & GETTERS
+		//
+		//-----------------------------------------------------------------------------
+		//-----------------------------------------------------------------------------
+		// set battery lvl
+		//-----------------------------------------------------------------------------
+		public function set battery1Lvl(batteryLvl:int):void {
+			this._battery1Lvl = batteryLvl;
+		}
+		//-----------------------------------------------------------------------------
+		// get battery lvl
+		//-----------------------------------------------------------------------------
+		public function get battery1Lvl():int {
+			return this._battery1Lvl;
+		}
+		//-----------------------------------------------------------------------------
 		// set time-string
 		//-----------------------------------------------------------------------------
 		public function set time(time:String):void {
@@ -197,10 +209,27 @@ package component
 		//-----------------------------------------------------------------------------
 		public function get time():String {
 			return this._time;
+		}
+		//-----------------------------------------------------------------------------
+		// set highsore
+		//-----------------------------------------------------------------------------
+		public function set highscore(highscore:String):void {
+			this._highscore = highscore;
 		} 
+		//-----------------------------------------------------------------------------
+		// get highscore
+		//-----------------------------------------------------------------------------
+		public function get highscore():String {
+			return this._highscore;
+		}
 		//------------------------------------------------------------------------
-		// 	update time graphics
+		//
+		//	UPDATE METHODS
+		// 	
 		//------------------------------------------------------------------------
+		//-----------------------------------------------------------------------------
+		// update time textfield
+		//-----------------------------------------------------------------------------
 		protected function updateTime():void {
 			if (_time != null) {
 				_timeT.text = this._time;
@@ -208,6 +237,18 @@ package component
 			} else {
 				_timeT.text = "00:00:00";
 				_timeT.setTextFormat(_timeF);
+			}
+		}
+		//-----------------------------------------------------------------------------
+		// update highscore
+		//-----------------------------------------------------------------------------
+		private function updateHighscore():void {
+			if (_highscore != null) {
+				_highscoreT.text = this._highscore;
+				_highscoreT.setTextFormat(_highscoreF);
+			} else {
+				_highscoreT.text = "00:00:00";
+				_highscoreT.setTextFormat(_highscoreF);
 			}
 		}
 		//------------------------------------------------------------------------
@@ -268,21 +309,28 @@ package component
 		// 	dispose battery
 		//------------------------------------------------------------------------
 		protected function disposeBattery():void {
-			this.removeChild(_battery1);
-			_battery1 = null;
+			if (_battery1 != null) {
+				this.removeChild(_battery1);
+				_battery1 = null;
+			}
 		}
 		//------------------------------------------------------------------------
 		// 	dispose time
 		//------------------------------------------------------------------------
 		protected function disposeTime():void {
-			this.removeChild(_timeT);
-			_timeT = null;
+			if(_timeT != null){
+				this.removeChild(_timeT);
+				_timeT = null;
+			}
 		}
 		//------------------------------------------------------------------------
 		//	dispose highscore
 		//------------------------------------------------------------------------
-		protected function disposeHighscore():void {
-			trace("dispose HUD highscore");
+		private function disposeHighscore():void {
+			if(_highscoreT != null) {
+				this.removeChild(_highscoreT);
+				_highscoreT = null;
+			}
 		}
 
 	}

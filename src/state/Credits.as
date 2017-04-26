@@ -1,14 +1,13 @@
 package state
 {
 	import entity.BackButton;
-	import component.HUD;
-	import component.MultiplayerHUD;
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
+	import component.HUD;
 
 	
 	public class Credits extends DisplayState {
@@ -32,7 +31,6 @@ package state
 		*	controls
 		*/
 		private var _controls:EvertronControls = new EvertronControls;
-		private var hud:MultiplayerHUD = new MultiplayerHUD();
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -74,7 +72,6 @@ package state
 			_layerBackground.y = 0;
 			
 			_layerBackground.addChild(_bgImg);
-			_layerBackground.addChild(hud);
 		}
 		//------------------------------------------------------------------------
 		// init "menu" --> back btn

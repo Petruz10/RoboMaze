@@ -13,7 +13,7 @@ package state
 		/*
 		* how long the splashscreen will show
 		*/
-		private const TIMER:int = 300; // 5 sec
+		private const TIMER:int = 180; // 3 sec
 		/*
 		* background layer
 		*/
@@ -29,7 +29,7 @@ package state
 		/*
 		* background img
 		*/
-		private var _backgroundImg:Splashscreen_test;
+		private var _backgroundImg:SplashScreenLogo_mc;
 		/*
 		* background img
 		*/
@@ -66,8 +66,8 @@ package state
 		//------------------------------------------------------------------------
 		private function updateCounter():void {
 			_counter++
-			if (_counter == TIMER) { Session.application.displayState = new Menu; }
-			if (_counter == 240) {
+			if (_counter == TIMER) { Session.application.displayState = new Menu, 1000 }
+			if (_counter == 120) {
 				updateSound();
 			}
 		}
@@ -81,19 +81,21 @@ package state
 		// init layers
 		//------------------------------------------------------------------------
 		private function initLayers():void {
-			_backgroundImg = new Splashscreen_test;
-			_layerBackground = layers.add(LAYER_BACKGROUND);
+			_backgroundImg = new SplashScreenLogo_mc;
+			_backgroundImg.x = 350;
+			_backgroundImg.y = 270;
+			_backgroundImg.play();
 			
+			_layerBackground = layers.add(LAYER_BACKGROUND);
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
-			
 			_layerBackground.addChild(_backgroundImg);
 		}
 		//------------------------------------------------------------------------
 		// init sound
 		//------------------------------------------------------------------------
 		private function initSound():void {
-			Session.sound.musicChannel.sources.add("splashscreen", SplashScreenSound);
+			Session.sound.musicChannel.sources.add("splashscreen", SplashSound_mp3);
 			_backgroundMusic = Session.sound.musicChannel.get("splashscreen");
 			_backgroundMusic.volume = 0.4;
 			_backgroundMusic.play();
