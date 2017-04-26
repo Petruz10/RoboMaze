@@ -51,6 +51,8 @@ package state
 		private var m_time:String;
 		private var min:int = 0;
 		private var sek:Number = 0;
+		
+		private var m_score:int = 0;
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -115,6 +117,8 @@ package state
 		{
 			var hundraSek:Number;
 			
+			m_score ++;
+			
 			m_gameTime += 1.666666666666667;
 			hundraSek = Math.round(m_gameTime);
 			
@@ -131,6 +135,31 @@ package state
 			
 			m_time = min+":"+ sek + ":" +hundraSek;
 			if(m_robot.battery.HP > 0) initTimer();	
+			else	initHighScore();
+			
+			
+			trace(m_score);
+		}
+		
+		private function initHighScore():void
+		{
+			trace("highscore");
+			var table:int = 1;
+			var score:int = m_score;
+			var range:int = 10;
+			
+			Session.highscore.smartSend(table, score, range, gameOver);
+		}
+		
+		private function gameOver(a):void
+		{
+			trace("a", a);
+			Session.timer.create(1000, initGameOver);
+		}
+		
+		private function initGameOver():void
+		{
+			Session.application.displayState = new GameOver;
 		}
 		
 		private function initBattery():void

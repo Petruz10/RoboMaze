@@ -65,18 +65,6 @@ package game
 			super.addHUD(m_hud);
 		}
 		
-		/*override public function update():void
-		{
-			//trace("update singleplayer");
-			//updateHUD();
-		}*/
-		
-		private function updateHUD():void
-		{
-			//m_hud.battery1Lvl = m_robot.m_battery.HP;
-			//trace(m_hud.battery1Lvl);
-		}
-		
 		override public function dispose():void
 		{
 			disposeAvatar();

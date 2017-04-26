@@ -5,8 +5,6 @@ package entity
 	//------------------------------------------------------------------------
 	import flash.display.Sprite;
 	
-	import se.lnu.stickossdk.fx.Effect;
-	import se.lnu.stickossdk.fx.Flash;
 	import se.lnu.stickossdk.fx.Flicker;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
@@ -44,7 +42,6 @@ package entity
 		{
 			super();
 			m_controls.player = controls;
-			
 			m_player = controls;
 		}
 		//------------------------------------------------------------------------
@@ -163,20 +160,14 @@ package entity
 			
 			if(battery.HP == 0)
 			{
-				Session.timer.create(1000, gameOver);
 				initGameOver();
 			}
 		}
 		
 		private function initGameOver():void
 		{			
-			flickr = new Flicker(_skin, 1000, 30); //obj, tid (hur länge), intervall
+			flickr = new Flicker(_skin, 1000, 20); //obj, tid (hur länge), intervall
 			Session.effects.add(flickr);
-		}
-		
-		private function gameOver():void
-		{
-			Session.application.displayState = new GameOver;
 		}
 
 		private function initSkin():void
