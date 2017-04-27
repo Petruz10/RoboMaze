@@ -46,7 +46,7 @@ package state
 		/*
 		* 	current menu choice
 		*/
-		private var _menuBtn:int; // index representation
+		private var _menuIndex:int; // index representation
 		/*
 		* 	current menu choice
 		*/
@@ -98,7 +98,7 @@ package state
 		//------------------------------------------------------------------------
 		private function initMenu():void {
 			_menuBtnIndexArray = [0, 1, 2 ,3 ] // 0 = oneplayer, 1 = twoplayer, 2 = highscore, 3 = credits
-			_menuBtn = _menuBtnIndexArray[0];
+			_menuIndex = _menuBtnIndexArray[0];
 		}
 		//------------------------------------------------------------------------
 		// 	init state-layeres
@@ -184,11 +184,11 @@ package state
 		//------------------------------------------------------------------------
 		private function updateMenu():void {
 			if(Input.keyboard.justPressed(_controls.PLAYER_DOWN)) { 
-				if(_menuBtn < 3) { _menuBtn++ ;}
+				if(_menuIndex < 3) { _menuIndex++ ;}
 				toggleActivation();
 			}
 			if(Input.keyboard.justPressed(_controls.PLAYER_UP)) { 
-				if (_menuBtn > 0) { _menuBtn--; }
+				if (_menuIndex > 0) { _menuIndex--; }
 				toggleActivation();
 			}
 		}
@@ -197,16 +197,16 @@ package state
 		//------------------------------------------------------------------------
 		private function toggleActivation():void {
 				var choosenBtn:MenuButton;
-				choosenBtn = _btnArray[_menuBtn];
+				choosenBtn = _btnArray[_menuIndex];
 				for (var i:int = 0; i < _btnArray.length; i++) { _btnArray[i].deactivate(); }
-				if (choosenBtn.id == _menuBtn ) { choosenBtn.activate(); } 
+				if (choosenBtn.id == _menuIndex ) { choosenBtn.activate(); } 
 		}
 		//------------------------------------------------------------------------
 		// 	update controls
 		//------------------------------------------------------------------------
 		private function changeState():void {
 			if(Input.keyboard.justPressed(_controls.PLAYER_BUTTON_1) == true){
-				switch (_menuBtn) {
+				switch (_menuIndex) {
 					case 0:
 						Session.application.displayState = new Singleplayer;
 					break;

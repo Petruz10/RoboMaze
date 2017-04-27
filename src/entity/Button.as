@@ -19,7 +19,8 @@ package entity
 			
 		}
 		override public function dispose():void {
-			
+			this.removeChild(_skin);
+            _skin = null;
 		}
 		protected function initSound():void{
 			

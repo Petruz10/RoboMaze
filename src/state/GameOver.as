@@ -11,9 +11,10 @@ package state
 	//------------------------------------------------------------------------
 	// 	entity
 	//------------------------------------------------------------------------
-	import entity.BackButton;
-
 	import entity.Button;
+	import entity.BackButton;
+	import entity.RetryButton;
+
 	import flash.net.SharedObject;
 	import game.Multiplayer;
 	import game.Singleplayer;
@@ -32,14 +33,6 @@ package state
 		*/
 		private var _layerOverlay:DisplayStateLayer;
 		/*
-		*	back btn
-		*/
-		private var _btn:BackButton;
-		/*
-		*	retry the game
-		*/
-		private var _retryBtn:Button;1
-		/*
 		*	background image
 		*/
 		private var _bgImg:BgImgTest;
@@ -50,7 +43,26 @@ package state
 		/*
 		*	current menu choice
 		*/
-		private var _menuBtn:int; 
+		private var _menuIndex:int;
+		/*
+		*
+		*/
+		private var _menuBtn:BackButton;
+		/*
+		*
+		*/
+		private var _retryBtn:RetryButton;
+		/*
+		*
+		*/
+		private var _btnArray:Array;
+		/*
+		*
+		*/
+		private var _menuIndexIndexArray:Array;
+		/*
+		* 1 = oneplayer game, 2 = twoplayer game
+		*/
 		private var _game:int;
 		//------------------------------------------------------------------------
 		// constructor
@@ -61,7 +73,7 @@ package state
 		// init
 		//------------------------------------------------------------------------
 		override public function init():void {
-            trace("GAME OVER");
+			trace("game over");
 			initLayers();
 			initSharedObj();
 		}
@@ -69,6 +81,7 @@ package state
 		// update
 		//------------------------------------------------------------------------
 		override public function update():void {
+			updateMenu();
 			changeState();
 		}
 		//------------------------------------------------------------------------
@@ -85,16 +98,19 @@ package state
 			initBackground();
 			initOverlay();
 		}
-		
+		//------------------------------------------------------------------------
+		//
+		//------------------------------------------------------------------------
 		private function initSharedObj():void
 		{
 			var players:SharedObject = SharedObject.getLocal("players");
 			_game = players.data.players;
-			trace(_game);
 		}
+		//------------------------------------------------------------------------
+		//
+		//------------------------------------------------------------------------
 		private function initBackground():void {
 			_bgImg = new BgImgTest();
-		1
 			_layerBackground = layers.add("MENU_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
@@ -105,26 +121,68 @@ package state
 		// init "menu" --> back btn
 		//------------------------------------------------------------------------
 		private function initOverlay():void {
-			_btn = new BackButton();
-			_layerOverlay = layers.add("BACK_BTN");
+			_layerOverlay = layers.add("OVERLAY");
 			_layerOverlay.x = 0;
 			_layerOverlay.y = 0;
-			_btn.x = 0;
-			_btn.y = 540;
-			_layerOverlay.addChild(_btn);
+			
+			_retryBtn = new RetryButton();
+			_menuBtn = new BackButton();
+
+			trace(_retryBtn);
+			trace(_menuBtn);
+			
+			_menuIndexIndexArray = [0, 1] // 0 = retry, 1 = menu
+			_menuIndex = _menuIndexIndexArray[0];
+			toggleActivation();
+			
+		/*	_btnArray.push(_retryBtn);
+			_btnArray.push(_menuIndex); */
+			
+			_menuBtn.y = 540;
+			_menuBtn.x = 390 - (_menuBtn.width/2);
+			_retryBtn.y = 490;
+			_retryBtn.x = 400 - (_retryBtn.width/2);
+			
+			_layerOverlay.addChild(_retryBtn);
+			_layerOverlay.addChild(_menuBtn);
+		}
+		//------------------------------------------------------------------------
+		// 	updates menu. default choice = 0 <--- singleplayer
+		//------------------------------------------------------------------------
+		private function updateMenu():void {
+			if(Input.keyboard.justPressed(_controls.PLAYER_DOWN)) { 
+				if(_menuIndex < 1) { _menuIndex++ ;}
+				toggleActivation();
+			}
+			if(Input.keyboard.justPressed(_controls.PLAYER_UP)) { 
+				if (_menuIndex > 0) { _menuIndex--; }
+				toggleActivation();
+			}
+		}
+		//------------------------------------------------------------------------
+		// 	activate // deactivate links
+		//------------------------------------------------------------------------
+		private function toggleActivation():void {
+				if(_menuIndex == 1) {
+					_menuBtn.activate();
+					_retryBtn.deactivate();
+				} else {
+					_menuBtn.deactivate();
+					_retryBtn.activate();
+				}
 		}
 		//------------------------------------------------------------------------
 		// change state -- > back to menu
 		//------------------------------------------------------------------------
 		private function changeState():void {
 			if(Input.keyboard.justPressed(_controls.PLAYER_BUTTON_1) == true){
-				if(_menuBtn == 0) {
+				if(_menuIndex == 1) {
 					Session.application.displayState = new Menu;
 				} 
-				else if ((_menuBtn == 0) && (_game == 1)) {
+				else if ((_menuIndex == 0) && (_game == 1)) {
 					Session.application.displayState = new Singleplayer;
 				}
-				else if ((_menuBtn == 1) && (_game == 2)) {
+				else if ((_menuIndex == 0) && (_game == 2)) {
 					Session.application.displayState = new Multiplayer;
 				}
 			}

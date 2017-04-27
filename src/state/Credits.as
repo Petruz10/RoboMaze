@@ -1,8 +1,5 @@
 package state
 {
-	import component.HUD;
-	import component.SingleplayerHUD;
-	
 	import entity.BackButton;
 	
 	import se.lnu.stickossdk.display.DisplayState;
@@ -28,7 +25,7 @@ package state
 		/*
 		*	back btn 
 		*/
-		private var _btn:BackButton;
+		private var _menuBtn:BackButton;
 		/*
 		*	controls
 		*/
@@ -44,6 +41,7 @@ package state
 		//------------------------------------------------------------------------
 		override public function init():void {
 			initLayers();
+			Session.application.displayState = new GameOver;
 		}
 		//------------------------------------------------------------------------
 		// update
@@ -79,16 +77,15 @@ package state
 		// init "menu" --> back btn
 		//------------------------------------------------------------------------
 		private function initOverlay():void {
-			_btn = new BackButton();
+			_menuBtn = new BackButton();
 			_layerOverlay = layers.add("BACK_BTN");
 			_layerOverlay.x = 0;
 			_layerOverlay.y = 0;
-			_btn.x = 0;
-			_btn.y = 540;
+			_menuBtn.x = 400 - (_menuBtn.width/2);
+			_menuBtn.y = 540;
+			_menuBtn.pulse();
 			
-			var hud:SingleplayerHUD = new SingleplayerHUD();
-			_layerOverlay.addChild(hud);
-			_layerOverlay.addChild(_btn);
+			_layerOverlay.addChild(_menuBtn);
 		}
 		//------------------------------------------------------------------------
 		// change state
@@ -109,7 +106,7 @@ package state
 		// dispose overlay
 		//------------------------------------------------------------------------
 		private function disposeOverlay():void {
-			_btn = null;
+			_menuBtn = null;
 			_layerOverlay = null;
 		}
 	}

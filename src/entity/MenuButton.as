@@ -11,8 +11,7 @@ package entity
 		public function MenuButton(id:int)	{	
             this.id = id;
 			super();
-			super.initSound();
-			initUI();
+			initSkin();
 		}
 		//------------------------------------------------------------------------
 		// init
@@ -30,12 +29,12 @@ package entity
 		// dispose
 		//------------------------------------------------------------------------
 		override public function dispose():void {
-			
+			super.dispose();
 		}
 		//------------------------------------------------------------------------
 		// initUI apply btn skin
 		//------------------------------------------------------------------------
-		private function initUI():void {
+		private function initSkin():void {
             switch(id) {
 				case 0:
 					_skin = new OnePlayerBtn_mc(); 

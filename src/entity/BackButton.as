@@ -1,10 +1,10 @@
 package entity
 {
-	public class BackButton extends Entity {
+	public class BackButton extends Button {
 		
         public function BackButton()	{	
 			super();
-			initUI();
+			initSkin();
 		}
 		override public function init():void {
 
@@ -13,11 +13,15 @@ package entity
 			
 		}
 		override public function dispose():void {
-			
+			super.dispose();
 		}
-		protected function initUI():void {
-            _skin = new BackBtn();
+		protected function initSkin():void {
+            _skin = new MenuBtn_mc();
+			_skin.stop();
 			this.addChild(_skin);
+		}
+		public function pulse():void {
+			_skin.play();
 		}
 	}
 }

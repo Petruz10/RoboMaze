@@ -85,13 +85,14 @@ package state
 		//------------------------------------------------------------------------
 		private function initHighscoreTable():void {
 			_btn = new BackButton();
-
 			_layerHighscoreTable = layers.add("HIGHSCORE_TABLE");
 			_layerHighscoreTable.x = 0;
 			_layerHighscoreTable.y = 0;
-
-			_btn.x = 0;
+			
+			_btn.x = 400 - (_btn.width/2);
 			_btn.y = 540;
+			_btn.pulse();
+
 			_layerHighscoreTable.addChild(_btn);
 		}
 		//------------------------------------------------------------------------
