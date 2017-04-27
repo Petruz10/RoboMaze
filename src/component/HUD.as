@@ -1,6 +1,7 @@
 package component
 {	
 	import flash.display.MovieClip;
+	import flash.media.Sound;
 	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -10,6 +11,9 @@ package component
 	import font.GameFont;
 	
 	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
+	import se.lnu.stickossdk.media.SoundObject;
+	import se.lnu.stickossdk.system.Session;
+
 	/*
 	*
 	* game HUD	
@@ -29,6 +33,13 @@ package component
 		*/
 		protected var _backgroundImg:HUD_BG_mc;
 		/*
+		*
+		*/
+		protected var _backgroundMusic:SoundObject;
+		protected var _warning:SoundObject;
+		protected var _shutdown:SoundObject;
+		protected var _activate:SoundObject;
+		/*
 		* 	Battery representation
 		*/
 		protected var _battery1:Battery_mc;
@@ -42,6 +53,7 @@ package component
 		protected var _gameFont:GameFont;
 		protected var _timeT:TextField;
 		protected var _timeF:TextFormat;
+	
 		//------------------------------------------------------------------------
 		// 	Constructor
 		//------------------------------------------------------------------------
@@ -55,13 +67,15 @@ package component
 			initBattery();
 			initTime();
 			initFont();
+			initSound();
 		}
 		//------------------------------------------------------------------------
 		// 	on update
 		//------------------------------------------------------------------------
 		override public function update():void {
-			updateBattery(1, battery1Lvl, _battery1);
+			updateBattery(battery1Lvl, _battery1);
 			updateTime();
+			updateSound(battery1Lvl);
 		}
 		//------------------------------------------------------------------------
 		// 	dispose
@@ -70,6 +84,25 @@ package component
 			disposeBackground();
 			disposeBattery();
 			disposeTime();
+		}
+		protected function initSound():void {
+			Session.sound.musicChannel.sources.add("activate", Robot_Activate_mp3);
+			_activate = Session.sound.musicChannel.get("activate");
+			_activate.volume = 0.6;
+			_activate.play();
+			
+			Session.sound.musicChannel.sources.add("warning", Robot_Warning_mp3);
+			_warning = Session.sound.musicChannel.get("warning");
+			_warning.volume = 0.5;
+
+			Session.sound.musicChannel.sources.add("shutdown", Robot_Shutdown_mp3);
+			_shutdown = Session.sound.musicChannel.get("shutdown");
+			_shutdown.volume = 0.5;
+
+			Session.sound.musicChannel.sources.add("game_bgmusic", GameBackgroundMusic);
+			_backgroundMusic = Session.sound.musicChannel.get("game_bgmusic");
+			_backgroundMusic.volume = 0.5;
+			_backgroundMusic.play();
 		}
 		protected function initFont():void {
 			_gameFont = new GameFont();
@@ -154,6 +187,23 @@ package component
 		// 	
 		//------------------------------------------------------------------------
 		//-----------------------------------------------------------------------------
+		// @param	i		int		battery lvl
+		//-----------------------------------------------------------------------------
+		public function updateSound(i:int):void {
+			switch (i) {
+				case 50:
+					_warning.play();
+				break;
+				case 30:
+					_warning.play();
+				break;
+				case 10:
+					_shutdown.play();
+				break;
+			}
+
+		}
+		//-----------------------------------------------------------------------------
 		// update time textfield
 		//-----------------------------------------------------------------------------
 		protected function updateTime():void {
@@ -169,12 +219,11 @@ package component
 		//
 		// 	update battery graphics
 		//
-		// @param	i	int 		battery 1 or battery 2
 		// @param	a	int			battery lvl
 		// @param 	b  	MovieClip	the graphics that will change
 		//
 		//------------------------------------------------------------------------
-		protected function updateBattery(i:int, a:int, b:MovieClip):void {
+		protected function updateBattery(a:int, b:MovieClip):void {
 			switch (a) {
 				case 100:
 					b.gotoAndStop(1);

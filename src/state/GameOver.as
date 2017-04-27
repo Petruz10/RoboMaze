@@ -69,7 +69,6 @@ package state
 		// init
 		//------------------------------------------------------------------------
 		override public function init():void {
-			trace("game over");
 			initLayers();
 			initSharedObj();
 		}
@@ -123,9 +122,6 @@ package state
 			
 			_retryBtn = new RetryButton();
 			_menuBtn = new BackButton();
-
-			trace(_retryBtn);
-			trace(_menuBtn);
 			
 			_menuIndexIndexArray = [0, 1] // 0 = retry, 1 = menu
 			_menuIndex = _menuIndexIndexArray[0];
@@ -184,13 +180,19 @@ package state
 		// dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
-			trace("dispose game over background");
+			_layerBackground.removeChild(_bgImg);
+			_bgImg = null;
+			_layerBackground = null;
 		}
 		//------------------------------------------------------------------------
 		// dispose overlay
 		//------------------------------------------------------------------------
 		private function disposeOverlay():void {
-			trace("dispose game over overlay");
+			_layerOverlay.removeChild(_retryBtn);
+			_layerOverlay.removeChild(_menuBtn);
+			_retryBtn = null;
+			_menuBtn = null;
+			_layerOverlay = null;
 		}
 	}
 }
