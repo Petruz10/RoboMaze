@@ -221,8 +221,8 @@ package entity
 			if(m_player == 0)_skin = new Robot1_mc();
 			else if(m_player == 1) _skin = new Robot2_mc();
 			
-			_skin.width = 35;
-			_skin.height = 35;
+			//_skin.width = 35;
+			//_skin.height = 35;
 			_skin.gotoAndStop("front");
 			
 			var square:Sprite = new Sprite();
