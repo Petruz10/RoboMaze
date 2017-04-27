@@ -9,6 +9,7 @@ package game
 	import entity.Robot;
 	
 	import state.Game;
+	import component.SingleplayerHUD;
 
 	//------------------------------------------------------------------------
 	// Public class Singleplayer
@@ -57,7 +58,7 @@ package game
 		
 		private function initHUD():void
 		{
-			m_hud = new HUD();
+			m_hud = new SingleplayerHUD();
 			
 			m_hud.x = 0;
 			m_hud.y=0;

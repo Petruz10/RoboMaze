@@ -117,7 +117,7 @@ package state
 		{
 			var hundraSek:Number;
 			
-			m_score ++;
+			m_score += 1.666666666666667;
 			
 			m_gameTime += 1.666666666666667;
 			hundraSek = Math.round(m_gameTime);
@@ -133,11 +133,13 @@ package state
 				}
 			}
 			
+			var x:int = 1;
+			
 			m_time = min+":"+ sek + ":" +hundraSek;
 			if(m_robot.battery.HP > 0) initTimer();	
-			else	initHighScore();
 			
-			
+			if(m_players == 1 && m_robot.battery.HP == 0) initHighScore();
+			else if (m_players == 2 && m_robot.battery.HP == 0 || m_robot2.battery.HP == 0) gameOver(x);
 			trace(m_score);
 		}
 		
@@ -149,11 +151,18 @@ package state
 			var range:int = 10;
 			
 			Session.highscore.smartSend(table, score, range, gameOver);
+			Session.highscore.receive(table, 10, hej);
+			//trace("highscore grejs", Session.highscore.receive(table, 10, hej));
 		}
 		
-		private function gameOver(a):void
+		private  function hej(e:XML):void
 		{
-			trace("a", a);
+			trace(e);
+		}
+		
+		private function gameOver(e):void
+		{
+			trace("a", e);
 			Session.timer.create(1000, initGameOver);
 		}
 		
