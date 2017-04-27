@@ -35,6 +35,14 @@ package entity
 		private var m_player:int;
 		
 		private var flickr:Flicker;
+		
+		private var up:Boolean = false;
+		private var down:Boolean = false;
+		private var right:Boolean = false;
+		private var left:Boolean = false;
+
+
+
 		//------------------------------------------------------------------------
 		// Constructor methods
 		//------------------------------------------------------------------------		
@@ -55,8 +63,8 @@ package entity
 		
 		override public function update():void
 		{
-			updateControls();
-			if(hit) hitt();
+			if(!hit)updateControls();
+			else if(hit) hitt();
 			checkHit();
 		}
 		
@@ -70,79 +78,117 @@ package entity
 		// private methods
 		//------------------------------------------------------------------------
 		private function updateControls():void
-		{
+		{	
 			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) 
 			{
+				//if(!down && !up && !right) left = true;
 				this.moveLeft(); 
+				
 				return;
 			}
 			else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) 
 			{
+			//	if(!down && !up && !left) right = true;
 				this.moveRight(); return;
+				
 			}
 			else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) 
 			{
+			//	if(!right && !up && !left) down = true;
 				this.moveDown(); return;
+				
 			}
 			else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) 
 			{
+				//if(!down && !right && !left)up = true;
 				this.moveUp(); return;
 			}
 		}
 		
 		private function moveUp():void
 		{	
+			
+			
 			hitSide = "up";
 			if(battery.HP != 0) 
 			{
 				_skin.y -= speed; 
 				_skin.gotoAndStop("back");
-				return;
 			}
+			return;
 		}
 		
 		private function moveDown():void
 		{
+		/*	up = false;
+			down = true;
+			left = false;
+			right = false;*/
+			
 			hitSide = "down";
 			if(battery.HP != 0)
 			{
 				_skin.y += speed; 
 				_skin.gotoAndStop("front");
-				return;
 			}
+			return;
 		}
 		
 		private function moveLeft():void
 		{
+			/*up = false;
+			down = false;
+			left = true;
+			right = false;
+			*/
+			
 			hitSide = "left";
 			if(battery.HP != 0) 
 			{
 				_skin.x -= speed; 
 				//_skin.scaleX *=- 1;
 				_skin.gotoAndStop("side");
-				return;	
 			}
+			return;
 		}
 		
 		private function moveRight():void
-		{
+		{/*
+			up = false;
+			down = false;
+			left = false;
+			right = true;*/
+			
 			hitSide = "right";
 			if(battery.HP != 0) 
 			{
 				_skin.x += speed; 
 			//	_skin.scaleX *= 1;
 				_skin.gotoAndStop("side");
-				return;
 			}
-			
+			return;
+
 		}
 		
 		private function hitt():void
 		{
-			if(hitSide == "up") _skin.y += speed;
-			if(hitSide == "down") _skin.y -= speed;
-			if(hitSide == "left") _skin.x += speed;
-			if(hitSide == "right") _skin.x -= speed;
+			if(hitSide == "up")
+			{
+				_skin.y += speed; up = false;
+			}
+			else if(hitSide == "down")
+			{
+				_skin.y -= speed; down = false;
+			}
+			else if(hitSide == "left") 
+			{
+				_skin.x += speed; left = false;
+			}
+			else if(hitSide == "right") 
+			{
+				_skin.x -= speed;
+				right = false;
+			}
 			
 			hit = false;
 			
