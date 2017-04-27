@@ -18,7 +18,8 @@ package component
 		//------------------------------------------------------------------------
 		override public function update():void {
 			super.update();
-			super.updateBattery(2, battery2Lvl, _battery2);
+			super.updateBattery(battery2Lvl, _battery2);
+			super.updateSound(battery2Lvl);
 		}
 		//------------------------------------------------------------------------
 		// dispose
