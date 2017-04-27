@@ -79,7 +79,7 @@ package state
 		override public function init():void {
 			initMenu();
 			initLayers();
-			initSound();
+			//initSound();
 		}
 		override public function update():void {
 			updateMenu();
@@ -91,7 +91,6 @@ package state
 		override public function dispose():void {
 			_controls = null;
 			disposeOverlay();
-			disposeSound();
 			disposeBackground();
 		}
 		//------------------------------------------------------------------------
@@ -241,12 +240,6 @@ package state
 		private function disposeRobot():void {
 			_robot = null;
 			_layerOverlay.removeChild(_robot);
-		}
-		//------------------------------------------------------------------------
-		// 	remove sound
-		//------------------------------------------------------------------------
-		private function disposeSound():void {
-
 		}
 }
 }
