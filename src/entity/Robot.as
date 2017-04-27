@@ -20,7 +20,7 @@ package entity
 		//------------------------------------------------------------------------
 		// public properties 
 		//------------------------------------------------------------------------
-		public var hit:Boolean;
+		public var hit:Boolean = false;
 		public var hitBattery:Boolean = false;
 		
 		public var area:Sprite;
@@ -63,6 +63,7 @@ package entity
 		
 		override public function update():void
 		{
+			trace("hit", hit);
 			if(!hit)updateControls();
 			else if(hit) hitt();
 			checkHit();
@@ -79,6 +80,7 @@ package entity
 		//------------------------------------------------------------------------
 		private function updateControls():void
 		{	
+			trace("controls");
 			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) 
 			{
 				//if(!down && !up && !right) left = true;
@@ -226,8 +228,8 @@ package entity
 			_skin.gotoAndStop("front");
 			
 			var square:Sprite = new Sprite();
-			//square.graphics.beginFill(0xCCFF00);
-			square.graphics.drawRect(100, 130, 230, 250);
+			square.graphics.beginFill(0xCCFF00);
+			square.graphics.drawRect(2, 7, 23, 25);
 			
 			_skin.hitArea = square;
 			area = _skin.hitArea;
