@@ -55,10 +55,6 @@ package state
 		/*
 		*
 		*/
-		private var _btnArray:Array;
-		/*
-		*
-		*/
 		private var _menuIndexIndexArray:Array;
 		/*
 		* 1 = oneplayer game, 2 = twoplayer game
@@ -134,9 +130,6 @@ package state
 			_menuIndexIndexArray = [0, 1] // 0 = retry, 1 = menu
 			_menuIndex = _menuIndexIndexArray[0];
 			toggleActivation();
-			
-		/*	_btnArray.push(_retryBtn);
-			_btnArray.push(_menuIndex); */
 			
 			_menuBtn.y = 540;
 			_menuBtn.x = 390 - (_menuBtn.width/2);

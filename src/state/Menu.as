@@ -17,8 +17,8 @@ package state
 	
 	import state.Credits;
 	import state.Highscore;
-	import state.Multiplayer;
-	import state.Singleplayer;
+	import game.Multiplayer;
+	import game.Singleplayer;
 	//------------------------------------------------------------------------
 	//	Menu state
 	//------------------------------------------------------------------------
