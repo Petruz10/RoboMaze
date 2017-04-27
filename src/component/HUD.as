@@ -39,6 +39,7 @@ package component
 		protected var _warning:SoundObject;
 		protected var _shutdown:SoundObject;
 		protected var _activate:SoundObject;
+		protected var _death:SoundObject;
 		/*
 		* 	Battery representation
 		*/
@@ -88,16 +89,20 @@ package component
 		protected function initSound():void {
 			Session.sound.musicChannel.sources.add("activate", Robot_Activate_mp3);
 			_activate = Session.sound.musicChannel.get("activate");
-			_activate.volume = 0.6;
+			_activate.volume = 0.7;
 			_activate.play();
 			
 			Session.sound.musicChannel.sources.add("warning", Robot_Warning_mp3);
 			_warning = Session.sound.musicChannel.get("warning");
-			_warning.volume = 0.5;
+			_warning.volume = 0.4;
 
 			Session.sound.musicChannel.sources.add("shutdown", Robot_Shutdown_mp3);
 			_shutdown = Session.sound.musicChannel.get("shutdown");
 			_shutdown.volume = 0.5;
+
+			Session.sound.musicChannel.sources.add("death", Robot_Death_mp3);
+			_death = Session.sound.musicChannel.get("death");
+			_death.volume = 0.2;
 
 			Session.sound.musicChannel.sources.add("game_bgmusic", GameBackgroundMusic);
 			_backgroundMusic = Session.sound.musicChannel.get("game_bgmusic");
@@ -199,6 +204,7 @@ package component
 				break;
 				case 10:
 					_shutdown.play();
+					_death.play();
 				break;
 			}
 
