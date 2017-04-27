@@ -139,13 +139,15 @@ package state
 			if(m_robot.battery.HP > 0) initTimer();	
 			
 			if(m_players == 1 && m_robot.battery.HP == 0) initHighScore();
-			else if (m_players == 2 && m_robot.battery.HP == 0 || m_robot2.battery.HP == 0) gameOver(x);
-			trace(m_score);
+			if (m_players == 2) 
+			{
+				if(m_players == 2 && m_robot.battery.HP == 0 || m_robot2.battery.HP == 0) gameOver(x); return;
+			}
+			
 		}
 		
 		private function initHighScore():void
 		{
-			trace("highscore");
 			var table:int = 1;
 			var score:int = m_score;
 			var range:int = 10;
@@ -162,7 +164,7 @@ package state
 		
 		private function gameOver(e):void
 		{
-			trace("a", e);
+			//trace("a", e);
 			Session.timer.create(1000, initGameOver);
 		}
 		
