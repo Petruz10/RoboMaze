@@ -115,6 +115,8 @@ package state
 		
 		private function updateTimer():void
 		{
+			checkBattery();
+			
 			var hundraSek:Number;
 			
 			m_score += 1.666666666666667;
@@ -133,24 +135,26 @@ package state
 				}
 			}
 			
-			var x:int = 1;
-			
 			m_time = min+":"+ sek + ":" +hundraSek;
-			if(m_robot.battery.HP > 0) initTimer();	
-			
-			if(m_players == 1 && m_robot.battery.HP == 0) initHighScore();
-			
+		}
+		
+		private function checkBattery():void
+		{
 			if (m_players == 2) 
 			{
-				if(m_robot.battery.HP == 0 || m_robot2.battery.HP == 0) 
+				if(m_robot2.battery.HP > 0 && m_robot.battery.HP > 0) initTimer();	
+				
+				if(m_robot.battery.HP <= 0 || m_robot2.battery.HP <= 0) 
 				{
-					trace("game over multiplayer");
-					trace("battery 1", m_robot.battery.HP);
-					trace("battery 2", m_robot2.battery.HP);
 					Session.timer.create(1000, initGameOver);
 				}
 			}
-			
+			else
+			{
+				if(m_robot.battery.HP > 0) initTimer();	
+				
+				if(m_robot.battery.HP == 0) initHighScore();
+			}
 		}
 		
 		private function initHighScore():void
@@ -177,6 +181,7 @@ package state
 		
 		private function initGameOver():void
 		{
+			trace("game over state");
 			Session.application.displayState = new GameOver;
 		}
 		
