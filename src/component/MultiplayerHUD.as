@@ -19,7 +19,7 @@ package component
 		override public function update():void {
 			super.update();
 			super.updateBattery(battery2Lvl, _battery2);
-			super.updateSound(battery2Lvl);
+			//super.updateSound(battery2Lvl);
 		}
 		//------------------------------------------------------------------------
 		// dispose
