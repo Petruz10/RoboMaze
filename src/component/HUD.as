@@ -68,7 +68,7 @@ package component
 			initBattery();
 			initTime();
 			initFont();
-			initSound();
+			//initSound();
 		}
 		//------------------------------------------------------------------------
 		// 	on update
@@ -76,7 +76,7 @@ package component
 		override public function update():void {
 			updateBattery(battery1Lvl, _battery1);
 			updateTime();
-			updateSound(battery1Lvl);
+			//updateSound(battery1Lvl);
 		}
 		//------------------------------------------------------------------------
 		// 	dispose
