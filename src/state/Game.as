@@ -3,11 +3,8 @@ package state
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
-	import flash.display.DisplayObject;
-	import flash.display.Sprite;
 	import flash.net.SharedObject;
 	
-	import component.HUD;
 	import component.Maze;
 	
 	import entity.BatteryRefill;
@@ -49,10 +46,11 @@ package state
 		
 		private var m_gameTime:Number = 0;
 		private var m_time:String;
+		
 		private var min:int = 0;
 		private var sek:Number = 0;
 		
-		private var m_score:int = 0;
+		private var m_score:Number = 0;
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -135,7 +133,7 @@ package state
 				}
 			}
 			
-			m_time = min+":"+ sek + ":" +hundraSek;
+			m_time = min+":"+ sek + ":" + hundraSek;
 		}
 		
 		private function checkBattery():void
@@ -164,14 +162,14 @@ package state
 			var range:int = 10;
 			
 			Session.highscore.smartSend(table, score, range, gameOver);
-			Session.highscore.receive(table, 10, hej);
+			
 			//trace("highscore grejs", Session.highscore.receive(table, 10, hej));
 		}
 		
-		private  function hej(e:XML):void
+		/*private  function hej(e:XML):void
 		{
 			trace(e);
-		}
+		}*/
 		
 		private function gameOver(e):void
 		{

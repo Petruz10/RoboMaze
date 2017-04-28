@@ -3,15 +3,16 @@ package state
 	//------------------------------------------------------------------------
 	// 	Evertron SDK
 	//------------------------------------------------------------------------
+	import entity.BackButton;
+	
+	import highscore.highscoreData;
+	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
-	import se.lnu.stickossdk.system.Session;
-	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.input.EvertronControls;
-	//------------------------------------------------------------------------
-	// 	entity
-	//------------------------------------------------------------------------
-	import entity.BackButton;
+	import se.lnu.stickossdk.input.Input;
+	import se.lnu.stickossdk.system.Session;
+
 	//------------------------------------------------------------------------
 	// 	Highscore State
 	//------------------------------------------------------------------------
@@ -42,6 +43,7 @@ package state
 		//------------------------------------------------------------------------
 		public function Highscore(){
 			trace("HIGHSCORE");
+			new highscoreData();
 		}
 		//------------------------------------------------------------------------
 		// init

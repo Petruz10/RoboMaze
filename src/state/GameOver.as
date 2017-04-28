@@ -3,21 +3,22 @@ package state
 	//------------------------------------------------------------------------
 	// 	Evertron SDK
 	//------------------------------------------------------------------------
-	import se.lnu.stickossdk.display.DisplayState;
-	import se.lnu.stickossdk.display.DisplayStateLayer;
-	import se.lnu.stickossdk.input.Input;
-	import se.lnu.stickossdk.system.Session;
-	import se.lnu.stickossdk.input.EvertronControls;
-	//------------------------------------------------------------------------
-	// 	entity
-	//------------------------------------------------------------------------
-	import entity.Button;
-	import entity.BackButton;
-	import entity.RetryButton;
-
 	import flash.net.SharedObject;
+	
+	import entity.BackButton;
+	import entity.Button;
+	import entity.RetryButton;
+	
 	import game.Multiplayer;
 	import game.Singleplayer;
+	
+	import gameOver.GameOverData;
+	
+	import se.lnu.stickossdk.display.DisplayState;
+	import se.lnu.stickossdk.display.DisplayStateLayer;
+	import se.lnu.stickossdk.input.EvertronControls;
+	import se.lnu.stickossdk.input.Input;
+	import se.lnu.stickossdk.system.Session;
 
 
 	//------------------------------------------------------------------------
