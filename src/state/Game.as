@@ -139,9 +139,16 @@ package state
 			if(m_robot.battery.HP > 0) initTimer();	
 			
 			if(m_players == 1 && m_robot.battery.HP == 0) initHighScore();
+			
 			if (m_players == 2) 
 			{
-				if(m_players == 2 && m_robot.battery.HP == 0 || m_robot2.battery.HP == 0) gameOver(x); return;
+				if(m_robot.battery.HP == 0 || m_robot2.battery.HP == 0) 
+				{
+					trace("game over multiplayer");
+					trace("battery 1", m_robot.battery.HP);
+					trace("battery 2", m_robot2.battery.HP);
+					Session.timer.create(1000, initGameOver);
+				}
 			}
 			
 		}

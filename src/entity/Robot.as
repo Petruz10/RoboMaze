@@ -40,9 +40,9 @@ package entity
 		private var down:Boolean = false;
 		private var right:Boolean = false;
 		private var left:Boolean = false;
-
-
-
+		
+		private var square:Sprite = new Sprite();
+		
 		//------------------------------------------------------------------------
 		// Constructor methods
 		//------------------------------------------------------------------------		
@@ -63,7 +63,6 @@ package entity
 		
 		override public function update():void
 		{
-			trace("hit", hit);
 			if(!hit)updateControls();
 			else if(hit) hitt();
 			checkHit();
@@ -80,7 +79,6 @@ package entity
 		//------------------------------------------------------------------------
 		private function updateControls():void
 		{	
-			trace("controls");
 			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) 
 			{
 				//if(!down && !up && !right) left = true;
@@ -116,6 +114,9 @@ package entity
 			{
 				_skin.y -= speed; 
 				_skin.gotoAndStop("back");
+			//	square.width = 30;
+			//	square.graphics.beginFill(0xFF2200);
+			//	drawSquare(2, 11, 27, 25);
 			}
 			return;
 		}
@@ -132,6 +133,10 @@ package entity
 			{
 				_skin.y += speed; 
 				_skin.gotoAndStop("front");
+			//	square.width = 30;
+			//	square.graphics.beginFill(0xFF2200);
+			//	square.graphics.drawRect(2, 11, 27, 25);
+				//drawSquare(2,11, 27, 25);
 			}
 			return;
 		}
@@ -150,6 +155,9 @@ package entity
 				_skin.x -= speed; 
 				//_skin.scaleX *=- 1;
 				_skin.gotoAndStop("side");
+			//	square.width = 16;
+			//	square.graphics.beginFill(0xCCFF00);
+			//	drawSquare(2, 11, 7, 25);
 			}
 			return;
 		}
@@ -167,30 +175,28 @@ package entity
 				_skin.x += speed; 
 			//	_skin.scaleX *= 1;
 				_skin.gotoAndStop("side");
+			//	square.width = 16;
+			//	square.graphics.beginFill(0xCCFF00);
+			//	drawSquare(2, 11, 7, 25);
 			}
 			return;
 
 		}
 		
+		private function drawSquare(a:int,b:int,c:int,d:int):void
+		{
+			square.graphics.beginFill(0xCCFF00);
+			square.graphics.drawRect(a,b,c,d)
+			_skin.hitArea = square;
+			area = _skin.hitArea;
+		}
+		
 		private function hitt():void
 		{
-			if(hitSide == "up")
-			{
-				_skin.y += speed; up = false;
-			}
-			else if(hitSide == "down")
-			{
-				_skin.y -= speed; down = false;
-			}
-			else if(hitSide == "left") 
-			{
-				_skin.x += speed; left = false;
-			}
-			else if(hitSide == "right") 
-			{
-				_skin.x -= speed;
-				right = false;
-			}
+			if(hitSide == "up") _skin.y += speed; 
+			else if(hitSide == "down") _skin.y -= speed; 
+			else if(hitSide == "left") _skin.x += speed; 
+			else if(hitSide == "right") _skin.x -= speed;
 			
 			hit = false;
 			
@@ -227,13 +233,23 @@ package entity
 			//_skin.height = 35;
 			_skin.gotoAndStop("front");
 			
-			var square:Sprite = new Sprite();
+			
 			square.graphics.beginFill(0xCCFF00);
-			square.graphics.drawRect(2, 7, 23, 25);
+			square.graphics.drawRect(2, 11, 20, 25);
+			/*if(_skin.currentFrame == 3) 
+			{
+				square.graphics.drawRect(2, 11, 23, 25);
+				trace("side??");
+			}
+			else 
+			{
+				square.graphics.drawRect(2, 11, 27, 25);
+				trace("front, back")
+			}*/
 			
 			_skin.hitArea = square;
 			area = _skin.hitArea;
-			
+		//	drawSquare(1,1,1,1);
 			battery = new Battery();
 			
 			this.addChild(_skin);
