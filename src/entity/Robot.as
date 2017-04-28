@@ -36,11 +36,6 @@ package entity
 		
 		private var flickr:Flicker;
 		
-		private var up:Boolean = false;
-		private var down:Boolean = false;
-		private var right:Boolean = false;
-		private var left:Boolean = false;
-		
 		private var square:Sprite = new Sprite();
 		
 		//------------------------------------------------------------------------
@@ -79,95 +74,48 @@ package entity
 		//------------------------------------------------------------------------
 		private function updateControls():void
 		{	
-			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) 
-			{
-				//if(!down && !up && !right) left = true;
-				this.moveLeft(); 
-				
-				return;
-			}
-			else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) 
-			{
-			//	if(!down && !up && !left) right = true;
-				this.moveRight(); return;
-				
-			}
-			else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) 
-			{
-			//	if(!right && !up && !left) down = true;
-				this.moveDown(); return;
-				
-			}
-			else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) 
-			{
-				//if(!down && !right && !left)up = true;
-				this.moveUp(); return;
-			}
+			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft(); 
+			else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
+			else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) this.moveDown(); 
+			else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) this.moveUp(); 
 		}
 		
 		private function moveUp():void
 		{	
-			
-			
 			hitSide = "up";
 			if(battery.HP != 0) 
 			{
 				_skin.y -= speed; 
 				_skin.gotoAndStop("back");
-			//	square.width = 30;
-			//	square.graphics.beginFill(0xFF2200);
-			//	drawSquare(2, 11, 27, 25);
 			}
 			return;
 		}
 		
 		private function moveDown():void
-		{
-		/*	up = false;
-			down = true;
-			left = false;
-			right = false;*/
-			
+		{	
 			hitSide = "down";
 			if(battery.HP != 0)
 			{
 				_skin.y += speed; 
 				_skin.gotoAndStop("front");
-			//	square.width = 30;
-			//	square.graphics.beginFill(0xFF2200);
-			//	square.graphics.drawRect(2, 11, 27, 25);
-				//drawSquare(2,11, 27, 25);
 			}
 			return;
 		}
 		
 		private function moveLeft():void
 		{
-			/*up = false;
-			down = false;
-			left = true;
-			right = false;
-			*/
-			
 			hitSide = "left";
 			if(battery.HP != 0) 
 			{
 				_skin.x -= speed; 
 				//_skin.scaleX *=- 1;
 				_skin.gotoAndStop("side");
-			//	square.width = 16;
-			//	square.graphics.beginFill(0xCCFF00);
-			//	drawSquare(2, 11, 7, 25);
 			}
 			return;
 		}
 		
 		private function moveRight():void
-		{/*
-			up = false;
-			down = false;
-			left = false;
-			right = true;*/
+		{
 			
 			hitSide = "right";
 			if(battery.HP != 0) 
@@ -175,9 +123,6 @@ package entity
 				_skin.x += speed; 
 			//	_skin.scaleX *= 1;
 				_skin.gotoAndStop("side");
-			//	square.width = 16;
-			//	square.graphics.beginFill(0xCCFF00);
-			//	drawSquare(2, 11, 7, 25);
 			}
 			return;
 
@@ -234,22 +179,11 @@ package entity
 			_skin.gotoAndStop("front");
 			
 			
-			square.graphics.beginFill(0xCCFF00);
-			square.graphics.drawRect(2, 11, 20, 25);
-			/*if(_skin.currentFrame == 3) 
-			{
-				square.graphics.drawRect(2, 11, 23, 25);
-				trace("side??");
-			}
-			else 
-			{
-				square.graphics.drawRect(2, 11, 27, 25);
-				trace("front, back")
-			}*/
-			
+			//square.graphics.beginFill(0xCCFF00);
+			square.graphics.drawRect(7, 11, 20, 20);
 			_skin.hitArea = square;
 			area = _skin.hitArea;
-		//	drawSquare(1,1,1,1);
+
 			battery = new Battery();
 			
 			this.addChild(_skin);
@@ -259,9 +193,11 @@ package entity
 		private function disposeSkin():void
 		{
 			m_controls = null;
+			square = null;
 			_skin.hitArea = null;
 			_skin = null;
 			battery = null;
+			
 			trace("dispose Robot");
 		}
 		
