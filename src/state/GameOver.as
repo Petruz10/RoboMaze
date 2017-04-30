@@ -11,20 +11,13 @@ package state
 	
 	import game.Multiplayer;
 	import game.Singleplayer;
-	
-<<<<<<< HEAD
-	import gameOver.GameOverData;
-	
-=======
->>>>>>> origin/master
+
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
-<<<<<<< HEAD
-=======
+
 	import se.lnu.stickossdk.media.SoundObject;
->>>>>>> origin/master
 	import se.lnu.stickossdk.system.Session;
 
 

@@ -120,7 +120,7 @@ package state
 			m_score += 1.666666666666667;
 			
 			m_gameTime += 1.666666666666667;
-			hundraSek = Math.round(m_gameTime);
+			hundraSek = Math.floor(m_gameTime);
 			
 			if(hundraSek == 98)
 			{
