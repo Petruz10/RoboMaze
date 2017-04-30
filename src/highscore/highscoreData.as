@@ -41,7 +41,7 @@ package highscore
 			var sek:Number;
 			var min:int;
 			
-			sek = hundraSek/96;
+			sek = hundraSek/98;
 			min = sek/60;
 			 if(sek >= 60) sek = sek - (60*min);
 			 hundraSek = sek - Math.floor(sek);
