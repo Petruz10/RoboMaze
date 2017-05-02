@@ -15,6 +15,7 @@ package state
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.fx.Flicker;
+	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.timer.Timer;
 
@@ -56,6 +57,11 @@ package state
 		private var sek:Number = 0;
 		
 		private var m_score:Number = 0;
+		
+		private var m_backgroundMusic:SoundObject;
+		
+		private var m_deadSound:SoundObject;
+		private var m_bombSound:SoundObject;
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -79,6 +85,7 @@ package state
 			}
 			initSharedObject();
 			initTimer();
+			initSound();
 		}
 		
 		override public function update():void
@@ -125,6 +132,14 @@ package state
 		private function initTimer():void
 		{
 			var timer:Timer = Session.timer.create(1, updateTimer);
+		}
+		
+		private function initSound():void
+		{
+			Session.sound.musicChannel.sources.add("game_bgmusic", BackgroundGame_mp3);
+			m_backgroundMusic = Session.sound.musicChannel.get("game_bgmusic");
+			m_backgroundMusic.volume = 0.5;
+			m_backgroundMusic.play();
 		}
 		
 		private function updateTimer():void
@@ -196,6 +211,16 @@ package state
 		{
 			//trace("a", e);
 			Session.timer.create(1000, initGameOver);
+			initDeadSound();
+		}
+		
+		private function initDeadSound():void
+		{
+			Session.sound.musicChannel.sources.add("game_deadSound", RobotDeath_mp3);
+			Session.sound.musicChannel.sources.add("game_deadSound", RobotShutdown_mp3);
+			m_deadSound = Session.sound.musicChannel.get("game_deadSound");
+			m_deadSound.volume = 0.5;
+			m_deadSound.play();
 		}
 		
 		private function initGameOver():void
@@ -372,6 +397,7 @@ package state
 					flickr = new Flicker(m_robot, 1000, 20); //obj, tid (hur länge), intervall
 					Session.effects.add(flickr);
 					Session.timer.create(600, initSpeed);
+					initBombSound();
 				}
 			}
 			if(m_robot.obstacle)
@@ -384,8 +410,17 @@ package state
 					flickr = new Flicker(m_robot2, 1000, 20); //obj, tid (hur länge), intervall
 					Session.effects.add(flickr);
 					Session.timer.create(600, initSpeed);
+					initBombSound();
 				}
 			}
+		}
+		
+		private function initBombSound():void
+		{
+			Session.sound.musicChannel.sources.add("game_bombSound", RobotWarning_mp3);
+			m_bombSound = Session.sound.musicChannel.get("game_bombSound");
+			m_bombSound.volume = 0.65;
+			m_bombSound.play();
 		}
 		
 		private function initSpeed():void

@@ -3,6 +3,7 @@ package entity
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.timer.Timer;
 
@@ -20,6 +21,7 @@ package entity
 		// private properties 
 		//------------------------------------------------------------------------
 		private var m_timer:Timer;
+		private var m_warningSound:SoundObject;
 		
 		public function Battery()
 		{
@@ -57,7 +59,21 @@ package entity
 				HPtimer();
 				trace(HP);
 			}
+			
+			if(HP == 30 ||  HP == 10) 
+			{
+				trace("10 eller 30");
+				initWarningSound();
+			}
 		//	else dead();
+		}
+		
+		private function initWarningSound():void
+		{
+			Session.sound.musicChannel.sources.add("game_warningSound", RobotWarning_mp3);
+			m_warningSound = Session.sound.musicChannel.get("game_warningSound");
+			m_warningSound.volume = 0.65;
+			m_warningSound.play();
 		}
 		
 		/*	private function dead():void

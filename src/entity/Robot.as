@@ -8,6 +8,7 @@ package entity
 	import se.lnu.stickossdk.fx.Flicker;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
+	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
 	
 	import state.GameOver;
@@ -44,6 +45,8 @@ package entity
 		
 		
 		public var obstacle;
+		
+		private var m_refillSound:SoundObject;
 		//------------------------------------------------------------------------
 		// Constructor methods
 		//------------------------------------------------------------------------		
@@ -170,12 +173,21 @@ package entity
 				battery.HP += 30; 
 				hitBattery = false;
 				if(battery.HP > 100) battery.HP = 100;
+				initRefillSound();
 			}
 			
 			if(battery.HP == 0)
 			{
 				initGameOver();
 			}
+		}
+		
+		private function initRefillSound():void
+		{
+			Session.sound.musicChannel.sources.add("game_refillSound", RobotRefill_mp3);
+			m_refillSound = Session.sound.musicChannel.get("game_refillSound");
+			m_refillSound.volume = 0.65;
+			m_refillSound.play();
 		}
 		
 		private function initGameOver():void
