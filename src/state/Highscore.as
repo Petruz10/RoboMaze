@@ -3,6 +3,7 @@ package state
 	//------------------------------------------------------------------------
 	// 	Evertron SDK
 	//------------------------------------------------------------------------
+	import flash.display.Sprite;
 	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -18,7 +19,6 @@ package state
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
-	import flash.display.Sprite;
 
 	//------------------------------------------------------------------------
 	// 	Highscore State
@@ -202,8 +202,9 @@ package state
 			_layerHighscoreTable.x = 0;
 			_layerHighscoreTable.y = 0;
 			
+			
 			_btn.x = 400 - (_btn.width/2);
-			_btn.y = 540;
+			_btn.y = 550;
 			_btn.pulse();
 
 			_layerHighscoreTable.addChild(_btn);

@@ -80,14 +80,20 @@ package state
 		// init "menu" --> back btn
 		//------------------------------------------------------------------------
 		private function initOverlay():void {
+			var _creditsAnimation:CreditsRobot_mc = new CreditsRobot_mc();
 			_menuBtn = new BackButton();
 			_layerOverlay = layers.add("BACK_BTN");
 			_layerOverlay.x = 0;
 			_layerOverlay.y = 0;
+			
+			_creditsAnimation.x = 400 - (_creditsAnimation.width / 2);
+			_creditsAnimation.y = 110;
+			
 			_menuBtn.x = 400 - (_menuBtn.width/2);
-			_menuBtn.y = 540;
+			_menuBtn.y = 550;
 			_menuBtn.pulse();
 			
+			_layerOverlay.addChild(_creditsAnimation);
 			_layerOverlay.addChild(_menuBtn);
 		}
 		//------------------------------------------------------------------------
