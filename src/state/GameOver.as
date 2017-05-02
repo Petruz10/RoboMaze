@@ -60,6 +60,10 @@ package state
 		/*
 		*
 		*/
+		private var _gameOverImg:GameOver_mc;
+		/*
+		*
+		*/
 		private var _backgroundMusic:SoundObject;
 		//------------------------------------------------------------------------
 		// constructor
@@ -116,6 +120,11 @@ package state
 			_layerBackground = layers.add("GAME_OVER_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
+
+			_gameOverImg = new GameOver_mc();
+			_gameOverImg.y = 100;
+			_gameOverImg.x = 400 - ( _gameOverImg.width / 2 );
+			_layerBackground.addChild(_gameOverImg);
 		}
 		//------------------------------------------------------------------------
 		// init "menu" --> back btn
@@ -185,7 +194,9 @@ package state
 		// dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
+			_layerBackground.removeChild(_gameOverImg);
 			_layerBackground = null;
+			_gameOverImg = null;
 		}
 		//------------------------------------------------------------------------
 		// dispose overlay
