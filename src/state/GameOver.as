@@ -34,10 +34,6 @@ package state
 		*/
 		private var _layerOverlay:DisplayStateLayer;
 		/*
-		*	background image
-		*/
-		private var _bgImg:BgImgTest;
-		/*
 		* 	Evertron Controls
 		*/
 		private var _controls:EvertronControls = new EvertronControls;
@@ -117,12 +113,9 @@ package state
 		//
 		//------------------------------------------------------------------------
 		private function initBackground():void {
-			_bgImg = new BgImgTest();
-			_layerBackground = layers.add("MENU_BG");
+			_layerBackground = layers.add("GAME_OVER_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
-			
-			_layerBackground.addChild(_bgImg);
 		}
 		//------------------------------------------------------------------------
 		// init "menu" --> back btn
@@ -192,8 +185,6 @@ package state
 		// dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
-			_layerBackground.removeChild(_bgImg);
-			_bgImg = null;
 			_layerBackground = null;
 		}
 		//------------------------------------------------------------------------

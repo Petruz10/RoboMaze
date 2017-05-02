@@ -104,7 +104,7 @@ package state
 		// 	init state-layeres
 		//------------------------------------------------------------------------
 		private function initLayers():void {
-			initBackground();
+			//initBackground();
 			initOverlay();
 			initRobot();
 		}
@@ -112,13 +112,7 @@ package state
 		// 	init background
 		//------------------------------------------------------------------------
 		private function initBackground():void {
-			var bgImg:BgImgTest = new BgImgTest();
-			
-			_layerBackground = layers.add("MENU_BG");
-			_layerBackground.x = 0;
-			_layerBackground.y = 0;
-			
-			_layerBackground.addChild(bgImg);
+
 		}
 		//------------------------------------------------------------------------
 		// 	init Buttons

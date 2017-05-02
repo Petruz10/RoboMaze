@@ -18,6 +18,7 @@ package
 			initDebugger = true;
 			//initDisplayState = SplashScreen; // <--- opens SplashScreen that leads to Menu State
 			initDisplayState = Menu;
+			initBackgroundColor = 0x333333;
 		}
 	}
 }

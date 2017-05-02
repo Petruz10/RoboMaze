@@ -19,10 +19,6 @@ package state
 		*/
 		private var _layerOverlay:DisplayStateLayer;
 		/*
-		* 	background layer
-		*/
-		private var _bgImg:BgImgTest;
-		/*
 		*	back btn 
 		*/
 		private var _menuBtn:BackButton;
@@ -30,6 +26,10 @@ package state
 		*	controls
 		*/
 		private var _controls:EvertronControls = new EvertronControls;
+		/*
+		*
+		*/
+		private var _header:ScreenTop_mc;
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -65,13 +65,16 @@ package state
 			initOverlay();
 		}
 		private function initBackground():void {
-			_bgImg = new BgImgTest();
-
-			_layerBackground = layers.add("MENU_BG");
+			_header = new ScreenTop_mc();
+			_layerBackground = layers.add("CREDITS_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
 			
-			_layerBackground.addChild(_bgImg);
+			_header.x = 0;
+			_header.y = 0;
+			_header.gotoAndStop("credits");
+			
+			_layerBackground.addChild(_header);
 		}
 		//------------------------------------------------------------------------
 		// init "menu" --> back btn
@@ -99,7 +102,8 @@ package state
 		// dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
-			_bgImg = null;
+			_layerBackground.removeChild(_header);
+			_header = null;
 			_layerBackground = null;
 		}
 		//------------------------------------------------------------------------

@@ -3,7 +3,13 @@ package state
 	//------------------------------------------------------------------------
 	// 	Evertron SDK
 	//------------------------------------------------------------------------
+	import flash.text.Font;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
+	
 	import entity.BackButton;
+	
+	import font.GameFont;
 	
 	import highscore.HighscoreData;
 	
@@ -25,26 +31,38 @@ package state
 		* 	layer for higscore display
 		*/
 		private var _layerHighscoreTable:DisplayStateLayer;
+		private var _header:ScreenTop_mc;
 		/*
 		* 	back btn
 		*/
 		private var _btn:BackButton;
 		/*
-		* 	background image
-		*/
-		private var _bgImg:BgImgTest;
-		/*
 		* 	Evertron Controls
 		*/
 		private var _controls:EvertronControls = new EvertronControls();
+		/*
+		* 	highscore data
+		*/
 		private var _highscoreData:HighscoreData;
-		private	var _score:Vector;
-		private	var _name:Vector;
+		/*
+		* 	score - time
+		*/
+		private	var _score:Vector.<String>;
+		/*
+		* 	names
+		*/
+		private	var _name:Vector.<String>;
+		/*
+		* 	font
+		*/
+		private var _gameFont:GameFont
+		private var _nameT:TextField;
+		private var _scoreT:TextField;
+		private var _highscoreF:TextFormat;
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
 		public function Highscore(){
-			trace("HIGHSCORE");
 		}
 		//------------------------------------------------------------------------
 		// init
@@ -52,6 +70,7 @@ package state
 		override public function init():void {
 			initHighscore();
 			initLayers();
+			initFont();
 		}
 		//------------------------------------------------------------------------
 		// update
@@ -68,34 +87,96 @@ package state
 			disposeHighscoreTable();
 			disposeOverlay();
 		}
+		private function initFont():void {
+			_gameFont = new GameFont();
+		}
 		//------------------------------------------------------------------------
 		// init layers
 		//------------------------------------------------------------------------
 		private function initLayers():void {
 			initBackground();
+			initHighscore();
 			initHighscoreTable();
+			initLists();
 			initOverlay();
 		}
 		private function initHighscore():void {
 			_highscoreData = new HighscoreData();
-			_score = _highscoreData.score.<String>;
-			_name = _highscoreData.name.<String>;
+			_score = _highscoreData.score;
+			_name = _highscoreData.name;
 			if (_score.length == 0) {
 				_score.push("00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00");
 			}
 			if (_name.length == 0) {
-				_name.push("michaela","michaela","michaela","michaela","michaela","michaela","michaela","michaela","michaela","michaela");
+				_name.push("michaelajättelångtnamn","michaelajättelångtnamn","michaela3","michaela4","michaela5","michaela6","michaela7","michaela8","michaela9","michaela10");
 			}
 		}
 		//------------------------------------------------------------------------
 		// init background
 		//------------------------------------------------------------------------
 		private function initBackground():void {
-			_bgImg = new BgImgTest();
+			_header = new ScreenTop_mc();
 			_layerBackground = layers.add("HIGHSCORE_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
-			_layerBackground.addChild(_bgImg);
+			
+			_header.x = 0;
+			_header.y = 0;
+			_header.gotoAndStop("highscore");
+			
+			_layerBackground.addChild(_header);
+			
+		}
+		//------------------------------------------------------------------------
+		// init name and highscore list
+		//------------------------------------------------------------------------
+		private function initLists():void {
+			var str:String; // name
+			_highscoreF = new TextFormat;
+
+			_highscoreF.font = "Arcade";
+			_highscoreF.align = "center";
+
+			for (var i:int = 0; i < _score.length; i++) {
+				if(_name[i].length > 10) { str = _name[i].substring(0,10) + "..."; } 
+				else { str = _name[i]}
+
+				_nameT = new TextField;
+				_scoreT = new TextField;
+				_nameT.embedFonts = true; 
+				_nameT.selectable = false;
+				_nameT.textColor = 0xffffff;      
+				_nameT.text = "00:00:00"; // PLACEHOLDER 
+				_nameT.width = 350;
+				_nameT.x = 100;
+				
+				_scoreT.embedFonts = true; 
+				_scoreT.selectable = false;
+				_scoreT.textColor = 0xffffff;      
+				_scoreT.text = "00:00:00"; // PLACEHOLDER 
+				_scoreT.width = 350;
+				_scoreT.x = 410;
+				
+				if (i == 0) { 
+					_highscoreF.size = 30; 
+					_scoreT.y = 150;
+					_nameT.y = 150;
+				}
+				else {
+					_scoreT.y = 160 + (i * 35) ;
+					_nameT.y = 160 + (i * 35);
+					_highscoreF.size = 20;
+				}
+
+				_nameT.text = str;
+				_nameT.setTextFormat(_highscoreF);
+				_scoreT.text = _score[i];
+				_scoreT.setTextFormat(_highscoreF);
+
+				_layerHighscoreTable.addChild(_scoreT);
+				_layerHighscoreTable.addChild(_nameT);
+			}
+	
 		}
 		//------------------------------------------------------------------------
 		// init background
@@ -130,15 +211,17 @@ package state
 			_layerHighscoreTable.removeChild(_btn); 
 			_layerHighscoreTable = null;
 			_btn = null;
+
+			
 			trace("dispose highscore table");
 		}
 		//------------------------------------------------------------------------
 		// dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
-			_layerBackground.removeChild(_bgImg);
+			_layerBackground.removeChild(_header);
 			_layerBackground = null;
-			_bgImg = null;	
+			_header = null;
 		}
 		private function disposeOverlay():void {
 			trace("dispose overlay");

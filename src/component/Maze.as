@@ -2,6 +2,7 @@
 {
 	import entity.Tile;
 	import flash.display.Sprite;
+	import flash.display.DisplayObject;
 
 	public class Maze extends Sprite {
 		/*
@@ -110,22 +111,21 @@
 		//	dispose
 		//------------------------------------------------------------------------
 		public function dispose():void {
-			//disposeTiles();
+			disposeTiles();
 		}
 		//------------------------------------------------------------------------
 		//	dispose tiles
 		//------------------------------------------------------------------------
 		private function disposeTiles():void {
-			/*	_mazeArray = null;
+			_mazeArray = null;
 			var numCh:int = this.numChildren;
-			var tile:Tile;
-			for(var i:int = 0; i < numCh; i++) {
-				tile = this.getChildAt(i);  
-				tile = null;
-			}
+			var tile:DisplayObject;
+
 			while (numCh > 0) {
 				this.removeChildAt(0);
-			} */
+				tile = this.getChildAt(0);
+				tile = null;
+			} 
 			trace("dispose tiles"); 
 		}
 	}
