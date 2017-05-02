@@ -93,9 +93,8 @@ package state
 			{
 				placePowerup();
 				hitPowerup();
+				if(m_robot.obstacle || m_robot2.obstacle) checkhitObstacle();
 			}
-			
-			if(m_robot.obstacle || m_robot2.obstacle) checkhitObstacle();
 		}
 		
 		override public function dispose():void
