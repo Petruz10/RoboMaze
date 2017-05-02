@@ -45,7 +45,12 @@ package state
 		// constructor
 		//------------------------------------------------------------------------
 		public function Highscore(){
+<<<<<<< HEAD
 
+=======
+			trace("HIGHSCORE");
+			new HighscoreData();
+>>>>>>> 7bc5971a371ed24ac3edaf51f4a5ed214b8fc37e
 		}
 		//------------------------------------------------------------------------
 		// init
