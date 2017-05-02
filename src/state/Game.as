@@ -83,6 +83,8 @@ package state
 			hitBattery();
 			updateHUDBattery();
 			updateHUDTime();
+			
+			if(m_players == 2) placePowerup();
 		}
 		
 		override public function dispose():void
@@ -166,14 +168,7 @@ package state
 			var range:int = 10;
 			
 			Session.highscore.smartSend(table, score, range, gameOver);
-			
-			//trace("highscore grejs", Session.highscore.receive(table, 10, hej));
 		}
-		
-		/*private  function hej(e:XML):void
-		{
-			trace(e);
-		}*/
 		
 		private function gameOver(e):void
 		{
@@ -216,6 +211,14 @@ package state
 			}
 			
 			if(m_players == 2) m_battery2.placeBattery2(m_battery.batteryX - 400,  m_battery.batteryY);
+		}
+		
+		private function placePowerup():void
+		{
+			for (var i:int = 0; i<children.length; i++)
+			{
+				if(m_powerUp.hitTestObject(children[i])) m_powerUp.placePowerUp(); 
+			}
 		}
 		
 		private function initLayers():void
@@ -309,7 +312,6 @@ package state
 		private function updateHUDTime():void
 		{
 			m_hud.time = m_time;
-		//	trace("time" + m_time);
 		}
 		
 		//------------------------------------------------------------------------
