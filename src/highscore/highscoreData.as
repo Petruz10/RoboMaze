@@ -7,14 +7,10 @@ package highscore
 		public var score:Vector.<String> = new Vector.<String>();
 		public var name:Vector.<String> = new Vector.<String>();
 		
-<<<<<<< HEAD
 		private var scoreData:XMLList;
 		private var scoreName:XMLList;
 		
-		public function highscoreData()
-=======
 		public function HighscoreData()
->>>>>>> origin/master
 		{
 			Session.highscore.receive(1, 10, initHighscore)
 		}

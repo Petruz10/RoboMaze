@@ -5,7 +5,7 @@ package state
 	//------------------------------------------------------------------------
 	import entity.BackButton;
 	
-	import highscore.highscoreData;
+	import highscore.HighscoreData;
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
@@ -43,7 +43,7 @@ package state
 		//------------------------------------------------------------------------
 		public function Highscore(){
 			trace("HIGHSCORE");
-			new highscoreData();
+			new HighscoreData();
 		}
 		//------------------------------------------------------------------------
 		// init
