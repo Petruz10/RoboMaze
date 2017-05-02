@@ -25,12 +25,16 @@ package entity
 		
 		public var area:Sprite;
 		public var battery:Battery;
+		
+		public var powerUp:int = 0;
 		//------------------------------------------------------------------------
 		// private properties 
 		//------------------------------------------------------------------------
 		private var m_controls:EvertronControls = new EvertronControls();
 		
-		private var speed:int = 3;
+		public var speed:int = 3;
+		
+		
 		private var hitSide:String;		
 		private var m_player:int;
 		
@@ -38,6 +42,8 @@ package entity
 		
 		private var square:Sprite = new Sprite();
 		
+		
+		public var obstacle:Sprite;
 		//------------------------------------------------------------------------
 		// Constructor methods
 		//------------------------------------------------------------------------		
@@ -61,6 +67,7 @@ package entity
 			if(!hit)updateControls();
 			else if(hit) hitt();
 			checkHit();
+		//	if(obstacle) checkhitObstacle();
 		}
 		
 		override public function dispose():void
@@ -78,6 +85,8 @@ package entity
 			else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
 			else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) this.moveDown(); 
 			else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) this.moveUp(); 
+			
+			if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1) && powerUp > 0) this.addObstacle()
 		}
 		
 		private function moveUp():void
@@ -128,14 +137,30 @@ package entity
 
 		}
 		
-		private function drawSquare(a:int,b:int,c:int,d:int):void
+		private function addObstacle():void
+		{
+			powerUp --;
+			obstacle = new Sprite();
+			
+			obstacle.graphics.beginFill(0xCCFF00);
+			if(m_player == 0)obstacle.graphics.drawRect(_skin.x+400, _skin.y, 30, 30);
+			else if(m_player == 1)obstacle.graphics.drawRect(_skin.x-400, _skin.y, 30, 30);
+			
+			this.addChild(obstacle);
+			trace("add obs funktion");
+			trace("x grejs", obstacle.x);
+			return;
+		}
+		
+		
+		/*private function drawSquare(a:int,b:int,c:int,d:int):void
 		{
 			square.graphics.beginFill(0xCCFF00);
 			square.graphics.drawRect(a,b,c,d)
 			_skin.hitArea = square;
 			area = _skin.hitArea;
 		}
-		
+		*/
 		private function hitt():void
 		{
 			if(hitSide == "up") _skin.y += speed; 
