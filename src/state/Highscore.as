@@ -12,7 +12,6 @@ package state
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
-	import highscore.HighscoreData;
 
 	//------------------------------------------------------------------------
 	// 	Highscore State
@@ -39,8 +38,8 @@ package state
 		*/
 		private var _controls:EvertronControls = new EvertronControls();
 		private var _highscoreData:HighscoreData;
-		private	var _score:vector.<String>;
-		private	var _name:vector.<String>;
+		private	var _score:Vector;
+		private	var _name:Vector;
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -78,14 +77,14 @@ package state
 			initOverlay();
 		}
 		private function initHighscore():void {
-			_highscoreData:HighscoreData = new HighscoreData();
-			_score:vector.<String> = highscoreData.score;
-			_name:vector.<String> = highcoreData.name;
-			if (score.length == 0) {
-				score.push("00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00",);
+			_highscoreData = new HighscoreData();
+			_score = _highscoreData.score.<String>;
+			_name = _highscoreData.name.<String>;
+			if (_score.length == 0) {
+				_score.push("00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00");
 			}
-			if (name.length == 0) {
-				score.push("michaela","michaela","michaela","michaela","michaela","michaela","michaela","michaela","michaela","michaela");
+			if (_name.length == 0) {
+				_name.push("michaela","michaela","michaela","michaela","michaela","michaela","michaela","michaela","michaela","michaela");
 			}
 		}
 		//------------------------------------------------------------------------
@@ -113,6 +112,9 @@ package state
 
 			_layerHighscoreTable.addChild(_btn);
 		}
+		private function initOverlay():void {
+			
+		}
 		//------------------------------------------------------------------------
 		// making sure that the player can return to menu
 		//------------------------------------------------------------------------
@@ -139,7 +141,7 @@ package state
 			_bgImg = null;	
 		}
 		private function disposeOverlay():void {
-			tracde("dispose overlay");
+			trace("dispose overlay");
 		}
 	}
 }1
