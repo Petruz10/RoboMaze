@@ -11,11 +11,12 @@ package state
 	
 	import game.Multiplayer;
 	import game.Singleplayer;
-	
+
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
+
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
 
