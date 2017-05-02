@@ -2,7 +2,7 @@ package component
 {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import highscore.HighscoreData();
+	import highscore.HighscoreData;
 
 	public class SingleplayerHUD extends HUD {
         //------------------------------------------------------------------------
