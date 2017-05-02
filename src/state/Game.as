@@ -156,12 +156,24 @@ package state
 		{
 			if (m_players == 2) 
 			{
+				var win:SharedObject;
+				
+				win = SharedObject.getLocal("playerwon");
+				
+				
 				if(m_robot2.battery.HP > 0 && m_robot.battery.HP > 0) initTimer();	
 				
-				if(m_robot.battery.HP <= 0 || m_robot2.battery.HP <= 0) 
+				if(m_robot.battery.HP <= 0)
 				{
 					Session.timer.create(1000, initGameOver);
+					win.data.players = 	2;
 				}
+				if(m_robot2.battery.HP <= 0)
+				{
+					Session.timer.create(1000, initGameOver);
+					win.data.players = 1;
+				}
+				win.flush(); 
 			}
 			else
 			{
@@ -189,6 +201,8 @@ package state
 		private function initGameOver():void
 		{
 			trace("game over state");
+			
+			
 			Session.application.displayState = new GameOver;
 		}
 		
@@ -225,6 +239,7 @@ package state
 		
 		private function placePowerup():void
 		{
+			//|| m_powerUp.powerupX <= 400
 			for (var i:int = 0; i<children.length; i++)
 			{
 				if(m_powerUp.hitTestObject(children[i])) m_powerUp.placePowerUp(); 

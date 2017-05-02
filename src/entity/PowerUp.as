@@ -3,6 +3,7 @@
 	public class PowerUp extends Entity
 	{
 		public var power:Boolean = false;
+		public var powerupX:int;
 		
 		public function PowerUp()
 		{
@@ -22,6 +23,7 @@
 		public function placePowerUp():void
 		{
 			super.place(_skin);
+			powerupX = _skin.x;
 		}
 	}
 }
