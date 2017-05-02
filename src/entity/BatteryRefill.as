@@ -1,5 +1,7 @@
 package entity
 {
+	import flash.display.Sprite;
+
 	//------------------------------------------------------------------------
 	// public class BatteryRefill
 	//------------------------------------------------------------------------
@@ -10,6 +12,8 @@ package entity
 		//------------------------------------------------------------------------
 		public var batteryX:int;
 		public var batteryY:int;
+		
+		private var container:Sprite = new Sprite();
 		
 		public function BatteryRefill()
 		{
@@ -25,7 +29,10 @@ package entity
 		{
 			_skin = new BatteryRefill_mc();
 			
-			this.addChild(_skin);
+			container.graphics.drawRect(0, 0, 35, 35);
+			
+			container.addChild(_skin);
+			this.addChild(container);
 		}
 		
 		//------------------------------------------------------------------------
@@ -33,15 +40,15 @@ package entity
 		//------------------------------------------------------------------------
 		public function placeBattery():void
 		{
-			super.place(_skin);
-			batteryX = _skin.x;
-			batteryY = _skin.y;
+			super.place(container);
+			batteryX = container.x;
+			batteryY = container.y;
 		}
 		
 		public function placeBattery2(x:int, y:int):void
 		{
-			_skin.x = x;
-			_skin.y = y;
+			container.x = x;
+			container.y = y;
 		}
 		
 		//------------------------------------------------------------------------

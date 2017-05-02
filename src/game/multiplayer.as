@@ -10,6 +10,7 @@ package game
 	import entity.Robot;
 	
 	import state.Game;
+	import entity.PowerUp;
 	
 	//------------------------------------------------------------------------
 	// Public class Multiplayer
@@ -27,6 +28,8 @@ package game
 		
 		private var m_hud:MultiplayerHUD;
 		
+		private var m_superPower:PowerUp;
+		
 		public function Multiplayer()
 		{
 			super(2);
@@ -38,6 +41,8 @@ package game
 			initMaze();
 			
 			initHUD();
+			
+			superPower();
 		}
 				
 		//------------------------------------------------------------------------
@@ -47,15 +52,9 @@ package game
 		{
 			m_robot = new Robot(0);
 			
-			/*m_robot. += 38;
-			m_robot.height += 38;
-			*/ 
-			
 			m_robot.x = 41;
 			m_robot.y = 125;
-			
-	//		m_robot.opaqueBackground = 0xFFFFFF;
-			
+						
 			super.addAvatar(m_robot);
 		}
 		
@@ -101,6 +100,18 @@ package game
 			super.addHUD(m_hud);
 		}
 		
+		private function superPower():void
+		{
+			m_superPower = new PowerUp();
+			
+			super.addPowerUp(m_superPower);
+			trace("Robot 1", m_robot.x);
+			trace("Robot 2", m_robot2.x);
+		}
+		
+		//------------------------------------------------------------------------
+		// dispose methods 
+		//------------------------------------------------------------------------
 		override public function dispose():void
 		{
 			disposeAvatar();
