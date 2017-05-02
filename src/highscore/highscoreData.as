@@ -2,12 +2,12 @@ package highscore
 {
 	import se.lnu.stickossdk.system.Session;
 
-	public class highscoreData
+	public class HighscoreData
 	{
 		public var score:Vector.<String> = new Vector.<String>();
 		public var name:Vector.<String> = new Vector.<String>();
 		
-		public function highscoreData()
+		public function HighscoreData()
 		{
 			trace("highscore info");
 			Session.highscore.receive(1, 10, initHighscore)
