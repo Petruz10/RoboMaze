@@ -174,7 +174,7 @@ package state
 		// 	init state-sound
 		//------------------------------------------------------------------------
 		private function initSound():void {
-			Session.sound.musicChannel.sources.add("menu_bgmusic", MenuBackgroundMusic);
+			Session.sound.musicChannel.sources.add("menu_bgmusic", BackgroundMenu_mp3);
 			_backgroundMusic = Session.sound.musicChannel.get("menu_bgmusic");
 			_backgroundMusic.volume = 0.5;
 			_backgroundMusic.play();

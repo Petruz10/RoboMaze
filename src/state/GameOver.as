@@ -93,7 +93,7 @@ package state
             disposeOverlay();
 		}
 		private function initSound():void {
-			Session.sound.musicChannel.sources.add("gameover_bgmusic", GameOverBackgroundMusic);
+			Session.sound.musicChannel.sources.add("gameover_bgmusic", BackgroundGameOver_mp3);
 			_backgroundMusic = Session.sound.musicChannel.get("gameover_bgmusic");
 			_backgroundMusic.volume = 0.5;
 			_backgroundMusic.play();

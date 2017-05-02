@@ -2,7 +2,7 @@ package component
 {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import highscore.HighscoreData();
+	import highscore.HighscoreData;
 
 	public class SingleplayerHUD extends HUD {
         //------------------------------------------------------------------------
@@ -50,7 +50,12 @@ package component
 		// 	init highscore graphics // only one player
 		//------------------------------------------------------------------------
 		protected function initHighscore():void {
-			highscoreData = new HighscoreData();
+			var highscoreData:HighscoreData = new HighscoreData();
+			var score:Vector.<String> = highscoreData.score;
+			if (score.length == 0) {
+				score.push("50:01:23","40:01:23","30:01:23","20:01:23","10:01:23","00:09:23","00:08:23","00:06:23","00:05:23","00:02:23");
+			}
+			this._highscore = score[0];
 			//-----------------------------------------------------------------------------
 			// Time Text Format
 			//-----------------------------------------------------------------------------

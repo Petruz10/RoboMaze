@@ -5,13 +5,14 @@ package state
 	//------------------------------------------------------------------------
 	import entity.BackButton;
 	
-	import highscore.highscoreData;
+	import highscore.HighscoreData;
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
+	import highscore.HighscoreData;
 
 	//------------------------------------------------------------------------
 	// 	Highscore State
@@ -36,19 +37,21 @@ package state
 		/*
 		* 	Evertron Controls
 		*/
-		private var _controls:EvertronControls = new EvertronControls;
-			
+		private var _controls:EvertronControls = new EvertronControls();
+		private var _highscoreData:HighscoreData;
+		private	var _score:vector.<String>;
+		private	var _name:vector.<String>;
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
 		public function Highscore(){
-			trace("HIGHSCORE");
-			new highscoreData();
+
 		}
 		//------------------------------------------------------------------------
 		// init
 		//------------------------------------------------------------------------
 		override public function init():void {
+			initHighscore();
 			initLayers();
 		}
 		//------------------------------------------------------------------------
@@ -64,13 +67,26 @@ package state
 			_controls = null;
 			disposeBackground();
 			disposeHighscoreTable();
+			disposeOverlay();
 		}
 		//------------------------------------------------------------------------
-		// constructor
+		// init layers
 		//------------------------------------------------------------------------
 		private function initLayers():void {
 			initBackground();
 			initHighscoreTable();
+			initOverlay();
+		}
+		private function initHighscore():void {
+			_highscoreData:HighscoreData = new HighscoreData();
+			_score:vector.<String> = highscoreData.score;
+			_name:vector.<String> = highcoreData.name;
+			if (score.length == 0) {
+				score.push("00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00",);
+			}
+			if (name.length == 0) {
+				score.push("michaela","michaela","michaela","michaela","michaela","michaela","michaela","michaela","michaela","michaela");
+			}
 		}
 		//------------------------------------------------------------------------
 		// init background
@@ -121,7 +137,9 @@ package state
 			_layerBackground.removeChild(_bgImg);
 			_layerBackground = null;
 			_bgImg = null;	
-			trace("dispose highscore background");
+		}
+		private function disposeOverlay():void {
+			tracde("dispose overlay");
 		}
 	}
 }1
