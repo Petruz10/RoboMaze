@@ -2,6 +2,7 @@ package component
 {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import highscore.HighscoreData();
 
 	public class SingleplayerHUD extends HUD {
         //------------------------------------------------------------------------
@@ -49,6 +50,7 @@ package component
 		// 	init highscore graphics // only one player
 		//------------------------------------------------------------------------
 		protected function initHighscore():void {
+			highscoreData = new HighscoreData();
 			//-----------------------------------------------------------------------------
 			// Time Text Format
 			//-----------------------------------------------------------------------------

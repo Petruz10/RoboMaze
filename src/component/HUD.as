@@ -68,7 +68,6 @@ package component
 			initBattery();
 			initTime();
 			initFont();
-			//initSound();
 		}
 		//------------------------------------------------------------------------
 		// 	on update
@@ -85,29 +84,6 @@ package component
 			disposeBackground();
 			disposeBattery();
 			disposeTime();
-		}
-		protected function initSound():void {
-			Session.sound.musicChannel.sources.add("activate", Robot_Activate_mp3);
-			_activate = Session.sound.musicChannel.get("activate");
-			_activate.volume = 0.7;
-			_activate.play();
-			
-			Session.sound.musicChannel.sources.add("warning", Robot_Warning_mp3);
-			_warning = Session.sound.musicChannel.get("warning");
-			_warning.volume = 0.4;
-
-			Session.sound.musicChannel.sources.add("shutdown", Robot_Shutdown_mp3);
-			_shutdown = Session.sound.musicChannel.get("shutdown");
-			_shutdown.volume = 0.5;
-
-			Session.sound.musicChannel.sources.add("death", Robot_Death_mp3);
-			_death = Session.sound.musicChannel.get("death");
-			_death.volume = 0.2;
-
-			Session.sound.musicChannel.sources.add("game_bgmusic", GameBackgroundMusic);
-			_backgroundMusic = Session.sound.musicChannel.get("game_bgmusic");
-			_backgroundMusic.volume = 0.5;
-			_backgroundMusic.play();
 		}
 		protected function initFont():void {
 			_gameFont = new GameFont();
@@ -191,24 +167,6 @@ package component
 		//	UPDATE METHODS
 		// 	
 		//------------------------------------------------------------------------
-		//-----------------------------------------------------------------------------
-		// @param	i		int		battery lvl
-		//-----------------------------------------------------------------------------
-		public function updateSound(i:int):void {
-			switch (i) {
-				case 50:
-					_warning.play();
-				break;
-				case 30:
-					_warning.play();
-				break;
-				case 10:
-					_shutdown.play();
-					_death.play();
-				break;
-			}
-
-		}
 		//-----------------------------------------------------------------------------
 		// update time textfield
 		//-----------------------------------------------------------------------------
