@@ -7,16 +7,20 @@ package highscore
 		public var score:Vector.<String> = new Vector.<String>();
 		public var name:Vector.<String> = new Vector.<String>();
 		
+		public var a:String;
+		
 		private var scoreData:XMLList;
 		private var scoreName:XMLList;
 		
 		public function HighscoreData()
 		{
-			Session.highscore.receive(1, 10, initHighscore)
+			Session.highscore.receive(1, 10, initHighscore);
+			trace("highscore data");
 		}
 		
 		private function initHighscore(xml:XML):void
-		{			
+		{	
+			trace("initHighscore");
 			scoreData = xml.items.item.score.*;
 			scoreName = xml.items.item.name.*;
 			
@@ -29,6 +33,7 @@ package highscore
 			{
 				name.push(scoreName[j]);
 			}
+			trace("vector names", name);
 		}
 		
 		private function scoreSettings(secs:Number):void
@@ -46,10 +51,11 @@ package highscore
 			 sek = Math.floor(sek);
 			 
 			 
-			 x =  min+":"+ sek + ":" +hundraSek;
-			 trace((secs/98) - min);
-			 score.push(x);
+			x =  min+":"+ sek + ":" +hundraSek;
+			trace((secs/98) - min);
+			score.push(x);
 			trace("min: "+ min+": sek "+ sek + ": hundrasek" +hundraSek);
+			trace("vector score", score);
 		}
 		
 		public function dispose():void

@@ -8,6 +8,7 @@ package state
 	import component.Maze;
 	
 	import entity.BatteryRefill;
+	import entity.PowerUp;
 	import entity.Robot;
 	import entity.Tile;
 	
@@ -28,6 +29,9 @@ package state
 		private var m_layer:DisplayStateLayer;
 		private var m_layer2:DisplayStateLayer;
 		private var m_layer3:DisplayStateLayer;
+		private var m_layer4:DisplayStateLayer;
+		
+		private var m_powerUp:PowerUp;
 		
 		private var m_robot:Robot;
 		private var m_robot2:Robot;
@@ -219,12 +223,15 @@ package state
 			m_layer = layers.add("maze layer");
 			m_layer2 = layers.add("robot layer");
 			m_layer3 = layers.add("battery layer");
+			m_layer4 = layers.add("test hest");
 			
 			if(m_maze) m_layer.addChild(m_maze);
 			if(m_maze2) m_layer.addChild(m_maze2);
 			
 			if(m_robot) m_layer2.addChild(m_robot);	
 			if(m_robot2) m_layer2.addChild(m_robot2);
+			
+			if(m_powerUp) m_layer4.addChild(m_powerUp);
 			
 			m_layer.addChild(m_hud);
 		}
@@ -332,6 +339,11 @@ package state
 		protected function addHUD(hud):void
 		{
 			m_hud = hud;
+		}
+		
+		protected function addPowerUp(x):void
+		{
+			m_powerUp = x;
 		}
 		
 		//------------------------------------------------------------------------
