@@ -140,27 +140,17 @@ package entity
 		private function addObstacle():void
 		{
 			powerUp --;
-			//obstacle = new Bomb_mc();
+			obstacle = new Bomb_mc();
 			
-			//obstacle.graphics.beginFill(0xCCFF00);
-			if(m_player == 0)obstacle.graphics.drawRect(_skin.x+400, _skin.y, 30, 30);
-			else if(m_player == 1)obstacle.graphics.drawRect(_skin.x-400, _skin.y, 30, 30);
+
+			obstacle.y = _skin.y;
+			if(m_player == 0)obstacle.x = _skin.x +400;
+			else if(m_player == 1)obstacle.x = _skin.y -400;
 			
 			this.addChild(obstacle);
-			trace("add obs funktion");
-			trace("x grejs", obstacle.x);
 			return;
 		}
 		
-		
-		/*private function drawSquare(a:int,b:int,c:int,d:int):void
-		{
-			square.graphics.beginFill(0xCCFF00);
-			square.graphics.drawRect(a,b,c,d)
-			_skin.hitArea = square;
-			area = _skin.hitArea;
-		}
-		*/
 		private function hitt():void
 		{
 			if(hitSide == "up") _skin.y += speed; 
@@ -199,10 +189,7 @@ package entity
 			if(m_player == 0)_skin = new Robot1_mc();
 			else if(m_player == 1) _skin = new Robot2_mc();
 			
-			//_skin.width = 35;
-			//_skin.height = 35;
 			_skin.gotoAndStop("front");
-			
 			
 			//square.graphics.beginFill(0xCCFF00);
 			square.graphics.drawRect(7, 11, 20, 20);
