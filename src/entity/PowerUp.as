@@ -14,7 +14,7 @@
 		
 		private function initSkin():void
 		{
-			_skin = new CircuitBoard_mc();
+			_skin = new BombRefill_mc();
 			
 			this.addChild(_skin);
 		}

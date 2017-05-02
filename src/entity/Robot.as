@@ -43,7 +43,7 @@ package entity
 		private var square:Sprite = new Sprite();
 		
 		
-		public var obstacle:Sprite;
+		public var obstacle;
 		//------------------------------------------------------------------------
 		// Constructor methods
 		//------------------------------------------------------------------------		
@@ -140,9 +140,9 @@ package entity
 		private function addObstacle():void
 		{
 			powerUp --;
-			obstacle = new Sprite();
+			//obstacle = new Bomb_mc();
 			
-			obstacle.graphics.beginFill(0xCCFF00);
+			//obstacle.graphics.beginFill(0xCCFF00);
 			if(m_player == 0)obstacle.graphics.drawRect(_skin.x+400, _skin.y, 30, 30);
 			else if(m_player == 1)obstacle.graphics.drawRect(_skin.x-400, _skin.y, 30, 30);
 			
