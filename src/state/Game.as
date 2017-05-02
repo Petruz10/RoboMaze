@@ -14,6 +14,7 @@ package state
 	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
+	import se.lnu.stickossdk.fx.Flicker;
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.timer.Timer;
 
@@ -71,7 +72,11 @@ package state
 		{
 			initLayers();
 			initBattery();
-			if(m_players == 2) initBattery2();
+			if(m_players == 2) 
+			{
+				initBattery2();
+				addChildPowerUp();
+			}
 			initSharedObject();
 			initTimer();
 		}
@@ -84,7 +89,13 @@ package state
 			updateHUDBattery();
 			updateHUDTime();
 			
-			if(m_players == 2) placePowerup();
+			if(m_players == 2) 
+			{
+				placePowerup();
+				hitPowerup();
+			}
+			
+			if(m_robot.obstacle || m_robot2.obstacle) checkhitObstacle();
 		}
 		
 		override public function dispose():void
@@ -226,7 +237,7 @@ package state
 			m_layer = layers.add("maze layer");
 			m_layer2 = layers.add("robot layer");
 			m_layer3 = layers.add("battery layer");
-			m_layer4 = layers.add("test hest");
+			m_layer4 = layers.add("powerup");
 			
 			if(m_maze) m_layer.addChild(m_maze);
 			if(m_maze2) m_layer.addChild(m_maze2);
@@ -234,9 +245,12 @@ package state
 			if(m_robot) m_layer2.addChild(m_robot);	
 			if(m_robot2) m_layer2.addChild(m_robot2);
 			
-			if(m_powerUp) m_layer4.addChild(m_powerUp);
-			
 			m_layer.addChild(m_hud);
+		}
+		
+		private function addChildPowerUp():void
+		{
+			if(m_powerUp) m_layer4.addChild(m_powerUp);
 		}
 		
 		private function addBattery():void
@@ -303,6 +317,21 @@ package state
 			}
 		}
 		
+		private function hitPowerup():void
+		{
+			if(m_powerUp.hitTestObject(m_robot2.area)) 
+			{
+				m_robot2.powerUp ++;
+				m_layer4.removeChild(m_powerUp);
+			}
+			if(m_powerUp.hitTestObject(m_robot.area)) 
+			{
+				m_robot.powerUp ++;
+				m_layer4.removeChild(m_powerUp);
+			}
+		//	trace("powerup antal", m_robot.powerUp, m_robot2.powerUp);
+		}
+		
 		private function updateHUDBattery():void
 		{
 			m_hud.battery1Lvl = m_robot.battery.HP;
@@ -314,6 +343,46 @@ package state
 			m_hud.time = m_time;
 		}
 		
+		
+		private function checkhitObstacle():void
+		{
+			var flickr:Flicker;
+			
+			if(m_robot2.obstacle) 
+			{
+				if(m_robot.hitTestObject(m_robot2.obstacle))
+				{
+					trace("hit obsticle");
+					m_robot.speed = 0;
+					m_robot2.removeChild(m_robot2.obstacle);// = null;
+					flickr = new Flicker(m_robot, 1000, 20); //obj, tid (hur länge), intervall
+					Session.effects.add(flickr);
+					Session.timer.create(600, initSpeed);
+				}
+			}
+			if(m_robot.obstacle)
+			{
+				if(m_robot2.hitTestObject(m_robot.obstacle)) 
+				{
+					trace ("hit");
+					m_robot2.speed = 0;
+					m_robot.removeChild(m_robot.obstacle); // = null;
+					flickr = new Flicker(m_robot2, 1000, 20); //obj, tid (hur länge), intervall
+					Session.effects.add(flickr);
+					Session.timer.create(600, initSpeed);
+				}
+			}
+		}
+		
+		private function initSpeed():void
+		{
+			m_robot2.speed = 3;
+			m_robot.speed = 3;
+			Session.timer.create(8600, addChildPowerUp);
+			Session.timer.create(8600, placePowerup);
+		}
+			
+
 		//------------------------------------------------------------------------
 		// protected methods
 		//------------------------------------------------------------------------
@@ -346,6 +415,7 @@ package state
 		protected function addPowerUp(x):void
 		{
 			m_powerUp = x;
+			
 		}
 		
 		//------------------------------------------------------------------------
