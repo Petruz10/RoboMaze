@@ -13,7 +13,10 @@ package entity
 		public var batteryX:int;
 		public var batteryY:int;
 		
-		private var container:Sprite = new Sprite();
+		//------------------------------------------------------------------------
+		// private properties
+		//------------------------------------------------------------------------
+		private var m_container:Sprite = new Sprite();
 		
 		public function BatteryRefill()
 		{
@@ -29,10 +32,10 @@ package entity
 		{
 			_skin = new BatteryRefill_mc();
 			
-			container.graphics.drawRect(0, 0, 35, 35);
+			m_container.graphics.drawRect(0, 0, 35, 35);
 			
-			container.addChild(_skin);
-			this.addChild(container);
+			m_container.addChild(_skin);
+			this.addChild(m_container);
 		}
 		
 		//------------------------------------------------------------------------
@@ -40,15 +43,15 @@ package entity
 		//------------------------------------------------------------------------
 		public function placeBattery():void
 		{
-			super.place(container);
-			batteryX = container.x;
-			batteryY = container.y;
+			super.place(m_container);
+			batteryX = m_container.x;
+			batteryY = m_container.y;
 		}
 		
 		public function placeBattery2(x:int, y:int):void
 		{
-			container.x = x;
-			container.y = y;
+			m_container.x = x;
+			m_container.y = y;
 		}
 		
 		//------------------------------------------------------------------------
@@ -62,6 +65,7 @@ package entity
 		private function disposeSkin():void
 		{
 			_skin = null;
+			m_container = null;
 		}
 	}
 }

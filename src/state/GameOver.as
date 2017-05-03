@@ -75,7 +75,7 @@ package state
 		//------------------------------------------------------------------------
 		override public function init():void {
 			initLayers();
-			//initSound();
+			initSound();
 			initSharedObj();
 		}
 		//------------------------------------------------------------------------

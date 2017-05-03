@@ -22,6 +22,7 @@ package entity
 		//------------------------------------------------------------------------
 		private var m_timer:Timer;
 		private var m_warningSound:SoundObject;
+		private var m_deadSound:SoundObject;
 		
 		public function Battery()
 		{
@@ -35,7 +36,7 @@ package entity
 		//------------------------------------------------------------------------
 		private function HPtimer():void
 		{
-			m_timer = Session.timer.create(1500, removeHP);
+			m_timer = Session.timer.create(1000, removeHP);
 		}
 		
 		//------------------------------------------------------------------------
@@ -65,27 +66,30 @@ package entity
 				trace("10 eller 30");
 				initWarningSound();
 			}
-		//	else dead();
+			
+			if(HP == 0) initDeadSound();
 		}
 		
 		private function initWarningSound():void
 		{
 			Session.sound.musicChannel.sources.add("game_warningSound", RobotWarning_mp3);
 			m_warningSound = Session.sound.musicChannel.get("game_warningSound");
-			m_warningSound.volume = 0.65;
+			m_warningSound.volume = 0.7;
 			m_warningSound.play();
 		}
 		
-		/*	private function dead():void
+		private function initDeadSound():void
 		{
-			Session.timer.create(1000, gameOver);
+			Session.sound.musicChannel.sources.add("game_deadSound", RobotDeath_mp3);
+			Session.sound.musicChannel.sources.add("game_deadSound", RobotShutdown_mp3);
+			m_deadSound = Session.sound.musicChannel.get("game_deadSound");
+			m_deadSound.volume = 0.7;
+			m_deadSound.play();
 		}
 		
-		private function gameOver():void
-		{
-			Session.application.displayState = new GameOver;
-		}*/
-		
+		//------------------------------------------------------------------------
+		// dispose methods 
+		//------------------------------------------------------------------------
 		override public function dispose():void
 		{
 			disposeTimer();
