@@ -108,6 +108,7 @@ package state
 			{
 				placePowerup();
 				hitPowerup();
+				checkBattery();
 				if(m_robot.obstacle || m_robot2.obstacle) checkhitObstacle();
 			}
 		}
@@ -190,14 +191,12 @@ package state
 			{
 				m_win = SharedObject.getLocal("playerwon");
 				
-				if(m_robot2.battery.HP > 0 && m_robot.battery.HP > 0) initTimer();	
-				
-				if(m_robot.battery.HP <= 0)
+				if(m_robot.battery.HP == 0)
 				{
 					Session.timer.create(1000, initGameOver);
 					m_win.data.won = 	2;
 				}
-				if(m_robot2.battery.HP <= 0)
+				if(m_robot2.battery.HP == 0)
 				{
 					Session.timer.create(1000, initGameOver);
 					m_win.data.won = 1;
