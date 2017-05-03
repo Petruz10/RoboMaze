@@ -7,6 +7,7 @@ package state
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
+	import se.lnu.stickossdk.media.SoundObject;
 
 	
 	public class Credits extends DisplayState {
@@ -30,6 +31,10 @@ package state
 		*
 		*/
 		private var _header:ScreenTop_mc;
+		/*
+		*
+		*/
+		private var _backgroundMusic:SoundObject;
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -40,6 +45,7 @@ package state
 		// init
 		//------------------------------------------------------------------------
 		override public function init():void {
+			initSound();
 			initLayers();
 			Session.application.displayState = new GameOver;
 		}
@@ -56,6 +62,15 @@ package state
 			_controls = null;
 			disposeBackground();
 			disposeOverlay();
+		}
+		//------------------------------------------------------------------------
+		// init sound
+		//------------------------------------------------------------------------
+		private function initSound():void {
+			Session.sound.musicChannel.sources.add("highscore_credits", BackgroundCredits_mp3);
+			_backgroundMusic = Session.sound.musicChannel.get("highscore_credits");
+			_backgroundMusic.volume = 0.4;
+			_backgroundMusic.play(10);
 		}
 		//------------------------------------------------------------------------
 		// init layers

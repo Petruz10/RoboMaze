@@ -4,6 +4,7 @@ package state
 	// 	Evertron SDK
 	//------------------------------------------------------------------------
 	import flash.display.Sprite;
+	import flash.media.Sound;
 	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -19,6 +20,7 @@ package state
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
+	import se.lnu.stickossdk.media.SoundObject;
 
 	//------------------------------------------------------------------------
 	// 	Highscore State
@@ -64,6 +66,7 @@ package state
 		private var _nameT:TextField;
 		private var _scoreT:TextField;
 		private var _highscoreF:TextFormat;
+		private var _backgroundMusic:SoundObject;
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -75,6 +78,7 @@ package state
 		override public function init():void {
 			initLayers();
 			initFont();
+			initSound();
 		}
 		//------------------------------------------------------------------------
 		// update
@@ -104,6 +108,15 @@ package state
 			//initLists();
 		}
 		//------------------------------------------------------------------------
+		// init sound
+		//------------------------------------------------------------------------
+		private function initSound():void {
+			Session.sound.musicChannel.sources.add("highscore_credits", BackgroundCredits_mp3);
+			_backgroundMusic = Session.sound.musicChannel.get("highscore_credits");
+			_backgroundMusic.volume = 0.4;
+			_backgroundMusic.play(10);
+		}
+		//------------------------------------------------------------------------
 		// placeholders
 		//------------------------------------------------------------------------
 		private function initHighscore():void {
@@ -111,10 +124,10 @@ package state
 			_score = _highscoreData.score;
 			_name = _highscoreData.name;
 
-			/*if((_score.length == 0) || (_score == null)) {
+			if((_score.length == 0) || (_score == null)) {
 				_score.push("00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00");
-				_name.push("michaelajättelångtnamn","michaelajättelångtnamn","michaela3","michaela4","michaela5","michaela6","michaela7","michaela8","michaela9","michaela10");
-			} */
+				_name.push("michaela1","michaela2","michaela3","michaela4","michaela5","michaela6","michaela7","michaela8","michaela9","michaela10");
+			} 
 		}
 		private function updateHighscore():void {
 			if (_score.length != 0) {

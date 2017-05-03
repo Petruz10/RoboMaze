@@ -52,9 +52,14 @@ package component
 		* 	Visual representation of time
 		*/
 		protected var _gameFont:GameFont;
+		/*
+		*
+		*/
 		protected var _timeT:TextField;
+		/*
+		*
+		*/
 		protected var _timeF:TextFormat;
-	
 		//------------------------------------------------------------------------
 		// 	Constructor
 		//------------------------------------------------------------------------

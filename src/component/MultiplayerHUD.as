@@ -4,6 +4,7 @@ package component
 	{
 		private var _battery2:Battery_mc;
 		private var _battery2Lvl:int;
+		private var _bomb:int; // 1 or 2
 		//------------------------------------------------------------------------
 		// 	Constructor
 		//------------------------------------------------------------------------
@@ -19,7 +20,7 @@ package component
 		override public function update():void {
 			super.update();
 			super.updateBattery(battery2Lvl, _battery2);
-			//super.updateSound(battery2Lvl);
+			updateBomb();
 		}
 		//------------------------------------------------------------------------
 		// dispose
@@ -33,13 +34,28 @@ package component
 		//------------------------------------------------------------------------
 		override protected function initBattery():void {
 			super.initBattery();
-			trace("add battery 2");
 			_battery2 = new Battery_mc();
 			_battery2.stop();
 			_battery2.x = 620;
 			_battery2.y = 20;
 			this.addChild(_battery2);
 		}
+		private function updateBomb():void {
+			if (this._bomb == 1) {
+				addBombIcon(1);
+			}
+			else if (this._bomb == 2) {
+				addBombIcon(2);
+			}
+		}
+		private function addBombIcon(player:int):void {
+			
+		}
+		//------------------------------------------------------------------------
+		// 	
+		//	GETTERS AND SETTERS
+		//
+		//------------------------------------------------------------------------
 		//------------------------------------------------------------------------
 		// 	set second battery lvl
 		//------------------------------------------------------------------------
@@ -51,6 +67,18 @@ package component
 		//------------------------------------------------------------------------
 		public function get battery2Lvl():int {
 			return this._battery2Lvl;
+		}
+		//-----------------------------------------------------------------------------
+		// set bomb status
+		//-----------------------------------------------------------------------------
+		public function set bomb(bomb:int):void {
+			this._bomb = bomb;
+		}
+		//-----------------------------------------------------------------------------
+		// get bomb status
+		//-----------------------------------------------------------------------------
+		public function get bomb():int {
+			return this._bomb;
 		}
 		//------------------------------------------------------------------------
 		// dispose battery 2
