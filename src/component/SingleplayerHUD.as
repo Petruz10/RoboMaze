@@ -15,6 +15,10 @@ package component
 		*/
 		private var _highscore:String;
 		/*
+		*
+		*/
+		private var _highscoreVector:Vector.<String>;
+		/*
 		* 	Visual representation of highscore
 		*/
 		private var _aboveHighscoreT:TextField;
@@ -102,11 +106,8 @@ package component
 		//------------------------------------------------------------------------
 		protected function initHighscore():void {
 			var highscoreData:HighscoreData = new HighscoreData();
-			var score:Vector.<String> = highscoreData.score;
-			if (score.length == 0) {
-				score.push("50:01:23","40:01:23","30:01:23","20:01:23","10:01:23","00:09:23","00:08:23","00:06:23","00:05:23","00:02:23");
-			}
-			this._highscore = score[0];
+			_highscoreVector = highscoreData.score;
+			this._highscore = "00:00:00";
 			//-----------------------------------------------------------------------------
 			// Time Text Format
 			//-----------------------------------------------------------------------------
@@ -121,7 +122,7 @@ package component
 			_highscoreT.embedFonts = true; 
 			_highscoreT.selectable = false;
 			_highscoreT.textColor = 0xffffff;      
-			_highscoreT.text = "60:60:60"; // PLACEHOLDER 
+			_highscoreT.text = this._highscore; // PLACEHOLDER 
 			_highscoreT.width = 500;
 			_highscoreT.y = 40;
 			_highscoreT.x = 630;
@@ -198,11 +199,15 @@ package component
 		// update highscore
 		//-----------------------------------------------------------------------------
 		private function updateHighscore():void {
-			if (_highscore != null) {
+			if (_highscoreVector.length != 0) {
+				if (_highscore != "00:00:00") {
+					this._highscore = _highscoreVector[0];
+					_highscoreT.text = this._highscore;
+					_highscoreT.setTextFormat(_highscoreF);
+				}
+			} 
+			else if (_highscoreVector.length == 0) {
 				_highscoreT.text = this._highscore;
-				_highscoreT.setTextFormat(_highscoreF);
-			} else {
-				_highscoreT.text = "00:00:00";
 				_highscoreT.setTextFormat(_highscoreF);
 			}
 		}

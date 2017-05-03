@@ -5,11 +5,15 @@ package component
 		private var _battery2:Battery_mc;
 		private var _battery2Lvl:int;
 		private var _bomb:int; // 1 or 2
+		private var _wrong:int; // 1 or 2
 		/*
 		*	ICONS
 		*/
 		private var _bombIcon1:BombIcon_mc;
 		private var _bombIcon2:BombIcon_mc;
+		
+		private var _wrongIcon1:WrongIcon_mc;
+		private var _wrongIcon2:WrongIcon_mc;
 		//------------------------------------------------------------------------
 		// 	Constructor
 		//------------------------------------------------------------------------
@@ -18,7 +22,8 @@ package component
 		}
 		override public function init():void {
 			super.init();
-			initIcons();
+			initBombIcons();
+			initWrongIcons();
 		}
 		//------------------------------------------------------------------------
 		// 	update
@@ -26,7 +31,7 @@ package component
 		override public function update():void {
 			super.update();
 			super.updateBattery(battery2Lvl, _battery2);
-			updateBomb();
+			updateIcons();
 		}
 		//------------------------------------------------------------------------
 		// dispose
@@ -46,20 +51,30 @@ package component
 			_battery2.y = 20;
 			this.addChild(_battery2);
 		}
-		private function updateBomb():void {
+		private function updateIcons():void {
+			
 			if (this._bomb == 1) {
 				activateBombIcon(1);
 			}
 			else if (this._bomb == 2) {
 				activateBombIcon(2);
 			}
+			
+			if (this._wrong == 1) {
+				activateWrongIcon(1);
+			}
+			else if (this._wrong == 2) {
+				activateWrongIcon(2);
+			}
+			
 		}
 		//------------------------------------------------------------------------
 		// 	init all icons used in HUD
 		//------------------------------------------------------------------------
-		private function initIcons():void {
+		private function initBombIcons():void {
 			_bombIcon1 = new BombIcon_mc();
 			_bombIcon2 = new BombIcon_mc();
+			
 			_bombIcon1.gotoAndStop("deactivate");
 			_bombIcon1.x = 200;
 			_bombIcon1.y = 28;
@@ -71,12 +86,37 @@ package component
 			this.addChild(_bombIcon1);
 			this.addChild(_bombIcon2);
 		}
+		private function initWrongIcons():void {
+			_wrongIcon1 = new WrongIcon_mc();
+			_wrongIcon2 = new WrongIcon_mc();
+			
+			_wrongIcon1.gotoAndStop("deactivate");
+			_wrongIcon1.x = 240;
+			_wrongIcon1.y = 28;
+			
+			_wrongIcon2.gotoAndStop("deactivate");
+			_wrongIcon2.x = 532;
+			_wrongIcon2.y = 28;
+			
+			this.addChild(_bombIcon1);
+			this.addChild(_bombIcon2);
+			
+			this.addChild(_wrongIcon1);
+			this.addChild(_wrongIcon2);
+		}
 		//------------------------------------------------------------------------
 		// 	activate bomb icon
 		//------------------------------------------------------------------------
 		private function activateBombIcon(player:int):void {
 			if ( player == 1 ) { _bombIcon1.gotoAndStop("activate"); }
 			if ( player == 2 ) { _bombIcon2.gotoAndStop("activate"); }
+		}
+		//------------------------------------------------------------------------
+		// 	activate wrong icon
+		//------------------------------------------------------------------------
+		private function activateWrongIcon(player:int):void {
+			if ( player == 1 ) { _wrongIcon1.gotoAndStop("activate"); }
+			if ( player == 2 ) { _wrongIcon2.gotoAndStop("activate"); }
 		}
 		//------------------------------------------------------------------------
 		// 	
@@ -100,7 +140,8 @@ package component
 		}
 		//-----------------------------------------------------------------------------
 		// set bomb status
-		//-----------------------------------------------------------------------------
+		//--------------------------------------
+		//---------------------------------------
 		public function set bomb(bomb:int):void {
 			trace("set bomb");
 			this._bomb = bomb;
@@ -111,6 +152,21 @@ package component
 		public function get bomb():int {
 			trace("get bomb");
 			return this._bomb;
+		}
+		//-----------------------------------------------------------------------------
+		// set wrong way sabotage status
+		//--------------------------------------
+		//---------------------------------------
+		public function set wrong(bomb:int):void {
+			trace("set wrong");
+			this._wrong = wrong;
+		}
+		//-----------------------------------------------------------------------------
+		// get wrong way sabotage status
+		//-----------------------------------------------------------------------------
+		public function get wrong():int {
+			trace("get wrong");
+			return this._wrong;
 		}
 		//------------------------------------------------------------------------
 		// dispose battery 2
