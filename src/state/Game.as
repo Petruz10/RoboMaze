@@ -61,7 +61,6 @@ package state
 		
 		private var m_backgroundMusic:SoundObject;
 		
-		private var m_deadSound:SoundObject;
 		private var m_bombSound:SoundObject;
 		
 		private var m_SharedObjPlayers:SharedObject;
@@ -145,7 +144,7 @@ package state
 			Session.sound.musicChannel.sources.add("game_bgmusic", BackgroundGame_mp3);
 			m_backgroundMusic = Session.sound.musicChannel.get("game_bgmusic");
 			m_backgroundMusic.volume = 0.5;
-			m_backgroundMusic.play();
+			m_backgroundMusic.play(int.MAX_VALUE); //loop av ljud "Henke hack"
 		}
 		
 		private function updateTimer():void
@@ -212,16 +211,6 @@ package state
 		private function gameOver(e):void
 		{
 			Session.timer.create(1000, initGameOver);
-			initDeadSound();
-		}
-		
-		private function initDeadSound():void
-		{
-			Session.sound.musicChannel.sources.add("game_deadSound", RobotDeath_mp3);
-			Session.sound.musicChannel.sources.add("game_deadSound", RobotShutdown_mp3);
-			m_deadSound = Session.sound.musicChannel.get("game_deadSound");
-			m_deadSound.volume = 0.65;
-			m_deadSound.play();
 		}
 		
 		private function initGameOver():void
@@ -414,7 +403,7 @@ package state
 		{
 			Session.sound.musicChannel.sources.add("game_bombSound", RobotWarning_mp3);
 			m_bombSound = Session.sound.musicChannel.get("game_bombSound");
-			m_bombSound.volume = 0.65;
+			m_bombSound.volume = 0.7;
 			m_bombSound.play();
 		}
 		
