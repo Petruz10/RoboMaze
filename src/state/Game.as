@@ -181,12 +181,12 @@ package state
 				if(m_robot.battery.HP <= 0)
 				{
 					Session.timer.create(1000, initGameOver);
-					win.data.players = 	2;
+					win.data.won = 	2;
 				}
 				if(m_robot2.battery.HP <= 0)
 				{
 					Session.timer.create(1000, initGameOver);
-					win.data.players = 1;
+					win.data.won = 1;
 				}
 				win.flush(); 
 			}
