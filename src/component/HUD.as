@@ -1,19 +1,8 @@
 package component
 {	
 	import flash.display.MovieClip;
-	import flash.media.Sound;
-	import flash.text.Font;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
-	
 	import entity.Battery;
-	
-	import font.GameFont;
-	
 	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
-	import se.lnu.stickossdk.media.SoundObject;
-	import se.lnu.stickossdk.system.Session;
-
 	/*
 	*
 	* game HUD	
@@ -33,33 +22,9 @@ package component
 		*/
 		protected var _backgroundImg:HUD_BG_mc;
 		/*
-		*
-		*/
-		protected var _backgroundMusic:SoundObject;
-		protected var _warning:SoundObject;
-		protected var _shutdown:SoundObject;
-		protected var _activate:SoundObject;
-		protected var _death:SoundObject;
-		/*
 		* 	Battery representation
 		*/
 		protected var _battery1:Battery_mc;
-		/*
-		* 	time 
-		*/
-		protected var _time:String; 
-		/*
-		* 	Visual representation of time
-		*/
-		protected var _gameFont:GameFont;
-		/*
-		*
-		*/
-		protected var _timeT:TextField;
-		/*
-		*
-		*/
-		protected var _timeF:TextFormat;
 		//------------------------------------------------------------------------
 		// 	Constructor
 		//------------------------------------------------------------------------
@@ -71,16 +36,12 @@ package component
 		override public function init():void {
 			initBackground();
 			initBattery();
-			initTime();
-			initFont();
 		}
 		//------------------------------------------------------------------------
 		// 	on update
 		//------------------------------------------------------------------------
 		override public function update():void {
 			updateBattery(battery1Lvl, _battery1);
-			updateTime();
-			//updateSound(battery1Lvl);
 		}
 		//------------------------------------------------------------------------
 		// 	dispose
@@ -88,10 +49,6 @@ package component
 		override public function dispose():void {
 			disposeBackground();
 			disposeBattery();
-			disposeTime();
-		}
-		protected function initFont():void {
-			_gameFont = new GameFont();
 		}
 		//------------------------------------------------------------------------
 		//	 background
@@ -112,32 +69,7 @@ package component
 			_battery1.y = 20;
 			this.addChild(_battery1);
 		}
-		//------------------------------------------------------------------------
-		//	 init time graphics
-		//------------------------------------------------------------------------
-		protected function initTime():void {
-			//-----------------------------------------------------------------------------
-			// Time Text Format
-			//-----------------------------------------------------------------------------
-			_timeF = new TextFormat;
-			_timeF.font = "Digitalix"; 
-			_timeF.size = 40;
-			_timeF.align = "left";
-			//-----------------------------------------------------------------------------
-			// Time Text Field
-			//-----------------------------------------------------------------------------
-			_timeT = new TextField;
-			_timeT.embedFonts = true; 
-			_timeT.selectable = false;
-			_timeT.textColor = 0xffffff;      
-			_timeT.text = "00:00:00"; // PLACEHOLDER 
-			_timeT.width = 500;
-			_timeT.y = 20;
-			_timeT.x = 270;
-			_timeT.setTextFormat(_timeF); 
-			this.addChild(_timeT);
-			
-		}
+
 		//-----------------------------------------------------------------------------
 		// 
 		// 	SETTERS & GETTERS
@@ -155,35 +87,11 @@ package component
 		public function get battery1Lvl():int {
 			return this._battery1Lvl;
 		}
-		//-----------------------------------------------------------------------------
-		// set time-string
-		//-----------------------------------------------------------------------------
-		public function set time(time:String):void {
-			this._time = time;
-		}
-		//-----------------------------------------------------------------------------
-		// get time string
-		//-----------------------------------------------------------------------------
-		public function get time():String {
-			return this._time;
-		}
 		//------------------------------------------------------------------------
 		//
 		//	UPDATE METHODS
 		// 	
 		//------------------------------------------------------------------------
-		//-----------------------------------------------------------------------------
-		// update time textfield
-		//-----------------------------------------------------------------------------
-		protected function updateTime():void {
-			if (_time != null) {
-				_timeT.text = this._time;
-				_timeT.setTextFormat(_timeF);
-			} else {
-				_timeT.text = "00:00:00";
-				_timeT.setTextFormat(_timeF);
-			}
-		}
 		//------------------------------------------------------------------------
 		//
 		// 	update battery graphics
@@ -244,15 +152,6 @@ package component
 			if (_battery1 != null) {
 				this.removeChild(_battery1);
 				_battery1 = null;
-			}
-		}
-		//------------------------------------------------------------------------
-		// 	dispose time
-		//------------------------------------------------------------------------
-		protected function disposeTime():void {
-			if(_timeT != null){
-				this.removeChild(_timeT);
-				_timeT = null;
 			}
 		}
 	}

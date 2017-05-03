@@ -5,6 +5,11 @@ package component
 		private var _battery2:Battery_mc;
 		private var _battery2Lvl:int;
 		private var _bomb:int; // 1 or 2
+		/*
+		*	ICONS
+		*/
+		private var _bombIcon1:BombIcon_mc;
+		private var _bombIcon2:BombIcon_mc;
 		//------------------------------------------------------------------------
 		// 	Constructor
 		//------------------------------------------------------------------------
@@ -13,6 +18,7 @@ package component
 		}
 		override public function init():void {
 			super.init();
+			initIcons();
 		}
 		//------------------------------------------------------------------------
 		// 	update
@@ -42,14 +48,35 @@ package component
 		}
 		private function updateBomb():void {
 			if (this._bomb == 1) {
-				addBombIcon(1);
+				activateBombIcon(1);
 			}
 			else if (this._bomb == 2) {
-				addBombIcon(2);
+				activateBombIcon(2);
 			}
 		}
-		private function addBombIcon(player:int):void {
+		//------------------------------------------------------------------------
+		// 	init all icons used in HUD
+		//------------------------------------------------------------------------
+		private function initIcons():void {
+			_bombIcon1 = new BombIcon_mc();
+			_bombIcon2 = new BombIcon_mc();
+			_bombIcon1.gotoAndStop("deactivate");
+			_bombIcon1.x = 200;
+			_bombIcon1.y = 28;
+
+			_bombIcon2.gotoAndStop("deactivate");
+			_bombIcon2.x = 572;
+			_bombIcon2.y = 28;
 			
+			this.addChild(_bombIcon1);
+			this.addChild(_bombIcon2);
+		}
+		//------------------------------------------------------------------------
+		// 	activate bomb icon
+		//------------------------------------------------------------------------
+		private function activateBombIcon(player:int):void {
+			if ( player == 1 ) { _bombIcon1.gotoAndStop("activate"); }
+			if ( player == 2 ) { _bombIcon2.gotoAndStop("activate"); }
 		}
 		//------------------------------------------------------------------------
 		// 	
@@ -59,6 +86,9 @@ package component
 		//------------------------------------------------------------------------
 		// 	set second battery lvl
 		//------------------------------------------------------------------------
+		public function set time(time:String):void{
+			var time:String = time;
+		}
 		public function set battery2Lvl(batteryLvl:int):void {
 			this._battery2Lvl = batteryLvl;
 		}

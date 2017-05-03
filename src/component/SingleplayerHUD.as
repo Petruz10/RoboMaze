@@ -2,6 +2,8 @@ package component
 {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import flash.text.Font;
+	import font.GameFont;
 	import highscore.HighscoreData;
 
 	public class SingleplayerHUD extends HUD {
@@ -19,6 +21,22 @@ package component
 		private var _aboveHighscoreF:TextFormat;
 		private var _highscoreT:TextField;
 		private var _highscoreF:TextFormat;
+		/*
+		* 	time 
+		*/
+		protected var _time:String; 
+		/*
+		* 	Visual representation of time
+		*/
+		protected var _gameFont:GameFont;
+		/*
+		*
+		*/
+		protected var _timeT:TextField;
+		/*
+		*
+		*/
+		protected var _timeF:TextFormat;
         //------------------------------------------------------------------------
 		// 	Constructor
 		//------------------------------------------------------------------------
@@ -30,7 +48,9 @@ package component
 		//------------------------------------------------------------------------
         override public function init():void {
             super.init();
+			initFont();
             initHighscore();
+			initTime();
         }
         //------------------------------------------------------------------------
 		// 	Update
@@ -38,6 +58,7 @@ package component
         override public function update():void {
             super.update();
             updateHighscore();
+			updateTime();
         }
         //------------------------------------------------------------------------
 		// 	Dispose
@@ -45,7 +66,37 @@ package component
         override public function dispose():void {
             super.dispose();
             disposeHighscore();
+			disposeTime();
         }
+		protected function initFont():void {
+			_gameFont = new GameFont();
+		}
+		//------------------------------------------------------------------------
+		//	 init time graphics
+		//------------------------------------------------------------------------
+		protected function initTime():void {
+			//-----------------------------------------------------------------------------
+			// Time Text Format
+			//-----------------------------------------------------------------------------
+			_timeF = new TextFormat;
+			_timeF.font = "Digitalix"; 
+			_timeF.size = 40;
+			_timeF.align = "left";
+			//-----------------------------------------------------------------------------
+			// Time Text Field
+			//-----------------------------------------------------------------------------
+			_timeT = new TextField;
+			_timeT.embedFonts = true; 
+			_timeT.selectable = false;
+			_timeT.textColor = 0xffffff;      
+			_timeT.text = "00:00:00"; // PLACEHOLDER 
+			_timeT.width = 500;
+			_timeT.y = 20;
+			_timeT.x = 270;
+			_timeT.setTextFormat(_timeF); 
+			this.addChild(_timeT);
+			
+		}
         //------------------------------------------------------------------------
 		// 	init highscore graphics // only one player
 		//------------------------------------------------------------------------
@@ -102,6 +153,18 @@ package component
 		// 	GETTERS AND SETTERS
 		//
 		//-----------------------------------------------------------------------------
+		//-----------------------------------------------------------------------------
+		// set time-string
+		//-----------------------------------------------------------------------------
+		public function set time(time:String):void {
+			this._time = time;
+		}
+		//-----------------------------------------------------------------------------
+		// get time string
+		//-----------------------------------------------------------------------------
+		public function get time():String {
+			return this._time;
+		}
         //-----------------------------------------------------------------------------
 		// set highsore
 		//-----------------------------------------------------------------------------
@@ -119,6 +182,18 @@ package component
 		// 	UPDATE METHODS
 		//
 		//-----------------------------------------------------------------------------
+		//-----------------------------------------------------------------------------
+		// update time textfield
+		//-----------------------------------------------------------------------------
+		protected function updateTime():void {
+			if (_time != null) {
+				_timeT.text = this._time;
+				_timeT.setTextFormat(_timeF);
+			} else {
+				_timeT.text = "00:00:00";
+				_timeT.setTextFormat(_timeF);
+			}
+		}
         //-----------------------------------------------------------------------------
 		// update highscore
 		//-----------------------------------------------------------------------------
@@ -129,6 +204,15 @@ package component
 			} else {
 				_highscoreT.text = "00:00:00";
 				_highscoreT.setTextFormat(_highscoreF);
+			}
+		}
+		//------------------------------------------------------------------------
+		// 	dispose time
+		//------------------------------------------------------------------------
+		protected function disposeTime():void {
+			if(_timeT != null){
+				this.removeChild(_timeT);
+				_timeT = null;
 			}
 		}
         //------------------------------------------------------------------------
