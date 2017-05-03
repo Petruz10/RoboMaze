@@ -27,24 +27,20 @@ package entity
 		public var battery:Battery;
 		
 		public var powerUp:int = 0;
+		public var obstacle:Bomb_mc;
+		
+		public var speed:int = 3;
 		//------------------------------------------------------------------------
 		// private properties 
 		//------------------------------------------------------------------------
 		private var m_controls:EvertronControls = new EvertronControls();
 		
-		public var speed:int = 3;
-		
-		
-		private var hitSide:String;		
+		private var m_hitSide:String;		
 		private var m_player:int;
 		
-		private var flickr:Flicker;
+		private var m_flickr:Flicker;
 		
-		private var square:Sprite = new Sprite();
-		
-		
-		public var obstacle;
-		
+		private var m_square:Sprite = new Sprite();
 		private var m_refillSound:SoundObject;
 		//------------------------------------------------------------------------
 		// Constructor methods
@@ -69,13 +65,13 @@ package entity
 			if(!hit)updateControls();
 			else if(hit) hitt();
 			checkHit();
-		//	if(obstacle) checkhitObstacle();
 		}
 		
 		override public function dispose():void
 		{
 			disposeSkin();
 			disposeGameOver();
+			disposeObstacle();
 		}
 		
 		//------------------------------------------------------------------------
@@ -93,7 +89,7 @@ package entity
 		
 		private function moveUp():void
 		{	
-			hitSide = "up";
+			m_hitSide = "up";
 			if(battery.HP != 0) 
 			{
 				_skin.y -= speed; 
@@ -104,7 +100,7 @@ package entity
 		
 		private function moveDown():void
 		{	
-			hitSide = "down";
+			m_hitSide = "down";
 			if(battery.HP != 0)
 			{
 				_skin.y += speed; 
@@ -115,7 +111,7 @@ package entity
 		
 		private function moveLeft():void
 		{
-			hitSide = "left";
+			m_hitSide = "left";
 			if(battery.HP != 0) 
 			{
 				_skin.x -= speed; 
@@ -128,7 +124,7 @@ package entity
 		private function moveRight():void
 		{
 			
-			hitSide = "right";
+			m_hitSide = "right";
 			if(battery.HP != 0) 
 			{
 				_skin.x += speed; 
@@ -155,10 +151,10 @@ package entity
 		
 		private function hitt():void
 		{
-			if(hitSide == "up") _skin.y += speed; 
-			else if(hitSide == "down") _skin.y -= speed; 
-			else if(hitSide == "left") _skin.x += speed; 
-			else if(hitSide == "right") _skin.x -= speed;
+			if(m_hitSide == "up") _skin.y += speed; 
+			else if(m_hitSide == "down") _skin.y -= speed; 
+			else if(m_hitSide == "left") _skin.x += speed; 
+			else if(m_hitSide == "right") _skin.x -= speed;
 			
 			hit = false;
 			
@@ -191,8 +187,8 @@ package entity
 		
 		private function initGameOver():void
 		{			
-			flickr = new Flicker(_skin, 1000, 20); //obj, tid (hur länge), intervall
-			Session.effects.add(flickr);
+			m_flickr = new Flicker(_skin, 1000, 20); //obj, tid (hur länge), intervall
+			Session.effects.add(m_flickr);
 		}
 
 		private function initSkin():void
@@ -203,8 +199,8 @@ package entity
 			_skin.gotoAndStop("front");
 			
 			//square.graphics.beginFill(0xCCFF00);
-			square.graphics.drawRect(7, 11, 20, 20);
-			_skin.hitArea = square;
+			m_square.graphics.drawRect(7, 11, 20, 20);
+			_skin.hitArea = m_square;
 			area = _skin.hitArea;
 
 			battery = new Battery();
@@ -213,10 +209,13 @@ package entity
 			_skin.addChild(_skin.hitArea);
 		}
 		
+		//------------------------------------------------------------------------
+		// dispose methods
+		//------------------------------------------------------------------------
 		private function disposeSkin():void
 		{
 			m_controls = null;
-			square = null;
+			m_square = null;
 			_skin.hitArea = null;
 			_skin = null;
 			battery = null;
@@ -224,9 +223,14 @@ package entity
 			trace("dispose Robot");
 		}
 		
+		private function disposeObstacle():void
+		{
+			obstacle = null;
+		}
+		
 		private function disposeGameOver():void
 		{
-			flickr = null;
+			m_flickr = null;
 			trace("dispose gameOver, flickr effekt");
 		}
 

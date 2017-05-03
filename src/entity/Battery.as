@@ -65,27 +65,19 @@ package entity
 				trace("10 eller 30");
 				//initWarningSound();
 			}
-		//	else dead();
 		}
 		
 		private function initWarningSound():void
 		{
 			Session.sound.musicChannel.sources.add("game_warningSound", RobotWarning_mp3);
 			m_warningSound = Session.sound.musicChannel.get("game_warningSound");
-			m_warningSound.volume = 0.65;
+			m_warningSound.volume = 0.7;
 			m_warningSound.play();
 		}
 		
-		/*	private function dead():void
-		{
-			Session.timer.create(1000, gameOver);
-		}
-		
-		private function gameOver():void
-		{
-			Session.application.displayState = new GameOver;
-		}*/
-		
+		//------------------------------------------------------------------------
+		// dispose methods 
+		//------------------------------------------------------------------------
 		override public function dispose():void
 		{
 			disposeTimer();

@@ -41,9 +41,7 @@ package game
 			
 			m_robot.x = 43;
 			m_robot.y = 125;
-			
-		//	m_robot.opaqueBackground = 0xFFFFFF;
-			
+				
 			super.addAvatar(m_robot);
 		}
 		
@@ -63,11 +61,14 @@ package game
 			m_hud = new SingleplayerHUD();
 			
 			m_hud.x = 0;
-			m_hud.y=0;
+			m_hud.y = 0;
 			
 			super.addHUD(m_hud);
 		}
 		
+		//------------------------------------------------------------------------
+		// dispose methods 
+		//------------------------------------------------------------------------
 		override public function dispose():void
 		{
 			disposeAvatar();

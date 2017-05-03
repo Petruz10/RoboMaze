@@ -3,14 +3,13 @@ package game
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
-	import component.HUD;
 	import component.Maze;
 	import component.MultiplayerHUD;
 	
 	import entity.Robot;
+	import entity.PowerUp;
 	
 	import state.Game;
-	import entity.PowerUp;
 	
 	//------------------------------------------------------------------------
 	// Public class Multiplayer
@@ -107,8 +106,6 @@ package game
 			m_superPower2 = new PowerUp();
 			
 			super.addPowerUp(m_superPower, m_superPower2);
-			trace("Robot 1", m_robot.x);
-			trace("Robot 2", m_robot2.x);
 		}
 		
 		//------------------------------------------------------------------------
@@ -119,6 +116,7 @@ package game
 			disposeAvatar();
 			disposeMaze();
 			disposeHUD();
+			disposePowerup();
 		}
 		
 		private function disposeAvatar():void
@@ -139,6 +137,12 @@ package game
 		{
 			m_hud = null;
 			trace("dispose hud");
+		}
+		
+		private function disposePowerup():void
+		{
+			m_superPower = null;
+			m_superPower2 = null;
 		}
 
 	}

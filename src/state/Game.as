@@ -45,7 +45,7 @@ package state
 		private var m_battery:BatteryRefill;
 		private var m_battery2:BatteryRefill;
 		
-		private var children:Vector.<Tile> = new Vector.<Tile>(); 
+		private var m_children:Vector.<Tile> = new Vector.<Tile>(); 
 		
 		private var m_players:int;
 		
@@ -54,8 +54,8 @@ package state
 		private var m_gameTime:Number = 0;
 		private var m_time:String;
 		
-		private var min:int = 0;
-		private var sek:Number = 0;
+		private var m_min:int = 0;
+		private var m_sek:Number = 0;
 		
 		private var m_score:Number = 0;
 		
@@ -63,7 +63,12 @@ package state
 		
 		private var m_deadSound:SoundObject;
 		private var m_bombSound:SoundObject;
-				
+		
+		private var m_SharedObjPlayers:SharedObject;
+		private var m_win:SharedObject;
+		
+		private var m_flickr:Flicker;
+		
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -113,6 +118,9 @@ package state
 			disposeLayers();	
 			disposeBattery()
 			disposeHUD();
+			disposeSharedObj();
+			disposeEffects();
+			if(m_players == 2) disposePowerUps();
 		}
 		
 		//------------------------------------------------------------------------
@@ -120,19 +128,16 @@ package state
 		//------------------------------------------------------------------------
 		private function initSharedObject():void
 		{
-			var players:SharedObject;
-			
-			players = SharedObject.getLocal("players");
-			players.data.players = 	m_players;
-			players.flush();
-			
-			trace("sharedObj", players.data.players);
+			m_SharedObjPlayers = SharedObject.getLocal("players");
+			m_SharedObjPlayers.data.players = m_players;
+			m_SharedObjPlayers.flush();
+	
 			return;
 		}
 		
 		private function initTimer():void
 		{
-			var timer:Timer = Session.timer.create(1, updateTimer);
+			Session.timer.create(1, updateTimer);
 		}
 		
 		private function initSound():void
@@ -156,45 +161,41 @@ package state
 			
 			if(hundraSek == 98)
 			{
-				sek++; 
+				m_sek++; 
 				m_gameTime = 0;
-				if(sek == 60)
+				if(m_sek == 60)
 				{
-					sek = 0;
-					min ++;
+					m_sek = 0;
+					m_min ++;
 				}
 			}
 			
-			m_time = min+":"+ sek + ":" + hundraSek;
+			m_time = m_min+":"+ m_sek + ":" + hundraSek;
 		}
 		
 		private function checkBattery():void
 		{
 			if (m_players == 2) 
 			{
-				var win:SharedObject;
-				
-				win = SharedObject.getLocal("playerwon");
-				
+				m_win = SharedObject.getLocal("playerwon");
 				
 				if(m_robot2.battery.HP > 0 && m_robot.battery.HP > 0) initTimer();	
 				
 				if(m_robot.battery.HP <= 0)
 				{
 					Session.timer.create(1000, initGameOver);
-					win.data.won = 	2;
+					m_win.data.won = 	2;
 				}
 				if(m_robot2.battery.HP <= 0)
 				{
 					Session.timer.create(1000, initGameOver);
-					win.data.won = 1;
+					m_win.data.won = 1;
 				}
-				win.flush(); 
+				m_win.flush(); 
 			}
 			else
 			{
-				if(m_robot.battery.HP > 0) initTimer();	
-				
+				if(m_robot.battery.HP > 0) initTimer();		
 				if(m_robot.battery.HP == 0) initHighScore();
 			}
 		}
@@ -210,7 +211,6 @@ package state
 		
 		private function gameOver(e):void
 		{
-			//trace("a", e);
 			Session.timer.create(1000, initGameOver);
 			initDeadSound();
 		}
@@ -220,15 +220,12 @@ package state
 			Session.sound.musicChannel.sources.add("game_deadSound", RobotDeath_mp3);
 			Session.sound.musicChannel.sources.add("game_deadSound", RobotShutdown_mp3);
 			m_deadSound = Session.sound.musicChannel.get("game_deadSound");
-			m_deadSound.volume = 0.5;
+			m_deadSound.volume = 0.65;
 			m_deadSound.play();
 		}
 		
 		private function initGameOver():void
 		{
-			trace("game over state");
-			
-			
 			Session.application.displayState = new GameOver;
 		}
 		
@@ -248,15 +245,15 @@ package state
 		private function placeBattery():void
 		{
 			
-			for (var i:int = 0; i<children.length; i++)
+			for (var i:int = 0; i<m_children.length; i++)
 			{
 				if(m_players == 2)
 				{
-					if(m_battery.hitTestObject(children[i]) || m_battery.batteryX <= 400) m_battery.placeBattery();
+					if(m_battery.hitTestObject(m_children[i]) || m_battery.batteryX <= 400) m_battery.placeBattery();
 				}
 				else
 				{
-					if(m_battery.hitTestObject(children[i])) m_battery.placeBattery(); 
+					if(m_battery.hitTestObject(m_children[i])) m_battery.placeBattery(); 
 				}
 			}
 			
@@ -266,9 +263,9 @@ package state
 		private function placePowerup():void
 		{
 			
-			for (var i:int = 0; i<children.length; i++)
+			for (var i:int = 0; i<m_children.length; i++)
 			{
-				if(m_powerUp.hitTestObject(children[i])|| m_powerUp.powerupX <= 400) m_powerUp.placePowerUp(); 
+				if(m_powerUp.hitTestObject(m_children[i])|| m_powerUp.powerupX <= 400) m_powerUp.placePowerUp(); 
 			}
 			
 			m_powerUp2.placePowerup2(m_powerUp.powerupX - 400,  m_powerUp.powerupY);
@@ -306,14 +303,14 @@ package state
 		{
 			for (var i:uint = 0; i < m_maze.numChildren; i++)
 			{
-				children.push(m_maze.getChildAt(i));
+				m_children.push(m_maze.getChildAt(i));
 			}
 			
 			if(m_maze2)
 			{
 				for (var j:uint = 0; j < m_maze2.numChildren; j++)
 				{
-					children.push(m_maze2.getChildAt(j));
+					m_children.push(m_maze2.getChildAt(j));
 				}
 			}
 		}
@@ -321,12 +318,12 @@ package state
 		private function hitTest():void
 		{	
 			
-			for (var i:int = 0; i<children.length; i++)
+			for (var i:int = 0; i<m_children.length; i++)
 			{
-				if(children[i].hitTestObject(m_robot.area)) m_robot.hit = true;
+				if(m_children[i].hitTestObject(m_robot.area)) m_robot.hit = true;
 				if(m_robot2)
 				{
-					if(children[i].hitTestObject(m_robot2.area)) m_robot2.hit = true;
+					if(m_children[i].hitTestObject(m_robot2.area)) m_robot2.hit = true;
 				}
 			}
 		}
@@ -383,20 +380,18 @@ package state
 			m_hud.time = m_time;
 		}
 		
-		
 		private function checkhitObstacle():void
 		{
-			var flickr:Flicker;
+			
 			
 			if(m_robot2.obstacle) 
 			{
 				if(m_robot.hitTestObject(m_robot2.obstacle))
 				{
-					trace("hit obsticle");
 					m_robot.speed = 0;
-					m_robot2.removeChild(m_robot2.obstacle);// = null;
-					flickr = new Flicker(m_robot, 1000, 20); //obj, tid (hur länge), intervall
-					Session.effects.add(flickr);
+					m_robot2.removeChild(m_robot2.obstacle);
+					m_flickr = new Flicker(m_robot, 1000, 20); //obj, tid (hur länge), intervall
+					Session.effects.add(m_flickr);
 					Session.timer.create(600, initSpeed);
 					initBombSound();
 				}
@@ -405,11 +400,10 @@ package state
 			{
 				if(m_robot2.hitTestObject(m_robot.obstacle)) 
 				{
-					trace ("hit");
 					m_robot2.speed = 0;
-					m_robot.removeChild(m_robot.obstacle); // = null;
-					flickr = new Flicker(m_robot2, 1000, 20); //obj, tid (hur länge), intervall
-					Session.effects.add(flickr);
+					m_robot.removeChild(m_robot.obstacle);
+					m_flickr = new Flicker(m_robot2, 1000, 20); //obj, tid (hur länge), intervall
+					Session.effects.add(m_flickr);
 					Session.timer.create(600, initSpeed);
 					initBombSound();
 				}
@@ -466,7 +460,6 @@ package state
 		{
 			m_powerUp = x;
 			m_powerUp2 = y;
-			
 		}
 		
 		//------------------------------------------------------------------------
@@ -477,19 +470,21 @@ package state
 			m_layer.removeChildren();
 			m_layer2.removeChildren();
 			m_layer3.removeChildren();
+			if(m_layer4)m_layer4.removeChildren();
 			
 			m_layer = null;
 			m_layer2 = null;
 			m_layer3 = null;
+			if(m_layer4)m_layer4 = null;
 		}
 		
 		private function disposeChildren():void
 		{
-			for (var i:uint = 0; i < children.length; i++)
+			for (var i:uint = 0; i < m_children.length; i++)
 			{
-				children[i] = null;
+				m_children[i] = null;
 			}
-			children = null;
+			m_children = null;
 		}
 		
 		private function disposeMaze():void
@@ -515,6 +510,23 @@ package state
 			m_hud.battery1Lvl = null;
 			if(m_hud.battery2Lvl) m_hud.battery2Lvl = null;
 			m_hud = null;
+		}
+		
+		private function disposeSharedObj():void
+		{
+			m_SharedObjPlayers = null;
+			m_win = null;
+		}
+		
+		private function disposePowerUps():void
+		{
+			m_powerUp = null;
+			m_powerUp2 = null;
+		}
+		
+		private function disposeEffects():void
+		{
+			m_flickr = null;
 		}
 	}
 }
