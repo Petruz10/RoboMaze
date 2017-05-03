@@ -88,8 +88,11 @@ package state
 				initBattery2();
 				addChildPowerUp();
 			}
+			else
+			{
+				initTimer();
+			}
 			initSharedObject();
-			initTimer();
 			initSound();
 		}
 		
@@ -152,6 +155,9 @@ package state
 			checkBattery();
 			
 			var hundraSek:Number;
+			var min:String;
+			var sek:String;
+			var hundranull:String;
 			
 			m_score += 1.666666666666667;
 			
@@ -168,8 +174,14 @@ package state
 					m_min ++;
 				}
 			}
+			if(m_min < 10) min = "0"+ m_min;
+			else min = m_min.toString();
+			if(m_sek <10) sek = "0" + m_sek;
+			else sek = m_sek.toString();
+			if(hundraSek < 10) hundranull = "0" + hundraSek;
+			else hundranull = hundraSek.toString();
 			
-			m_time = m_min+":"+ m_sek + ":" + hundraSek;
+			m_time = min+":"+ sek + ":" + hundranull;
 		}
 		
 		private function checkBattery():void
