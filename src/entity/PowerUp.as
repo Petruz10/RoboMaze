@@ -21,20 +21,28 @@
 		//------------------------------------------------------------------------
 		private var m_container:Sprite = new Sprite();
 		
-		public function PowerUp()
+		public function PowerUp(x:int)
 		{
 			trace("init powerup");
 			super();
-			initSkin();
+			initSkin(x);
 			placePowerUp();
 		}
 		
 		//------------------------------------------------------------------------
 		// private methods 
 		//------------------------------------------------------------------------
-		private function initSkin():void
+		private function initSkin(x:int):void
 		{
-			_skin = new BombRefill_mc();
+			switch(x) 
+			{
+				case 0: 
+					_skin = new BombRefill_mc();
+					break;
+				case 1:
+					//_skin = new ikon för tvärtomstyrning;
+					break;
+			}
 			m_container.graphics.drawRect(0, 0, 35, 35);
 			
 			m_container.addChild(_skin);
