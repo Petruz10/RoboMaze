@@ -63,7 +63,7 @@ package entity
 			if(HP == 30 ||  HP == 10) 
 			{
 				trace("10 eller 30");
-				initWarningSound();
+				//initWarningSound();
 			}
 		//	else dead();
 		}

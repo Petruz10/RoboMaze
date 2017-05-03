@@ -95,7 +95,7 @@ package state
 		// init sound
 		//------------------------------------------------------------------------
 		private function initSound():void {
-			Session.sound.musicChannel.sources.add("splashscreen", SplashSound_mp3);
+			Session.sound.musicChannel.sources.add("splashscreen", BackgroundMenu_mp3);
 			_backgroundMusic = Session.sound.musicChannel.get("splashscreen");
 			_backgroundMusic.volume = 0.4;
 			_backgroundMusic.play();
