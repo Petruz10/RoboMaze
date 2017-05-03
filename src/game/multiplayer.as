@@ -71,7 +71,6 @@ package game
 		private function initMaze():void
 		{
 			m_maze = new Maze(2);
-			m_maze.opaqueBackground = 0x333333;
 			
 			m_maze.x = 20;
 			m_maze.y = 100;
@@ -82,7 +81,6 @@ package game
 		private function initMaze2():void
 		{
 			m_maze2 = new Maze(2);
-			m_maze2.opaqueBackground = 0x333333;
 			
 			m_maze2.x = 420;
 			m_maze2.y = 100;

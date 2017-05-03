@@ -48,7 +48,6 @@ package game
 		private function initMaze():void
 		{
 			m_maze = new Maze(1);
-			m_maze.opaqueBackground = 0x333333;
 			
 			m_maze.x = 20;
 			m_maze.y = 100;
