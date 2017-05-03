@@ -29,6 +29,7 @@ package game
 		private var m_hud:MultiplayerHUD;
 		
 		private var m_superPower:PowerUp;
+		private var m_superPower2:PowerUp;
 		
 		public function Multiplayer()
 		{
@@ -103,8 +104,9 @@ package game
 		private function superPower():void
 		{
 			m_superPower = new PowerUp();
+			m_superPower2 = new PowerUp();
 			
-			super.addPowerUp(m_superPower);
+			super.addPowerUp(m_superPower, m_superPower2);
 			trace("Robot 1", m_robot.x);
 			trace("Robot 2", m_robot2.x);
 		}

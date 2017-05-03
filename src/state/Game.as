@@ -34,6 +34,7 @@ package state
 		private var m_layer4:DisplayStateLayer;
 		
 		private var m_powerUp:PowerUp;
+		private var m_powerUp2:PowerUp;
 		
 		private var m_robot:Robot;
 		private var m_robot2:Robot;
@@ -264,11 +265,13 @@ package state
 		
 		private function placePowerup():void
 		{
-			//|| m_powerUp.powerupX <= 400
+			
 			for (var i:int = 0; i<children.length; i++)
 			{
-				if(m_powerUp.hitTestObject(children[i])) m_powerUp.placePowerUp(); 
+				if(m_powerUp.hitTestObject(children[i])|| m_powerUp.powerupX <= 400) m_powerUp.placePowerUp(); 
 			}
+			
+			m_powerUp2.placePowerup2(m_powerUp.powerupX - 400,  m_powerUp.powerupY);
 		}
 		
 		private function initLayers():void
@@ -290,6 +293,7 @@ package state
 		private function addChildPowerUp():void
 		{
 			if(m_powerUp) m_layer4.addChild(m_powerUp);
+			if(m_powerUp2) m_layer4.addChild(m_powerUp2);
 		}
 		
 		private function addBattery():void
@@ -358,17 +362,14 @@ package state
 		
 		private function hitPowerup():void
 		{
-			if(m_powerUp.hitTestObject(m_robot2.area)) 
+			if(m_powerUp.hitTestObject(m_robot2.area)) m_robot2.powerUp ++;
+			if(m_powerUp2.hitTestObject(m_robot.area)) m_robot.powerUp ++;
+			
+			if(m_powerUp.hitTestObject(m_robot2.area) || m_powerUp2.hitTestObject(m_robot.area))
 			{
-				m_robot2.powerUp ++;
-				m_layer4.removeChild(m_powerUp);
+				m_layer4.removeChildren();
+				return;
 			}
-			if(m_powerUp.hitTestObject(m_robot.area)) 
-			{
-				m_robot.powerUp ++;
-				m_layer4.removeChild(m_powerUp);
-			}
-		//	trace("powerup antal", m_robot.powerUp, m_robot2.powerUp);
 		}
 		
 		private function updateHUDBattery():void
@@ -428,7 +429,7 @@ package state
 			m_robot2.speed = 3;
 			m_robot.speed = 3;
 			Session.timer.create(8600, addChildPowerUp);
-			Session.timer.create(8600, placePowerup);
+			Session.timer.create(8600, m_powerUp.placePowerUp);
 		}
 			
 
@@ -461,9 +462,10 @@ package state
 			m_hud = hud;
 		}
 		
-		protected function addPowerUp(x):void
+		protected function addPowerUp(x:PowerUp, y:PowerUp):void
 		{
 			m_powerUp = x;
+			m_powerUp2 = y;
 			
 		}
 		

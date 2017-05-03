@@ -10,8 +10,7 @@ package entity
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
-	
-	import state.GameOver;
+
 
 	//------------------------------------------------------------------------
 	// Public class Robot
@@ -148,7 +147,7 @@ package entity
 
 			obstacle.y = _skin.y;
 			if(m_player == 0)obstacle.x = _skin.x +400;
-			else if(m_player == 1)obstacle.x = _skin.y -400;
+			else if(m_player == 1)obstacle.x = _skin.x -400;
 			
 			this.addChild(obstacle);
 			return;
