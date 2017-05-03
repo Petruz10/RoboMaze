@@ -100,8 +100,8 @@ package game
 		
 		private function superPower():void
 		{
-			m_superPower = new PowerUp();
-			m_superPower2 = new PowerUp();
+			m_superPower = new PowerUp(0);
+			m_superPower2 = new PowerUp(0);
 			
 			super.addPowerUp(m_superPower, m_superPower2);
 		}
