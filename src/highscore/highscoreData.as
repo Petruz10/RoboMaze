@@ -54,6 +54,11 @@ package highscore
 			var hundraSek:Number = secs;
 			var sek:Number;
 			var min:int;
+			
+			var hundraString:String;
+			var sekString:String;
+			var minString:String;
+			
 			var currentScore:String;
 			
 			sek = hundraSek/98;
@@ -63,12 +68,20 @@ package highscore
 			 hundraSek = Math.floor(hundraSek);
 			 sek = Math.floor(sek);
 			 
+			 if(min < 10) minString = "0"+ min;
+			 else minString = min.toString();
+			 if(sek <10) sekString= "0" + sek;
+			 else sekString = sek.toString();
+			 if(hundraSek < 10) hundraString = "0" + hundraSek;
+			 else hundraString = hundraSek.toString();
 			 
-			 currentScore =  min+":"+ sek + ":" +hundraSek;
+			 
+			 
+			 currentScore =  minString+":"+ sekString + ":" +hundraString;
 			//trace((secs/98) - min);
 			score.push(currentScore);
 			//trace("min: "+ min+": sek "+ sek + ": hundrasek" +hundraSek);
-			//trace("vector score", score);
+			trace("vector score", score);
 		}
 		
 		//------------------------------------------------------------------------
