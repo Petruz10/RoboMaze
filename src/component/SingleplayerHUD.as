@@ -17,6 +17,10 @@ package component
 		/*
 		*
 		*/
+		private var _highscoreData:HighscoreData = new HighscoreData();
+		/*
+		*
+		*/
 		private var _highscoreVector:Vector.<String>;
 		/*
 		* 	Visual representation of highscore
@@ -105,9 +109,7 @@ package component
 		// 	init highscore graphics // only one player
 		//------------------------------------------------------------------------
 		protected function initHighscore():void {
-			var highscoreData:HighscoreData = new HighscoreData();
-			_highscoreVector = highscoreData.score;
-			this._highscore = "00:00:00";
+			_highscoreData = new HighscoreData();
 			//-----------------------------------------------------------------------------
 			// Time Text Format
 			//-----------------------------------------------------------------------------
@@ -122,7 +124,7 @@ package component
 			_highscoreT.embedFonts = true; 
 			_highscoreT.selectable = false;
 			_highscoreT.textColor = 0xffffff;      
-			_highscoreT.text = this._highscore; // PLACEHOLDER 
+			_highscoreT.text = "00:00:00"; // PLACEHOLDER 
 			_highscoreT.width = 500;
 			_highscoreT.y = 40;
 			_highscoreT.x = 630;
@@ -199,16 +201,16 @@ package component
 		// update highscore
 		//-----------------------------------------------------------------------------
 		private function updateHighscore():void {
+			_highscoreVector = _highscoreData.score;
 			if (_highscoreVector.length != 0) {
 				if (_highscore != "00:00:00") {
 					this._highscore = _highscoreVector[0];
-					_highscoreT.text = this._highscore;
+					_highscoreT.text = this.highscore;
 					_highscoreT.setTextFormat(_highscoreF);
 				}
 			} 
 			else if (_highscoreVector.length == 0) {
-				_highscoreT.text = this._highscore;
-				_highscoreT.setTextFormat(_highscoreF);
+				trace("vector är 0");
 			}
 		}
 		//------------------------------------------------------------------------
