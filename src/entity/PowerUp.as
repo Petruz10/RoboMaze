@@ -68,6 +68,7 @@
 		private function disposeContainer():void
 		{
 			m_container = null;
+			_skin = null;
 		}
 	}
 }

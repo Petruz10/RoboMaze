@@ -1,14 +1,24 @@
 package highscore
 {
+	//------------------------------------------------------------------------
+	// imports
+	//------------------------------------------------------------------------
 	import se.lnu.stickossdk.system.Session;
 
+	//------------------------------------------------------------------------
+	// Public class HighscoreData
+	//------------------------------------------------------------------------
 	public class HighscoreData
 	{
+		//------------------------------------------------------------------------
+		// public properties 
+		//------------------------------------------------------------------------
 		public var score:Vector.<String> = new Vector.<String>();
 		public var name:Vector.<String> = new Vector.<String>();
 		
-		public var a:String;
-		
+		//------------------------------------------------------------------------
+		// private properties 
+		//------------------------------------------------------------------------
 		private var scoreData:XMLList;
 		private var scoreName:XMLList;
 		
@@ -18,6 +28,9 @@ package highscore
 			trace("highscore data");
 		}
 		
+		//------------------------------------------------------------------------
+		// private methods 
+		//------------------------------------------------------------------------
 		private function initHighscore(xml:XML):void
 		{	
 			trace("initHighscore");
@@ -41,7 +54,7 @@ package highscore
 			var hundraSek:Number = secs;
 			var sek:Number;
 			var min:int;
-			var x:String;
+			var currentScore:String;
 			
 			sek = hundraSek/98;
 			min = sek/60;
@@ -51,13 +64,16 @@ package highscore
 			 sek = Math.floor(sek);
 			 
 			 
-			x =  min+":"+ sek + ":" +hundraSek;
-			trace((secs/98) - min);
-			score.push(x);
-			trace("min: "+ min+": sek "+ sek + ": hundrasek" +hundraSek);
-			trace("vector score", score);
+			 currentScore =  min+":"+ sek + ":" +hundraSek;
+			//trace((secs/98) - min);
+			score.push(currentScore);
+			//trace("min: "+ min+": sek "+ sek + ": hundrasek" +hundraSek);
+			//trace("vector score", score);
 		}
 		
+		//------------------------------------------------------------------------
+		// dispose methods 
+		//------------------------------------------------------------------------
 		public function dispose():void
 		{
 			disposeHighscore();
