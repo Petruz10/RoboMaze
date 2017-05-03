@@ -88,8 +88,11 @@ package state
 				initBattery2();
 				addChildPowerUp();
 			}
+			else
+			{
+				initTimer();
+			}
 			initSharedObject();
-			initTimer();
 			initSound();
 		}
 		
