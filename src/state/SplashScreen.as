@@ -11,27 +11,47 @@ package state
 	
 	public class SplashScreen extends DisplayState {
 		/*
-		* how long the splashscreen will show
+		* 	how long the splashscreen will show
 		*/
-		private const TIMER:int = 180; // 3 sec
+		private const TIMER:int = 300; // 5 sec
 		/*
-		* background layer
+		* 	background layer
 		*/
 		private const LAYER_BACKGROUND:String = "background_layer"
 		/*
-		* counts the updates. 60fps
+		* 	background layer
+		*/
+		private const LAYER_OVERLAY:String = "overlay_layer"
+		/*
+		* 	counts the updates. 60fps
 		*/
 		private var _counter:int = 0; // counter
 		/*
-		* background layer
+		* 	background layer
 		*/
 		private var _layerBackground:DisplayStateLayer;
 		/*
-		* background img
+		* 	background img
 		*/
-		private var _backgroundImg:SplashScreenLogo_mc;
+		private var _backgroundImg:SplashBg_mc;
 		/*
-		* background img
+		*	overlay
+		*/ 
+		private var _layerOverlay:DisplayStateLayer;
+		/*
+		* 	Michaela
+		*/
+		private var _michaela:MichaelaBot_mc;
+		/*	
+		*	Petra
+		*/
+		private var _petra:PetraBot_mc;
+		/*
+		*	Background Sound
+		*/
+		private var _names:SplashNames_mc;
+		/*
+		*
 		*/
 		private var _backgroundMusic:SoundObject;
 		//------------------------------------------------------------------------
@@ -57,16 +77,23 @@ package state
 		// dispose
 		//------------------------------------------------------------------------
 		override public function dispose():void {
-			_layerBackground.removeChild(_backgroundImg);
-			_backgroundImg = null;
-			_layerBackground = null;
+			//_layerBackground.removeChild(_backgroundImg);
+			_layerOverlay.removeChild(_michaela);
+			_layerOverlay.removeChild(_petra);
+
+			//_backgroundImg = null;
+			_michaela = null;
+			_petra = null;
+
+			//_layerBackground = null;
+			_layerOverlay = null;
 		}
 		//------------------------------------------------------------------------
 		// update counter
 		//------------------------------------------------------------------------
 		private function updateCounter():void {
 			_counter++
-			if (_counter == TIMER) { Session.application.displayState = new Menu, 1000 }
+			if (_counter == TIMER) { Session.application.displayState = new Menu, 4000 }
 			if (_counter == 120) {
 				updateSound();
 			}
@@ -81,9 +108,14 @@ package state
 		// init layers
 		//------------------------------------------------------------------------
 		private function initLayers():void {
-			_backgroundImg = new SplashScreenLogo_mc;
-			_backgroundImg.x = 350;
-			_backgroundImg.y = 270;
+			//initBackground();
+			initOverlay();
+
+		}
+		private function initBackground():void {
+			_backgroundImg = new SplashBg_mc;
+			_backgroundImg.x = 0;
+			_backgroundImg.y = 0;
 			_backgroundImg.play();
 			
 			_layerBackground = layers.add(LAYER_BACKGROUND);
@@ -91,11 +123,33 @@ package state
 			_layerBackground.y = 0;
 			_layerBackground.addChild(_backgroundImg);
 		}
+		private function initOverlay():void {
+			_michaela = new MichaelaBot_mc;
+			_petra = new PetraBot_mc;
+			_names = new SplashNames_mc;
+
+			_michaela.x = 78;
+			_michaela.y = 43;
+
+			_petra.x = 423;
+			_petra.y = 73;
+
+			_names.x = 400 - (_names.width / 2);
+			_names.y = 410;
+			
+			_layerOverlay = layers.add(LAYER_OVERLAY);
+			_layerOverlay.x = 0;
+			_layerOverlay.y = 0;
+
+			_layerOverlay.addChild(_michaela);
+			_layerOverlay.addChild(_petra);
+			_layerOverlay.addChild(_names);
+		}
 		//------------------------------------------------------------------------
 		// init sound
 		//------------------------------------------------------------------------
 		private function initSound():void {
-			Session.sound.musicChannel.sources.add("splashscreen", BackgroundMenu_mp3);
+			Session.sound.musicChannel.sources.add("splashscreen", Background_Splashscreen_mp3);
 			_backgroundMusic = Session.sound.musicChannel.get("splashscreen");
 			_backgroundMusic.volume = 0.4;
 			_backgroundMusic.play();

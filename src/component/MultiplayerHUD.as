@@ -54,16 +54,11 @@ package component
 			_battery2.y = 20;
 			this.addChild(_battery2);
 		}
-<<<<<<< HEAD
-		private function updateIcons():void {
-			switch (_bomb) {
-=======
 		//------------------------------------------------------------------------
 		// 	update hud icon for bomb
 		//------------------------------------------------------------------------
 		private function updateBomb():void {
 			switch (this.bomb) {
->>>>>>> origin/master
 				case 0:
 					deactivateIcon(_bombIcon1, _bombIcon2);
 				break;
@@ -74,16 +69,12 @@ package component
 					activateIcon(_bombIcon2);
 				break;
 			}
-<<<<<<< HEAD
-			switch (_wrong) {
-=======
 		}
 		//------------------------------------------------------------------------
 		// 	update hud symbol for wrong controls
 		//------------------------------------------------------------------------
 		private function updateWrong():void {
 			switch (this.wrong) {
->>>>>>> origin/master
 				case 0: 
 					deactivateIcon(_wrongIcon1, _wrongIcon2);
 				break;
@@ -169,36 +160,20 @@ package component
 		//--------------------------------------
 		//---------------------------------------
 		public function set bomb(bomb:int):void {
-<<<<<<< HEAD
-		//	trace("set bomb");
-			this._bomb = bomb;
-=======
 			_bomb = bomb;
->>>>>>> origin/master
 		}
 		//-----------------------------------------------------------------------------
 		// get bomb status
 		//-----------------------------------------------------------------------------
 		public function get bomb():int {
-<<<<<<< HEAD
-			//trace("get bomb");
-			return this._bomb;
-=======
 			return _bomb;
->>>>>>> origin/master
 		}
 		//-----------------------------------------------------------------------------
 		// set wrong way sabotage status
 		//--------------------------------------
 		//---------------------------------------
-<<<<<<< HEAD
-		public function set wrong(bomb:int):void {
-			//trace("set wrong");
-			this._wrong = wrong;
-=======
 		public function set wrong(wrong:int):void {
 			_wrong = wrong;
->>>>>>> origin/master
 		}
 		//-----------------------------------------------------------------------------
 		// get wrong way sabotage status
