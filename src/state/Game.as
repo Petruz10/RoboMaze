@@ -68,6 +68,8 @@ package state
 		
 		private var m_flickr:Flicker;
 		
+		private var m_x:int = 0;
+		
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -232,7 +234,7 @@ package state
 		private function initBattery():void
 		{
 			m_battery = new BatteryRefill();
-			addBattery();
+			addBattery();d
 			m_battery.placeBattery();
 		}
 		
@@ -249,13 +251,26 @@ package state
 			{
 				if(m_players == 2)
 				{
-					if(m_battery.hitTestObject(m_children[i]) || m_battery.batteryX <= 400) m_battery.placeBattery();
+					if(m_battery.hitTestObject(m_children[i]) || m_battery.batteryX <= 400) 
+					{
+						m_battery.placeBattery();
+						m_x = 0;
+					}
+					//else m_x ++;
 				}
 				else
 				{
-					if(m_battery.hitTestObject(m_children[i])) m_battery.placeBattery(); 
+					if(m_battery.hitTestObject(m_children[i])) 
+					{
+						m_battery.placeBattery(); 
+						m_x = 0;
+					}
+					//else m_x ++;
 				}
 			}
+			m_x ++;
+			trace(m_x);
+			if(m_x == 40) addBattery();
 			
 			if(m_players == 2) m_battery2.placeBattery2(m_battery.batteryX - 400,  m_battery.batteryY);
 		}
@@ -339,7 +354,8 @@ package state
 				{
 					m_layer3.removeChildren();
 					m_battery.placeBattery();
-					addBattery();
+					m_x = 0;
+					//addBattery();
 					return;
 				}
 			}
@@ -349,9 +365,10 @@ package state
 				if(m_battery.hitTestObject(m_robot.area))
 				{
 					m_robot.hitBattery = true;
-					m_layer3.removeChild(m_battery);
+					m_layer3.removeChildren();
 					m_battery.placeBattery();
-					addBattery();
+					m_x = 0;
+					//addBattery();
 					return;
 				}
 			}
