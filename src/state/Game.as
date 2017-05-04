@@ -491,7 +491,6 @@ package state
 		{
 			m_robot2.speed = 3;
 			m_robot.speed = 3;
-			//addPowerUp();
 			Session.timer.create(6000, addPowerUp);
 			Session.timer.create(8600, addChildPowerUp);
 			Session.timer.create(8600, m_powerUp.placePowerUp);
