@@ -170,7 +170,7 @@ package component
 		// set wrong way sabotage status
 		//--------------------------------------
 		//---------------------------------------
-		public function set wrong(bomb:int):void {
+		public function set wrong(wrong:int):void {
 			_wrong = wrong;
 		}
 		//-----------------------------------------------------------------------------
