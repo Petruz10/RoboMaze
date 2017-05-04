@@ -33,7 +33,8 @@ package component
 		override public function update():void {
 			super.update();
 			super.updateBattery(battery2Lvl, _battery2);
-			updateIcons();
+			updateBomb();
+			updateWrong();
 		}
 		//------------------------------------------------------------------------
 		// dispose
@@ -53,7 +54,10 @@ package component
 			_battery2.y = 20;
 			this.addChild(_battery2);
 		}
-		private function updateIcons():void {
+		//------------------------------------------------------------------------
+		// 	update hud icon for bomb
+		//------------------------------------------------------------------------
+		private function updateBomb():void {
 			switch (this.bomb) {
 				case 0:
 					deactivateIcon(_bombIcon1, _bombIcon2);
@@ -66,6 +70,11 @@ package component
 				break;
 				default: deactivateIcon(_bombIcon1, _bombIcon2);
 			}
+		}
+		//------------------------------------------------------------------------
+		// 	update hud symbol for wrong controls
+		//------------------------------------------------------------------------
+		private function updateWrong():void {
 			switch (this.wrong) {
 				case 0: 
 					deactivateIcon(_wrongIcon1, _wrongIcon2);
@@ -156,14 +165,12 @@ package component
 		//-----------------------------------------------------------------------------
 		public function get bomb():int {
 			return _bomb;
-
 		}
 		//-----------------------------------------------------------------------------
 		// set wrong way sabotage status
 		//--------------------------------------
 		//---------------------------------------
 		public function set wrong(bomb:int):void {
-
 			_wrong = wrong;
 		}
 		//-----------------------------------------------------------------------------
