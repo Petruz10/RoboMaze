@@ -54,7 +54,7 @@ package component
 			this.addChild(_battery2);
 		}
 		private function updateIcons():void {
-			switch (_bomb) {
+			switch (this.bomb) {
 				case 0:
 					deactivateIcon(_bombIcon1, _bombIcon2);
 				break;
@@ -64,8 +64,9 @@ package component
 				case 2: 
 					activateIcon(_bombIcon2);
 				break;
+				default: deactivateIcon(_bombIcon1, _bombIcon2);
 			}
-			switch (_wrong) {
+			switch (this.wrong) {
 				case 0: 
 					deactivateIcon(_wrongIcon1, _wrongIcon2);
 				break;
@@ -75,36 +76,36 @@ package component
 				case 2:
 					activateIcon(_wrongIcon2);
 				break;
+				default: deactivateIcon(_wrongIcon1, _wrongIcon2);
 			}	
 		}
 		//------------------------------------------------------------------------
-		// 	init all icons used in HUD
+		// 	init icons used in HUD
 		//------------------------------------------------------------------------
 		private function initBombIcons():void {
 			_bombIcon1 = new BombIcon_mc();
 			_bombIcon2 = new BombIcon_mc();
 			
-			_bombIcon1.gotoAndStop("deactivate");
-			_bombIcon1.x = 200;
-			_bombIcon1.y = 28;
+			_bombIcon1.x = 400 - 110;
+			_bombIcon1.y = 30;
 
-			_bombIcon2.gotoAndStop("deactivate");
-			_bombIcon2.x = 572;
-			_bombIcon2.y = 28;
+			_bombIcon2.x = 400 + 80;
+			_bombIcon2.y = 30;
 			
 			this.addChild(_bombIcon1);
 			this.addChild(_bombIcon2);
 		}
+		//------------------------------------------------------------------------
+		// 	init icons used in HUD
+		//------------------------------------------------------------------------
 		private function initWrongIcons():void {
 			_wrongIcon1 = new WrongIcon_mc();
 			_wrongIcon2 = new WrongIcon_mc();
-			
-			_wrongIcon1.gotoAndStop("deactivate");
-			_wrongIcon1.x = 240;
+
+			_wrongIcon1.x = 400 - 150;
 			_wrongIcon1.y = 30;
-			
-			_wrongIcon2.gotoAndStop("deactivate");
-			_wrongIcon2.x = 532;
+
+			_wrongIcon2.x = 400 + 120;
 			_wrongIcon2.y = 30;
 			
 			this.addChild(_bombIcon1);
@@ -134,9 +135,6 @@ package component
 		//------------------------------------------------------------------------
 		// 	set second battery lvl
 		//------------------------------------------------------------------------
-		public function set time(time:String):void{
-			var time:String = time;
-		}
 		public function set battery2Lvl(batteryLvl:int):void {
 			this._battery2Lvl = batteryLvl;
 		}
@@ -151,30 +149,37 @@ package component
 		//--------------------------------------
 		//---------------------------------------
 		public function set bomb(bomb:int):void {
+<<<<<<< HEAD
 		//	trace("set bomb");
 			this._bomb = bomb;
+=======
+			_bomb = bomb;
+>>>>>>> origin/master
 		}
 		//-----------------------------------------------------------------------------
 		// get bomb status
 		//-----------------------------------------------------------------------------
 		public function get bomb():int {
+<<<<<<< HEAD
 			//trace("get bomb");
 			return this._bomb;
+=======
+			return _bomb;
+>>>>>>> origin/master
 		}
 		//-----------------------------------------------------------------------------
 		// set wrong way sabotage status
 		//--------------------------------------
 		//---------------------------------------
 		public function set wrong(bomb:int):void {
-			trace("set wrong");
-			this._wrong = wrong;
+
+			_wrong = wrong;
 		}
 		//-----------------------------------------------------------------------------
 		// get wrong way sabotage status
 		//-----------------------------------------------------------------------------
 		public function get wrong():int {
-			trace("get wrong");
-			return this._wrong;
+			return _wrong;
 		}
 		//------------------------------------------------------------------------
 		// dispose battery 2
