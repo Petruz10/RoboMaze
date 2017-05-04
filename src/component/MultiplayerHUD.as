@@ -1,5 +1,7 @@
 package component
 {
+	import flash.display.MovieClip;
+
 	public class MultiplayerHUD extends HUD
 	{
 		private var _battery2:Battery_mc;
@@ -52,21 +54,28 @@ package component
 			this.addChild(_battery2);
 		}
 		private function updateIcons():void {
-			
-			if (this._bomb == 1) {
-				activateBombIcon(1);
+			switch (_bomb) {
+				case 0:
+					deactivateIcon(_bombIcon1, _bombIcon2);
+				break;
+				case 1:
+					activateIcon(_bombIcon1);
+				break;
+				case 2: 
+					activateIcon(_bombIcon2);
+				break;
 			}
-			else if (this._bomb == 2) {
-				activateBombIcon(2);
-			}
-			
-			if (this._wrong == 1) {
-				activateWrongIcon(1);
-			}
-			else if (this._wrong == 2) {
-				activateWrongIcon(2);
-			}
-			
+			switch (_wrong) {
+				case 0: 
+					deactivateIcon(_wrongIcon1, _wrongIcon2);
+				break;
+				case 1:
+					activateIcon(_wrongIcon1);
+				break;
+				case 2:
+					activateIcon(_wrongIcon2);
+				break;
+			}	
 		}
 		//------------------------------------------------------------------------
 		// 	init all icons used in HUD
@@ -92,11 +101,11 @@ package component
 			
 			_wrongIcon1.gotoAndStop("deactivate");
 			_wrongIcon1.x = 240;
-			_wrongIcon1.y = 28;
+			_wrongIcon1.y = 30;
 			
 			_wrongIcon2.gotoAndStop("deactivate");
 			_wrongIcon2.x = 532;
-			_wrongIcon2.y = 28;
+			_wrongIcon2.y = 30;
 			
 			this.addChild(_bombIcon1);
 			this.addChild(_bombIcon2);
@@ -105,18 +114,17 @@ package component
 			this.addChild(_wrongIcon2);
 		}
 		//------------------------------------------------------------------------
-		// 	activate bomb icon
+		// 	activate icon
 		//------------------------------------------------------------------------
-		private function activateBombIcon(player:int):void {
-			if ( player == 1 ) { _bombIcon1.gotoAndStop("activate"); }
-			if ( player == 2 ) { _bombIcon2.gotoAndStop("activate"); }
+		private function activateIcon(icon:MovieClip):void {
+			icon.gotoAndStop("activate");
 		}
 		//------------------------------------------------------------------------
-		// 	activate wrong icon
+		// 	deactivate icon
 		//------------------------------------------------------------------------
-		private function activateWrongIcon(player:int):void {
-			if ( player == 1 ) { _wrongIcon1.gotoAndStop("activate"); }
-			if ( player == 2 ) { _wrongIcon2.gotoAndStop("activate"); }
+		private function deactivateIcon(icon1:MovieClip, icon2:MovieClip = null):void {
+			icon1.gotoAndStop("deactivate");
+			if (icon2) { icon2.gotoAndStop("deactivate"); }
 		}
 		//------------------------------------------------------------------------
 		// 	
