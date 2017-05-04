@@ -431,24 +431,48 @@ package state
 			{
 				if(m_robot.hitTestObject(m_robot2.obstacle))
 				{
-					m_robot.speed = 0;
+					
 					m_robot2.removeChild(m_robot2.obstacle);
-					m_flickr = new Flicker(m_robot, 1000, 20); //obj, tid (hur länge), intervall
-					Session.effects.add(m_flickr);
-					Session.timer.create(600, initSpeed);
-					initBombSound();
+					if(whichPower == 1)
+					{
+						m_robot.wrongSide = true;
+						Session.timer.create(7600, setToFalse);
+						return;
+					}
+					else
+					{
+						m_robot.speed = 0;
+						m_flickr = new Flicker(m_robot, 1000, 20); //obj, tid (hur länge), intervall
+						Session.effects.add(m_flickr);
+						Session.timer.create(600, initSpeed);
+						initBombSound();
+						return;
+					}
+					
 				}
 			}
 			if(m_robot.obstacle)
 			{
 				if(m_robot2.hitTestObject(m_robot.obstacle)) 
 				{
-					m_robot2.speed = 0;
+					
 					m_robot.removeChild(m_robot.obstacle);
-					m_flickr = new Flicker(m_robot2, 1000, 20); //obj, tid (hur länge), intervall
-					Session.effects.add(m_flickr);
-					Session.timer.create(600, initSpeed);
-					initBombSound();
+					if(whichPower == 1)
+					{
+						m_robot2.wrongSide = true;
+						Session.timer.create(7600, setToFalse);
+						return;
+					}
+					else
+					{
+						m_robot2.speed = 0;
+						m_flickr = new Flicker(m_robot2, 1000, 20); //obj, tid (hur länge), intervall
+						Session.effects.add(m_flickr);
+						Session.timer.create(600, initSpeed);
+						initBombSound();
+						return;
+					}
+					
 				}
 			}
 		}
@@ -470,7 +494,12 @@ package state
 			Session.timer.create(8600, addChildPowerUp);
 			Session.timer.create(8600, m_powerUp.placePowerUp);
 		}
-			
+		
+		private function setToFalse():void
+		{
+			m_robot.wrongSide = false;
+			m_robot2.wrongSide = false;
+		}
 
 		//------------------------------------------------------------------------
 		// protected methods
@@ -490,7 +519,7 @@ package state
 		{
 			m_robot = Avatar;
 		}
-		
+
 		protected function addMultiplayer(robot:Robot):void
 		{
 			m_robot2 = robot;
@@ -512,11 +541,12 @@ package state
 			
 			
 			
-			whichPower = Math.random();
+			/*whichPower = Math.random();
 			trace("innan round", whichPower);
 			whichPower = Math.round(whichPower);
 			
-			trace("math random x", whichPower);
+			trace("math random x", whichPower);*/
+			whichPower = 1;
 			
 			m_robot.test = whichPower;
 			m_robot2.test = whichPower;

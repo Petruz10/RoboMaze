@@ -45,6 +45,8 @@ package entity
 		private var m_refillSound:SoundObject;
 		
 		public var test:int;
+		
+		public var wrongSide:Boolean = false;
 		//------------------------------------------------------------------------
 		// Constructor methods
 		//------------------------------------------------------------------------		
@@ -92,47 +94,108 @@ package entity
 		
 		private function moveUp():void
 		{	
-			m_hitSide = "up";
+			
+			
 			if(battery.HP != 0) 
 			{
-				_skin.y -= speed; 
 				_skin.gotoAndStop("back");
+				if(!wrongSide)
+				{
+					m_hitSide = "up";
+					_skin.y -= speed; 
+					return;
+				}
+				else 
+				{
+					_skin.y += speed;
+					m_hitSide = "down";
+				}
 			}
 			return;
+			
 		}
 		
 		private function moveDown():void
 		{	
-			m_hitSide = "down";
+			trace("test wrongside", wrongSide); 
+			
+			
 			if(battery.HP != 0)
 			{
-				_skin.y += speed; 
 				_skin.gotoAndStop("front");
+				if(!wrongSide)
+				{
+					m_hitSide = "down";
+					_skin.y += speed; 
+				}
+				else
+				{
+					m_hitSide = "up";
+					_skin.y -= speed;
+					trace("aaa");
+					return;
+				}
 			}
-			return;
+			
+			trace("speed", speed);
+			//return;
 		}
 		
 		private function moveLeft():void
 		{
-			m_hitSide = "left";
+			
+			
 			if(battery.HP != 0) 
 			{
-				_skin.x -= speed; 
-				//_skin.scaleX *=- 1;
 				_skin.gotoAndStop("side");
+			
+				if(!wrongSide)
+				{
+					m_hitSide = "left";
+					_skin.x -= speed; 
+				}
+				else 
+				{
+					m_hitSide = "right";
+					_skin.x += speed;
+				}
+				//_skin.scaleX *=- 1;
+				
 			}
 			return;
 		}
 		
 		private function moveRight():void
 		{
+			/*if(wrongSide)
+			{
+				this.moveLeft();
+				return;
+			}*/
 			
-			m_hitSide = "right";
+			
 			if(battery.HP != 0) 
 			{
-				_skin.x += speed; 
+				
 			//	_skin.scaleX *= 1;
 				_skin.gotoAndStop("side");
+				
+				/*if(wrongSide)
+				{
+					_skin.x -= speed;
+					return;
+				}*/
+			
+				if(!wrongSide)
+				{
+					m_hitSide = "right";
+					_skin.x += speed;
+				}
+				else 
+				{
+					m_hitSide = "left";
+					_skin.x -= speed;
+				}
 			}
 			return;
 
