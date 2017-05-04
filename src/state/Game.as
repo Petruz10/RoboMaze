@@ -415,6 +415,8 @@ package state
 					break;
 				
 				case 1:
+					trace("case1");
+
 					if(m_robot.powerUp == 1) m_hud.wrong = 1;
 					else if(m_robot2.powerUp == 1) m_hud.wrong = 2;
 					else m_hud.wrong = 0;
@@ -489,8 +491,8 @@ package state
 		{
 			m_robot2.speed = 3;
 			m_robot.speed = 3;
-			addPowerUp();
-			//Session.timer.create(8600, addPowerUp);
+			//addPowerUp();
+			Session.timer.create(6000, addPowerUp);
 			Session.timer.create(8600, addChildPowerUp);
 			Session.timer.create(8600, m_powerUp.placePowerUp);
 		}
@@ -499,6 +501,9 @@ package state
 		{
 			m_robot.wrongSide = false;
 			m_robot2.wrongSide = false;
+			Session.timer.create(6000, addPowerUp);
+			Session.timer.create(8600, addChildPowerUp);
+			Session.timer.create(8600, m_powerUp.placePowerUp);
 		}
 
 		//------------------------------------------------------------------------
@@ -541,12 +546,12 @@ package state
 			
 			
 			
-			/*whichPower = Math.random();
+			whichPower = Math.random();
 			trace("innan round", whichPower);
 			whichPower = Math.round(whichPower);
 			
-			trace("math random x", whichPower);*/
-			whichPower = 1;
+			trace("math random x", whichPower);
+	//		whichPower = 1;
 			
 			m_robot.test = whichPower;
 			m_robot2.test = whichPower;

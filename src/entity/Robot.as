@@ -103,7 +103,6 @@ package entity
 				{
 					m_hitSide = "up";
 					_skin.y -= speed; 
-					return;
 				}
 				else 
 				{
@@ -129,7 +128,6 @@ package entity
 				{
 					m_hitSide = "up";
 					_skin.y -= speed;
-					return;
 				}
 			}
 			return;
@@ -137,9 +135,7 @@ package entity
 		
 		private function moveLeft():void
 		{
-			
-			
-			if(battery.HP != 0) 
+			if(battery.HP != 0)
 			{
 				_skin.gotoAndStop("side");
 			
@@ -154,7 +150,6 @@ package entity
 					_skin.x += speed;
 				}
 				//_skin.scaleX *=- 1;
-				
 			}
 			return;
 		}
@@ -167,7 +162,6 @@ package entity
 				
 			//	_skin.scaleX *= 1;
 				_skin.gotoAndStop("side");
-				
 			
 				if(!wrongSide)
 				{
@@ -181,7 +175,6 @@ package entity
 				}
 			}
 			return;
-
 		}
 		
 		private function addObstacle():void
