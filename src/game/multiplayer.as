@@ -100,10 +100,15 @@ package game
 		
 		private function superPower():void
 		{
-			m_superPower = new PowerUp(0);
-			m_superPower2 = new PowerUp(0);
+			/*var x:Number;
 			
-			super.addPowerUp(m_superPower, m_superPower2);
+			x = Math.random();
+			x = Math.round(x);
+			
+			m_superPower = new PowerUp(x);
+			m_superPower2 = new PowerUp(x);*/
+			
+			super.addPowerUp(/*m_superPower, m_superPower2, x*/);
 		}
 		
 		//------------------------------------------------------------------------

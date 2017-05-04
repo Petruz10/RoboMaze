@@ -27,7 +27,8 @@ package entity
 		public var battery:Battery;
 		
 		public var powerUp:int = 0;
-		public var obstacle:Bomb_mc;
+		
+		public var obstacle:Obstacle;
 		
 		public var speed:int = 3;
 		//------------------------------------------------------------------------
@@ -42,6 +43,8 @@ package entity
 		
 		private var m_square:Sprite = new Sprite();
 		private var m_refillSound:SoundObject;
+		
+		public var test:int;
 		//------------------------------------------------------------------------
 		// Constructor methods
 		//------------------------------------------------------------------------		
@@ -138,9 +141,9 @@ package entity
 		private function addObstacle():void
 		{
 			powerUp --;
-			obstacle = new Bomb_mc();
+			trace("test", test);
+			obstacle = new Obstacle(test);
 			
-
 			obstacle.y = _skin.y;
 			if(m_player == 0)obstacle.x = _skin.x +400;
 			else if(m_player == 1)obstacle.x = _skin.x -400;

@@ -16,6 +16,8 @@
 		public var powerupX:int;
 		public var powerupY:int;
 		
+		public var type:int;
+		
 		//------------------------------------------------------------------------
 		// private properties 
 		//------------------------------------------------------------------------
@@ -38,9 +40,11 @@
 			{
 				case 0: 
 					_skin = new BombRefill_mc();
+					type = 0;
 					break;
 				case 1:
-					//_skin = new ikon för tvärtomstyrning;
+					_skin = new WrongRefill_mc();
+					type = 1;
 					break;
 			}
 			m_container.graphics.drawRect(0, 0, 35, 35);

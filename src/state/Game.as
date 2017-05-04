@@ -70,6 +70,11 @@ package state
 		
 		private var m_x:int = 0;
 		
+		
+		public var whichPower:Number;
+		
+		
+		
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -104,7 +109,6 @@ package state
 			hitTest();
 			hitBattery();
 			updateHUDBattery();
-			
 			
 			if(m_players == 2) 
 			{
@@ -272,7 +276,7 @@ package state
 				}
 			}
 			m_x ++;
-			trace(m_x);
+			//trace(m_x);
 			if(m_x == 40) addBattery();
 			
 			if(m_players == 2) m_battery2.placeBattery2(m_battery.batteryX - 400,  m_battery.batteryY);
@@ -402,12 +406,21 @@ package state
 		
 		private function updateHUDPowerup():void
 		{
-			if(m_robot.powerUp == 1) m_hud.bomb = 1;
-			else if(m_robot2.powerUp == 1) m_hud.bomb = 2;
-			else 
+			switch(whichPower)
 			{
-				m_hud.bomb = 0;
+				case 0:
+					if(m_robot.powerUp == 1) m_hud.bomb = 1;
+					else if(m_robot2.powerUp == 1) m_hud.bomb = 2;
+					else m_hud.bomb = 0;
+					break;
+				
+				case 1:
+					if(m_robot.powerUp == 1) m_hud.wrong = 1;
+					else if(m_robot2.powerUp == 1) m_hud.wrong = 2;
+					else m_hud.wrong = 0;
+					break;
 			}
+			
 		}
 		
 		private function checkhitObstacle():void
@@ -452,6 +465,8 @@ package state
 		{
 			m_robot2.speed = 3;
 			m_robot.speed = 3;
+			addPowerUp();
+			//Session.timer.create(8600, addPowerUp);
 			Session.timer.create(8600, addChildPowerUp);
 			Session.timer.create(8600, m_powerUp.placePowerUp);
 		}
@@ -486,10 +501,28 @@ package state
 			m_hud = hud;
 		}
 		
-		protected function addPowerUp(x:PowerUp, y:PowerUp):void
+		protected function addPowerUp(/*powerup1:PowerUp, powerup2:PowerUp, type:int*/):void
 		{
-			m_powerUp = x;
-			m_powerUp2 = y;
+			/*m_powerUp = powerup1;
+			m_powerUp2 = powerup2;
+			
+			m_robot.test = type;
+			m_robot2.test = type;
+			trace("vilken powerup",type);*/
+			
+			
+			
+			whichPower = Math.random();
+			trace("innan round", whichPower);
+			whichPower = Math.round(whichPower);
+			
+			trace("math random x", whichPower);
+			
+			m_robot.test = whichPower;
+			m_robot2.test = whichPower;
+			
+			m_powerUp = new PowerUp(whichPower);
+			m_powerUp2 = new PowerUp(whichPower);
 		}
 		
 		//------------------------------------------------------------------------
