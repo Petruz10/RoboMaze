@@ -149,23 +149,14 @@ package component
 		//--------------------------------------
 		//---------------------------------------
 		public function set bomb(bomb:int):void {
-<<<<<<< HEAD
-		//	trace("set bomb");
-			this._bomb = bomb;
-=======
 			_bomb = bomb;
->>>>>>> origin/master
 		}
 		//-----------------------------------------------------------------------------
 		// get bomb status
 		//-----------------------------------------------------------------------------
 		public function get bomb():int {
-<<<<<<< HEAD
-			//trace("get bomb");
-			return this._bomb;
-=======
 			return _bomb;
->>>>>>> origin/master
+
 		}
 		//-----------------------------------------------------------------------------
 		// set wrong way sabotage status
