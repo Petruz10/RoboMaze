@@ -117,9 +117,6 @@ package entity
 		
 		private function moveDown():void
 		{	
-			trace("test wrongside", wrongSide); 
-			
-			
 			if(battery.HP != 0)
 			{
 				_skin.gotoAndStop("front");
@@ -132,13 +129,10 @@ package entity
 				{
 					m_hitSide = "up";
 					_skin.y -= speed;
-					trace("aaa");
 					return;
 				}
 			}
-			
-			trace("speed", speed);
-			//return;
+			return;
 		}
 		
 		private function moveLeft():void
@@ -167,12 +161,6 @@ package entity
 		
 		private function moveRight():void
 		{
-			/*if(wrongSide)
-			{
-				this.moveLeft();
-				return;
-			}*/
-			
 			
 			if(battery.HP != 0) 
 			{
@@ -180,11 +168,6 @@ package entity
 			//	_skin.scaleX *= 1;
 				_skin.gotoAndStop("side");
 				
-				/*if(wrongSide)
-				{
-					_skin.x -= speed;
-					return;
-				}*/
 			
 				if(!wrongSide)
 				{
@@ -204,7 +187,7 @@ package entity
 		private function addObstacle():void
 		{
 			powerUp --;
-			trace("test", test);
+
 			obstacle = new Obstacle(test);
 			
 			obstacle.y = _skin.y;

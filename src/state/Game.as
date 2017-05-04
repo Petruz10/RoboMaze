@@ -433,46 +433,46 @@ package state
 				{
 					
 					m_robot2.removeChild(m_robot2.obstacle);
-					if(whichPower == 1)
+					switch(whichPower)
 					{
-						m_robot.wrongSide = true;
-						Session.timer.create(7600, setToFalse);
-						return;
-					}
-					else
-					{
-						m_robot.speed = 0;
-						m_flickr = new Flicker(m_robot, 1000, 20); //obj, tid (hur länge), intervall
-						Session.effects.add(m_flickr);
-						Session.timer.create(600, initSpeed);
-						initBombSound();
-						return;
+						case 0:
+							m_robot.speed = 0;
+							m_flickr = new Flicker(m_robot, 1000, 20); //obj, tid (hur länge), intervall
+							Session.effects.add(m_flickr);
+							Session.timer.create(600, initSpeed);
+							initBombSound();
+							break;
+						
+						case 1:
+							m_robot.wrongSide = true;
+							Session.timer.create(7600, setToFalse);
+							break;
 					}
 					
 				}
 			}
+			
 			if(m_robot.obstacle)
 			{
 				if(m_robot2.hitTestObject(m_robot.obstacle)) 
 				{
 					
 					m_robot.removeChild(m_robot.obstacle);
-					if(whichPower == 1)
+					switch(whichPower)
 					{
-						m_robot2.wrongSide = true;
-						Session.timer.create(7600, setToFalse);
-						return;
+						case 0:
+							m_robot2.speed = 0;
+							m_flickr = new Flicker(m_robot2, 1000, 20); //obj, tid (hur länge), intervall
+							Session.effects.add(m_flickr);
+							Session.timer.create(600, initSpeed);
+							initBombSound();
+							break;
+						
+						case 1:
+							m_robot2.wrongSide = true;
+							Session.timer.create(7600, setToFalse);
+							break;
 					}
-					else
-					{
-						m_robot2.speed = 0;
-						m_flickr = new Flicker(m_robot2, 1000, 20); //obj, tid (hur länge), intervall
-						Session.effects.add(m_flickr);
-						Session.timer.create(600, initSpeed);
-						initBombSound();
-						return;
-					}
-					
 				}
 			}
 		}
