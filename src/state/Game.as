@@ -104,7 +104,7 @@ package state
 			hitTest();
 			hitBattery();
 			updateHUDBattery();
-			updateHUDTime();
+			
 			
 			if(m_players == 2) 
 			{
@@ -113,6 +113,8 @@ package state
 				checkBattery();
 				if(m_robot.obstacle || m_robot2.obstacle) checkhitObstacle();
 			}
+			else
+				updateHUDTime();
 		}
 		
 		override public function dispose():void
@@ -234,7 +236,7 @@ package state
 		private function initBattery():void
 		{
 			m_battery = new BatteryRefill();
-			addBattery();d
+			addBattery();
 			m_battery.placeBattery();
 		}
 		
