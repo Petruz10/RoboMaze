@@ -111,6 +111,7 @@ package state
 				placePowerup();
 				hitPowerup();
 				checkBattery();
+				updateHUDPowerup();
 				if(m_robot.obstacle || m_robot2.obstacle) checkhitObstacle();
 			}
 			else
@@ -397,6 +398,16 @@ package state
 		private function updateHUDTime():void
 		{
 			m_hud.time = m_time;
+		}
+		
+		private function updateHUDPowerup():void
+		{
+			if(m_robot.powerUp == 1) m_hud.bomb = 1;
+			else if(m_robot2.powerUp == 1) m_hud.bomb = 2;
+			else 
+			{
+				m_hud.bomb = 0;
+			}
 		}
 		
 		private function checkhitObstacle():void
