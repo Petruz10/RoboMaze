@@ -186,7 +186,7 @@ package state
 			}
 			if(m_min < 10) min = "0"+ m_min;
 			else min = m_min.toString();
-			if(m_sek <10) sek = "0" + m_sek;
+			if(m_sek < 10) sek = "0" + m_sek;
 			else sek = m_sek.toString();
 			if(hundraSek < 10) hundranull = "0" + hundraSek;
 			else hundranull = hundraSek.toString();
