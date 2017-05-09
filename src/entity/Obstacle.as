@@ -22,5 +22,19 @@ package entity
 		
 			this.addChild(_skin);
 		}
+		
+		//------------------------------------------------------------------------
+		// dispose methods 
+		//------------------------------------------------------------------------
+		override public function dispose():void
+		{
+			disposeSkin();
+		}
+		
+		private function disposeSkin():void
+		{
+			_skin = null;
+		}
+		
 	}
 }

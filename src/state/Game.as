@@ -186,7 +186,7 @@ package state
 			}
 			if(m_min < 10) min = "0"+ m_min;
 			else min = m_min.toString();
-			if(m_sek <10) sek = "0" + m_sek;
+			if(m_sek < 10) sek = "0" + m_sek;
 			else sek = m_sek.toString();
 			if(hundraSek < 10) hundranull = "0" + hundraSek;
 			else hundranull = hundraSek.toString();
@@ -263,7 +263,6 @@ package state
 						m_battery.placeBattery();
 						m_x = 0;
 					}
-					//else m_x ++;
 				}
 				else
 				{
@@ -272,7 +271,6 @@ package state
 						m_battery.placeBattery(); 
 						m_x = 0;
 					}
-					//else m_x ++;
 				}
 			}
 			m_x ++;
@@ -362,7 +360,6 @@ package state
 					m_layer3.removeChildren();
 					m_battery.placeBattery();
 					m_x = 0;
-					//addBattery();
 					return;
 				}
 			}
@@ -375,7 +372,6 @@ package state
 					m_layer3.removeChildren();
 					m_battery.placeBattery();
 					m_x = 0;
-					//addBattery();
 					return;
 				}
 			}
@@ -415,8 +411,6 @@ package state
 					break;
 				
 				case 1:
-					trace("case1");
-
 					if(m_robot.powerUp == 1) m_hud.wrong = 1;
 					else if(m_robot2.powerUp == 1) m_hud.wrong = 2;
 					else m_hud.wrong = 0;
@@ -427,8 +421,6 @@ package state
 		
 		private function checkhitObstacle():void
 		{
-			
-			
 			if(m_robot2.obstacle) 
 			{
 				if(m_robot.hitTestObject(m_robot2.obstacle))
@@ -448,6 +440,7 @@ package state
 						case 1:
 							m_robot.wrongSide = true;
 							Session.timer.create(7600, setToFalse);
+							initBombSound();
 							break;
 					}
 					
@@ -473,6 +466,7 @@ package state
 						case 1:
 							m_robot2.wrongSide = true;
 							Session.timer.create(7600, setToFalse);
+							initBombSound();
 							break;
 					}
 				}
@@ -481,9 +475,10 @@ package state
 		
 		private function initBombSound():void
 		{
-			Session.sound.musicChannel.sources.add("game_bombSound", RobotWarning_mp3);
+			trace("bomb ljud!!");
+			Session.sound.musicChannel.sources.add("game_bombSound", RobotBomb_mp3);
 			m_bombSound = Session.sound.musicChannel.get("game_bombSound");
-			m_bombSound.volume = 0.7;
+			m_bombSound.volume = 0.8;
 			m_bombSound.play();
 		}
 		
@@ -491,6 +486,7 @@ package state
 		{
 			m_robot2.speed = 3;
 			m_robot.speed = 3;
+			
 			Session.timer.create(6000, addPowerUp);
 			Session.timer.create(8600, addChildPowerUp);
 			Session.timer.create(8600, m_powerUp.placePowerUp);
@@ -500,6 +496,7 @@ package state
 		{
 			m_robot.wrongSide = false;
 			m_robot2.wrongSide = false;
+			
 			Session.timer.create(6000, addPowerUp);
 			Session.timer.create(8600, addChildPowerUp);
 			Session.timer.create(8600, m_powerUp.placePowerUp);
@@ -534,23 +531,11 @@ package state
 			m_hud = hud;
 		}
 		
-		protected function addPowerUp(/*powerup1:PowerUp, powerup2:PowerUp, type:int*/):void
+		protected function addPowerUp():void
 		{
-			/*m_powerUp = powerup1;
-			m_powerUp2 = powerup2;
-			
-			m_robot.test = type;
-			m_robot2.test = type;
-			trace("vilken powerup",type);*/
-			
-			
-			
 			whichPower = Math.random();
-			trace("innan round", whichPower);
 			whichPower = Math.round(whichPower);
-			
-			trace("math random x", whichPower);
-	//		whichPower = 1;
+
 			
 			m_robot.test = whichPower;
 			m_robot2.test = whichPower;

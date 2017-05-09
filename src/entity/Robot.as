@@ -94,8 +94,6 @@ package entity
 		
 		private function moveUp():void
 		{	
-			
-			
 			if(battery.HP != 0) 
 			{
 				_skin.gotoAndStop("back");
