@@ -17,8 +17,6 @@ package state
 	import se.lnu.stickossdk.fx.Flicker;
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
-	import se.lnu.stickossdk.timer.Timer;
-
 
 	//------------------------------------------------------------------------
 	// Public class Game
@@ -69,7 +67,9 @@ package state
 		private var m_x:int = 0;
 		private var m_k:int = 0;
 		
-		
+		//------------------------------------------------------------------------
+		// public properties 
+		//------------------------------------------------------------------------
 		public var whichPower:Number;
 				
 		//------------------------------------------------------------------------
@@ -275,7 +275,7 @@ package state
 			}
 			m_x ++;
 			trace(m_x);
-			if(m_x == 35) 
+			if(m_x == 40) 
 			{
 				//m_k = 0;
 				addBattery();
@@ -462,7 +462,7 @@ package state
 					{
 						case 0:
 							m_robot2.speed = 0;
-							m_flickr = new Flicker(m_robot2, 1000, 20); //obj, tid (hur länge), intervall
+							m_flickr = new Flicker(m_robot2, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
 							Session.timer.create(600, initSpeed);
 							initBombSound();
@@ -470,7 +470,7 @@ package state
 						
 						case 1:
 							m_robot2.wrongSide = true;
-							Session.timer.create(7600, setToFalse);
+							Session.timer.create(6600, setToFalse);
 							initBombSound();
 							break;
 					}
