@@ -44,10 +44,10 @@ package component
         //------------------------------------------------------------------------
         private function initBackground():void {
             _background = new Shape();
-            _background.graphics.beginFill(0x000000);
+            _background.graphics.beginFill(0x333333);
             _background.graphics.drawRect(0, 0, 800, 600);
             _background.graphics.endFill();
-            _background.alpha = 0.5;
+            _background.alpha = 0.7;
             _background.x = 0;
             _background.y = 0;
             this.addChild(_background);    
