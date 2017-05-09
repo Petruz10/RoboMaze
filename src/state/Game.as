@@ -94,17 +94,24 @@ package state
 		{
 			initLayers();
 			initInstructions();
-			initSharedObject();
-			
-			if(!m_robot.hej) return;
-			
-			
+			initSharedObject();			
 		//	initSound();
 		}
 		
 		override public function update():void
 		{
-			if(!m_robot.hej) return;
+			//if(!m_robot.hej) return;
+			switch(m_players)
+			{
+				case 1:
+					if(!m_robot.hej) return;
+					break;
+				
+				case 2:
+					if(!m_robot.hej || !m_robot2.hej) return;
+					break;
+			}
+			
 			if(!k) initGame();
 			placeBattery();
 			hitTest();
@@ -564,8 +571,11 @@ package state
 			m_layer5.removeChildren();
 			trace("init game");
 			initBattery();
+			m_robot.battery.HP = 100;
+			
 			if(m_players == 2) 
 			{
+				m_robot2.battery.HP = 100;
 				initBattery2();
 				Session.timer.create(1600, addChildPowerUp);
 			}

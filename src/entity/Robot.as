@@ -92,18 +92,18 @@ package entity
 				if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1))
 				{
 					hej = true; 
-					return;
+					//return;
 				}
 			}
-			else
-			{
+			//else
+			//{
 				if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft(); 
 				else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
 				else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) this.moveDown(); 
 				else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) this.moveUp(); 
 				
 				if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1) && powerUp > 0) this.addObstacle()
-			}
+			//}
 		}
 		
 		private function moveUp():void
