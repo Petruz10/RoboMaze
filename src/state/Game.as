@@ -56,11 +56,9 @@ package state
 		
 		private var m_min:int = 0;
 		private var m_sek:Number = 0;
-		
 		private var m_score:Number = 0;
 		
 		private var m_backgroundMusic:SoundObject;
-		
 		private var m_bombSound:SoundObject;
 		
 		private var m_SharedObjPlayers:SharedObject;
@@ -69,12 +67,11 @@ package state
 		private var m_flickr:Flicker;
 		
 		private var m_x:int = 0;
+		private var m_k:int = 0;
 		
 		
 		public var whichPower:Number;
-		
-		
-		
+				
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -93,14 +90,14 @@ package state
 			if(m_players == 2) 
 			{
 				initBattery2();
-				addChildPowerUp();
+				Session.timer.create(1600, addChildPowerUp);
 			}
 			else
 			{
 				initTimer();
 			}
 			initSharedObject();
-			initSound();
+		//	initSound();
 		}
 		
 		override public function update():void
@@ -156,13 +153,13 @@ package state
 		{
 			Session.sound.musicChannel.sources.add("game_bgmusic", BackgroundGame_mp3);
 			m_backgroundMusic = Session.sound.musicChannel.get("game_bgmusic");
-			m_backgroundMusic.volume = 0.5;
+			m_backgroundMusic.volume = 0.4;
 			m_backgroundMusic.play(int.MAX_VALUE); //loop av ljud "Henke hack"
 		}
 		
 		private function updateTimer():void
 		{
-			checkBattery();
+		//	checkBattery();
 			
 			var hundraSek:Number;
 			var min:String;
@@ -260,6 +257,7 @@ package state
 				{
 					if(m_battery.hitTestObject(m_children[i]) || m_battery.batteryX <= 400) 
 					{
+						//m_layer3.removeChildren();
 						m_battery.placeBattery();
 						m_x = 0;
 					}
@@ -269,13 +267,20 @@ package state
 					if(m_battery.hitTestObject(m_children[i])) 
 					{
 						m_battery.placeBattery(); 
+						//m_layer3.removeChildren();
 						m_x = 0;
 					}
 				}
+				
 			}
 			m_x ++;
-			//trace(m_x);
-			if(m_x == 40) addBattery();
+			trace(m_x);
+			if(m_x == 35) 
+			{
+				//m_k = 0;
+				addBattery();
+			}
+
 			
 			if(m_players == 2) m_battery2.placeBattery2(m_battery.batteryX - 400,  m_battery.batteryY);
 		}
@@ -478,7 +483,7 @@ package state
 			trace("bomb ljud!!");
 			Session.sound.musicChannel.sources.add("game_bombSound", RobotBomb_mp3);
 			m_bombSound = Session.sound.musicChannel.get("game_bombSound");
-			m_bombSound.volume = 0.8;
+			m_bombSound.volume = 0.6;
 			m_bombSound.play();
 		}
 		
@@ -537,8 +542,8 @@ package state
 			whichPower = Math.round(whichPower);
 
 			
-			m_robot.test = whichPower;
-			m_robot2.test = whichPower;
+			m_robot.obstacleType = whichPower;
+			m_robot2.obstacleType = whichPower;
 			
 			m_powerUp = new PowerUp(whichPower);
 			m_powerUp2 = new PowerUp(whichPower);

@@ -29,8 +29,12 @@ package entity
 		public var powerUp:int = 0;
 		
 		public var obstacle:Obstacle;
+		public var obstacleType:int;
 		
 		public var speed:int = 3;
+		
+		public var wrongSide:Boolean = false;
+
 		//------------------------------------------------------------------------
 		// private properties 
 		//------------------------------------------------------------------------
@@ -43,10 +47,7 @@ package entity
 		
 		private var m_square:Sprite = new Sprite();
 		private var m_refillSound:SoundObject;
-		
-		public var test:int;
-		
-		public var wrongSide:Boolean = false;
+	
 		//------------------------------------------------------------------------
 		// Constructor methods
 		//------------------------------------------------------------------------		
@@ -179,7 +180,7 @@ package entity
 		{
 			powerUp --;
 
-			obstacle = new Obstacle(test);
+			obstacle = new Obstacle(obstacleType);
 			
 			obstacle.y = _skin.y;
 			if(m_player == 0)obstacle.x = _skin.x +400;
@@ -208,7 +209,7 @@ package entity
 				battery.HP += 30; 
 				hitBattery = false;
 				if(battery.HP > 100) battery.HP = 100;
-				initRefillSound();
+				//initRefillSound();
 			}
 			
 			if(battery.HP == 0)
@@ -221,13 +222,13 @@ package entity
 		{
 			Session.sound.musicChannel.sources.add("game_refillSound", RobotRefill_mp3);
 			m_refillSound = Session.sound.musicChannel.get("game_refillSound");
-			m_refillSound.volume = 0.65;
+			m_refillSound.volume = 0.55;
 			m_refillSound.play();
 		}
 		
 		private function initGameOver():void
 		{			
-			m_flickr = new Flicker(_skin, 1000, 20); //obj, tid (hur länge), intervall
+			m_flickr = new Flicker(_skin, 1000); //obj, tid (hur länge), intervall
 			Session.effects.add(m_flickr);
 		}
 

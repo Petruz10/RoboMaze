@@ -6,8 +6,10 @@ package game
 	import component.Maze;
 	import component.MultiplayerHUD;
 	
-	import entity.Robot;
 	import entity.PowerUp;
+	import entity.Robot;
+	
+	import se.lnu.stickossdk.system.Session;
 	
 	import state.Game;
 	
