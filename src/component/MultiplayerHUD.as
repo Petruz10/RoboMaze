@@ -95,11 +95,11 @@ package component
 			
 			_bombIcon1.gotoAndStop("deactivate");
 			_bombIcon1.x = 200;
-			_bombIcon1.y = 28;
+			_bombIcon1.y = 30;
 
 			_bombIcon2.gotoAndStop("deactivate");
 			_bombIcon2.x = 572;
-			_bombIcon2.y = 28;
+			_bombIcon2.y = 30;
 			
 			this.addChild(_bombIcon1);
 			this.addChild(_bombIcon2);
