@@ -21,6 +21,7 @@ package state
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.media.SoundObject;
+	import flash.display.DisplayObject;
 
 	//------------------------------------------------------------------------
 	// 	Highscore State
@@ -105,7 +106,6 @@ package state
 			initBackground();
 			initHighscore();
 			initHighscoreTable();
-			//initLists();
 		}
 		//------------------------------------------------------------------------
 		// init sound
@@ -124,14 +124,14 @@ package state
 			_score = _highscoreData.score;
 			_name = _highscoreData.name;
 
-		/*	if((_score.length == 0) || (_score == null)) {
+		if((_score.length == 0) || (_score == null)) {
 				_score.push("00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00");
 				_name.push("michaela1","michaela2","michaela3","michaela4","michaela5","michaela6","michaela7","michaela8","michaela9","michaela10");
-			} */
+			} 
 		}
 		private function updateHighscore():void {
 			if (_score.length != 0) {
-				initLists();
+				initList();
 			} else { trace("vector is empty"); }
 		}
 		//------------------------------------------------------------------------
@@ -148,12 +148,11 @@ package state
 			_header.gotoAndStop("highscore");
 			
 			_layerBackground.addChild(_header);
-			
 		}
 		//------------------------------------------------------------------------
 		// init name and highscore list
 		//------------------------------------------------------------------------
-		private function initLists():void {
+		private function initList():void {
 			if(_container == null) {
 				_container = new Sprite();
 				var str:String; // name
@@ -215,7 +214,6 @@ package state
 			_layerHighscoreTable.x = 0;
 			_layerHighscoreTable.y = 0;
 			
-			
 			_btn.x = 400 - (_btn.width/2);
 			_btn.y = 550;
 			_btn.pulse();
@@ -237,12 +235,23 @@ package state
 		// dispose highscore table
 		//------------------------------------------------------------------------
 		private function disposeHighscoreTable():void {
+			var textField:DisplayObject;
+			
+			while (_container.numChildren > 0) {
+				textField = _container.getChildAt(0);
+				_container.removeChildAt(0);
+				textField = null;
+			}
+
+			if (_container.numChildren == 0) {
+				_layerHighscoreTable.removeChild(_container);
+			}
+
 			_layerHighscoreTable.removeChild(_btn); 
 			_layerHighscoreTable = null;
 			_btn = null;
 
 			
-			trace("dispose highscore table");
 		}
 		//------------------------------------------------------------------------
 		// dispose background

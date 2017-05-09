@@ -27,14 +27,6 @@ package state
 		*/
 		private var _counter:int = 0; // counter
 		/*
-		* 	background layer
-		*/
-		private var _layerBackground:DisplayStateLayer;
-		/*
-		* 	background img
-		*/
-		private var _backgroundImg:SplashBg_mc;
-		/*
 		*	overlay
 		*/ 
 		private var _layerOverlay:DisplayStateLayer;
@@ -77,15 +69,12 @@ package state
 		// dispose
 		//------------------------------------------------------------------------
 		override public function dispose():void {
-			//_layerBackground.removeChild(_backgroundImg);
 			_layerOverlay.removeChild(_michaela);
 			_layerOverlay.removeChild(_petra);
 
-			//_backgroundImg = null;
 			_michaela = null;
 			_petra = null;
 
-			//_layerBackground = null;
 			_layerOverlay = null;
 		}
 		//------------------------------------------------------------------------
@@ -111,17 +100,6 @@ package state
 			//initBackground();
 			initOverlay();
 
-		}
-		private function initBackground():void {
-			_backgroundImg = new SplashBg_mc;
-			_backgroundImg.x = 0;
-			_backgroundImg.y = 0;
-			_backgroundImg.play();
-			
-			_layerBackground = layers.add(LAYER_BACKGROUND);
-			_layerBackground.x = 0;
-			_layerBackground.y = 0;
-			_layerBackground.addChild(_backgroundImg);
 		}
 		private function initOverlay():void {
 			_michaela = new MichaelaBot_mc;
