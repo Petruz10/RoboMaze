@@ -38,7 +38,6 @@ package state
 		private var m_robot2:Robot;
 		
 		private var m_maze:Maze;
-		private var m_maze2:Maze;
 		
 		private var m_battery:BatteryRefill;
 		private var m_battery2:BatteryRefill;
@@ -193,27 +192,29 @@ package state
 		
 		private function checkBattery():void
 		{
+			m_win = SharedObject.getLocal("playerwon");
 			if (m_players == 2) 
 			{
-				m_win = SharedObject.getLocal("playerwon");
 				
 				if(m_robot.battery.HP == 0)
 				{
 					Session.timer.create(1000, initGameOver);
-					m_win.data.won = 	2;
+					m_win.data.won = 2;
 				}
 				if(m_robot2.battery.HP == 0)
 				{
 					Session.timer.create(1000, initGameOver);
 					m_win.data.won = 1;
 				}
-				m_win.flush(); 
 			}
 			else
 			{
 				if(m_robot.battery.HP > 0) initTimer();		
 				if(m_robot.battery.HP == 0) initHighScore();
+				m_win.data.won = 0;
 			}
+			
+			m_win.flush(); 
 		}
 		
 		private function initHighScore():void
@@ -304,7 +305,6 @@ package state
 			m_layer4 = layers.add("powerup");
 			
 			if(m_maze) m_layer.addChild(m_maze);
-			if(m_maze2) m_layer.addChild(m_maze2);
 			
 			if(m_robot) m_layer2.addChild(m_robot);	
 			if(m_robot2) m_layer2.addChild(m_robot2);
@@ -331,13 +331,6 @@ package state
 				m_children.push(m_maze.getChildAt(i));
 			}
 			
-			if(m_maze2)
-			{
-				for (var j:uint = 0; j < m_maze2.numChildren; j++)
-				{
-					m_children.push(m_maze2.getChildAt(j));
-				}
-			}
 		}
 		
 		private function hitTest():void
@@ -436,7 +429,7 @@ package state
 					{
 						case 0:
 							m_robot.speed = 0;
-							m_flickr = new Flicker(m_robot, 1000, 20); //obj, tid (hur länge), intervall
+							m_flickr = new Flicker(m_robot, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
 							Session.timer.create(600, initSpeed);
 							initBombSound();
@@ -465,13 +458,13 @@ package state
 							m_flickr = new Flicker(m_robot2, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
 							Session.timer.create(600, initSpeed);
-							initBombSound();
+							//initBombSound();
 							break;
 						
 						case 1:
 							m_robot2.wrongSide = true;
 							Session.timer.create(6600, setToFalse);
-							initBombSound();
+							//initBombSound();
 							break;
 					}
 				}
@@ -515,12 +508,7 @@ package state
 			m_maze = maze;
 			getChildren();
 		}
-		
-		protected function addMaze2(maze:Maze):void
-		{	
-			m_maze2 = maze;			
-		}
-			
+	
 		protected function addAvatar(Avatar:Robot):void
 		{
 			m_robot = Avatar;
@@ -577,7 +565,6 @@ package state
 		private function disposeMaze():void
 		{
 			m_maze = null;
-			if(m_maze2) m_maze2 = null;
 		}
 		
 		private function disposeAvatar():void

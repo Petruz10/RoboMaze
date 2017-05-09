@@ -39,7 +39,6 @@ package game
 			initAvatar2();
 			initAvatar();
 			
-			initMaze2();
 			initMaze();
 			
 			initHUD();
@@ -78,16 +77,6 @@ package game
 			m_maze.y = 100;
 			
 			super.addMaze(m_maze);
-		}
-		
-		private function initMaze2():void
-		{
-			m_maze2 = new Maze(2);
-			
-			m_maze2.x = 420;
-			m_maze2.y = 100;
-			
-			super.addMaze2(m_maze2);
 		}
 		
 		private function initHUD():void

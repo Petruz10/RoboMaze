@@ -95,7 +95,7 @@ package state
 			_won = _victoryInfo.data.won; 
 	
 			initLayers();
-			initSound();
+			//initSound();
 			initSharedObj();
 		}
 		//------------------------------------------------------------------------
