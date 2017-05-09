@@ -47,7 +47,7 @@ package component
             _background.graphics.beginFill(0x333333);
             _background.graphics.drawRect(0, 0, 800, 600);
             _background.graphics.endFill();
-            _background.alpha = 0.7;
+            //_background.alpha = 0.7;
             _background.x = 0;
             _background.y = 0;
             this.addChild(_background);    
