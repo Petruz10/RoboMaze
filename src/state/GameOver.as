@@ -60,11 +60,27 @@ package state
 		/*
 		*
 		*/
-		private var _gameOverImg:GameOver_mc;
+		private var _gameOverImg:GameOver_mc; // if singleplayer
+		/*
+		*
+		*/
+		private var _winnerHeader:GameOver_winner_header_mc; // if multiplayer // winner banner
+		/*
+		*
+		*/
+		private var _winner:GameOver_winner_mc;
 		/*
 		*
 		*/
 		private var _backgroundMusic:SoundObject;
+		/*
+		*
+		*/
+		private var _victoryInfo:SharedObject;
+		/*
+		*
+		*/
+		private var _won; // winning player
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -74,6 +90,10 @@ package state
 		// init
 		//------------------------------------------------------------------------
 		override public function init():void {
+		
+			_victoryInfo = SharedObject.getLocal("playerwon");
+			_won = _victoryInfo.data.won; 
+	
 			initLayers();
 			initSound();
 			initSharedObj();
@@ -93,10 +113,17 @@ package state
             disposeOverlay();
 		}
 		private function initSound():void {
-			Session.sound.musicChannel.sources.add("gameover_bgmusic", BackgroundGameOver_mp3);
-			_backgroundMusic = Session.sound.musicChannel.get("gameover_bgmusic");
+			if (_won == 0) {
+				Session.sound.musicChannel.sources.add("gameover_bgmusic", BackgroundGameOver_mp3);
+				_backgroundMusic = Session.sound.musicChannel.get("gameover_bgmusic");
+			}
+			else {
+				Session.sound.musicChannel.sources.add("menu_bgmusic", BackgroundMenu_mp3);
+				_backgroundMusic = Session.sound.musicChannel.get("menu_bgmusic");
+			}
 			_backgroundMusic.volume = 0.5;
 			_backgroundMusic.play();
+			
 		}
 		//------------------------------------------------------------------------
 		// init layers
@@ -121,10 +148,36 @@ package state
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
 
-			_gameOverImg = new GameOver_mc();
-			_gameOverImg.y = 100;
-			_gameOverImg.x = 400 - ( _gameOverImg.width / 2 );
-			_layerBackground.addChild(_gameOverImg);
+			if (_won != 0) {
+				_winnerHeader = new GameOver_winner_header_mc();
+				_winner = new GameOver_winner_mc();
+
+				_winnerHeader.y = 150;
+				_winnerHeader.x = 400 - (_winnerHeader.width / 2);
+
+				_winner.scaleY = 0.8;
+				_winner.scaleX = 0.8;
+				_winner.x = 400 - (_winner.width / 2);
+				_winner.y = 300;
+				_winner.stop();
+
+				_layerBackground.addChild(_winnerHeader);
+				_layerBackground.addChild(_winner);
+			}
+
+			switch (_won) {
+				case 0:
+					_gameOverImg = new GameOver_mc();
+					_gameOverImg.y = 100;
+					_gameOverImg.x = 400 - ( _gameOverImg.width / 2 );
+					_layerBackground.addChild(_gameOverImg);
+				break;
+				case 1:
+					_winner.gotoAndStop("player1");
+				break;
+				case 2:
+					_winner.gotoAndStop("player2");
+			}
 		}
 		//------------------------------------------------------------------------
 		// init "menu" --> back btn
@@ -194,9 +247,17 @@ package state
 		// dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
-			_layerBackground.removeChild(_gameOverImg);
-			_layerBackground = null;
-			_gameOverImg = null;
+			if (_won == 0) {
+				_layerBackground.removeChild(_gameOverImg);
+				_layerBackground = null;
+				_gameOverImg = null;
+			}
+			else if (_won != 0) {
+				_layerBackground.removeChild(_winnerHeader);
+				_layerBackground.removeChild(_winner);
+				_winnerHeader = null;
+				_winner = null;
+			}
 		}
 		//------------------------------------------------------------------------
 		// dispose overlay

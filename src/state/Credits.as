@@ -47,7 +47,6 @@ package state
 		override public function init():void {
 			initSound();
 			initLayers();
-			Session.application.displayState = new GameOver;
 		}
 		//------------------------------------------------------------------------
 		// update
