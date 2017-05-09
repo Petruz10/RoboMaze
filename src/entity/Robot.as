@@ -4,6 +4,7 @@ package entity
 	// imports
 	//------------------------------------------------------------------------
 	import flash.display.Sprite;
+	import flash.text.ReturnKeyLabel;
 	
 	import se.lnu.stickossdk.fx.Flicker;
 	import se.lnu.stickossdk.input.EvertronControls;
@@ -70,8 +71,13 @@ package entity
 		
 		override public function update():void
 		{
+			
+			
 			if(!hit)updateControls();
-			else if(hit) hitt();
+			
+			//if(!hej) return;
+			if(!battery) return;
+			if(hit) hitt();
 			checkHit();
 		}
 		
@@ -89,14 +95,16 @@ package entity
 		{	
 			if(!hej) 
 			{
+				//trace("controls: ", m_controls);
 				if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1))
 				{
 					hej = true; 
-					//return;
 				}
 			}
 			//else
 			//{
+			//trace("batteryyyyyyy: ", battery);
+			if(!battery) return;
 				if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft(); 
 				else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
 				else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) this.moveDown(); 
@@ -106,8 +114,14 @@ package entity
 			//}
 		}
 		
+		public function initBattery():void
+		{
+			battery = new Battery();
+		}
+		
 		private function moveUp():void
 		{	
+			trace("up");
 			if(battery.HP != 0) 
 			{
 				_skin.gotoAndStop("back");
@@ -128,6 +142,7 @@ package entity
 		
 		private function moveDown():void
 		{	
+			trace("down");
 			if(battery.HP != 0)
 			{
 				_skin.gotoAndStop("front");
@@ -147,6 +162,7 @@ package entity
 		
 		private function moveLeft():void
 		{
+			trace("left");
 			if(battery.HP != 0)
 			{
 				_skin.gotoAndStop("side");
@@ -168,11 +184,10 @@ package entity
 		
 		private function moveRight():void
 		{
-			
+			trace("right");
 			if(battery.HP != 0) 
 			{
-				
-			//	_skin.scaleX *= 1;
+				//	_skin.scaleX *= 1;
 				_skin.gotoAndStop("side");
 			
 				if(!wrongSide)
@@ -256,8 +271,6 @@ package entity
 			m_square.graphics.drawRect(7, 11, 20, 20);
 			_skin.hitArea = m_square;
 			area = _skin.hitArea;
-
-			battery = new Battery();
 			
 			this.addChild(_skin);
 			_skin.addChild(_skin.hitArea);

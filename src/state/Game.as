@@ -303,7 +303,7 @@ package state
 				
 			}
 			m_x ++;
-			trace(m_x);
+			//trace(m_x);
 			if(m_x == 40) 
 			{
 				//m_k = 0;
@@ -460,13 +460,13 @@ package state
 							m_flickr = new Flicker(m_robot, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
 							Session.timer.create(600, initSpeed);
-							initBombSound();
+						//	initBombSound();
 							break;
 						
 						case 1:
 							m_robot.wrongSide = true;
 							Session.timer.create(7600, setToFalse);
-							initBombSound();
+						//	initBombSound();
 							break;
 					}
 					
@@ -564,18 +564,22 @@ package state
 			m_powerUp = new PowerUp(whichPower);
 			m_powerUp2 = new PowerUp(whichPower);
 		}
-		
+		//testa att flytta
 		protected function initGame():void
 		{
-			k = true;
 			m_layer5.removeChildren();
-			trace("init game");
+			
+			k = true;
+			m_robot.initBattery();
 			initBattery();
-			m_robot.battery.HP = 100;
+			
+			trace("init game");
+			//m_robot.battery.HP = 100;
 			
 			if(m_players == 2) 
 			{
-				m_robot2.battery.HP = 100;
+				m_robot2.initBattery();
+		//		m_robot2.battery.HP = 100;
 				initBattery2();
 				Session.timer.create(1600, addChildPowerUp);
 			}

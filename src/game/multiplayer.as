@@ -25,7 +25,6 @@ package game
 		private var m_robot2:Robot;
 		
 		private var m_maze:Maze;
-		private var m_maze2:Maze;
 		
 		private var m_hud:MultiplayerHUD;
 		
@@ -84,22 +83,14 @@ package game
 			m_hud = new MultiplayerHUD();
 			
 			m_hud.x = 0;
-			m_hud.y=0;
+			m_hud.y = 0;
 			
 			super.addHUD(m_hud);
 		}
 		
 		private function superPower():void
-		{
-			/*var x:Number;
-			
-			x = Math.random();
-			x = Math.round(x);
-			
-			m_superPower = new PowerUp(x);
-			m_superPower2 = new PowerUp(x);*/
-			
-			super.addPowerUp(/*m_superPower, m_superPower2, x*/);
+		{	
+			super.addPowerUp();
 		}
 		
 		//------------------------------------------------------------------------
@@ -123,7 +114,6 @@ package game
 		private function disposeMaze():void
 		{
 			m_maze = null;
-			m_maze2 = null;
 			trace("dispose maze");
 		}
 		
