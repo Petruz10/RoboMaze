@@ -3,9 +3,12 @@ package state
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import flash.geom.Point;
 	import flash.net.SharedObject;
 	
 	import component.Maze;
+	import component.MultiplayerInstruction;
+	import component.SingleplayerInstruction;
 	
 	import entity.BatteryRefill;
 	import entity.PowerUp;
@@ -17,8 +20,6 @@ package state
 	import se.lnu.stickossdk.fx.Flicker;
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
-	import component.SingleplayerInstruction;
-	import component.MultiplayerInstruction;
 
 	//------------------------------------------------------------------------
 	// Public class Game
@@ -75,6 +76,8 @@ package state
 		private var startGame:Boolean= false;
 		
 		private var hej:Boolean;
+		
+		private var m_placable:Array = new Array();
 		
 		//------------------------------------------------------------------------
 		// public properties 
@@ -269,8 +272,36 @@ package state
 		private function initBattery():void
 		{
 			m_battery = new BatteryRefill();
-			addBattery();
 			m_battery.placeBattery();
+			addBattery();
+			
+			/*
+			var j:uint = 0;
+			while(m_placable.length < 10)
+			{
+				for(var i:int = 0; i < m_children.length; i++)
+				{
+					if(m_battery.hitTestObject(m_children[i])) 
+					{
+						continue;
+					}
+					m_placable.push(new Point(m_battery.batteryX, m_battery.batteryY));
+					j++;
+					
+				}	
+			}
+			var r:int;
+			
+			r = Math.floor(Math.random() * m_placable.length) - 1;
+			m_battery.batteryX = m_placable[r].x;
+			m_battery.batteryY = m_placable[r].y;
+			*/
+		//testBatteryPlace();
+			
+				
+			//
+		
+			
 		}
 		
 		private function initBattery2():void
@@ -324,11 +355,18 @@ package state
 			}
 			
 			
-
-			
 			if(m_players == 2) m_battery2.placeBattery2(m_battery.batteryX - 400,  m_battery.batteryY);
 		}
 		
+	/*	private function testBatteryPlace():void
+		{
+			var r:int;
+			
+			r = Math.floor(Math.random() * m_placable.length) - 1;
+			m_battery.batteryX = m_placable[r].x;
+			m_battery.batteryY = m_placable[r].y;
+		}
+		*/
 		private function placePowerup():void
 		{
 			
@@ -373,6 +411,9 @@ package state
 			{
 				m_children.push(m_maze.getChildAt(i));
 			}
+			
+			
+			
 			
 		}
 		
@@ -551,6 +592,7 @@ package state
 			startGame = true;
 			m_robot.initBattery();
 			initBattery();
+		//	testBatteryPlace();
 			
 			if(m_players == 2) 
 			{
