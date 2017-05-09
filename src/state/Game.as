@@ -313,12 +313,17 @@ package state
 			trace(m_x);
 			if(hej) 
 			{
-				m_battery.visible = true;
-				if(m_battery2)m_battery2.visible = true;
 				//m_k = 0;
 				m_x ++;
+				if(m_x >= 3)
+				{
+					m_battery.visible = true;
+					if(m_battery2)m_battery2.visible = true;
+				}
 				if(m_x == 30) addBattery();
 			}
+			
+			
 
 			
 			if(m_players == 2) m_battery2.placeBattery2(m_battery.batteryX - 400,  m_battery.batteryY);

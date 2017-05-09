@@ -233,7 +233,7 @@ package entity
 				battery.HP += 30; 
 				hitBattery = false;
 				if(battery.HP > 100) battery.HP = 100;
-				//initRefillSound();
+				initRefillSound();
 			}
 			
 			if(battery.HP == 0)
