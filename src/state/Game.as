@@ -108,7 +108,7 @@ package state
 					break;
 				
 				case 2:
-					if(!m_robot.hej || !m_robot2.hej) return;
+					if(!m_robot.hej && !m_robot2.hej) return;
 					break;
 			}
 			
@@ -567,7 +567,7 @@ package state
 		
 		protected function initGame():void
 		{
-			k= true;
+			k = true;
 			m_layer5.removeChildren();
 			trace("init game");
 			initBattery();
