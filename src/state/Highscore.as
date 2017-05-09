@@ -130,9 +130,8 @@ package state
 			} */
 		}
 		private function updateHighscore():void {
-			if (_score.length != 0) {
-				initList();
-			} else { trace("vector is empty"); }
+			if (_score.length != 0) { initList(); } 
+			else { trace("vector is empty"); }
 		}
 		//------------------------------------------------------------------------
 		// init background
@@ -236,7 +235,7 @@ package state
 		//------------------------------------------------------------------------
 		private function disposeHighscoreTable():void {
 			var textField:DisplayObject;
-			
+			if (_container) {
 			while (_container.numChildren > 0) {
 				textField = _container.getChildAt(0);
 				_container.removeChildAt(0);
@@ -245,6 +244,7 @@ package state
 
 			if (_container.numChildren == 0) {
 				_layerHighscoreTable.removeChild(_container);
+			}
 			}
 
 			_layerHighscoreTable.removeChild(_btn); 

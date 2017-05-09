@@ -9,6 +9,7 @@
 		* maze design
 		*/
 		private var _mazeArray:Array;
+		private var _multiMazeArray:Array; // mazes for multiplayer
 		/*
 		* 
 		*/
@@ -46,14 +47,14 @@
 			init();
 		}
 		public function init():void {
-			initMaze();
+			if (_mode == 1) { initSingleplayerMaze(); }
+			if (_mode == 2) { initMultiplayerMaze(); }
 			initTiles();	
 		}
 		//------------------------------------------------------------------------
 		// create Vector
 		//------------------------------------------------------------------------
-		private function initMaze():void {
-			if (_mode == 1) {
+		private function initSingleplayerMaze():void {
 				_mazeArray = [
 					[3,2,2,2,2,2,2,2,2,2,14,2,2,2,2,2,2,14,2,4],
 					[1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1],
@@ -69,8 +70,12 @@
 					[1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
 					[5,2,2,2,2,2,2,2,2,2,2,13,2,2,2,2,2,2,2,6]
 				];
-			} else {
-				_mazeArray = [
+		} 
+		private function initMultiplayerMaze():void {
+			var r:int;
+			_multiMazeArray = 
+			[
+				[
 					[3,2,14,2,2,2,2,2,2,4],
 					[1,0,1,0,0,0,0,0,0,1],
 					[1,0,5,2,2,7,0,9,0,1],
@@ -84,9 +89,42 @@
 					[11,2,7,0,8,6,0,1,0,1],
 					[1,0,0,0,0,0,0,1,0,1],
 					[5,2,2,2,2,2,2,13,2,6]
+				],
+				[
+					[3,2,2,2,2,2,2,2,2,4],
+					[1,0,0,0,0,0,0,0,0,1],
+					[1,0,8,2,2,2,2,7,0,1],
+					[1,0,0,0,0,0,0,0,0,1],
+					[1,0,8,2,2,2,2,7,0,1],
+					[1,0,0,0,0,0,0,0,0,1],
+					[1,0,8,2,2,2,2,7,0,1],
+					[1,0,0,0,0,0,0,0,0,1],
+					[1,0,8,2,2,2,2,7,0,1],
+					[1,0,0,0,0,0,0,0,0,1],
+					[1,0,8,2,2,2,2,7,0,1],
+					[1,0,0,0,0,0,0,0,0,1],
+					[5,2,2,2,2,2,2,2,2,6]
+				],
+				[
+					[3,2,2,14,2,2,2,14,2,4],
+					[1,0,0,1,0,0,0,1,0,1],
+					[1,0,8,13,7,0,8,6,0,1],
+					[1,0,0,0,0,0,0,0,0,1],
+					[11,2,2,4,0,8,8,7,0,1],
+					[1,0,0,1,0,0,0,0,0,1],
+					[1,0,8,6,0,8,2,2,2,12],
+					[1,0,0,0,0,0,0,0,0,1],
+					[11,2,7,0,3,2,14,7,0,1],
+					[1,0,0,0,1,0,1,0,0,1],
+					[1,0,9,0,10,0,5,7,0,1],
+					[1,0,1,0,0,0,0,0,0,1],
+					[5,2,13,2,2,2,2,2,2,6]
+				]
 				];
-			}
-		} 
+			
+			r = Math.floor(Math.random()*_multiMazeArray.length);
+			_mazeArray = _multiMazeArray[r];
+		}
 		//------------------------------------------------------------------------
 		// fill object with tiles based on mazeArray
 		//------------------------------------------------------------------------
@@ -96,16 +134,28 @@
 			* the tile to add 
 			*/
 			var tile:Tile;
-			for (var i:int = 0; i <_mazeArray.length; i++ ){
-				for (var j:int = 0; j < _mazeArray[i].length; j++) {
-					tile = new Tile(_mazeArray[i][j]);
-					tile.width = TILE_WIDTH;
-					tile.height = TILE_HEIGHT;
-					tile.y = i * tile.height;
-					tile.x = j * tile.width;
-					this.addChild(tile);
+				for (var i:int = 0; i <_mazeArray.length; i++ ){
+					for (var j:int = 0; j < _mazeArray[i].length; j++) {
+						tile = new Tile(_mazeArray[i][j]);
+						tile.width = TILE_WIDTH;
+						tile.height = TILE_HEIGHT;
+						tile.y = i * tile.height;
+						tile.x = j * tile.width;
+						this.addChild(tile); 
+					}
 				}
-			}
+				if (_mode == 2) {
+					for (var k:int = 0; k <_mazeArray.length; k++ ){
+						for (var l:int = 0; l < _mazeArray[k].length; l++) {
+							tile = new Tile(_mazeArray[k][l]);
+							tile.width = TILE_WIDTH;
+							tile.height = TILE_HEIGHT;
+							tile.y = k * tile.height;
+							tile.x = tile.x = 400 + (l * tile.width);
+							this.addChild(tile); 
+						}
+					}	
+				}
 		}
 		//------------------------------------------------------------------------
 		//	dispose
@@ -126,7 +176,6 @@
 				tile = this.getChildAt(0);
 				tile = null;
 			} 
-			trace("dispose tiles"); 
 		}
 	}
 }
