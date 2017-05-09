@@ -34,6 +34,8 @@ package entity
 		public var speed:int = 3;
 		
 		public var wrongSide:Boolean = false;
+		
+		public var hej:Boolean = false;
 
 		//------------------------------------------------------------------------
 		// private properties 
@@ -85,12 +87,23 @@ package entity
 		//------------------------------------------------------------------------
 		private function updateControls():void
 		{	
-			if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft(); 
-			else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
-			else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) this.moveDown(); 
-			else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) this.moveUp(); 
-			
-			if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1) && powerUp > 0) this.addObstacle()
+			if(!hej) 
+			{
+				if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1))
+				{
+					hej = true; 
+					//return;
+				}
+			}
+			//else
+			//{
+				if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft(); 
+				else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
+				else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) this.moveDown(); 
+				else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) this.moveUp(); 
+				
+				if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1) && powerUp > 0) this.addObstacle()
+			//}
 		}
 		
 		private function moveUp():void
