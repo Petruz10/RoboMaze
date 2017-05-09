@@ -64,17 +64,17 @@ package entity
 			if(HP == 30 ||  HP == 10) 
 			{
 				trace("10 eller 30");
-				initWarningSound();
+				//initWarningSound();
 			}
 			
-			if(HP == 0) initDeadSound();
+			//if(HP == 0) initDeadSound();
 		}
 		
 		private function initWarningSound():void
 		{
 			Session.sound.musicChannel.sources.add("game_warningSound", RobotWarning_mp3);
 			m_warningSound = Session.sound.musicChannel.get("game_warningSound");
-			m_warningSound.volume = 0.7;
+			m_warningSound.volume = 0.55;
 			m_warningSound.play();
 		}
 		
@@ -83,7 +83,7 @@ package entity
 			Session.sound.musicChannel.sources.add("game_deadSound", RobotDeath_mp3);
 			Session.sound.musicChannel.sources.add("game_deadSound", RobotShutdown_mp3);
 			m_deadSound = Session.sound.musicChannel.get("game_deadSound");
-			m_deadSound.volume = 0.7;
+			m_deadSound.volume = 0.55;
 			m_deadSound.play();
 		}
 		
