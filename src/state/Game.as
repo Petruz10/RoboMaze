@@ -17,6 +17,8 @@ package state
 	import se.lnu.stickossdk.fx.Flicker;
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
+	import component.SingleplayerInstruction;
+	import component.MultiplayerInstruction;
 
 	//------------------------------------------------------------------------
 	// Public class Game
@@ -30,6 +32,8 @@ package state
 		private var m_layer2:DisplayStateLayer;
 		private var m_layer3:DisplayStateLayer;
 		private var m_layer4:DisplayStateLayer;
+		private var m_layer5:DisplayStateLayer;
+
 		
 		private var m_powerUp:PowerUp;
 		private var m_powerUp2:PowerUp;
@@ -66,6 +70,10 @@ package state
 		private var m_x:int = 0;
 		private var m_k:int = 0;
 		
+		private var m_instructions;
+		
+		private var k:Boolean= false;
+		
 		//------------------------------------------------------------------------
 		// public properties 
 		//------------------------------------------------------------------------
@@ -85,22 +93,19 @@ package state
 		override public function init():void
 		{
 			initLayers();
-			initBattery();
-			if(m_players == 2) 
-			{
-				initBattery2();
-				Session.timer.create(1600, addChildPowerUp);
-			}
-			else
-			{
-				initTimer();
-			}
+			initInstructions();
 			initSharedObject();
+			
+			if(!m_robot.hej) return;
+			
+			
 		//	initSound();
 		}
 		
 		override public function update():void
 		{
+			if(!m_robot.hej) return;
+			if(!k) initGame();
 			placeBattery();
 			hitTest();
 			hitBattery();
@@ -114,8 +119,7 @@ package state
 				updateHUDPowerup();
 				if(m_robot.obstacle || m_robot2.obstacle) checkhitObstacle();
 			}
-			else
-				updateHUDTime();
+			else updateHUDTime();
 		}
 		
 		override public function dispose():void
@@ -143,6 +147,23 @@ package state
 			return;
 		}
 		
+		private function initInstructions():void
+		{
+			switch(m_players)
+			{
+				case 1: 
+					m_instructions = new SingleplayerInstruction();
+					break;
+				
+				case 2:
+					m_instructions = new MultiplayerInstruction();
+					break;
+			}
+			
+			m_layer5 = layers.add("instructions");
+			m_layer5.addChild(m_instructions);
+		}
+		
 		private function initTimer():void
 		{
 			Session.timer.create(1, updateTimer);
@@ -158,7 +179,7 @@ package state
 		
 		private function updateTimer():void
 		{
-		//	checkBattery();
+			checkBattery();
 			
 			var hundraSek:Number;
 			var min:String;
@@ -537,6 +558,23 @@ package state
 			m_powerUp2 = new PowerUp(whichPower);
 		}
 		
+		protected function initGame():void
+		{
+			k= true;
+			m_layer5.removeChildren();
+			trace("init game");
+			initBattery();
+			if(m_players == 2) 
+			{
+				initBattery2();
+				Session.timer.create(1600, addChildPowerUp);
+			}
+			else
+			{
+				initTimer();
+			}
+		}
+		
 		//------------------------------------------------------------------------
 		// dispose methods
 		//------------------------------------------------------------------------
@@ -546,11 +584,13 @@ package state
 			m_layer2.removeChildren();
 			m_layer3.removeChildren();
 			if(m_layer4)m_layer4.removeChildren();
+			if(m_layer5)m_layer5.removeChildren();
 			
 			m_layer = null;
 			m_layer2 = null;
 			m_layer3 = null;
 			if(m_layer4)m_layer4 = null;
+			if(m_layer5)m_layer5 = null;
 		}
 		
 		private function disposeChildren():void
