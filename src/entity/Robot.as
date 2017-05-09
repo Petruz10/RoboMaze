@@ -121,7 +121,6 @@ package entity
 		
 		private function moveUp():void
 		{	
-			trace("up");
 			if(battery.HP != 0) 
 			{
 				_skin.gotoAndStop("back");
@@ -142,7 +141,6 @@ package entity
 		
 		private function moveDown():void
 		{	
-			trace("down");
 			if(battery.HP != 0)
 			{
 				_skin.gotoAndStop("front");
@@ -162,7 +160,6 @@ package entity
 		
 		private function moveLeft():void
 		{
-			trace("left");
 			if(battery.HP != 0)
 			{
 				_skin.gotoAndStop("side");
@@ -184,7 +181,6 @@ package entity
 		
 		private function moveRight():void
 		{
-			trace("right");
 			if(battery.HP != 0) 
 			{
 				//	_skin.scaleX *= 1;
@@ -237,7 +233,7 @@ package entity
 				battery.HP += 30; 
 				hitBattery = false;
 				if(battery.HP > 100) battery.HP = 100;
-				//initRefillSound();
+				initRefillSound();
 			}
 			
 			if(battery.HP == 0)

@@ -33,7 +33,6 @@ package highscore
 		//------------------------------------------------------------------------
 		private function initHighscore(xml:XML):void
 		{	
-			trace("initHighscore");
 			scoreData = xml.items.item.score.*;
 			scoreName = xml.items.item.name.*;
 			
@@ -46,7 +45,7 @@ package highscore
 			{
 				name.push(scoreName[j]);
 			}
-			trace("vector names", name);
+		//	trace("vector names", name);
 		}
 		
 		private function scoreSettings(secs:Number):void
@@ -75,13 +74,8 @@ package highscore
 			 if(hundraSek < 10) hundraString = "0" + hundraSek;
 			 else hundraString = hundraSek.toString();
 			 
-			 
-			 
-			 currentScore =  minString+":"+ sekString + ":" +hundraString;
-			//trace((secs/98) - min);
+			currentScore =  minString+":"+ sekString + ":" +hundraString;
 			score.push(currentScore);
-			//trace("min: "+ min+": sek "+ sek + ": hundrasek" +hundraSek);
-			trace("vector score", score);
 		}
 		
 		//------------------------------------------------------------------------
@@ -96,6 +90,8 @@ package highscore
 		{
 			scoreData = null;
 			scoreName = null;
+			score = null;
+			name = null;
 		}
 	}
 }

@@ -72,7 +72,9 @@ package state
 		
 		private var m_instructions;
 		
-		private var k:Boolean= false;
+		private var startGame:Boolean= false;
+		
+		private var hej:Boolean;
 		
 		//------------------------------------------------------------------------
 		// public properties 
@@ -112,7 +114,7 @@ package state
 					break;
 			}
 			
-			if(!k) initGame();
+			if(!startGame) initGame();
 			placeBattery();
 			hitTest();
 			hitBattery();
@@ -279,7 +281,7 @@ package state
 		
 		private function placeBattery():void
 		{
-			
+			hej = true;
 			for (var i:int = 0; i<m_children.length; i++)
 			{
 				if(m_players == 2)
@@ -288,27 +290,40 @@ package state
 					{
 						//m_layer3.removeChildren();
 						m_battery.placeBattery();
+						m_battery.visible = false;
+						m_battery2.visible = false;
 						m_x = 0;
+						hej = false;
 					}
 				}
 				else
 				{
 					if(m_battery.hitTestObject(m_children[i])) 
 					{
-						m_battery.placeBattery(); 
 						//m_layer3.removeChildren();
+						m_battery.visible = false;
+						m_battery.placeBattery(); 
 						m_x = 0;
+						hej = false;
 					}
 				}
 				
 			}
-			m_x ++;
-			//trace(m_x);
-			if(m_x == 40) 
+		//	trace(hej);
+			trace(m_x);
+			if(hej) 
 			{
 				//m_k = 0;
-				addBattery();
+				m_x ++;
+				if(m_x >= 3)
+				{
+					m_battery.visible = true;
+					if(m_battery2)m_battery2.visible = true;
+				}
+				if(m_x == 30) addBattery();
 			}
+			
+			
 
 			
 			if(m_players == 2) m_battery2.placeBattery2(m_battery.batteryX - 400,  m_battery.batteryY);
@@ -491,7 +506,7 @@ package state
 						
 						case 1:
 							m_robot2.wrongSide = true;
-							Session.timer.create(6600, setToFalse);
+							Session.timer.create(4600, setToFalse);
 							//initBombSound();
 							break;
 					}
@@ -526,6 +541,27 @@ package state
 			Session.timer.create(6000, addPowerUp);
 			Session.timer.create(8600, addChildPowerUp);
 			Session.timer.create(8600, m_powerUp.placePowerUp);
+		}
+		
+		private function initGame():void
+		{
+			trace("init game");
+			m_layer5.removeChildren();
+			
+			startGame = true;
+			m_robot.initBattery();
+			initBattery();
+			
+			if(m_players == 2) 
+			{
+				m_robot2.initBattery();
+				initBattery2();
+				Session.timer.create(1600, addChildPowerUp);
+			}
+			else
+			{
+				initTimer();
+			}
 		}
 
 		//------------------------------------------------------------------------
@@ -563,30 +599,6 @@ package state
 			
 			m_powerUp = new PowerUp(whichPower);
 			m_powerUp2 = new PowerUp(whichPower);
-		}
-		//testa att flytta
-		protected function initGame():void
-		{
-			m_layer5.removeChildren();
-			
-			k = true;
-			m_robot.initBattery();
-			initBattery();
-			
-			trace("init game");
-			//m_robot.battery.HP = 100;
-			
-			if(m_players == 2) 
-			{
-				m_robot2.initBattery();
-		//		m_robot2.battery.HP = 100;
-				initBattery2();
-				Session.timer.create(1600, addChildPowerUp);
-			}
-			else
-			{
-				initTimer();
-			}
 		}
 		
 		//------------------------------------------------------------------------
