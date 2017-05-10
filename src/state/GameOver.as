@@ -3,6 +3,7 @@ package state
 	//------------------------------------------------------------------------
 	// 	Evertron SDK
 	//------------------------------------------------------------------------
+	import flash.display.MovieClip;
 	import flash.net.SharedObject;
 	
 	import entity.BackButton;
@@ -11,12 +12,11 @@ package state
 	
 	import game.Multiplayer;
 	import game.Singleplayer;
-
+	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
-
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
 
@@ -80,7 +80,15 @@ package state
 		/*
 		*
 		*/
-		private var _won; // winning player
+		private var _won:int; // winning player
+		/*
+		*
+		*/
+		private var _robot:MovieClip; 
+			/*
+		*
+		*/
+		private var _trophy:Trophy_mc; 
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -152,15 +160,37 @@ package state
 				_winnerHeader = new GameOver_winner_header_mc();
 				_winner = new GameOver_winner_mc();
 
-				_winnerHeader.y = 150;
+				_winnerHeader.y = 50;
 				_winnerHeader.x = 400 - (_winnerHeader.width / 2);
 
 				_winner.scaleY = 0.8;
 				_winner.scaleX = 0.8;
 				_winner.x = 400 - (_winner.width / 2);
-				_winner.y = 300;
+				_winner.y = 180;
 				_winner.stop();
 
+				switch (_won) {
+					case 1:
+						_robot = new Robot1_mc();
+					break;
+					case 2:
+						_robot = new Robot2_mc();
+					break;
+				}
+
+				_robot.scaleY = 5.1;
+				_robot.scaleX = 5.1;
+				_robot.x = 400;
+				_robot.y = 280;
+
+				_trophy = new Trophy_mc();
+
+				_trophy.x = 200;
+				_trophy.y = 290;
+				
+				_robot.gotoAndStop("front");
+				_layerBackground.addChild(_robot);
+				_layerBackground.addChild(_trophy);
 				_layerBackground.addChild(_winnerHeader);
 				_layerBackground.addChild(_winner);
 			}
@@ -255,8 +285,12 @@ package state
 			else if (_won != 0) {
 				_layerBackground.removeChild(_winnerHeader);
 				_layerBackground.removeChild(_winner);
+				_layerBackground.removeChild(_robot);
+				_layerBackground.removeChild(_trophy);
 				_winnerHeader = null;
 				_winner = null;
+				_robot = null;
+				_trophy = null;
 			}
 		}
 		//------------------------------------------------------------------------
