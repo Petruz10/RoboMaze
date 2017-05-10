@@ -189,16 +189,25 @@ package state
 				_trophy.y = 290;
 				
 				_robot.gotoAndStop("front");
-				_layerBackground.addChild(_robot);
 				_layerBackground.addChild(_trophy);
 				_layerBackground.addChild(_winnerHeader);
 				_layerBackground.addChild(_winner);
 			}
 
+			if (_won == 0) {
+				_robot = new GameOver_robot_mc();
+				_robot.x = 400 - ( _robot.width / 2 );
+				_robot.y = 270;
+			}
+
+			_layerBackground.addChild(_robot);
+
 			switch (_won) {
 				case 0:
 					_gameOverImg = new GameOver_mc();
-					_gameOverImg.y = 100;
+					_gameOverImg.scaleX = 0.7;
+					_gameOverImg.scaleY = 0.7;
+					_gameOverImg.y = 50;
 					_gameOverImg.x = 400 - ( _gameOverImg.width / 2 );
 					_layerBackground.addChild(_gameOverImg);
 				break;
