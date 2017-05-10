@@ -64,10 +64,10 @@ package entity
 			if(HP == 30 ||  HP == 10) 
 			{
 				trace("10 eller 30");
-				//initWarningSound();
+				initWarningSound();
 			}
 			
-			//if(HP == 0) initDeadSound();
+			if(HP == 0) initDeadSound();
 		}
 		
 		private function initWarningSound():void
