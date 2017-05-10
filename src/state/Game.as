@@ -100,7 +100,7 @@ package state
 			initLayers();
 			initInstructions();
 			initSharedObject();			
-		//	initSound();
+			initSound();
 		}
 		
 		override public function update():void
@@ -516,13 +516,13 @@ package state
 							m_flickr = new Flicker(m_robot, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
 							Session.timer.create(600, initSpeed);
-						//	initBombSound();
+							initBombSound();
 							break;
 						
 						case 1:
 							m_robot.wrongSide = true;
 							Session.timer.create(7600, setToFalse);
-						//	initBombSound();
+							initBombSound();
 							break;
 					}
 					
@@ -542,13 +542,13 @@ package state
 							m_flickr = new Flicker(m_robot2, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
 							Session.timer.create(600, initSpeed);
-							//initBombSound();
+							initBombSound();
 							break;
 						
 						case 1:
 							m_robot2.wrongSide = true;
 							Session.timer.create(4600, setToFalse);
-							//initBombSound();
+							initBombSound();
 							break;
 					}
 				}
