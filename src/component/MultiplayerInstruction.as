@@ -9,6 +9,8 @@ package component
 	* 
 	*/ 
 	public class MultiplayerInstruction extends Instruction {
+        private var _rectangle1:Shape;
+        private var _rectangle2:Shape;
 
         private var _instTxt1:InstructionMultiplayer_joystick_mc;
         private var _instTxt2:InstructionMultiplayer_pickup_mc;
@@ -26,6 +28,7 @@ package component
 
         override public function init():void {
             super.init();
+            initStripes();
             initText();
             initAnimations();
         }
@@ -39,7 +42,27 @@ package component
             disposeText();
             disposeAnimations();
         }
+        private function initStripes():void {
+            _rectangle1 = new Shape();
+            _rectangle2 = new Shape();
 
+            _rectangle1.graphics.beginFill(0x333333);
+            _rectangle1.graphics.drawRect(0, 0, 800, 140);
+            _rectangle1.graphics.endFill();
+
+            _rectangle2.graphics.beginFill(0x333333);
+            _rectangle2.graphics.drawRect(0, 0, 800, 140);
+            _rectangle2.graphics.endFill();
+
+            _rectangle1.x = 0;
+            _rectangle1.y = 90;
+
+            _rectangle2.x = 0;
+            _rectangle2.y = 370;
+
+            this.addChild(_rectangle1); 
+            this.addChild(_rectangle2); 
+        }
         private function initText():void {
             _instTxt1 = new InstructionMultiplayer_joystick_mc();
             _instTxt2 = new InstructionMultiplayer_pickup_mc();
@@ -91,6 +114,12 @@ package component
             this.addChild(_battery);
             this.addChild(_buttons);
             this.addChild(_sabotage);
+        }
+        private function disposeStripes():void {
+            this.removeChild(_rectangle1);
+            this.removeChild(_rectangle2);
+            _rectangle1 = null;
+            _rectangle2 = null;
         }
         private function disposeText():void {
             this.removeChild(_instTxt1);
