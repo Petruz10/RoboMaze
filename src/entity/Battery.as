@@ -58,23 +58,18 @@ package entity
 			{
 				HP -= 10;
 				HPtimer();
-				trace(HP);
 			}
 			
-			if(HP == 30 ||  HP == 10) 
-			{
-				trace("10 eller 30");
-				initWarningSound();
-			}
+		//	if(HP == 30 ||  HP == 10) initWarningSound();
 			
-			if(HP == 0) initDeadSound();
+			//if(HP == 0) initDeadSound();
 		}
 		
 		private function initWarningSound():void
 		{
 			Session.sound.musicChannel.sources.add("game_warningSound", RobotWarning_mp3);
 			m_warningSound = Session.sound.musicChannel.get("game_warningSound");
-			m_warningSound.volume = 0.55;
+			m_warningSound.volume = 0.8;
 			m_warningSound.play();
 		}
 		
