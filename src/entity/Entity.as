@@ -40,7 +40,7 @@ package entity
 		//------------------------------------------------------------------------
 		protected function place(skin):void
 		{
-			skin.x = randomNumberBetween(25, 650);
+			skin.x = randomNumberBetween(25, 700);
 			skin.y = randomNumberBetween(100, 600);			
 		}
 		

@@ -1,8 +1,10 @@
+
 package state
 {
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import flash.display.Shape;
 	import flash.geom.Point;
 	import flash.net.SharedObject;
 	
@@ -13,6 +15,7 @@ package state
 	import entity.BatteryRefill;
 	import entity.PowerUp;
 	import entity.Robot;
+	import entity.TestPlaceObj;
 	import entity.Tile;
 	
 	import se.lnu.stickossdk.display.DisplayState;
@@ -77,7 +80,16 @@ package state
 		
 		private var hej:Boolean;
 		
-		private var m_placable:Array = new Array();
+	//	private var m_placable:Array = new Array();
+		
+		private var m_availableSpace:Vector.<Point> = new Vector.<Point>(); 
+		private var m_testObj:TestPlaceObj;
+		
+		//private var testX:int =0;
+		
+		private var xArray:Vector.<int> = new Vector.<int>(); 
+		private var yArray:Vector.<int> = new Vector.<int>(); 
+
 		
 		//------------------------------------------------------------------------
 		// public properties 
@@ -100,12 +112,13 @@ package state
 			initLayers();
 			initInstructions();
 			initSharedObject();			
-			//initSound();
+			initTestObj();
+			findPoints(); 
+			initSound();
 		}
 		
 		override public function update():void
 		{
-			//if(!m_robot.hej) return;
 			switch(m_players)
 			{
 				case 1:
@@ -118,14 +131,13 @@ package state
 			}
 			
 			if(!startGame) initGame();
-			placeBattery();
 			hitTest();
 			hitBattery();
 			updateHUDBattery();
 			
+			
 			if(m_players == 2) 
 			{
-				placePowerup();
 				hitPowerup();
 				checkBattery();
 				updateHUDPowerup();
@@ -157,6 +169,66 @@ package state
 			m_SharedObjPlayers.flush();
 	
 			return;
+		}
+		
+		private function initTestObj():void
+		{
+			m_testObj = new TestPlaceObj();
+			m_testObj.placeBattery();
+			
+			m_layer.addChild(m_testObj);
+			
+		}
+		
+		private function findPoints():void
+		{
+			for (var i:int = 0; i<m_children.length; i++)
+			{
+				if(m_players == 2)
+				{
+					if(m_testObj.hitTestObject(m_children[i]) || m_testObj.testObjX <= 400) m_testObj.placeBattery(); 
+				}
+				else
+				{
+					if(m_testObj.hitTestObject(m_children[i])) m_testObj.placeBattery(); 
+				}
+
+			}
+
+			xArray.unshift(m_testObj.testObjX);
+			yArray.unshift(m_testObj.testObjY);
+			
+			
+			if(xArray.length > 2)
+			{
+				if(xArray[0] == xArray[1]&& yArray[0] == yArray[1]) 
+				{
+					m_testObj.placeBattery();
+					m_availableSpace.push(new Point(xArray[0], yArray[0]));
+				}
+			}
+			
+			testFunction();
+		}
+		
+		private function testFunction():void
+		{
+
+			if(m_availableSpace.length < 17) findPoints();
+		}
+		
+		private function testBatteryPlace():void
+		{
+			var r:int;
+
+			r = Math.floor(Math.random() * m_availableSpace.length);
+
+			m_battery.x = m_availableSpace[r].x;
+			m_battery.y = m_availableSpace[r].y;
+			
+			addBattery();
+			
+			if(m_players == 2) m_battery2.placeBattery2(m_battery.x - 400,  m_battery.y);
 		}
 		
 		private function initInstructions():void
@@ -213,6 +285,7 @@ package state
 					m_min ++;
 				}
 			}
+			
 			if(m_min < 10) min = "0"+ m_min;
 			else min = m_min.toString();
 			if(m_sek < 10) sek = "0" + m_sek;
@@ -226,6 +299,7 @@ package state
 		private function checkBattery():void
 		{
 			m_win = SharedObject.getLocal("playerwon");
+			
 			if (m_players == 2) 
 			{
 				
@@ -272,110 +346,23 @@ package state
 		private function initBattery():void
 		{
 			m_battery = new BatteryRefill();
-			m_battery.placeBattery();
-			addBattery();
-			
-			/*
-			var j:uint = 0;
-			while(m_placable.length < 10)
-			{
-				for(var i:int = 0; i < m_children.length; i++)
-				{
-					if(m_battery.hitTestObject(m_children[i])) 
-					{
-						continue;
-					}
-					m_placable.push(new Point(m_battery.batteryX, m_battery.batteryY));
-					j++;
-					
-				}	
-			}
-			var r:int;
-			
-			r = Math.floor(Math.random() * m_placable.length) - 1;
-			m_battery.batteryX = m_placable[r].x;
-			m_battery.batteryY = m_placable[r].y;
-			*/
-		//testBatteryPlace();
-			
-				
-			//
-		
-			
 		}
 		
 		private function initBattery2():void
 		{
 			m_battery2 = new BatteryRefill();
-			addBattery();
 		}
 		
-		private function placeBattery():void
-		{
-			hej = true;
-			for (var i:int = 0; i<m_children.length; i++)
-			{
-				if(m_players == 2)
-				{
-					if(m_battery.hitTestObject(m_children[i]) || m_battery.batteryX <= 400) 
-					{
-						//m_layer3.removeChildren();
-						m_battery.placeBattery();
-						m_battery.visible = false;
-						m_battery2.visible = false;
-						m_x = 0;
-						hej = false;
-					}
-				}
-				else
-				{
-					if(m_battery.hitTestObject(m_children[i])) 
-					{
-						//m_layer3.removeChildren();
-						m_battery.visible = false;
-						m_battery.placeBattery(); 
-						m_x = 0;
-						hej = false;
-					}
-				}
-				
-			}
-		//	trace(hej);
-		//	trace(m_x);
-			if(hej) 
-			{
-				//m_k = 0;
-				m_x ++;
-				if(m_x >= 3)
-				{
-					m_battery.visible = true;
-					if(m_battery2)m_battery2.visible = true;
-				}
-				if(m_x == 30) addBattery();
-			}
-			
-			
-			if(m_players == 2) m_battery2.placeBattery2(m_battery.batteryX - 400,  m_battery.batteryY);
-		}
-		
-	/*	private function testBatteryPlace():void
+		private function placePowerup():void
 		{
 			var r:int;
 			
-			r = Math.floor(Math.random() * m_placable.length) - 1;
-			m_battery.batteryX = m_placable[r].x;
-			m_battery.batteryY = m_placable[r].y;
-		}
-		*/
-		private function placePowerup():void
-		{
+			r = Math.floor(Math.random() * m_availableSpace.length);
 			
-			for (var i:int = 0; i<m_children.length; i++)
-			{
-				if(m_powerUp.hitTestObject(m_children[i])|| m_powerUp.powerupX <= 400) m_powerUp.placePowerUp(); 
-			}
+			m_powerUp.x = m_availableSpace[r].x;
+			m_powerUp.y = m_availableSpace[r].y;
 			
-			m_powerUp2.placePowerup2(m_powerUp.powerupX - 400,  m_powerUp.powerupY);
+			m_powerUp2.placePowerup2(m_powerUp.x - 400,  m_powerUp.y);
 		}
 		
 		private function initLayers():void
@@ -383,7 +370,7 @@ package state
 			m_layer = layers.add("maze layer");
 			m_layer2 = layers.add("robot layer");
 			m_layer3 = layers.add("battery layer");
-			m_layer4 = layers.add("powerup");
+			
 			
 			if(m_maze) m_layer.addChild(m_maze);
 			
@@ -395,8 +382,11 @@ package state
 		
 		private function addChildPowerUp():void
 		{
-			if(m_powerUp) m_layer4.addChild(m_powerUp);
-			if(m_powerUp2) m_layer4.addChild(m_powerUp2);
+			m_layer4 = layers.add("powerup layer");
+
+			m_layer4.addChild(m_powerUp2);
+			m_layer4.addChild(m_powerUp);
+
 		}
 		
 		private function addBattery():void
@@ -436,8 +426,7 @@ package state
 				if(m_robot.hitBattery  || m_robot2.hitBattery)
 				{
 					m_layer3.removeChildren();
-					m_battery.placeBattery();
-					m_x = 0;
+					testBatteryPlace();
 					return;
 				}
 			}
@@ -448,8 +437,7 @@ package state
 				{
 					m_robot.hitBattery = true;
 					m_layer3.removeChildren();
-					m_battery.placeBattery();
-					m_x = 0;
+					testBatteryPlace();
 					return;
 				}
 			}
@@ -457,13 +445,13 @@ package state
 		
 		private function hitPowerup():void
 		{
+			
 			if(m_powerUp.hitTestObject(m_robot2.area)) m_robot2.powerUp ++;
 			if(m_powerUp2.hitTestObject(m_robot.area)) m_robot.powerUp ++;
 			
 			if(m_powerUp.hitTestObject(m_robot2.area) || m_powerUp2.hitTestObject(m_robot.area))
 			{
-				m_layer4.removeChildren();
-				return;
+				if(m_layer4)m_layer4.removeChildren();
 			}
 		}
 		
@@ -505,6 +493,7 @@ package state
 				{
 					
 					m_robot2.removeChild(m_robot2.obstacle);
+					
 					switch(whichPower)
 					{
 						case 0:
@@ -512,13 +501,13 @@ package state
 							m_flickr = new Flicker(m_robot, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
 							Session.timer.create(600, initSpeed);
-							//initBombSound();
+							initBombSound();
 							break;
 						
 						case 1:
 							m_robot.wrongSide = true;
 							Session.timer.create(7600, setToFalse);
-							//initBombSound();
+							initBombSound();
 							break;
 					}
 					
@@ -538,13 +527,13 @@ package state
 							m_flickr = new Flicker(m_robot2, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
 							Session.timer.create(600, initSpeed);
-						//	initBombSound();
+							initBombSound();
 							break;
 						
 						case 1:
 							m_robot2.wrongSide = true;
 							Session.timer.create(4600, setToFalse);
-						//	initBombSound();
+							initBombSound();
 							break;
 					}
 				}
@@ -556,7 +545,7 @@ package state
 			trace("bomb ljud!!");
 			Session.sound.musicChannel.sources.add("game_bombSound", RobotBomb_mp3);
 			m_bombSound = Session.sound.musicChannel.get("game_bombSound");
-			m_bombSound.volume = 0.6;
+			m_bombSound.volume = 0.45;
 			m_bombSound.play();
 		}
 		
@@ -565,9 +554,9 @@ package state
 			m_robot2.speed = 3;
 			m_robot.speed = 3;
 			
+			placePowerup();
 			Session.timer.create(6000, addPowerUp);
 			Session.timer.create(8600, addChildPowerUp);
-			Session.timer.create(8600, m_powerUp.placePowerUp);
 		}
 		
 		private function setToFalse():void
@@ -575,9 +564,9 @@ package state
 			m_robot.wrongSide = false;
 			m_robot2.wrongSide = false;
 			
+			placePowerup();
 			Session.timer.create(6000, addPowerUp);
 			Session.timer.create(8600, addChildPowerUp);
-			Session.timer.create(8600, m_powerUp.placePowerUp);
 		}
 		
 		private function initGame():void
@@ -588,18 +577,20 @@ package state
 			startGame = true;
 			m_robot.initBattery();
 			initBattery();
-		//	testBatteryPlace();
 			
 			if(m_players == 2) 
 			{
 				m_robot2.initBattery();
 				initBattery2();
 				Session.timer.create(1600, addChildPowerUp);
+				Session.timer.create(500, placePowerup);
 			}
 			else
 			{
 				initTimer();
 			}
+			
+			testBatteryPlace();
 		}
 
 		//------------------------------------------------------------------------
@@ -637,6 +628,8 @@ package state
 			
 			m_powerUp = new PowerUp(whichPower);
 			m_powerUp2 = new PowerUp(whichPower);
+			
+			//placePowerup();
 		}
 		
 		//------------------------------------------------------------------------

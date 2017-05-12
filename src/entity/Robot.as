@@ -246,7 +246,7 @@ package entity
 		{
 			Session.sound.musicChannel.sources.add("game_refillSound", RobotRefill_mp3);
 			m_refillSound = Session.sound.musicChannel.get("game_refillSound");
-			m_refillSound.volume = 0.55;
+			m_refillSound.volume = 0.5;
 			m_refillSound.play();
 		}
 		

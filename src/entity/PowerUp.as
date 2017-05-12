@@ -28,7 +28,6 @@
 			trace("init powerup");
 			super();
 			initSkin(x);
-			placePowerUp();
 		}
 		
 		//------------------------------------------------------------------------
@@ -42,6 +41,7 @@
 					_skin = new BombRefill_mc();
 					type = 0;
 					break;
+				
 				case 1:
 					_skin = new WrongRefill_mc();
 					type = 1;
@@ -65,6 +65,7 @@
 		
 		public function placePowerup2(x:int, y:int):void
 		{
+			trace("add powerup 2");
 			m_container.x = x;
 			m_container.y = y;
 		}

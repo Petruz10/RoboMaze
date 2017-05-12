@@ -60,9 +60,9 @@ package entity
 				HPtimer();
 			}
 			
-		//	if(HP == 30 ||  HP == 10) initWarningSound();
+			if(HP == 30 ||  HP == 10) initWarningSound();
 			
-			//if(HP == 0) initDeadSound();
+			if(HP == 0) initDeadSound();
 		}
 		
 		private function initWarningSound():void
