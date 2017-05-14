@@ -35,7 +35,6 @@ package entity
 		public var speed:int = 3;
 		
 		public var wrongSide:Boolean = false;
-		
 		public var startGame:Boolean = false;
 
 		//------------------------------------------------------------------------
@@ -66,16 +65,14 @@ package entity
 		override public function init():void
 		{
 			initSkin();
-			trace("init Robot");
 		}
 		
+		/*
+		* function that goes every frame
+		*/
 		override public function update():void
 		{
-			
-			
 			if(!hit)updateControls();
-			
-			//if(!startGame) return;
 			if(!battery) return;
 			if(hit) hitt();
 			checkHit();
@@ -91,6 +88,9 @@ package entity
 		//------------------------------------------------------------------------
 		// private methods
 		//------------------------------------------------------------------------
+		/*
+		* function to check the inputs
+		*/
 		private function updateControls():void
 		{	
 			if(!startGame) 
@@ -107,11 +107,18 @@ package entity
 				if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1) && powerUp > 0) this.addObstacle()
 		}
 		
+		/*
+		* function to init the functionality at the battery
+		*/
 		public function initBattery():void
 		{
 			battery = new Battery();
 		}
 		
+		/*
+		* function to move the avatar up,
+		* unless he have "wrongside" then he goes down
+		*/
 		private function moveUp():void
 		{	
 			if(battery.HP != 0) 
@@ -129,9 +136,12 @@ package entity
 				}
 			}
 			return;
-			
 		}
 		
+		/*
+		* function to move the avatar down,
+		* unless he have "wrongside" then he goes up
+		*/
 		private function moveDown():void
 		{	
 			if(battery.HP != 0)
@@ -151,6 +161,10 @@ package entity
 			return;
 		}
 		
+		/*
+		* function to move the avatar left,
+		* unless he have "wrongside" then he goes right
+		*/
 		private function moveLeft():void
 		{
 			if(battery.HP != 0)
@@ -172,6 +186,10 @@ package entity
 			return;
 		}
 		
+		/*
+		* function to move the avatar right,
+		* unless he have "wrongside" then he goes left
+		*/
 		private function moveRight():void
 		{
 			if(battery.HP != 0) 
@@ -193,6 +211,9 @@ package entity
 			return;
 		}
 		
+		/*
+		* function to add a obstacle at the other players maze
+		*/
 		private function addObstacle():void
 		{
 			powerUp --;
@@ -207,6 +228,9 @@ package entity
 			return;
 		}
 		
+		/*
+		* function to check which side of the robot hit the wall
+		*/
 		private function hitt():void
 		{
 			if(m_hitSide == "up") _skin.y += speed; 
@@ -219,6 +243,9 @@ package entity
 			return;
 		}
 		
+		/*
+		* function to check if the robot got any more battery
+		*/
 		private function checkHit():void
 		{
 			if(hitBattery)
@@ -235,6 +262,9 @@ package entity
 			}
 		}
 		
+		/*
+		* function to init the refill sound at the robot
+		*/
 		private function initRefillSound():void
 		{
 			Session.sound.musicChannel.sources.add("game_refillSound", RobotRefill_mp3);
@@ -243,12 +273,18 @@ package entity
 			m_refillSound.play();
 		}
 		
+		/*
+		* function to give the avatar a flicker effect when he/she dies
+		*/
 		private function initGameOver():void
 		{			
 			m_flickr = new Flicker(_skin, 1000); //obj, tid (hur länge), intervall
 			Session.effects.add(m_flickr);
 		}
 
+		/*
+		* function to give the avatar some skin and hit area
+		*/
 		private function initSkin():void
 		{
 			if(m_player == 0)_skin = new Robot1_mc();

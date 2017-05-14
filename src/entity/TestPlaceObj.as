@@ -4,8 +4,14 @@ package entity
 
 	public class TestPlaceObj extends Entity
 	{
+		//------------------------------------------------------------------------
+		// private properties
+		//------------------------------------------------------------------------
 		private var m_skin:Shape;
 		
+		//------------------------------------------------------------------------
+		// public properties
+		//------------------------------------------------------------------------
 		public var testObjX:int;
 		public var testObjY:int;
 		
@@ -18,6 +24,9 @@ package entity
 		//------------------------------------------------------------------------
 		// private methods
 		//------------------------------------------------------------------------
+		/*
+		* function to init the skin
+		*/
 		private function initSkin():void
 		{
 			m_skin = new Shape();
@@ -31,7 +40,10 @@ package entity
 		//------------------------------------------------------------------------
 		// public methods
 		//------------------------------------------------------------------------
-		public function placeBattery():void
+		/*
+		* function to place the object
+		*/
+		public function placeObj():void
 		{
 			super.place(m_skin);
 			testObjX = m_skin.x;

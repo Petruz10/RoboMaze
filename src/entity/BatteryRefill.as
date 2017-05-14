@@ -14,6 +14,9 @@ package entity
 		//------------------------------------------------------------------------
 		// private methods
 		//------------------------------------------------------------------------
+ 		/*
+		* init the skin of the battery
+		*/
 		private function initSkin():void
 		{
 			_skin = new BatteryRefill_mc();
@@ -24,6 +27,9 @@ package entity
 		//------------------------------------------------------------------------
 		// public methods
 		//------------------------------------------------------------------------
+		/*
+		* function to place the second battery
+		*/
 		public function placeBattery2(x:int, y:int):void
 		{
 			_skin.x = x;

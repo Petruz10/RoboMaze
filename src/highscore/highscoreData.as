@@ -31,6 +31,9 @@ package highscore
 		//------------------------------------------------------------------------
 		// private methods 
 		//------------------------------------------------------------------------
+		/*
+		* function to get the XML from the DB
+		*/
 		private function initHighscore(xml:XML):void
 		{	
 			scoreData = xml.items.item.score.*;
@@ -45,9 +48,11 @@ package highscore
 			{
 				name.push(scoreName[j]);
 			}
-		//	trace("vector names", name);
 		}
 		
+		/*
+		* function to change the number to time and save it correctly
+		*/
 		private function scoreSettings(secs:Number):void
 		{
 			var hundraSek:Number = secs;
@@ -62,6 +67,7 @@ package highscore
 			
 			sek = hundraSek/98;
 			min = sek/60;
+			
 			 if(sek >= 60) sek = sek - (60*min);
 			 hundraSek = (sek - Math.floor(sek)) * 100;
 			 hundraSek = Math.floor(hundraSek);
@@ -90,6 +96,14 @@ package highscore
 		{
 			scoreData = null;
 			scoreName = null;
+			for(var i:uint = 0; i<score.length; i++)
+			{
+				score[i] = null;
+			}
+			for(var j:uint = 0; j<name.length; j++)
+			{
+				name[i] = null;
+			}
 			score = null;
 			name = null;
 		}

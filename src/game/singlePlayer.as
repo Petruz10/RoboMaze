@@ -35,6 +35,9 @@ package game
 		//------------------------------------------------------------------------
 		// private methods 
 		//------------------------------------------------------------------------
+		/*
+		* init the tha avatar
+		*/
 		private function initAvatar():void
 		{
 			m_robot = new Robot(0);
@@ -45,6 +48,9 @@ package game
 			super.addAvatar(m_robot);
 		}
 		
+		/*
+		* init the maze
+		*/
 		private function initMaze():void
 		{
 			m_maze = new Maze(1);
@@ -55,6 +61,9 @@ package game
 			super.addMaze(m_maze);
 		}
 		
+		/*
+		* init the HUD
+		*/
 		private function initHUD():void
 		{
 			m_hud = new SingleplayerHUD();

@@ -239,7 +239,7 @@ package state
 		private function initTestObj():void
 		{
 			m_testObj = new TestPlaceObj();
-			m_testObj.placeBattery();
+			m_testObj.placeObj();
 			
 			m_layer.addChild(m_testObj);
 		}
@@ -253,11 +253,11 @@ package state
 			{
 				if(m_players == 2)
 				{
-					if(m_testObj.hitTestObject(m_children[i]) || m_testObj.testObjX <= 400) m_testObj.placeBattery(); 
+					if(m_testObj.hitTestObject(m_children[i]) || m_testObj.testObjX <= 400) m_testObj.placeObj(); 
 				}
 				else
 				{
-					if(m_testObj.hitTestObject(m_children[i])) m_testObj.placeBattery(); 
+					if(m_testObj.hitTestObject(m_children[i])) m_testObj.placeObj(); 
 				}
 
 			}
@@ -269,7 +269,7 @@ package state
 			{
 				if(xArray[0] == xArray[1]&& yArray[0] == yArray[1]) 
 				{
-					m_testObj.placeBattery();
+					m_testObj.placeObj();
 					m_availableSpace.push(new Point(xArray[0], yArray[0]));
 				}
 			}

@@ -1,5 +1,8 @@
 package entity
 {
+	//------------------------------------------------------------------------
+	// public class Obstacle
+	//------------------------------------------------------------------------
 	public class Obstacle extends Entity
 	{
 		public function Obstacle(x:int)
@@ -8,6 +11,12 @@ package entity
 			initSkin(x);
 		}
 		
+		//------------------------------------------------------------------------
+		// private methods 
+		//------------------------------------------------------------------------
+		/*
+		* init the skin of the obstacle depending on what powerup
+		*/
 		private function initSkin(x:int):void
 		{
 			switch(x) 
