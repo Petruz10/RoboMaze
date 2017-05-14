@@ -36,7 +36,7 @@ package entity
 		
 		public var wrongSide:Boolean = false;
 		
-		public var hej:Boolean = false;
+		public var startGame:Boolean = false;
 
 		//------------------------------------------------------------------------
 		// private properties 
@@ -75,7 +75,7 @@ package entity
 			
 			if(!hit)updateControls();
 			
-			//if(!hej) return;
+			//if(!startGame) return;
 			if(!battery) return;
 			if(hit) hitt();
 			checkHit();
@@ -93,17 +93,11 @@ package entity
 		//------------------------------------------------------------------------
 		private function updateControls():void
 		{	
-			if(!hej) 
+			if(!startGame) 
 			{
-				//trace("controls: ", m_controls);
-				if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1))
-				{
-					hej = true; 
-				}
+				if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1))startGame = true; 
 			}
-			//else
-			//{
-			//trace("batteryyyyyyy: ", battery);
+
 			if(!battery) return;
 				if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft(); 
 				else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
@@ -111,7 +105,6 @@ package entity
 				else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) this.moveUp(); 
 				
 				if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1) && powerUp > 0) this.addObstacle()
-			//}
 		}
 		
 		public function initBattery():void

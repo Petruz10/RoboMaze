@@ -16,8 +16,8 @@ package
 		{
 			initId = 28;
 			initDebugger = true;
-			initDisplayState = SplashScreen; // <--- opens SplashScreen that leads to Menu State
-			//initDisplayState = Menu;
+			//initDisplayState = SplashScreen; // <--- opens SplashScreen that leads to Menu State
+			initDisplayState = Menu;
 			initBackgroundColor = 0x666666;
 		}
 	}

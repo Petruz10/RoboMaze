@@ -38,7 +38,6 @@ package state
 		private var m_layer4:DisplayStateLayer;
 		private var m_layer5:DisplayStateLayer;
 
-		
 		private var m_powerUp:PowerUp;
 		private var m_powerUp2:PowerUp;
 		
@@ -51,9 +50,7 @@ package state
 		private var m_battery2:BatteryRefill;
 		
 		private var m_children:Vector.<Tile> = new Vector.<Tile>(); 
-		
 		private var m_players:int;
-		
 		private var m_hud;
 		
 		private var m_gameTime:Number = 0;
@@ -70,25 +67,13 @@ package state
 		private var m_win:SharedObject;
 		
 		private var m_flickr:Flicker;
-		
-		private var m_x:int = 0;
-		private var m_k:int = 0;
-		
 		private var m_instructions;
-		
 		private var startGame:Boolean= false;
-		
-		private var hej:Boolean;
-		
-	//	private var m_placable:Array = new Array();
-		
+						
 		private var m_availableSpace:Vector.<Point> = new Vector.<Point>(); 
-		private var m_testObj:TestPlaceObj;
-		
-		//private var testX:int =0;
-		
 		private var xArray:Vector.<int> = new Vector.<int>(); 
 		private var yArray:Vector.<int> = new Vector.<int>(); 
+		private var m_testObj:TestPlaceObj;
 
 		
 		//------------------------------------------------------------------------
@@ -114,7 +99,7 @@ package state
 			initSharedObject();			
 			initTestObj();
 			findPoints(); 
-			initSound();
+			//initSound();
 		}
 		
 		override public function update():void
@@ -122,11 +107,11 @@ package state
 			switch(m_players)
 			{
 				case 1:
-					if(!m_robot.hej) return;
+					if(!m_robot.startGame) return;
 					break;
 				
 				case 2:
-					if(!m_robot.hej && !m_robot2.hej) return;
+					if(!m_robot.startGame && !m_robot2.startGame) return;
 					break;
 			}
 			
