@@ -199,7 +199,7 @@ package state
 		private function testFunction():void
 		{
 
-			if(m_availableSpace.length < 17) findPoints();
+			if(m_availableSpace.length < 50) findPoints();
 		}
 		
 		private function testBatteryPlace():void
@@ -353,8 +353,8 @@ package state
 		private function initLayers():void
 		{	
 			m_layer = layers.add("maze layer");
-			m_layer2 = layers.add("robot layer");
 			m_layer3 = layers.add("battery layer");
+			m_layer2 = layers.add("robot layer");
 			
 			
 			if(m_maze) m_layer.addChild(m_maze);
@@ -476,7 +476,7 @@ package state
 			{
 				if(m_robot.hitTestObject(m_robot2.obstacle))
 				{
-					
+					initBombSound();
 					m_robot2.removeChild(m_robot2.obstacle);
 					
 					switch(whichPower)
@@ -486,13 +486,11 @@ package state
 							m_flickr = new Flicker(m_robot, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
 							Session.timer.create(600, initSpeed);
-							initBombSound();
 							break;
 						
 						case 1:
 							m_robot.wrongSide = true;
 							Session.timer.create(7600, setToFalse);
-							initBombSound();
 							break;
 					}
 					
@@ -503,7 +501,7 @@ package state
 			{
 				if(m_robot2.hitTestObject(m_robot.obstacle)) 
 				{
-					
+					initBombSound();
 					m_robot.removeChild(m_robot.obstacle);
 					switch(whichPower)
 					{
@@ -512,13 +510,11 @@ package state
 							m_flickr = new Flicker(m_robot2, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
 							Session.timer.create(600, initSpeed);
-							initBombSound();
 							break;
 						
 						case 1:
 							m_robot2.wrongSide = true;
 							Session.timer.create(4600, setToFalse);
-							initBombSound();
 							break;
 					}
 				}
@@ -530,7 +526,7 @@ package state
 			trace("bomb ljud!!");
 			Session.sound.musicChannel.sources.add("game_bombSound", RobotBomb_mp3);
 			m_bombSound = Session.sound.musicChannel.get("game_bombSound");
-			m_bombSound.volume = 0.45;
+			m_bombSound.volume = 0.3;
 			m_bombSound.play();
 		}
 		
@@ -556,7 +552,6 @@ package state
 		
 		private function initGame():void
 		{
-			trace("init game");
 			m_layer5.removeChildren();
 			
 			startGame = true;
@@ -614,7 +609,6 @@ package state
 			m_powerUp = new PowerUp(whichPower);
 			m_powerUp2 = new PowerUp(whichPower);
 			
-			//placePowerup();
 		}
 		
 		//------------------------------------------------------------------------

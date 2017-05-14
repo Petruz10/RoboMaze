@@ -1,11 +1,6 @@
 ﻿package entity
 {
 	//------------------------------------------------------------------------
-	// imports
-	//------------------------------------------------------------------------
-	import flash.display.Sprite;
-
-	//------------------------------------------------------------------------
 	// Public class PowerUp
 	//------------------------------------------------------------------------
 	public class PowerUp extends Entity
@@ -13,19 +8,10 @@
 		//------------------------------------------------------------------------
 		// public properties 
 		//------------------------------------------------------------------------
-		public var powerupX:int;
-		public var powerupY:int;
-		
 		public var type:int;
-		
-		//------------------------------------------------------------------------
-		// private properties 
-		//------------------------------------------------------------------------
-		private var m_container:Sprite = new Sprite();
 		
 		public function PowerUp(x:int)
 		{
-			trace("init powerup");
 			super();
 			initSkin(x);
 		}
@@ -47,27 +33,17 @@
 					type = 1;
 					break;
 			}
-			m_container.graphics.drawRect(0, 0, 35, 35);
-			
-			m_container.addChild(_skin);
-			this.addChild(m_container);
+
+			this.addChild(_skin);
 		}
 		
 		//------------------------------------------------------------------------
 		// public methods 
-		//------------------------------------------------------------------------
-		public function placePowerUp():void
-		{
-			super.place(m_container);
-			powerupX = m_container.x;
-			powerupY = m_container.y;
-		}
-		
+		//------------------------------------------------------------------------	
 		public function placePowerup2(x:int, y:int):void
 		{
-			trace("add powerup 2");
-			m_container.x = x;
-			m_container.y = y;
+			_skin.x = x;
+			_skin.y = y;
 		}
 		
 		//------------------------------------------------------------------------
@@ -80,7 +56,6 @@
 		
 		private function disposeContainer():void
 		{
-			m_container = null;
 			_skin = null;
 		}
 	}
