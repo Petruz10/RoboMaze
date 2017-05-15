@@ -38,15 +38,21 @@ package entity
 		//------------------------------------------------------------------------
 		// protected methods
 		//------------------------------------------------------------------------
+		/*
+		* function to get a random x and y position
+		*/
 		protected function place(skin):void
 		{
-			skin.x = randomNumberBetween(25, 650);
+			skin.x = randomNumberBetween(25, 700);
 			skin.y = randomNumberBetween(100, 600);			
 		}
 		
 		//------------------------------------------------------------------------
 		// private methods
 		//------------------------------------------------------------------------
+		/*
+		* function to get a random number
+		*/
 		private function randomNumberBetween(min:Number, max:Number):Number 
 		{
 			return (Math.floor(Math.random() * (max - min + 1)) + min);

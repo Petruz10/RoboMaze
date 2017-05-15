@@ -27,13 +27,15 @@ package entity
 		public function Battery()
 		{
 			super();
-			trace("battery konstruktor");
 			HPtimer();
 		}
 		
 		//------------------------------------------------------------------------
 		// private methods 
 		//------------------------------------------------------------------------
+		/*
+		* function to set a  timer to when the battery should go down
+		*/
 		private function HPtimer():void
 		{
 			m_timer = Session.timer.create(1000, removeHP);
@@ -52,32 +54,36 @@ package entity
 			
 		}
 		
-		public function removeHP():void
+		/*
+		* function to remove battery 
+		*/
+		private function removeHP():void
 		{
 			if(HP != 0) 
 			{
 				HP -= 10;
 				HPtimer();
-				trace(HP);
 			}
 			
-			if(HP == 30 ||  HP == 10) 
-			{
-				trace("10 eller 30");
-				initWarningSound();
-			}
+			if(HP == 30 ||  HP == 10) initWarningSound();
 			
 			if(HP == 0) initDeadSound();
 		}
 		
+		/*
+		* function for the warning sound when the robot is about to die
+		*/
 		private function initWarningSound():void
 		{
 			Session.sound.musicChannel.sources.add("game_warningSound", RobotWarning_mp3);
 			m_warningSound = Session.sound.musicChannel.get("game_warningSound");
-			m_warningSound.volume = 0.55;
+			m_warningSound.volume = 0.9;
 			m_warningSound.play();
 		}
 		
+		/*
+		* function for the sound that plays when you die
+		*/
 		private function initDeadSound():void
 		{
 			Session.sound.musicChannel.sources.add("game_deadSound", RobotDeath_mp3);

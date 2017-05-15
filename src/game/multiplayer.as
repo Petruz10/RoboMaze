@@ -34,12 +34,9 @@ package game
 		public function Multiplayer()
 		{
 			super(2);
-			trace("multiplayer");
 			initAvatar2();
 			initAvatar();
-			
 			initMaze();
-			
 			initHUD();
 			
 			superPower();
@@ -48,6 +45,9 @@ package game
 		//------------------------------------------------------------------------
 		// private methods 
 		//------------------------------------------------------------------------
+		/*
+		* init the first avatar 
+		*/
 		private function initAvatar():void
 		{
 			m_robot = new Robot(0);
@@ -58,6 +58,9 @@ package game
 			super.addAvatar(m_robot);
 		}
 		
+		/*
+		* init the second avatar
+		*/
 		private function initAvatar2():void
 		{
 			m_robot2 = new Robot(1);
@@ -68,6 +71,9 @@ package game
 			super.addMultiplayer(m_robot2);
 		}
 		
+		/*
+		* init the maze
+		*/
 		private function initMaze():void
 		{
 			m_maze = new Maze(2);
@@ -78,6 +84,9 @@ package game
 			super.addMaze(m_maze);
 		}
 		
+		/*
+		* init the HUD
+		*/
 		private function initHUD():void
 		{
 			m_hud = new MultiplayerHUD();
@@ -88,6 +97,9 @@ package game
 			super.addHUD(m_hud);
 		}
 		
+		/*
+		* init the superpower
+		*/
 		private function superPower():void
 		{	
 			super.addPowerUp();
