@@ -1,7 +1,8 @@
 package state
 {
 	import entity.BackButton;
-	
+	import font.GameFont;
+
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
@@ -35,6 +36,10 @@ package state
 		*
 		*/
 		private var _backgroundMusic:SoundObject;
+		/*
+		* font
+		*/
+		private var _font:GameFont;
 		//------------------------------------------------------------------------
 		// constructor
 		//------------------------------------------------------------------------
@@ -47,6 +52,7 @@ package state
 		override public function init():void {
 			initSound();
 			initLayers();
+			initFont();
 		}
 		//------------------------------------------------------------------------
 		// update
@@ -109,6 +115,9 @@ package state
 			
 			_layerOverlay.addChild(_creditsAnimation);
 			_layerOverlay.addChild(_menuBtn);
+		}
+		private function initFont():void {
+			_font = new GameFont();
 		}
 		//------------------------------------------------------------------------
 		// change state
