@@ -292,8 +292,8 @@ package entity
 			
 			_skin.gotoAndStop("front");
 			
-			//square.graphics.beginFill(0xCCFF00);
-			m_square.graphics.drawRect(7, 11, 20, 20);
+			//m_square.graphics.beginFill(0xCCFF00);
+			m_square.graphics.drawRect(5.55, 16.45, 24, 18.3);
 			_skin.hitArea = m_square;
 			area = _skin.hitArea;
 			

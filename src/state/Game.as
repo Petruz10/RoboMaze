@@ -118,7 +118,7 @@ package state
 			initSharedObject();			
 			initTestObj();
 			findPoints(); 
-			//initSound();
+			initSound();
 		}
 		
 		/*
@@ -632,7 +632,7 @@ package state
 			trace("bomb ljud!!");
 			Session.sound.musicChannel.sources.add("game_bombSound", RobotBomb_mp3);
 			m_bombSound = Session.sound.musicChannel.get("game_bombSound");
-			m_bombSound.volume = 0.3;
+			m_bombSound.volume = 0.2;
 			m_bombSound.play();
 		}
 		
