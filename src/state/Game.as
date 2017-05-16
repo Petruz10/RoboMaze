@@ -493,8 +493,8 @@ package state
 		{
 			if(m_players == 2)
 			{	
-				if(m_battery.hitTestObject(m_robot2.area)) m_robot2.hitBattery = true;
-				if(m_battery2.hitTestObject(m_robot.area)) m_robot.hitBattery = true;
+				if(m_battery.hitTestObject(m_robot2)) m_robot2.hitBattery = true;
+				if(m_battery2.hitTestObject(m_robot)) m_robot.hitBattery = true;
 				
 				if(m_robot.hitBattery  || m_robot2.hitBattery)
 				{

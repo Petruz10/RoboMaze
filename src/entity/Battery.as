@@ -42,18 +42,8 @@ package entity
 		}
 		
 		//------------------------------------------------------------------------
-		// public methods 
+		// private methods 
 		//------------------------------------------------------------------------
-		public function getHP():void
-		{
-			
-		}
-		
-		public function addHP():void
-		{
-			
-		}
-		
 		/*
 		* function to remove battery 
 		*/
@@ -65,7 +55,7 @@ package entity
 				HPtimer();
 			}
 			
-			if(HP == 30 ||  HP == 10) initWarningSound();
+			if(HP == 30 || HP == 10) initWarningSound();
 			
 			if(HP == 0) initDeadSound();
 		}
