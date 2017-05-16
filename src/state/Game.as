@@ -7,7 +7,6 @@ package state
 	import flash.geom.Point;
 	import flash.net.SharedObject;
 	
-	import component.HUD;
 	import component.Instruction;
 	import component.Maze;
 	import component.MultiplayerInstruction;

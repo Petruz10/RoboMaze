@@ -4,7 +4,6 @@ package entity
 	// imports
 	//------------------------------------------------------------------------
 	import flash.display.Sprite;
-	import flash.text.ReturnKeyLabel;
 	
 	import se.lnu.stickossdk.fx.Flicker;
 	import se.lnu.stickossdk.input.EvertronControls;
