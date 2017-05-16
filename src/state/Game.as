@@ -213,7 +213,6 @@ package state
 			
 			
 			if(m_maze) m_layer.addChild(m_maze);
-			
 			if(m_robot) m_layer2.addChild(m_robot);	
 			if(m_robot2) m_layer2.addChild(m_robot2);
 			
@@ -418,7 +417,7 @@ package state
 					Session.timer.create(1000, initGameOver);
 					m_win.data.won = 2;
 				}
-				if(m_robot2.battery.HP == 0)
+				else if(m_robot2.battery.HP == 0)
 				{
 					Session.timer.create(1000, initGameOver);
 					m_win.data.won = 1;
@@ -490,28 +489,29 @@ package state
 		*/
 		private function hitBattery():void
 		{
-			if(m_players == 2)
-			{	
-				if(m_battery.hitTestObject(m_robot2)) m_robot2.hitBattery = true;
-				if(m_battery2.hitTestObject(m_robot)) m_robot.hitBattery = true;
-				
-				if(m_robot.hitBattery  || m_robot2.hitBattery)
-				{
-					m_layer3.removeChildren();
-					findBatteryPlace();
-					return;
-				}
-			}
-			
-			else
+			switch(m_players)
 			{
-				if(m_battery.hitTestObject(m_robot.area))
-				{
-					m_robot.hitBattery = true;
-					m_layer3.removeChildren();
-					findBatteryPlace();
-					return;
-				}
+				case 2:
+					if(m_battery.hitTestObject(m_robot2)) m_robot2.hitBattery = true;
+					if(m_battery2.hitTestObject(m_robot)) m_robot.hitBattery = true;
+					
+					if(m_robot.hitBattery || m_robot2.hitBattery)
+					{
+						m_layer3.removeChildren();
+						findBatteryPlace();
+						return;
+					}
+					break;
+				
+				case 1:
+					if(m_battery.hitTestObject(m_robot.area))
+					{
+						m_robot.hitBattery = true;
+						m_layer3.removeChildren();
+						findBatteryPlace();
+						return;
+					}
+					break;		
 			}
 		}
 		
@@ -592,10 +592,9 @@ package state
 						
 						case 1:
 							m_robot.wrongSide = true;
-							Session.timer.create(7600, setToFalse);
+							Session.timer.create(4600, setToFalse);
 							break;
 					}
-					
 				}
 			}
 			
@@ -643,8 +642,11 @@ package state
 			m_robot2.speed = 3;
 			m_robot.speed = 3;
 			
+			m_powerUp = null;
+			m_powerUp2 = null;
+			
+			addPowerUp();
 			placePowerup();
-			Session.timer.create(6000, addPowerUp);
 			Session.timer.create(8600, addChildPowerUp);
 		}
 		
@@ -656,8 +658,11 @@ package state
 			m_robot.wrongSide = false;
 			m_robot2.wrongSide = false;
 			
+			m_powerUp = null;
+			m_powerUp2 = null;
+			
+			addPowerUp();
 			placePowerup();
-			Session.timer.create(6000, addPowerUp);
 			Session.timer.create(8600, addChildPowerUp);
 		}
 		
