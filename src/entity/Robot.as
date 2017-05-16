@@ -108,14 +108,6 @@ package entity
 		}
 		
 		/*
-		* function to init the functionality at the battery
-		*/
-		public function initBattery():void
-		{
-			battery = new Battery();
-		}
-		
-		/*
 		* function to move the avatar up,
 		* unless he have "wrongside" then he goes down
 		*/
@@ -299,6 +291,16 @@ package entity
 			
 			this.addChild(_skin);
 			_skin.addChild(_skin.hitArea);
+		}
+		//------------------------------------------------------------------------
+		// public methods
+		//------------------------------------------------------------------------
+		/*
+		* function to init the functionality at the battery
+		*/
+		public function initBattery():void
+		{
+			battery = new Battery();
 		}
 		
 		//------------------------------------------------------------------------
