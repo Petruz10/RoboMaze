@@ -340,9 +340,10 @@ package state
 		*/
 		private function initSound():void
 		{
+			trace("Game sound");
 			Session.sound.musicChannel.sources.add("game_bgmusic", BackgroundGame_mp3);
 			m_backgroundMusic = Session.sound.musicChannel.get("game_bgmusic");
-			m_backgroundMusic.volume = 0.4;
+			m_backgroundMusic.volume = 0.3;
 			m_backgroundMusic.play(int.MAX_VALUE); //loop av ljud "Henke hack"
 		}
 		
@@ -587,7 +588,7 @@ package state
 							m_robot.speed = 0;
 							m_flickr = new Flicker(m_robot, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
-							Session.timer.create(600, initSpeed);
+							Session.timer.create(1000, initSpeed);
 							break;
 						
 						case 1:
@@ -610,7 +611,7 @@ package state
 							m_robot2.speed = 0;
 							m_flickr = new Flicker(m_robot2, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
-							Session.timer.create(600, initSpeed);
+							Session.timer.create(1000, initSpeed);
 							break;
 						
 						case 1:
@@ -683,7 +684,7 @@ package state
 		*/
 		private function gameOver(e):void
 		{
-			Session.timer.create(1000, initGameOver);
+			Session.timer.create(1300, initGameOver);
 		}
 		
 		/*
