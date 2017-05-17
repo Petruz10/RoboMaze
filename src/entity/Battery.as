@@ -39,7 +39,8 @@ package entity
 		*/
 		private function HPtimer():void
 		{
-			m_timer = Session.timer.create(1500, removeHP);
+			//m_timer = Session.timer.create(1300, removeHP);
+			m_timer = Session.timer.create(100, removeHP);
 		}
 		
 		//------------------------------------------------------------------------
@@ -52,13 +53,14 @@ package entity
 		{
 			if(HP != 0) 
 			{
-				HP -= 10;
+				HP --;
 				HPtimer();
 			}
 			
 			if(HP == 30 || HP == 10) initWarningSound();
 			
-			if(HP == 0) {
+			if(HP == 0) 
+			{
 				initDeadSound();
 				initShutdownSound();
 			}

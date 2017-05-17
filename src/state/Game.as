@@ -415,12 +415,12 @@ package state
 				
 				if(m_robot.battery.HP == 0)
 				{
-					Session.timer.create(1000, initGameOver);
+					Session.timer.create(1100, initGameOver);
 					m_win.data.won = 2;
 				}
 				else if(m_robot2.battery.HP == 0)
 				{
-					Session.timer.create(1000, initGameOver);
+					Session.timer.create(1100, initGameOver);
 					m_win.data.won = 1;
 				}
 			}
@@ -521,6 +521,15 @@ package state
 		*/
 		private function hitPowerup():void
 		{
+			if(m_powerUp.hitTestObject(m_robot2.area)&& m_powerUp2.hitTestObject(m_robot.area))
+			{
+				trace("bägge samtidigt");
+				m_layer4.removeChildren();
+				
+				addPowerUp();
+				placePowerup();
+				return;
+			}
 			
 			if(m_powerUp.hitTestObject(m_robot2.area)) m_robot2.powerUp ++;
 			if(m_powerUp2.hitTestObject(m_robot.area)) m_robot.powerUp ++;
@@ -536,8 +545,82 @@ package state
 		*/
 		private function updateHUDBattery():void
 		{
-			m_hud.battery1Lvl = m_robot.battery.HP;
-			if(m_players == 2) m_hud.battery2Lvl = m_robot2.battery.HP;
+			switch(m_robot.battery.HP)
+			{
+				case 0:
+					m_hud.battery1Lvl = m_robot.battery.HP;
+					break;
+				case 10:
+					m_hud.battery1Lvl = m_robot.battery.HP;
+					break;
+				case 20:
+					m_hud.battery1Lvl = m_robot.battery.HP;
+					break;
+				case 30:
+					m_hud.battery1Lvl = m_robot.battery.HP;
+					break;
+				case 40:
+					m_hud.battery1Lvl = m_robot.battery.HP;
+					break;
+				case 50:
+					m_hud.battery1Lvl = m_robot.battery.HP;
+					break;
+				case 60:
+					m_hud.battery1Lvl = m_robot.battery.HP;
+					break;
+				case 70:
+					m_hud.battery1Lvl = m_robot.battery.HP;
+					break;
+				case 80:
+					m_hud.battery1Lvl = m_robot.battery.HP;
+					break;
+				case 90:
+					m_hud.battery1Lvl = m_robot.battery.HP;
+					break;
+				case 100:
+					m_hud.battery1Lvl = m_robot.battery.HP;
+					break;
+			}
+			
+			if(m_players == 2) 
+			{
+				switch(m_robot2.battery.HP)
+				{
+					case 0:
+						m_hud.battery2Lvl = m_robot2.battery.HP;
+						break;
+					case 10:
+						m_hud.battery2Lvl = m_robot2.battery.HP;
+						break;
+					case 20:
+						m_hud.battery2Lvl = m_robot2.battery.HP;
+						break;
+					case 30:
+						m_hud.battery2Lvl = m_robot2.battery.HP;
+						break;
+					case 40:
+						m_hud.battery2Lvl = m_robot2.battery.HP;
+						break;
+					case 50:
+						m_hud.battery2Lvl = m_robot2.battery.HP;
+						break;
+					case 60:
+						m_hud.battery2Lvl = m_robot2.battery.HP;
+						break;
+					case 70:
+						m_hud.battery2Lvl = m_robot2.battery.HP;
+						break;
+					case 80:
+						m_hud.battery2Lvl = m_robot2.battery.HP;
+						break;
+					case 90:
+						m_hud.battery2Lvl = m_robot2.battery.HP;
+						break;
+					case 100:
+						m_hud.battery2Lvl = m_robot2.battery.HP;
+						break;
+				}
+			}
 		}
 		
 		/*
@@ -593,7 +676,9 @@ package state
 						
 						case 1:
 							m_robot.wrongSide = true;
-							Session.timer.create(4600, setToFalse);
+							m_flickr = new Flicker(m_robot, 4000); //obj, tid (hur länge), intervall
+							Session.effects.add(m_flickr);
+							Session.timer.create(4000, setToFalse);
 							break;
 					}
 				}
@@ -616,7 +701,9 @@ package state
 						
 						case 1:
 							m_robot2.wrongSide = true;
-							Session.timer.create(4600, setToFalse);
+							m_flickr = new Flicker(m_robot2, 4000); //obj, tid (hur länge), intervall
+							Session.effects.add(m_flickr);
+							Session.timer.create(4000, setToFalse);
 							break;
 					}
 				}
@@ -648,7 +735,7 @@ package state
 			
 			addPowerUp();
 			placePowerup();
-			Session.timer.create(8600, addChildPowerUp);
+			Session.timer.create(7000, addChildPowerUp);
 		}
 		
 		/*
@@ -664,7 +751,7 @@ package state
 			
 			addPowerUp();
 			placePowerup();
-			Session.timer.create(8600, addChildPowerUp);
+			Session.timer.create(7000, addChildPowerUp);
 		}
 		
 		/*
