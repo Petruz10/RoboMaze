@@ -25,9 +25,13 @@ package entity
 		private var m_deadSound:SoundObject;
 		private var m_deadSound2:SoundObject;
 		
-		public function Battery()
+		private var m_players:int;
+		
+		public function Battery(player:int)
 		{
+			trace("battery players", player);
 			super();
+			m_players = player;
 			HPtimer();
 		}
 		
@@ -41,7 +45,16 @@ package entity
 		{
 			//m_timer = Session.timer.create(1300, removeHP);
 			//m_timer = Session.timer.create(100, removeHP);
-			m_timer = Session.timer.create(300, removeHP);
+			switch(m_players)
+			{
+				case 1:
+					m_timer = Session.timer.create(85, removeHP);
+					break;
+				case 2:
+					m_timer = Session.timer.create(100, removeHP);
+					break;
+			}
+			
 		}
 		
 		//------------------------------------------------------------------------
@@ -58,12 +71,12 @@ package entity
 				HPtimer();
 			}
 			
-			if(HP == 30 || HP == 10) initWarningSound();
+			//if(HP == 30 || HP == 10) initWarningSound();
 			
 			if(HP == 0) 
 			{
-				initDeadSound();
-				initShutdownSound();
+			//	initDeadSound();
+			//	initShutdownSound();
 			}
 		}
 		

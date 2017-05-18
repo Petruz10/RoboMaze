@@ -44,6 +44,7 @@ package entity
 		
 		private var m_hitSide:String;		
 		private var m_player:int;
+		private var m_numberPlayers:int;
 		
 		private var m_flickr:Flicker;
 		
@@ -53,11 +54,12 @@ package entity
 		//------------------------------------------------------------------------
 		// Constructor methods
 		//------------------------------------------------------------------------		
-		public function Robot(controls:int=0)
+		public function Robot(controls:int=0, players:int=1)
 		{
 			super();
 			m_controls.player = controls;
 			m_player = controls;
+			m_numberPlayers = players;
 		}
 		//------------------------------------------------------------------------
 		// public methods
@@ -224,10 +226,6 @@ package entity
 		
 				case 1:
 					activateWrongSide = true;
-					/*wrongSide = true;
-					m_flickr = new Flicker(this._skin, 4000); //obj, tid (hur länge), intervall
-					Session.effects.add(m_flickr);
-					Session.timer.create(4000, setToFalse);*/
 					break;
 			}
 			
@@ -265,7 +263,7 @@ package entity
 				battery.HP += 30; 
 				hitBattery = false;
 				if(battery.HP > 100) battery.HP = 100;
-				initRefillSound();
+				//initRefillSound();
 			}
 			
 			if(battery.HP == 0)
@@ -322,7 +320,7 @@ package entity
 		*/
 		public function initBattery():void
 		{
-			battery = new Battery();
+			battery = new Battery(m_numberPlayers);
 		}
 		
 		//------------------------------------------------------------------------

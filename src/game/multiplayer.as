@@ -50,7 +50,7 @@ package game
 		*/
 		private function initAvatar():void
 		{
-			m_robot = new Robot(0);
+			m_robot = new Robot(0, 2);
 			
 			m_robot.x = 41;
 			m_robot.y = 125;
@@ -63,7 +63,7 @@ package game
 		*/
 		private function initAvatar2():void
 		{
-			m_robot2 = new Robot(1);
+			m_robot2 = new Robot(1, 2);
 			
 			m_robot2.x = 441;
 			m_robot2.y = 125;

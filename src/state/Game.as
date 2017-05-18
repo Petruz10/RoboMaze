@@ -117,7 +117,7 @@ package state
 			initSharedObject();			
 			initTestObj();
 			findPoints(); 
-			initSound();
+			//initSound();
 		}
 		
 		/*
@@ -248,6 +248,7 @@ package state
 		*/
 		private function findPoints():void
 		{
+			trace("find points");
 			for (var i:int = 0; i<m_children.length; i++)
 			{
 				if(m_players == 2)
@@ -316,6 +317,7 @@ package state
 		*/
 		private function findBatteryPlace():void
 		{
+			trace("batteri place");
 			var r:int;
 
 			r = Math.floor(Math.random() * m_availableSpace.length);
@@ -468,6 +470,8 @@ package state
 		*/
 		private function addBattery():void
 		{
+			trace("addChild batteri");
+			
 			m_layer3.addChild(m_battery);
 			if(m_battery2) m_layer3.addChild(m_battery2);
 		}
@@ -501,6 +505,7 @@ package state
 					
 					if(m_robot.hitBattery || m_robot2.hitBattery)
 					{
+						trace("hit");
 						m_layer3.removeChildren();
 						findBatteryPlace();
 						return;
@@ -665,7 +670,7 @@ package state
 			{
 				if(m_robot.hitTestObject(m_robot2.obstacle))
 				{
-					initBombSound();
+				//	initBombSound();
 					m_robot2.removeChild(m_robot2.obstacle);
 					
 					switch(whichPower)
