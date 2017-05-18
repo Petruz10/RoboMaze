@@ -33,8 +33,9 @@ package entity
 		
 		public var speed:int = 3;
 		
-		public var wrongSide:Boolean = false;
 		public var startGame:Boolean = false;
+		public var wrongSide:Boolean = false;
+		public var activateWrongSide:Boolean = false;
 
 		//------------------------------------------------------------------------
 		// private properties 
@@ -208,15 +209,35 @@ package entity
 		private function addObstacle():void
 		{
 			powerUp --;
-
-			obstacle = new Obstacle(obstacleType);
 			
-			obstacle.y = _skin.y;
-			if(m_player == 0)obstacle.x = _skin.x +400;
-			else if(m_player == 1)obstacle.x = _skin.x -400;
+			switch(obstacleType)
+			{
+				case 0:
+					obstacle = new Obstacle(obstacleType);
+					
+					obstacle.y = _skin.y;
+					if(m_player == 0)obstacle.x = _skin.x +400;
+					else if(m_player == 1)obstacle.x = _skin.x -400;
+					
+					this.addChild(obstacle);
+					break;
+		
+				case 1:
+					activateWrongSide = true;
+					/*wrongSide = true;
+					m_flickr = new Flicker(this._skin, 4000); //obj, tid (hur länge), intervall
+					Session.effects.add(m_flickr);
+					Session.timer.create(4000, setToFalse);*/
+					break;
+			}
 			
-			this.addChild(obstacle);
-			return;
+			//return;
+		}
+		
+		private function setToFalse():void
+		{
+			wrongSide = false;
+			
 		}
 		
 		/*

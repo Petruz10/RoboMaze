@@ -147,6 +147,7 @@ package state
 				checkBattery();
 				updateHUDPowerup();
 				if(m_robot.obstacle || m_robot2.obstacle) checkhitObstacle();
+				checkWrongSide();
 			}
 			else updateHUDTime();
 		}
@@ -710,6 +711,25 @@ package state
 			}
 		}
 		
+		private function checkWrongSide():void
+		{
+			if(m_robot.activateWrongSide)
+			{
+				m_robot2.wrongSide = true;
+				m_flickr = new Flicker(m_robot2, 4000); //obj, tid (hur länge), intervall
+				Session.effects.add(m_flickr);
+				Session.timer.create(4000, setToFalse);
+			}
+			
+			if(m_robot2.activateWrongSide)
+			{
+				m_robot.wrongSide = true;
+				m_flickr = new Flicker(m_robot, 4000); //obj, tid (hur länge), intervall
+				Session.effects.add(m_flickr);
+				Session.timer.create(4000, setToFalse);
+			}
+		}
+		
 		/*
 		* function to play a bomb sound
 		*/
@@ -745,6 +765,9 @@ package state
 		{
 			m_robot.wrongSide = false;
 			m_robot2.wrongSide = false;
+			
+			m_robot.activateWrongSide = false;
+			m_robot2.activateWrongSide = false;
 			
 			m_powerUp = null;
 			m_powerUp2 = null;
