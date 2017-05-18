@@ -23,6 +23,7 @@ package entity
 		private var m_timer:Timer;
 		private var m_warningSound:SoundObject;
 		private var m_deadSound:SoundObject;
+		private var m_deadSound2:SoundObject;
 		
 		public function Battery()
 		{
@@ -38,7 +39,9 @@ package entity
 		*/
 		private function HPtimer():void
 		{
-			m_timer = Session.timer.create(1000, removeHP);
+			//m_timer = Session.timer.create(1300, removeHP);
+			//m_timer = Session.timer.create(100, removeHP);
+			m_timer = Session.timer.create(300, removeHP);
 		}
 		
 		//------------------------------------------------------------------------
@@ -51,13 +54,17 @@ package entity
 		{
 			if(HP != 0) 
 			{
-				HP -= 10;
+				HP --;
 				HPtimer();
 			}
 			
 			if(HP == 30 || HP == 10) initWarningSound();
 			
-			if(HP == 0) initDeadSound();
+			if(HP == 0) 
+			{
+				initDeadSound();
+				initShutdownSound();
+			}
 		}
 		
 		/*
@@ -65,6 +72,7 @@ package entity
 		*/
 		private function initWarningSound():void
 		{
+			trace("WARNING ljud");
 			Session.sound.musicChannel.sources.add("game_warningSound", RobotWarning_mp3);
 			m_warningSound = Session.sound.musicChannel.get("game_warningSound");
 			m_warningSound.volume = 0.9;
@@ -77,10 +85,18 @@ package entity
 		private function initDeadSound():void
 		{
 			Session.sound.musicChannel.sources.add("game_deadSound", RobotDeath_mp3);
-			Session.sound.musicChannel.sources.add("game_deadSound", RobotShutdown_mp3);
 			m_deadSound = Session.sound.musicChannel.get("game_deadSound");
-			m_deadSound.volume = 0.55;
+			m_deadSound.volume = 0.3;
 			m_deadSound.play();
+		}
+		
+		private function initShutdownSound():void
+		{
+			trace("sound");
+			Session.sound.musicChannel.sources.add("game_deadSound2", RobotShutdown_mp3);
+			m_deadSound2 = Session.sound.musicChannel.get("game_deadSound2");
+			m_deadSound2.volume = 0.9;
+			m_deadSound2.play();
 		}
 		
 		//------------------------------------------------------------------------

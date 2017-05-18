@@ -4,7 +4,6 @@ package entity
 	// imports
 	//------------------------------------------------------------------------
 	import flash.display.Sprite;
-	import flash.text.ReturnKeyLabel;
 	
 	import se.lnu.stickossdk.fx.Flicker;
 	import se.lnu.stickossdk.input.EvertronControls;
@@ -34,8 +33,9 @@ package entity
 		
 		public var speed:int = 3;
 		
-		public var wrongSide:Boolean = false;
 		public var startGame:Boolean = false;
+		public var wrongSide:Boolean = false;
+		public var activateWrongSide:Boolean = false;
 
 		//------------------------------------------------------------------------
 		// private properties 
@@ -105,14 +105,6 @@ package entity
 				else if(Input.keyboard.pressed(m_controls.PLAYER_UP)) this.moveUp(); 
 				
 				if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1) && powerUp > 0) this.addObstacle()
-		}
-		
-		/*
-		* function to init the functionality at the battery
-		*/
-		public function initBattery():void
-		{
-			battery = new Battery();
 		}
 		
 		/*
@@ -217,15 +209,35 @@ package entity
 		private function addObstacle():void
 		{
 			powerUp --;
-
-			obstacle = new Obstacle(obstacleType);
 			
-			obstacle.y = _skin.y;
-			if(m_player == 0)obstacle.x = _skin.x +400;
-			else if(m_player == 1)obstacle.x = _skin.x -400;
+			switch(obstacleType)
+			{
+				case 0:
+					obstacle = new Obstacle(obstacleType);
+					
+					obstacle.y = _skin.y;
+					if(m_player == 0)obstacle.x = _skin.x +400;
+					else if(m_player == 1)obstacle.x = _skin.x -400;
+					
+					this.addChild(obstacle);
+					break;
+		
+				case 1:
+					activateWrongSide = true;
+					/*wrongSide = true;
+					m_flickr = new Flicker(this._skin, 4000); //obj, tid (hur länge), intervall
+					Session.effects.add(m_flickr);
+					Session.timer.create(4000, setToFalse);*/
+					break;
+			}
 			
-			this.addChild(obstacle);
-			return;
+			//return;
+		}
+		
+		private function setToFalse():void
+		{
+			wrongSide = false;
+			
 		}
 		
 		/*
@@ -287,7 +299,7 @@ package entity
 		*/
 		private function initSkin():void
 		{
-			if(m_player == 0)_skin = new Robot1_mc();
+			if(m_player == 0) _skin = new Robot1_mc();
 			else if(m_player == 1) _skin = new Robot2_mc();
 			
 			_skin.gotoAndStop("front");
@@ -297,8 +309,20 @@ package entity
 			_skin.hitArea = m_square;
 			area = _skin.hitArea;
 			
+			_skin.opaqueBackground = 0xFFFFFF;
+			
 			this.addChild(_skin);
 			_skin.addChild(_skin.hitArea);
+		}
+		//------------------------------------------------------------------------
+		// public methods
+		//------------------------------------------------------------------------
+		/*
+		* function to init the functionality at the battery
+		*/
+		public function initBattery():void
+		{
+			battery = new Battery();
 		}
 		
 		//------------------------------------------------------------------------
