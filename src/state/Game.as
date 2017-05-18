@@ -117,7 +117,7 @@ package state
 			initSharedObject();			
 			initTestObj();
 			findPoints(); 
-			//initSound();
+			initSound();
 		}
 		
 		/*
@@ -670,7 +670,7 @@ package state
 			{
 				if(m_robot.hitTestObject(m_robot2.obstacle))
 				{
-				//	initBombSound();
+					initBombSound();
 					m_robot2.removeChild(m_robot2.obstacle);
 					
 					switch(whichPower)
