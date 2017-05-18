@@ -356,7 +356,7 @@ package state
 		private function initBattery():void
 		{
 			m_battery = new BatteryRefill();
-			m_battery.opaqueBackground = 0xFF2200;
+		//	m_battery.opaqueBackground = 0xFF2200;
 		}
 		
 		/*
@@ -365,7 +365,7 @@ package state
 		private function initBattery2():void
 		{
 			m_battery2 = new BatteryRefill();
-			m_battery2.opaqueBackground = 0xFF2200;
+		//	m_battery2.opaqueBackground = 0xFF2200;
 		}
 		
 		/*

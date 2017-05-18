@@ -307,7 +307,7 @@ package entity
 			_skin.hitArea = m_square;
 			area = _skin.hitArea;
 			
-			_skin.opaqueBackground = 0xFFFFFF;
+		//	_skin.opaqueBackground = 0xFFFFFF;
 			
 			this.addChild(_skin);
 			_skin.addChild(_skin.hitArea);
