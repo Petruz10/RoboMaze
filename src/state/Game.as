@@ -354,6 +354,7 @@ package state
 		private function initBattery():void
 		{
 			m_battery = new BatteryRefill();
+			m_battery.opaqueBackground = 0xFF2200;
 		}
 		
 		/*
@@ -362,6 +363,7 @@ package state
 		private function initBattery2():void
 		{
 			m_battery2 = new BatteryRefill();
+			m_battery2.opaqueBackground = 0xFF2200;
 		}
 		
 		/*
@@ -710,11 +712,14 @@ package state
 				}
 			}
 		}
-		
+		/*
+		* för aktivering av wrongSide så fort användaren klickar på knapp 1
+		*/
 		private function checkWrongSide():void
 		{
 			if(m_robot.activateWrongSide)
 			{
+				m_robot.activateWrongSide = false;
 				m_robot2.wrongSide = true;
 				m_flickr = new Flicker(m_robot2, 4000); //obj, tid (hur länge), intervall
 				Session.effects.add(m_flickr);
@@ -723,6 +728,7 @@ package state
 			
 			if(m_robot2.activateWrongSide)
 			{
+				m_robot2.activateWrongSide = false;
 				m_robot.wrongSide = true;
 				m_flickr = new Flicker(m_robot, 4000); //obj, tid (hur länge), intervall
 				Session.effects.add(m_flickr);
@@ -774,7 +780,7 @@ package state
 			
 			addPowerUp();
 			placePowerup();
-			Session.timer.create(7000, addChildPowerUp);
+			Session.timer.create(6000, addChildPowerUp);
 		}
 		
 		/*

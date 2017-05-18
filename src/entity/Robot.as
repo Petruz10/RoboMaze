@@ -299,7 +299,7 @@ package entity
 		*/
 		private function initSkin():void
 		{
-			if(m_player == 0)_skin = new Robot1_mc();
+			if(m_player == 0) _skin = new Robot1_mc();
 			else if(m_player == 1) _skin = new Robot2_mc();
 			
 			_skin.gotoAndStop("front");
@@ -308,6 +308,8 @@ package entity
 			m_square.graphics.drawRect(8.25, 15.7, 18.55, 19.2);
 			_skin.hitArea = m_square;
 			area = _skin.hitArea;
+			
+			_skin.opaqueBackground = 0xFFFFFF;
 			
 			this.addChild(_skin);
 			_skin.addChild(_skin.hitArea);
