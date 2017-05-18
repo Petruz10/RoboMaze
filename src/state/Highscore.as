@@ -171,7 +171,7 @@ package state
 					_nameT.textColor = 0xffffff;      
 					_nameT.text = "00:00:00"; // PLACEHOLDER 
 					_nameT.width = 350;
-					_nameT.x = 100;
+					_nameT.x = 70;
 					
 					_scoreT.embedFonts = true; 
 					_scoreT.selectable = false;
