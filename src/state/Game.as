@@ -77,6 +77,9 @@ package state
 		
 		private var m_backgroundMusic:SoundObject;
 		private var m_bombSound:SoundObject;
+		private var m_wrongSound:SoundObject;
+		private var m_powerupSound:SoundObject;
+
 		
 		private var m_SharedObjPlayers:SharedObject;
 		private var m_win:SharedObject;
@@ -529,7 +532,7 @@ package state
 		*/
 		private function hitPowerup():void
 		{
-			if(m_powerUp.hitTestObject(m_robot2.area)&& m_powerUp2.hitTestObject(m_robot.area))
+			if(m_powerUp.hitTestObject(m_robot2.area) && m_powerUp2.hitTestObject(m_robot.area))
 			{
 				trace("bägge samtidigt");
 				m_layer4.removeChildren();
@@ -544,8 +547,17 @@ package state
 			
 			if(m_powerUp.hitTestObject(m_robot2.area) || m_powerUp2.hitTestObject(m_robot.area))
 			{
+				initPowerupSound();
 				if(m_layer4)m_layer4.removeChildren();
 			}
+		}
+		
+		private function initPowerupSound():void
+		{
+			Session.sound.musicChannel.sources.add("powerup_sound", RobotPickUp_mp3);
+			m_powerupSound = Session.sound.musicChannel.get("powerup_sound");
+			m_powerupSound.volume = 0.3;
+			m_powerupSound.play();
 		}
 		
 		/*
@@ -670,12 +682,13 @@ package state
 			{
 				if(m_robot.hitTestObject(m_robot2.obstacle))
 				{
-					initBombSound();
+					
 					m_robot2.removeChild(m_robot2.obstacle);
 					
 					switch(whichPower)
 					{
 						case 0:
+							initBombSound();
 							m_robot.speed = 0;
 							m_flickr = new Flicker(m_robot, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
@@ -683,6 +696,7 @@ package state
 							break;
 						
 						case 1:
+							initWrongWaySound();
 							m_robot.wrongSide = true;
 							m_flickr = new Flicker(m_robot, 4000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
@@ -696,11 +710,12 @@ package state
 			{
 				if(m_robot2.hitTestObject(m_robot.obstacle)) 
 				{
-					initBombSound();
+					
 					m_robot.removeChild(m_robot.obstacle);
 					switch(whichPower)
 					{
 						case 0:
+							initBombSound();
 							m_robot2.speed = 0;
 							m_flickr = new Flicker(m_robot2, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
@@ -708,6 +723,7 @@ package state
 							break;
 						
 						case 1:
+							initWrongWaySound();
 							m_robot2.wrongSide = true;
 							m_flickr = new Flicker(m_robot2, 4000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
@@ -724,6 +740,7 @@ package state
 		{
 			if(m_robot.activateWrongSide)
 			{
+				initWrongWaySound();
 				m_robot.activateWrongSide = false;
 				m_robot2.wrongSide = true;
 				m_flickr = new Flicker(m_robot2, 4000); //obj, tid (hur länge), intervall
@@ -733,12 +750,21 @@ package state
 			
 			if(m_robot2.activateWrongSide)
 			{
+				initWrongWaySound();
 				m_robot2.activateWrongSide = false;
 				m_robot.wrongSide = true;
 				m_flickr = new Flicker(m_robot, 4000); //obj, tid (hur länge), intervall
 				Session.effects.add(m_flickr);
 				Session.timer.create(4000, setToFalse);
 			}
+		}
+		
+		private function initWrongWaySound():void
+		{
+			Session.sound.musicChannel.sources.add("game_wrongSound", RobotWrongWay_mp3);
+			m_wrongSound = Session.sound.musicChannel.get("game_wrongSound");
+			m_wrongSound.volume = 0.5;
+			m_wrongSound.play();
 		}
 		
 		/*
