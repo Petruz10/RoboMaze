@@ -97,7 +97,7 @@ package entity
 		{	
 			if(!startGame) 
 			{
-				if(Input.keyboard.justPressed(m_controls.PLAYER_BUTTON_1))startGame = true; 
+				if(Input.keyboard.anyPressed()) startGame = true; 
 			}
 
 			if(!battery) return;
