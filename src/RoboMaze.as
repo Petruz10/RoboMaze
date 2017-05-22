@@ -15,7 +15,7 @@ package
 		override public function setup():void
 		{
 			initId = 28;
-			//initDebugger = true;
+			initDebugger = true;
 			initDisplayState = SplashScreen; // <--- opens SplashScreen that leads to Menu State
 			//initDisplayState = Menu;
 			initBackgroundColor = 0x666666;
