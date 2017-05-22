@@ -37,6 +37,10 @@ package state
 		private var _layerHighscoreTable:DisplayStateLayer;
 		private var _header:ScreenTop_mc;
 		/*
+		*	overlay // robot
+		*/
+		private var _layerOverlay:DisplayStateLayer;
+		/*
 		* 	back btn
 		*/
 		private var _btn:BackButton;
@@ -60,6 +64,14 @@ package state
 		* 	font
 		*/
 		private var _gameFont:GameFont
+		/*
+		* 	animation
+		*/
+		private var _robot:Robot1_mc;
+		/*
+		*
+		*/ 
+		private var _robotDirection:Boolean; 
 		/*
 		* highscore list
 		*/
@@ -87,6 +99,7 @@ package state
 		override public function update():void {
 			changeState();
 			updateHighscore();
+			updateRobot();
 		}
 		//------------------------------------------------------------------------
 		// dispose
@@ -106,6 +119,7 @@ package state
 			initBackground();
 			initHighscore();
 			initHighscoreTable();
+			initOverlay(); // robot animation
 		}
 		//------------------------------------------------------------------------
 		// init sound
@@ -124,14 +138,35 @@ package state
 			_score = _highscoreData.score;
 			_name = _highscoreData.name;
 
-		/*if((_score.length == 0) || (_score == null)) {
+		if((_score.length == 0) || (_score == null)) {
 				_score.push("00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00");
 				_name.push("michaela1","michaela2","michaela3","michaela4","michaela5","michaela6","michaela7","michaela8","michaela9","michaela10");
-			} */
+			} 
 		}
 		private function updateHighscore():void {
 			if (_score.length != 0) { initList(); } 
-			else { trace("vector is empty"); }
+		}
+		//------------------------------------------------------------------------
+		// move robot
+		//------------------------------------------------------------------------
+		private function updateRobot():void {
+			if (_robot) {
+				if (_robot.x <= -80) { 
+					_robotDirection = false; trace("false"); 
+				}
+				else if (_robot.x >= 880) { 
+					_robotDirection = true; trace("true"); 
+				}
+
+				if (_robotDirection == true) {
+					_robot.x--;
+					_robot.scaleX = -4;
+				}
+				else if (_robotDirection == false) {
+					_robot.x++;
+					_robot.scaleX = 4;
+				}
+			}	
 		}
 		//------------------------------------------------------------------------
 		// init background
@@ -155,7 +190,6 @@ package state
 			if(_container == null) {
 				_container = new Sprite();
 				var str:String; // name
-				trace("en gång");
 				_highscoreF = new TextFormat;
 				_highscoreF.font = "Arcade";
 				_highscoreF.align = "center";
@@ -219,8 +253,20 @@ package state
 
 			_layerHighscoreTable.addChild(_btn);
 		}
+		//------------------------------------------------------------------------
+		// robot
+		//------------------------------------------------------------------------
 		private function initOverlay():void {
-			
+			trace("place robot");
+			_robot = new Robot1_mc();
+			_robot.scaleY = 4;
+			_robot.scaleX = 4;
+			_robot.x = -80;
+			_robot.y = 440;
+			_robot.gotoAndStop("side");
+
+			_layerOverlay = layers.add("HIGHSCORE_OVERLAY");
+			_layerOverlay.addChild(_robot);
 		}
 		//------------------------------------------------------------------------
 		// making sure that the player can return to menu
@@ -235,6 +281,9 @@ package state
 		//------------------------------------------------------------------------
 		private function disposeHighscoreTable():void {
 			var textField:DisplayObject;
+
+			_highscoreData.dispose();
+
 			if (_container) {
 			while (_container.numChildren > 0) {
 				textField = _container.getChildAt(0);
@@ -249,9 +298,7 @@ package state
 
 			_layerHighscoreTable.removeChild(_btn); 
 			_layerHighscoreTable = null;
-			_btn = null;
-
-			
+			_btn = null;	
 		}
 		//------------------------------------------------------------------------
 		// dispose background
@@ -260,6 +307,10 @@ package state
 			_layerBackground.removeChild(_header);
 			_layerBackground = null;
 			_header = null;
+		}
+		private function disposeOverlay():void {
+			_layerOverlay.removeChild(_robot);
+			_robot = null;
 		}
 	}
 }

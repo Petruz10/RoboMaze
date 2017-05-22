@@ -226,6 +226,7 @@ package component
 		//	dispose highscore
 		//------------------------------------------------------------------------
 		private function disposeHighscore():void {
+				_highscoreData.dispose();
 			if(_highscoreT != null) {
 				this.removeChild(_highscoreT);
 				_highscoreT = null;

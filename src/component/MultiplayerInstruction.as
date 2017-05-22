@@ -69,16 +69,16 @@ package component
             _instTxt3 = new InstructionMultiplayer_sabotage_mc();
             _instTxt4 = new InstructionMultiplayer_sabotage_items_mc();
 
-            _instTxt1.x = 120;
-            _instTxt1.y = 142;
+            _instTxt1.x = 114;
+            _instTxt1.y = 138;
 
-            _instTxt2.x = 528;
-            _instTxt2.y = 142;
+            _instTxt2.x = 499;
+            _instTxt2.y = 138;
 
             _instTxt3.x = 320;
-            _instTxt3.y = 430;
+            _instTxt3.y = 420;
 
-            _instTxt4.x = 64;
+            _instTxt4.x = 37;
             _instTxt4.y = 266;
 
             this.addChild(_instTxt1);
@@ -101,8 +101,8 @@ package component
             _battery.width = 66;
             _battery.height = 20;
 
-            _battery.x = 415;
-            _battery.y = 130;
+            _battery.x = 418;
+            _battery.y = 160;
 
             _buttons.x = 105;
             _buttons.y = 395;
