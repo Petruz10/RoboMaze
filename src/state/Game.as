@@ -21,6 +21,7 @@ package state
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.fx.Flicker;
+	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
 
@@ -110,6 +111,15 @@ package state
 		//------------------------------------------------------------------------
 		// public methods
 		//------------------------------------------------------------------------
+	/*	private function emptyHighscore():void
+		{
+			if(Input.keyboard.justPressed("SPACE")) 
+			{
+				trace("space knapp i menu");
+				Session.highscore.resetTable(1);
+			}
+		}
+		*/
 		/*
 		* the init function to start the Game state
 		*/
@@ -148,11 +158,30 @@ package state
 			{
 				hitPowerup();
 				checkBattery();
-				updateHUDPowerup();
-				if(m_robot.obstacle || m_robot2.obstacle) checkhitObstacle();
+			//	updateHUDPowerup();
+				if(m_robot.obstacle || m_robot2.obstacle)checkhitObstacle();
+				if(m_robot.obstacle) m_hud.bomb(1, false);
+				if(m_robot2.obstacle) m_hud.bomb(2, false);
+					
 				checkWrongSide();
+				testWhichPowerup();
 			}
 			else updateHUDTime();
+		}
+		
+		private function testWhichPowerup():void
+		{
+			if(m_hud.wrong == 1) m_robot.obstacleType = 1;
+			if(m_hud.wrong == 2) m_robot2.obstacleType = 1;
+			
+			if(m_hud.bomb == 2) m_robot2.obstacleType = 0;
+			if(m_hud.bomb == 1) m_robot.obstacleType = 0;
+			
+		}
+		
+		protected function bombHUD():void
+		{
+			m_hud.bomb = 0;
 		}
 		
 		/*
@@ -212,8 +241,10 @@ package state
 		private function initLayers():void
 		{	
 			m_layer = layers.add("maze layer");
+			m_layer4 = layers.add("powerup layer");
 			m_layer3 = layers.add("battery layer");
 			m_layer2 = layers.add("robot layer");
+			
 			
 			
 			if(m_maze) m_layer.addChild(m_maze);
@@ -251,7 +282,6 @@ package state
 		*/
 		private function findPoints():void
 		{
-			trace("find points");
 			for (var i:int = 0; i<m_children.length; i++)
 			{
 				if(m_players == 2)
@@ -262,7 +292,6 @@ package state
 				{
 					if(m_testObj.hitTestObject(m_children[i])) m_testObj.placeObj(); 
 				}
-
 			}
 
 			xArray.unshift(m_testObj.testObjX);
@@ -462,8 +491,6 @@ package state
 		*/
 		private function addChildPowerUp():void
 		{
-			m_layer4 = layers.add("powerup layer");
-
 			m_layer4.addChild(m_powerUp2);
 			m_layer4.addChild(m_powerUp);
 		}
@@ -539,16 +566,55 @@ package state
 				
 				addPowerUp();
 				placePowerup();
+				
+				
 				return;
 			}
 			
-			if(m_powerUp.hitTestObject(m_robot2.area)) m_robot2.powerUp ++;
-			if(m_powerUp2.hitTestObject(m_robot.area)) m_robot.powerUp ++;
+			if(m_powerUp.hitTestObject(m_robot2.area)) 
+			{
+				if(m_robot2.powerUp >= 1) return;
+				m_robot2.powerUp ++;
+				switch(whichPower)
+				{
+					case 0:
+						m_hud.bomb(2, true);
+						break;
+					
+					case 1:
+						m_hud.wrong(2, true);
+						break;
+				}
+			}
+			if(m_powerUp2.hitTestObject(m_robot.area)) 
+			{
+				if(m_robot.powerUp >= 1) return;
+				m_robot.powerUp ++;
+				
+				switch(whichPower)
+				{
+					case 0:
+						m_hud.bomb(1, true);
+						break;
+					
+					case 1:
+						m_hud.wrong(1, true);
+						break;
+				}
+				
+			}
 			
 			if(m_powerUp.hitTestObject(m_robot2.area) || m_powerUp2.hitTestObject(m_robot.area))
 			{
 				initPowerupSound();
 				if(m_layer4)m_layer4.removeChildren();
+				
+	//			addPowerUp();
+	//			placePowerup();
+	//			updateHUDPowerup();
+				Session.timer.create(100, addPowerUp);
+				Session.timer.create(200, placePowerup);
+				Session.timer.create(7000, addChildPowerUp);
 			}
 		}
 		
@@ -654,24 +720,25 @@ package state
 		/*
 		* function to update the powerups in HUD
 		*/
-		private function updateHUDPowerup():void
+	/*	private function updateHUDPowerup():void
 		{
+			// skit i funktionen och skriv detta då användaren plockar upp skit
 			switch(whichPower)
 			{
 				case 0:
 					if(m_robot.powerUp == 1) m_hud.bomb = 1;
-					else if(m_robot2.powerUp == 1) m_hud.bomb = 2;
+					if(m_robot2.powerUp == 1) m_hud.bomb = 2;
 					else m_hud.bomb = 0;
 					break;
 				
 				case 1:
 					if(m_robot.powerUp == 1) m_hud.wrong = 1;
-					else if(m_robot2.powerUp == 1) m_hud.wrong = 2;
+					if(m_robot2.powerUp == 1) m_hud.wrong = 2;
 					else m_hud.wrong = 0;
 					break;
 			}
 			
-		}
+		}*/
 		
 		/*
 		* function to see if a robot walks into a obstacle "sabotage grejs"
@@ -685,15 +752,17 @@ package state
 					
 					m_robot2.removeChild(m_robot2.obstacle);
 					
-					switch(whichPower)
-					{
-						case 0:
+		//			switch(whichPower)
+		//			{
+		//				case 0:
 							initBombSound();
 							m_robot.speed = 0;
 							m_flickr = new Flicker(m_robot, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
 							Session.timer.create(1000, initSpeed);
-							break;
+							
+		//					updateHUDPowerup();
+	/*						break;
 						
 						case 1:
 							initWrongWaySound();
@@ -702,7 +771,7 @@ package state
 							Session.effects.add(m_flickr);
 							Session.timer.create(4000, setToFalse);
 							break;
-					}
+					}*/
 				}
 			}
 			
@@ -712,15 +781,17 @@ package state
 				{
 					
 					m_robot.removeChild(m_robot.obstacle);
-					switch(whichPower)
-					{
-						case 0:
+		//			switch(whichPower)
+		//			{
+		//				case 0:
 							initBombSound();
 							m_robot2.speed = 0;
 							m_flickr = new Flicker(m_robot2, 1000); //obj, tid (hur länge), intervall
 							Session.effects.add(m_flickr);
 							Session.timer.create(1000, initSpeed);
-							break;
+							
+		//					updateHUDPowerup();
+	/*						break;
 						
 						case 1:
 							initWrongWaySound();
@@ -729,7 +800,7 @@ package state
 							Session.effects.add(m_flickr);
 							Session.timer.create(4000, setToFalse);
 							break;
-					}
+					}*/
 				}
 			}
 		}
@@ -746,6 +817,9 @@ package state
 				m_flickr = new Flicker(m_robot2, 4000); //obj, tid (hur länge), intervall
 				Session.effects.add(m_flickr);
 				Session.timer.create(4000, setToFalse);
+				m_hud.wrong(1, false);
+				
+	//			updateHUDPowerup();
 			}
 			
 			if(m_robot2.activateWrongSide)
@@ -756,6 +830,9 @@ package state
 				m_flickr = new Flicker(m_robot, 4000); //obj, tid (hur länge), intervall
 				Session.effects.add(m_flickr);
 				Session.timer.create(4000, setToFalse);
+				m_hud.wrong(2, false);
+
+		//		updateHUDPowerup();
 			}
 		}
 		
@@ -787,8 +864,8 @@ package state
 			m_robot2.speed = 3;
 			m_robot.speed = 3;
 			
-			m_powerUp = null;
-			m_powerUp2 = null;
+	//		m_powerUp = null;
+	//		m_powerUp2 = null;
 			
 			addPowerUp();
 			placePowerup();
@@ -806,8 +883,8 @@ package state
 			m_robot.activateWrongSide = false;
 			m_robot2.activateWrongSide = false;
 			
-			m_powerUp = null;
-			m_powerUp2 = null;
+	//		m_powerUp = null;
+	//		m_powerUp2 = null;
 			
 			addPowerUp();
 			placePowerup();
@@ -887,8 +964,8 @@ package state
 			whichPower = Math.round(whichPower);
 
 			
-			m_robot.obstacleType = whichPower;
-			m_robot2.obstacleType = whichPower;
+			/*m_robot.obstacleType = whichPower;
+			m_robot2.obstacleType = whichPower;*/
 			
 			m_powerUp = new PowerUp(whichPower);
 			m_powerUp2 = new PowerUp(whichPower);

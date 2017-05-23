@@ -83,13 +83,13 @@ package se.lnu.stickossdk.tween {
 		 *	@return	String
 		 */
 		public function toString():String {
-			var string:String = "\n[TweenProperty ";
+			var string:String = "[TweenProperty ";
 				string += "name:" + name;
 				string += ", ";	
 				string += "valueStart:" + String(valueStart);
 				string += ", ";
 				string += "valueComplete:" + String(valueComplete);
-				string += "]\n";
+				string += "]";
 			
 			return string;
 		}

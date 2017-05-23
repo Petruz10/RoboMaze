@@ -54,7 +54,7 @@ package se.lnu.stickossdk.debug
 		 *	...
 		 */
 		public function SoundCounter() {
-			width = 129; //@TODO: MAGICK NUMBER
+			width = 139; //@TODO: MAGICK NUMBER
 		}
 		
 		//-------------------------------------------------------

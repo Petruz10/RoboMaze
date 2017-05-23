@@ -15,6 +15,7 @@ package se.lnu.stickossdk.system
 	import flash.system.System;
 	import flash.ui.Mouse;
 	
+	import se.lnu.stickossdk.component.notice.Notices;
 	import se.lnu.stickossdk.debug.Debug;
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.input.Input;
@@ -42,7 +43,7 @@ package se.lnu.stickossdk.system
 		/**
 		 *	Versionsnummer för denna version av StickOS SDK.
 		 */
-		public static const VERSION:String = "1.5.6";
+		public static const VERSION:String = "1.6.8";
 		
 		//-------------------------------------------------------
 		// Public getter and setter methods
@@ -61,6 +62,13 @@ package se.lnu.stickossdk.system
 		 */
 		public function set displayState(state:DisplayState):void {
 			_swapState = state;
+		}
+		
+		/**
+		 *	StickOS SDKs notis-hanterare
+		 */
+		public function get notices():Notices {
+			return _notices;
 		}
 		
 		/**
@@ -107,6 +115,17 @@ package se.lnu.stickossdk.system
 		internal function get overlay():Sprite {
 			return _overlay;
 		}
+		
+		//-------------------------------------------------------
+		// Public properties
+		//-------------------------------------------------------
+		
+		/**
+		 *	Adress till extern databas om spelet skall exporteras till mobil, PC eller mac
+		 * 
+		 *	@default DisplayState
+		 */
+		public var initExternalDatabaseLocation:String = null;
 		
 		//-------------------------------------------------------
 		// Protected properties
@@ -161,6 +180,13 @@ package se.lnu.stickossdk.system
 		 */
 		protected var initDebugger:Boolean;
 		
+		/**
+		 *	Vilken sorts renderingsteknik som applikationen skall använda
+		 * 
+		 *	@default StageQuality.LOW
+		 */
+		protected var initRenderQuality:String = StageQuality.LOW;
+		
 		//-------------------------------------------------------
 		// Private properties
 		//-------------------------------------------------------
@@ -185,6 +211,13 @@ package se.lnu.stickossdk.system
 		 *	@default null
 		 */
 		private var _debug:Debug;
+		
+		/**
+		 *	...
+		 * 
+		 *	@default null
+		 */
+		private var _notices:Notices;
 		
 		/**
 		 *	Överdragslager som används för att presentera 
@@ -286,7 +319,25 @@ package se.lnu.stickossdk.system
 		 *	@return void
 		 */
 		public function setup():void {
-			//ÖVERSKRIV FRÅN SUPER
+			
+		}
+		
+		/**
+		 *	...
+		 * 
+		 *	@return void
+		 */
+		public function presets():void {
+			
+		}
+		
+		/**
+		 *	...
+		 * 
+		 *	@return void
+		 */
+		public function kill():void {
+			
 		}
 		
 		//-------------------------------------------------------
@@ -319,10 +370,12 @@ package se.lnu.stickossdk.system
 			
 			initOverlay();
 			initSession();
+			initNotices();
 			initDebug();
 			initStage();
 			initResolution();
 			initInput();
+			initPresets();
 			initState();
 			initEvent();
 		}
@@ -350,6 +403,18 @@ package se.lnu.stickossdk.system
 		private function initOverlay():void {
 			_overlay = new Sprite();
 			addChild(_overlay);
+		}
+		
+		/**
+		 *	Skapar och initierar StickOS SDKs debugg-verktyg. 
+		 *	Verktyget aktiveras automatiskt om egenskapen 
+		 *	initDebugger har satts till true i setup-metoden.
+		 * 
+		 *	@return void
+		 */
+		private function initNotices():void {
+			_notices = new Notices(size.x, size.y);
+			_overlay.addChild(_notices);
 		}
 		
 		/**
@@ -394,6 +459,7 @@ package se.lnu.stickossdk.system
 			this.graphics.endFill();
 			
 			/*
+			// OSX RETINA FIX
 			this.width  = initSize.x;
 			this.height = initSize.y;
 			this.scaleX = initScale.x;
@@ -414,6 +480,15 @@ package se.lnu.stickossdk.system
 			Input.init(stage);
 			Input.enableKeyboard = true;
 			Mouse.hide();
+		}
+		
+		/**
+		 *	...
+		 * 
+		 *	@return void
+		 */
+		private function initPresets():void {
+			presets();
 		}
 		
 		/**
@@ -585,8 +660,10 @@ package se.lnu.stickossdk.system
 			disposeState();
 			disposeInput();
 			disposeSession();
+			disposeNotices();
 			disposeOverlay();
 			disposeMemory();
+			kill();
 		}
 		
 		/**
@@ -650,6 +727,19 @@ package se.lnu.stickossdk.system
 		 */
 		private function disposeSession():void {
 			Session.dispose();
+		}
+		
+		/**
+		 *	...
+		 * 
+		 *	@return void
+		 */
+		private function disposeNotices():void {
+			if (_notices != null && _notices.parent != null) {
+				_notices.parent.removeChild(_notices);
+				_notices.dispose();
+				_notices = null;
+			}
 		}
 		
 		/**
@@ -740,12 +830,12 @@ package se.lnu.stickossdk.system
 		 *	@return void
 		 */
 		private final function setupFullscreen():void {
-			var screenRectangle:Rectangle = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
+			var screenRectangle:Rectangle = new Rectangle(0, 0, size.x, size.y);
 			
 			stage.align 				= StageAlign.TOP_LEFT;
 			stage.scaleMode 			= StageScaleMode.NO_SCALE;
 			stage.displayState			= StageDisplayState.NORMAL;
-			stage.quality				= StageQuality.LOW;
+			stage.quality				= initRenderQuality;
 			stage.focus					= stage;
 			stage.fullScreenSourceRect	= screenRectangle;
 			

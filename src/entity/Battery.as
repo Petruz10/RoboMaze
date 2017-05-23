@@ -51,7 +51,8 @@ package entity
 					m_timer = Session.timer.create(85, removeHP);
 					break;
 				case 2:
-					m_timer = Session.timer.create(100, removeHP);
+					//m_timer = Session.timer.create(100, removeHP);
+					m_timer = Session.timer.create(200, removeHP);
 					break;
 			}
 			

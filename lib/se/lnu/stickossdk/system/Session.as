@@ -4,6 +4,7 @@ package se.lnu.stickossdk.system
 	// Import
 	//-----------------------------------------------------------
 	
+	import se.lnu.stickossdk.component.notice.Notices;
 	import se.lnu.stickossdk.component.screenkeyboard.ScreenKeyboardManager;
 	import se.lnu.stickossdk.fx.Effects;
 	import se.lnu.stickossdk.media.SoundManager;
@@ -37,6 +38,14 @@ package se.lnu.stickossdk.system
 		 */
 		public static function get application():Engine {
 			return _application;
+		}
+		
+		/**
+		 *	Denna referens är reserverad för internet bruk av StickOS SDK. 
+		 *	Externa utvecklare skall inte använda denna referens!
+		 */
+		public static function get core():Core {
+			return _core;
 		}
 		
 		/**
@@ -114,6 +123,13 @@ package se.lnu.stickossdk.system
 		 *	@default null
 		 */
 		private static var _application:Engine;
+		
+		/**
+		 *	...
+		 * 
+		 *	@default null
+		 */
+		private static var _core:Core;
 		
 		/**
 		 *	Referens till StickOS SDKs ljudhanterare. Egenskapen 
@@ -207,6 +223,7 @@ package se.lnu.stickossdk.system
 			_screenKeyboard = new ScreenKeyboardManager(_application.overlay);
 			_tweener		= new Tweener();
 			_effects		= new Effects();
+			_core			= new Core();
 		}
 		
 		/**
@@ -221,6 +238,7 @@ package se.lnu.stickossdk.system
 			_tweener.update();
 			_timerManager.update();
 			_effects.update();
+			_core.update();
 		}
 		
 		/**
@@ -236,6 +254,7 @@ package se.lnu.stickossdk.system
 			disposeEffects();
 			disposeSoundManager();
 			disposeScreenKeyboard();
+			disposeCore();
 			
 			_application = null;
 		}
@@ -316,6 +335,16 @@ package se.lnu.stickossdk.system
 		private static function disposeScreenKeyboard():void {
 			_screenKeyboard.dispose();
 			_screenKeyboard = null;
+		}
+		
+		/**
+		 *	Deallokerar minnet för skärmtangentbords-objektet.
+		 * 
+		 *	@return void
+		 */
+		private static function disposeCore():void {
+			_core.dispose();
+			_core = null;
 		}
 	}
 }
