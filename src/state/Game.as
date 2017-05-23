@@ -159,11 +159,10 @@ package state
 				hitPowerup();
 				checkBattery();
 			//	updateHUDPowerup();
-				if(m_robot.obstacle || m_robot2.obstacle) 
-				{
-					m_hud.bomb = 0;
-					checkhitObstacle();
-				}
+				if(m_robot.obstacle || m_robot2.obstacle)checkhitObstacle();
+				if(m_robot.obstacle) m_hud.bomb(1, false);
+				if(m_robot2.obstacle) m_hud.bomb(2, false);
+					
 				checkWrongSide();
 				testWhichPowerup();
 			}
@@ -579,11 +578,11 @@ package state
 				switch(whichPower)
 				{
 					case 0:
-						m_hud.bomb = 2;
+						m_hud.bomb(2, true);
 						break;
 					
 					case 1:
-						m_hud.wrong = 2;
+						m_hud.wrong(2, true);
 						break;
 				}
 			}
@@ -595,11 +594,11 @@ package state
 				switch(whichPower)
 				{
 					case 0:
-						m_hud.bomb = 1;
+						m_hud.bomb(1, true);
 						break;
 					
 					case 1:
-						m_hud.wrong = 1;
+						m_hud.wrong(1, true);
 						break;
 				}
 				
@@ -818,7 +817,7 @@ package state
 				m_flickr = new Flicker(m_robot2, 4000); //obj, tid (hur länge), intervall
 				Session.effects.add(m_flickr);
 				Session.timer.create(4000, setToFalse);
-				m_hud.wrong = 0;
+				m_hud.wrong(1, false);
 				
 	//			updateHUDPowerup();
 			}
@@ -831,7 +830,7 @@ package state
 				m_flickr = new Flicker(m_robot, 4000); //obj, tid (hur länge), intervall
 				Session.effects.add(m_flickr);
 				Session.timer.create(4000, setToFalse);
-				m_hud.wrong = 0;
+				m_hud.wrong(2, false);
 
 		//		updateHUDPowerup();
 			}
