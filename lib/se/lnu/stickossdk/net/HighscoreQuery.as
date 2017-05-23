@@ -1,5 +1,6 @@
 package se.lnu.stickossdk.net
 {
+	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.util.URLUtils;
 
 	//-----------------------------------------------------------
@@ -21,7 +22,7 @@ package se.lnu.stickossdk.net
 	internal class HighscoreQuery {
 		
 		//-------------------------------------------------------
-		// Private static constants
+		// Public static getter and setter methods
 		//-------------------------------------------------------
 		
 		/**
@@ -29,7 +30,9 @@ package se.lnu.stickossdk.net
 		 * 
 		 *	@default String
 		 */
-		private static const DEFAULT_DATABASE_LOCATION:String = "http://localhost/stickos";
+		public static function get DEFAULT_DATABASE_LOCATION():String {
+			return Session.application.initExternalDatabaseLocation || "http://localhost/stickos";
+		}
 		
 		//-------------------------------------------------------
 		// Constructor methods
@@ -87,6 +90,18 @@ package se.lnu.stickossdk.net
 		 */
 		public static function getCheckQuery(game:int, table:int, score:int):String {
 			return DEFAULT_DATABASE_LOCATION+'?method_id=3&game_id='+game+'&table_id='+table+'&score='+score;
+		}
+		
+		/**
+		 *	Returnerar sökvägen till att rensa en highscore-tabell
+		 * 
+		 *	@param	game	Spelets unika identifierare.
+		 *	@param	table	Tabellen som skall rensas.
+		 * 
+		 *	@return String
+		 */
+		public static function getResetQuery(game:int, table:int):String {
+			return DEFAULT_DATABASE_LOCATION+'?method_id=4&game_id='+game+'&table_id='+table;
 		}
 	}
 }

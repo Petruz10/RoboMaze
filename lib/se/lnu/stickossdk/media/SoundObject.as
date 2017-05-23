@@ -29,6 +29,17 @@ package se.lnu.stickossdk.media {
 		//-------------------------------------------------------
 		
 		/**
+		 *	...
+		 */
+		public function get isPlaying():Boolean {
+			for (var i:int = 0; i < _soundInstances.length; i++ ) {
+				if (_soundInstances[i].complete == false) return true;
+			}
+			
+			return false;
+		}
+		
+		/**
 		 *	Om ljudvolymen är avslagen (muted) eller inte.
 		 */
 		public function get mute():Boolean {

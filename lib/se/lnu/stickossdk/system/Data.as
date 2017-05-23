@@ -1,5 +1,11 @@
-package se.lnu.stickossdk.system
-{
+package se.lnu.stickossdk.system {
+	
+	//-----------------------------------------------------------
+	// Imports
+	//-----------------------------------------------------------
+	
+	import flash.net.SharedObject;
+
 	//-----------------------------------------------------------
 	// Public class
 	//-----------------------------------------------------------
@@ -41,6 +47,13 @@ package se.lnu.stickossdk.system
 			return _local;
 		}
 		
+		/**
+		 *	...
+		 */
+		public function get permanent():Object {
+			return _permanent.data;
+		}
+		
 		//-------------------------------------------------------
 		// Private properties
 		//-------------------------------------------------------
@@ -64,6 +77,13 @@ package se.lnu.stickossdk.system
 		 */
 		private var _local:Object = new Object();
 		
+		/**
+		 *	...
+		 * 
+		 *	@default Object
+		 */
+		private var _permanent:Object = SharedObject.getLocal(String(Session.application.id));
+		
 		//-------------------------------------------------------
 		// Constructor method
 		//-------------------------------------------------------
@@ -72,7 +92,7 @@ package se.lnu.stickossdk.system
 		 *	Skapar en ny instans av Data.
 		 */
 		public function Data() {
-			 
+			
 		}
 		
 		//-------------------------------------------------------

@@ -1,7 +1,7 @@
 package se.lnu.stickossdk.tween {
 	
 	//-----------------------------------------------------------
-	// Public class
+	// Imports
 	//-----------------------------------------------------------
 	
 	import se.lnu.stickossdk.system.Session;
@@ -90,7 +90,7 @@ package se.lnu.stickossdk.tween {
 		}
 		
 		//-------------------------------------------------------
-		// Private properties
+		// Protected properties
 		//-------------------------------------------------------
 		
 		/**
@@ -110,7 +110,7 @@ package se.lnu.stickossdk.tween {
 		 * 
 		 *	@default 1000
 		 */
-		private var _duration:Number = 1000;
+		protected var _duration:Number = 1000;
 		
 		/**
 		 *	Referens till objektet vars egenskaper ska 
@@ -118,7 +118,7 @@ package se.lnu.stickossdk.tween {
 		 * 
 		 *	@default null
 		 */
-		private var _objectCurrent:Object;
+		protected var _objectCurrent:Object;
 		
 		/**
 		 *	En klon av objektet som ska interpoleras. Klonen 
@@ -128,7 +128,7 @@ package se.lnu.stickossdk.tween {
 		 * 
 		 *	@default null
 		 */
-		private var _objectInitial:Object;
+		protected var _objectInitial:Object;
 		
 		/**
 		 *	Lista innehållande samtliga egenskaper som påverkas 
@@ -137,7 +137,44 @@ package se.lnu.stickossdk.tween {
 		 * 
 		 *	@default Vector
 		 */
-		private var _propertyList:Vector.<TweenProperty> = new Vector.<TweenProperty>();
+		protected var _propertyList:Vector.<TweenProperty> = new Vector.<TweenProperty>();
+		
+		/**
+		 *	Huruvida parametrar skall retuneras i samband med callback
+		 * 
+		 *	@default Boolean
+		 */
+		protected var _requestParam:Boolean = false;
+		
+		/**
+		 *	Beräknar under hur lång tid interpoleringen har varit 
+		 *	aktiv. Tidsenheten som används är millisekunder.
+		 * 
+		 *	@default 0
+		 */
+		protected var _activeTimeElapsed:Number = 0;
+		
+		/**
+		 *	Återuppringningsmetod (callback) som aktiveras när 
+		 *	interpoleringen är klar. Metoden är valbar och 
+		 *	aktiveras enbart då det finns en giltig referens.
+		 * 
+		 *	@default null
+		 */
+		protected var _onComplete:Function;
+		
+		/**
+		 *	Återuppringningsmetod (callback) som aktiveras innan 
+		 *	interpoleringen påbörjas. Metoden är valbar och 
+		 *	aktiveras enbart då det finns en giltig referens.
+		 * 
+		 *	@default null
+		 */
+		protected var _onInit:Function;
+		
+		//-------------------------------------------------------
+		// Private properties
+		//-------------------------------------------------------
 		
 		/**
 		 *	Referens till en "Ease-metod". Metoden används för 
@@ -147,23 +184,6 @@ package se.lnu.stickossdk.tween {
 		 *	@default null
 		 */
 		private var _transition:Function;
-		
-		/**
-		 *	Beräknar under hur lång tid interpoleringen har varit 
-		 *	aktiv. Tidsenheten som används är millisekunder.
-		 * 
-		 *	@default 0
-		 */
-		private var _activeTimeElapsed:Number = 0;
-		
-		/**
-		 *	Återuppringningsmetod (callback) som aktiveras när 
-		 *	interpoleringen är klar. Metoden är valbar och 
-		 *	aktiveras enbart då det finns en giltig referens.
-		 * 
-		 *	@default null
-		 */
-		private var _onComplete:Function;
 		
 		//-------------------------------------------------------
 		// Constructor method
@@ -175,15 +195,21 @@ package se.lnu.stickossdk.tween {
 		 *	@param	object		...
 		 *	@param	argument	...
 		 */
-		public function Tween(object:Object, argument:Object) {
+		public function Tween(object:Object, argument:Object, extended:Boolean = false ) {
+			//trace("---------------------------------------------");
+			//trace("Tween.constructor for " + object);
+			if (extended) { return; }
+			
 			_objectCurrent 	= object;
 			_objectInitial	= ObjectUtils.clone(object);
 			_argument 		= argument;
 			_transition 	= argument.transition || Sine.easeInOut;
-			_duration 		= _argument.duration;
-			_onComplete    	= _argument.onComplete;
+			_duration 		= argument.duration;
+			_onComplete    	= argument.onComplete;
+			_onInit   	 	= argument.onInit;
+			_requestParam   = argument.requestParam || false;
 			
-			triggerCallback(_argument.onInit);
+			triggerCallback(_onInit);
 			removeReservedArguments();
 			createPropertyTween();
 		}
@@ -232,7 +258,8 @@ package se.lnu.stickossdk.tween {
 		 */
 		private function triggerCallback(callback:Function):void {
 			if (callback is Function) {
-				callback();
+				if (_requestParam == true) callback(this, _objectCurrent);
+				else callback();
 			}
 		}
 		
@@ -265,6 +292,10 @@ package se.lnu.stickossdk.tween {
 		 *	@return void
 		 */
 		private function createPropertyTween():void {
+			if (_objectInitial == null) {
+				trace("Error: Tween:_objectInitial is null");
+				return;
+			}
 			for (var property:String in _argument) {
 				if (_objectInitial[property] !== _argument[property]) {
 					createTweenProperty(property);
@@ -296,25 +327,14 @@ package se.lnu.stickossdk.tween {
 		 *	@return void
 		 */
 		private function updateTweens():void {
-			var i:int = 0;
-			for (i = 0; i < _propertyList.length; i++) {
-				updateTween(i);
+			if (Session.application.time.timeOfCurrentFrame < _tweenEnd) {
+				updateTweenProperties();
 			}
-		}
-		
-		/**
-		 *	Uppdaterar en specifik egenskap i 
-		 *	interpoleringsprocessen. Om en egenskap har nått sin 
-		 *	slutpunkt tar metoden bort och deallokerar 
-		 *	egenskapen.
-		 * 
-		 *	@param	index	Index för egenskapen.
-		 * 
-		 *	@return void
-		 */
-		private function updateTween(index:int):void {
-			if (Session.application.time.timeOfCurrentFrame < _tweenEnd) updateTweenProperty(index);
-			else completeTweenProperty(index);
+			else {
+				completeTweenProperties();
+				disposeTweenProperties();
+				triggerCallback(_onComplete);
+			}
 		}
 		
 		/**
@@ -322,19 +342,24 @@ package se.lnu.stickossdk.tween {
 		 *	beräknar förflyttningen för en specifik egenskap. 
 		 *	Resultatet anges alltid som ett decimaltal (Number).
 		 * 
-		 *	@param	index	Index för egenskapen.
-		 * 
 		 *	@return void
 		 */
-		private function updateTweenProperty(index:int):void {
-			var p:Object = _propertyList[index];
-			var t:Number = _activeTimeElapsed;
-			var b:Number = p.valueStart;
-			var c:Number = p.valueComplete - p.valueStart;
-			var d:Number = _tweenEnd - _tweenStart;
-			var v:Number = _transition(t, b, c, d);
+		private function updateTweenProperties():void {
+			var property:Object;
+			var t:Number; // Specifies the current time, between 0 and duration inclusive.
+			var b:Number; // Specifies the initial value of the animation property.
+			var c:Number; // Specifies the total change in the animation property.
+			var d:Number; // Specifies the duration of the motion.
 			
-			_objectCurrent[p.name] = v;
+			for (var i:int = 0; i < _propertyList.length; i++) {
+				property = _propertyList[i];
+				t = _activeTimeElapsed;
+				b = property.valueStart;
+				c = property.valueComplete - property.valueStart;
+				d = _tweenEnd - _tweenStart;
+				
+				_objectCurrent[property.name] = _transition(t, b, c, d);
+			}
 		}
 		
 		/**
@@ -342,15 +367,14 @@ package se.lnu.stickossdk.tween {
 		 *	egenskap. Metoden aktiverar återupprigningsmetoden, 
 		 *	om den finns tillgänglig.
 		 * 
-		 *	@param	index	Index för egenskapensinställningen.
-		 * 
 		 *	@return void
 		 */
-		private function completeTweenProperty(index:int):void {
-			var p:Object = _propertyList[index];
-			_objectCurrent[p.name] = p.valueComplete;
-			disposeTweenProperty(index);
-			triggerCallback(_onComplete);
+		private function completeTweenProperties():void {
+			var property:Object;
+			for (var i:int = 0; i < _propertyList.length; i++) {
+				property = _propertyList[i];
+				_objectCurrent[property.name] = property.valueComplete;
+			}
 		}
 		
 		/**

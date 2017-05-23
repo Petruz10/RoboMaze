@@ -87,5 +87,26 @@ package se.lnu.stickossdk.util
 			var dy:Number = p1.y-p2.y;
 			return Math.sqrt(dx * dx + dy * dy);
 		}
+		
+		/**
+		 *	Slumpar tal mellan intervall
+		 * 
+		 *	@param	min	start
+		 *	@param	max	end
+		 * 
+		 *	@return Avståndet mellan p1 och p2.
+		 */
+		public static function randomRange(min:Number, max:Number):Number {
+			return Math.random() * (max - min + 1) + min;
+		}
+		
+		/**
+		 *	...
+		 * 
+		 * 	@param a Trolighetsfaktor, 100 är alltid, 0 är aldrig.
+		 */
+		public static function chance(a:int):Boolean {
+			return Boolean(Math.random() > (100 - a) / 100);
+		}
 	}
 }
