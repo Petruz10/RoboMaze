@@ -95,6 +95,8 @@ package state
 		private var yArray:Vector.<int> = new Vector.<int>(); 
 		private var m_testObj:TestPlaceObj;
 		
+		private var m_robotInt:int;
+		
 		//------------------------------------------------------------------------
 		// public properties 
 		//------------------------------------------------------------------------
@@ -160,28 +162,34 @@ package state
 				checkBattery();
 			//	updateHUDPowerup();
 				if(m_robot.obstacle || m_robot2.obstacle)checkhitObstacle();
-				if(m_robot.obstacle) m_hud.bomb(1, false);
-				if(m_robot2.obstacle) m_hud.bomb(2, false);
+			
+				//if(!m_robot.bomb) m_hud.bomb(1, false);
+			//	if(!m_robot2.bomb) m_hud.bomb(2, false);
 					
 				checkWrongSide();
-				testWhichPowerup();
+			//	testWhichPowerup();
+				bombHUD();
 			}
 			else updateHUDTime();
 		}
 		
 		private function testWhichPowerup():void
 		{
-			if(m_hud.wrong == 1) m_robot.obstacleType = 1;
-			if(m_hud.wrong == 2) m_robot2.obstacleType = 1;
+			if(m_robotInt == 1)m_robot.obstacleType = whichPower;
 			
-			if(m_hud.bomb == 2) m_robot2.obstacleType = 0;
-			if(m_hud.bomb == 1) m_robot.obstacleType = 0;
+			if(m_robotInt == 2)m_robot2.obstacleType = whichPower;
+			
 			
 		}
 		
 		protected function bombHUD():void
 		{
-			m_hud.bomb = 0;
+			//m_hud.bomb = 0;
+			if(m_robot.bomb) m_hud.bomb(1, true);
+			else if(!m_robot.bomb) m_hud.bomb(1, false);
+			
+			if(m_robot2.bomb) m_hud.bomb(2, true);
+			else if(m_robot2.bomb) m_hud.bomb(2, false);
 		}
 		
 		/*
@@ -559,7 +567,7 @@ package state
 		*/
 		private function hitPowerup():void
 		{
-			if(m_powerUp.hitTestObject(m_robot2.area) && m_powerUp2.hitTestObject(m_robot.area))
+			/*if(m_powerUp.hitTestObject(m_robot2.area) && m_powerUp2.hitTestObject(m_robot.area))
 			{
 				trace("bägge samtidigt");
 				m_layer4.removeChildren();
@@ -569,32 +577,40 @@ package state
 				
 				
 				return;
-			}
+			}*/
 			
 			if(m_powerUp.hitTestObject(m_robot2.area)) 
 			{
 				if(m_robot2.powerUp >= 1) return;
 				m_robot2.powerUp ++;
+				m_robotInt = 2;
 				switch(whichPower)
 				{
 					case 0:
 						m_hud.bomb(2, true);
+						m_robot2.bomb = true;
 						break;
 					
 					case 1:
 						m_hud.wrong(2, true);
 						break;
 				}
+				
+				testWhichPowerup();
 			}
+			
 			if(m_powerUp2.hitTestObject(m_robot.area)) 
 			{
 				if(m_robot.powerUp >= 1) return;
 				m_robot.powerUp ++;
+				m_robotInt = 1;
+				testWhichPowerup();
 				
 				switch(whichPower)
 				{
 					case 0:
 						m_hud.bomb(1, true);
+						m_robot.bomb = true;
 						break;
 					
 					case 1:
@@ -817,6 +833,7 @@ package state
 				m_flickr = new Flicker(m_robot2, 4000); //obj, tid (hur länge), intervall
 				Session.effects.add(m_flickr);
 				Session.timer.create(4000, setToFalse);
+				
 				m_hud.wrong(1, false);
 				
 	//			updateHUDPowerup();
@@ -830,6 +847,7 @@ package state
 				m_flickr = new Flicker(m_robot, 4000); //obj, tid (hur länge), intervall
 				Session.effects.add(m_flickr);
 				Session.timer.create(4000, setToFalse);
+				
 				m_hud.wrong(2, false);
 
 		//		updateHUDPowerup();

@@ -36,6 +36,8 @@ package entity
 		public var startGame:Boolean = false;
 		public var wrongSide:Boolean = false;
 		public var activateWrongSide:Boolean = false;
+		
+		public var bomb:Boolean = false;
 
 		//------------------------------------------------------------------------
 		// private properties 
@@ -211,17 +213,19 @@ package entity
 		private function addObstacle():void
 		{
 			powerUp --;
+			trace("obstacle type fucking robot",obstacleType);
 			
 			switch(obstacleType)
 			{
 				case 0:
-					obstacle = new Obstacle(obstacleType);
+					obstacle = new Obstacle(0);
 					
 					obstacle.y = _skin.y;
-					if(m_player == 0)obstacle.x = _skin.x +400;
-					else if(m_player == 1)obstacle.x = _skin.x -400;
+					if(m_player == 0)obstacle.x = _skin.x + 400;
+					else if(m_player == 1)obstacle.x = _skin.x - 400;
 					
 					this.addChild(obstacle);
+					bomb = false;
 					break;
 		
 				case 1:
