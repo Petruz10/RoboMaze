@@ -99,12 +99,16 @@ package component
 			_bombIcon2 = new BombIcon_mc();
 			
 			_bombIcon1.gotoAndStop("deactivate");
-			_bombIcon1.x = 200;
-			_bombIcon1.y = 30;
+			_bombIcon1.x = 220;
+			_bombIcon1.y = 20;
+			_bombIcon1.scaleX = 1.5;
+			_bombIcon1.scaleY = 1.5;
 
 			_bombIcon2.gotoAndStop("deactivate");
-			_bombIcon2.x = 572;
-			_bombIcon2.y = 30;
+			_bombIcon2.x = 552;
+			_bombIcon2.y = 20;
+			_bombIcon2.scaleX = 1.5;
+			_bombIcon2.scaleY = 1.5;
 			
 			this.addChild(_bombIcon1);
 			this.addChild(_bombIcon2);
@@ -114,12 +118,16 @@ package component
 			_wrongIcon2 = new WrongIcon_mc();
 			
 			_wrongIcon1.gotoAndStop("deactivate");
-			_wrongIcon1.x = 240;
-			_wrongIcon1.y = 30;
+			_wrongIcon1.x = 280;
+			_wrongIcon1.y = 20;
+			_wrongIcon1.scaleX = 1.5;
+			_wrongIcon1.scaleY = 1.5;
 			
 			_wrongIcon2.gotoAndStop("deactivate");
-			_wrongIcon2.x = 532;
-			_wrongIcon2.y = 30;
+			_wrongIcon2.x = 492;
+			_wrongIcon2.y = 20;
+			_wrongIcon2.scaleX = 1.5;
+			_wrongIcon2.scaleY = 1.5;
 			
 			this.addChild(_bombIcon1);
 			this.addChild(_bombIcon2);
@@ -147,8 +155,8 @@ package component
 		//------------------------------------------------------------------------
 		// 	set second battery lvl
 		//------------------------------------------------------------------------
-		public function set time(time:String):void{
-			var time:String = time;
+		public function set time(timePlayed:String):void{
+			var time:String = timePlayed;
 		}
 		public function set battery2Lvl(batteryLvl:int):void {
 			this._battery2Lvl = batteryLvl;
