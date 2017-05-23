@@ -1,6 +1,7 @@
 package component
 {
 	import flash.display.MovieClip;
+	import flash.filters.DropShadowFilter;
 
 	public class MultiplayerHUD extends HUD
 	{
@@ -23,6 +24,10 @@ package component
 		private var _ownedBomb2:Boolean; 	// player2
 		private var _ownedWrong1:Boolean; 	// player 1			
 		private var _ownedWrong2:Boolean; 	// player 2
+		/*
+		* 	graphic filters
+		*/
+		private var _shadow:DropShadowFilter; 
 		//------------------------------------------------------------------------
 		// 	Constructor
 		//------------------------------------------------------------------------
@@ -33,6 +38,7 @@ package component
 			super.init();
 			initBombIcons();
 			initWrongIcons();
+			initShadowfilter();
 		}
 		//------------------------------------------------------------------------
 		// 	update
@@ -57,7 +63,7 @@ package component
 			super.initBattery();
 			_battery2 = new Battery_mc();
 			_battery2.stop();
-			_battery2.x = 620;
+			_battery2.x = 615;
 			_battery2.y = 20;
 			this.addChild(_battery2);
 		}
@@ -91,6 +97,28 @@ package component
 			if (_ownedWrong1 == false) { deactivateIcon(_wrongIcon1); }
 			if (_ownedWrong2 == false) { deactivateIcon(_wrongIcon2); }
 		}
+		private function initShadowfilter():void {
+			_shadow = new DropShadowFilter();
+			_shadow.distance = 4;
+			_shadow.angle = 90;
+			_shadow.color = 0x111111;
+			_shadow.alpha = 1;
+			_shadow.blurX = 5;
+			_shadow.blurY = 5;
+			_shadow.strength = 1;
+			_shadow.quality = 15;
+			_shadow.inner = false;
+			_shadow.knockout = false;
+			_shadow.hideObject = false;
+
+			_battery1.filters = new Array(_shadow);
+			_battery2.filters = new Array(_shadow);
+
+			_wrongIcon1.filters = [_shadow];
+			_wrongIcon2.filters = [_shadow];
+			_bombIcon1.filters = [_shadow];
+			_bombIcon2.filters = [_shadow];
+		}
 		//------------------------------------------------------------------------
 		// 	init all icons used in HUD
 		//------------------------------------------------------------------------
@@ -101,14 +129,10 @@ package component
 			_bombIcon1.gotoAndStop("deactivate");
 			_bombIcon1.x = 220;
 			_bombIcon1.y = 20;
-			_bombIcon1.scaleX = 1.5;
-			_bombIcon1.scaleY = 1.5;
 
 			_bombIcon2.gotoAndStop("deactivate");
-			_bombIcon2.x = 552;
+			_bombIcon2.x = 532;
 			_bombIcon2.y = 20;
-			_bombIcon2.scaleX = 1.5;
-			_bombIcon2.scaleY = 1.5;
 			
 			this.addChild(_bombIcon1);
 			this.addChild(_bombIcon2);
@@ -118,19 +142,12 @@ package component
 			_wrongIcon2 = new WrongIcon_mc();
 			
 			_wrongIcon1.gotoAndStop("deactivate");
-			_wrongIcon1.x = 280;
+			_wrongIcon1.x = 290;
 			_wrongIcon1.y = 20;
-			_wrongIcon1.scaleX = 1.5;
-			_wrongIcon1.scaleY = 1.5;
-			
+		
 			_wrongIcon2.gotoAndStop("deactivate");
-			_wrongIcon2.x = 492;
+			_wrongIcon2.x = 462;
 			_wrongIcon2.y = 20;
-			_wrongIcon2.scaleX = 1.5;
-			_wrongIcon2.scaleY = 1.5;
-			
-			this.addChild(_bombIcon1);
-			this.addChild(_bombIcon2);
 			
 			this.addChild(_wrongIcon1);
 			this.addChild(_wrongIcon2);

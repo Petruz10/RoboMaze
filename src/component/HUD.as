@@ -3,6 +3,8 @@ package component
 	import flash.display.MovieClip;
 	import entity.Battery;
 	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
+	import flash.display.Shape;
+
 	/*
 	*
 	* game HUD	
@@ -20,7 +22,7 @@ package component
 		/*
 		*	BackgroundImg
 		*/
-		protected var _backgroundImg:HUD_BG_mc;
+		protected var _background:Shape;
 		/*
 		* 	Battery representation
 		*/
@@ -54,10 +56,13 @@ package component
 		//	 background
 		//------------------------------------------------------------------------
 		protected function initBackground():void {
-			_backgroundImg = new HUD_BG_mc();
-			_backgroundImg.x = 0;
-			_backgroundImg.y = 0;
-			this.addChild(_backgroundImg);
+            _background = new Shape();
+            _background.graphics.beginFill(0x444444);
+            _background.graphics.drawRect(0, 0, 800, 80);
+            _background.graphics.endFill();
+            _background.x = 0;
+            _background.y = 0;
+            this.addChild(_background);    
 		}
 		//------------------------------------------------------------------------
 		// 	init battery graphics
@@ -69,7 +74,6 @@ package component
 			_battery1.y = 20;
 			this.addChild(_battery1);
 		}
-
 		//-----------------------------------------------------------------------------
 		// 
 		// 	SETTERS & GETTERS
@@ -142,8 +146,8 @@ package component
 		// 	dispose background
 		//------------------------------------------------------------------------
 		protected function disposeBackground():void {
-			this.removeChild(_backgroundImg);
-			_backgroundImg = null;
+			this.removeChild(_background);
+			_background = null;
 		}
 		//------------------------------------------------------------------------
 		// 	dispose battery
