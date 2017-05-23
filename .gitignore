@@ -22,3 +22,7 @@ asset/swc/RoboMaze.swc
 src/state/GameOver.as
 
 asset/fla/RECOVER_RoboMaze.fla
+
+src/state/Menu.as
+
+src/state/Menu.as

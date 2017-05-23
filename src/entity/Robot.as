@@ -232,12 +232,6 @@ package entity
 			//return;
 		}
 		
-		private function setToFalse():void
-		{
-			wrongSide = false;
-			
-		}
-		
 		/*
 		* function to check which side of the robot hit the wall
 		*/
