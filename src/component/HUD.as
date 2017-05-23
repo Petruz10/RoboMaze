@@ -1,10 +1,10 @@
 package component
 {	
-	import flash.display.MovieClip;
 	import entity.Battery;
+	import flash.display.MovieClip;
 	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
 	import flash.display.Shape;
-
+	import flash.filters.DropShadowFilter;
 	/*
 	*
 	* game HUD	
@@ -27,6 +27,10 @@ package component
 		* 	Battery representation
 		*/
 		protected var _battery1:Battery_mc;
+		/*
+		* 	shadow filter
+		*/
+		protected var _shadow:DropShadowFilter;
 		//------------------------------------------------------------------------
 		// 	Constructor
 		//------------------------------------------------------------------------
@@ -36,6 +40,7 @@ package component
 		// 	init
 		//------------------------------------------------------------------------
 		override public function init():void {
+			initShadowfilter();
 			initBackground();
 			initBattery();
 		}
@@ -72,7 +77,25 @@ package component
 			_battery1.stop();
 			_battery1.x = 20;
 			_battery1.y = 20;
+			_battery1.filters = new Array(_shadow);
 			this.addChild(_battery1);
+		}
+		//------------------------------------------------------------------------
+		// 	shadow graphics
+		//------------------------------------------------------------------------
+		protected function initShadowfilter():void {
+			_shadow = new DropShadowFilter();
+			_shadow.distance = 2;
+			_shadow.angle = 90;
+			_shadow.color = 0x111111;
+			_shadow.alpha = 1;
+			_shadow.blurX = 3;
+			_shadow.blurY = 3;
+			_shadow.strength = 1;
+			_shadow.quality = 15;
+			_shadow.inner = false;
+			_shadow.knockout = false;
+			_shadow.hideObject = false;
 		}
 		//-----------------------------------------------------------------------------
 		// 

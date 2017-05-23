@@ -22,6 +22,7 @@ package state
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.media.SoundObject;
 	import flash.display.DisplayObject;
+	import flash.filters.DropShadowFilter;
 
 	//------------------------------------------------------------------------
 	// 	Highscore State
@@ -73,28 +74,33 @@ package state
 		*/ 
 		private var _robotDirection:Boolean; 
 		/*
-		* highscore list
+		* 	highscore list
 		*/
 		private var _container:Sprite;
 		private var _nameT:TextField;
 		private var _scoreT:TextField;
 		private var _highscoreF:TextFormat;
+		private var _shadow:DropShadowFilter;
+		/*
+		* 	music
+		*/
 		private var _backgroundMusic:SoundObject;
 		//------------------------------------------------------------------------
-		// constructor
+		// 	constructor
 		//------------------------------------------------------------------------
 		public function Highscore(){
 		}
 		//------------------------------------------------------------------------
-		// init
+		// 	init
 		//------------------------------------------------------------------------
 		override public function init():void {
+			initShadowfilter();
 			initLayers();
 			initFont();
 			initSound();
 		}
 		//------------------------------------------------------------------------
-		// update
+		// 	update
 		//------------------------------------------------------------------------
 		override public function update():void {
 			changeState();
@@ -102,18 +108,36 @@ package state
 			updateRobot();
 		}
 		//------------------------------------------------------------------------
-		// dispose
+		// 	dispose
 		//------------------------------------------------------------------------
 		override public function dispose():void {
 			_controls = null;
 			disposeBackground();
 			disposeHighscoreTable();
+			disposeOverlay();
 		}
 		private function initFont():void {
 			_gameFont = new GameFont();
 		}
 		//------------------------------------------------------------------------
-		// init layers
+		// 	shadow graphics
+		//------------------------------------------------------------------------
+		private function initShadowfilter():void {
+			_shadow = new DropShadowFilter();
+			_shadow.distance = 2;
+			_shadow.angle = 90;
+			_shadow.color = 0x000000;
+			_shadow.alpha = 1;
+			_shadow.blurX = 2;
+			_shadow.blurY = 2;
+			_shadow.strength = 1;
+			_shadow.quality = 15;
+			_shadow.inner = false;
+			_shadow.knockout = false;
+			_shadow.hideObject = false;
+		}
+		//------------------------------------------------------------------------
+		// 	init layers
 		//------------------------------------------------------------------------
 		private function initLayers():void {
 			initBackground();
@@ -122,7 +146,7 @@ package state
 			initOverlay(); // robot animation
 		}
 		//------------------------------------------------------------------------
-		// init sound
+		// 	init sound
 		//------------------------------------------------------------------------
 		private function initSound():void {
 			Session.sound.musicChannel.sources.add("highscore_credits", BackgroundCredits_mp3);
@@ -131,23 +155,23 @@ package state
 			_backgroundMusic.play(10);
 		}
 		//------------------------------------------------------------------------
-		// placeholders
+		// 	placeholders
 		//------------------------------------------------------------------------
 		private function initHighscore():void {
 			_highscoreData = new HighscoreData();
 			_score = _highscoreData.score;
 			_name = _highscoreData.name;
 
-	/*	if((_score.length == 0) || (_score == null)) {
+		if((_score.length == 0) || (_score == null)) {
 				_score.push("00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00");
 				_name.push("michaela1","michaela2","michaela3","michaela4","michaela5","michaela6","michaela7","michaela8","michaela9","michaela10");
-			} */
+			} 
 		}
 		private function updateHighscore():void {
 			if (_score.length != 0) { initList(); } 
 		}
 		//------------------------------------------------------------------------
-		// move robot
+		// 	move robot
 		//------------------------------------------------------------------------
 		private function updateRobot():void {
 			if (_robot) {
@@ -169,7 +193,7 @@ package state
 			}	
 		}
 		//------------------------------------------------------------------------
-		// init background
+		// 	init background
 		//------------------------------------------------------------------------
 		private function initBackground():void {
 			_header = new ScreenTop_mc();
@@ -184,7 +208,7 @@ package state
 			_layerBackground.addChild(_header);
 		}
 		//------------------------------------------------------------------------
-		// init name and highscore list
+		// 	init name and highscore list
 		//------------------------------------------------------------------------
 		private function initList():void {
 			if(_container == null) {
@@ -206,6 +230,7 @@ package state
 					_nameT.text = "00:00:00"; // PLACEHOLDER 
 					_nameT.width = 350;
 					_nameT.x = 70;
+					_nameT.filters = new Array(_shadow);
 					
 					_scoreT.embedFonts = true; 
 					_scoreT.selectable = false;
@@ -213,6 +238,7 @@ package state
 					_scoreT.text = "00:00:00"; // PLACEHOLDER 
 					_scoreT.width = 350;
 					_scoreT.x = 410;
+					_scoreT.filters = new Array(_shadow);
 					
 					if (i == 0) { 
 						_highscoreF.size = 30; 
@@ -239,7 +265,7 @@ package state
 			}
 		}
 		//------------------------------------------------------------------------
-		// init background
+		// 	init background
 		//------------------------------------------------------------------------
 		private function initHighscoreTable():void {
 			_btn = new BackButton();
@@ -254,10 +280,9 @@ package state
 			_layerHighscoreTable.addChild(_btn);
 		}
 		//------------------------------------------------------------------------
-		// robot
+		// 	robot
 		//------------------------------------------------------------------------
 		private function initOverlay():void {
-			trace("place robot");
 			_robot = new Robot1_mc();
 			_robot.scaleY = 4;
 			_robot.scaleX = 4;
@@ -269,7 +294,7 @@ package state
 			_layerOverlay.addChild(_robot);
 		}
 		//------------------------------------------------------------------------
-		// making sure that the player can return to menu
+		// 	making sure that the player can return to menu
 		//------------------------------------------------------------------------
 		private function changeState():void {
 			if(Input.keyboard.justPressed(_controls.PLAYER_BUTTON_1) == true){
@@ -277,7 +302,7 @@ package state
 			}
 		}
 		//------------------------------------------------------------------------
-		// dispose highscore table
+		// 	dispose highscore table
 		//------------------------------------------------------------------------
 		private function disposeHighscoreTable():void {
 			var textField:DisplayObject;
@@ -301,7 +326,7 @@ package state
 			_btn = null;	
 		}
 		//------------------------------------------------------------------------
-		// dispose background
+		// 	dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
 			_layerBackground.removeChild(_header);

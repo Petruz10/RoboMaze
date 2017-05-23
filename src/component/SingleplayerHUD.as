@@ -101,6 +101,7 @@ package component
 			_timeT.width = 500;
 			_timeT.y = 20;
 			_timeT.x = 270;
+			_timeT.filters = new Array(_shadow);
 			_timeT.setTextFormat(_timeF); 
 			this.addChild(_timeT);
 			
@@ -128,6 +129,7 @@ package component
 			_highscoreT.width = 500;
 			_highscoreT.y = 40;
 			_highscoreT.x = 630;
+			_highscoreT.filters = new Array(_shadow);
 			_highscoreT.setTextFormat(_highscoreF); 
 			this.addChild(_highscoreT);
 			//-----------------------------------------------------------------------------
@@ -148,6 +150,7 @@ package component
 			_aboveHighscoreT.width = 500;
 			_aboveHighscoreT.y = 20;
 			_aboveHighscoreT.x = 630;
+			_aboveHighscoreT.filters = new Array(_shadow);
 			_aboveHighscoreT.setTextFormat(_aboveHighscoreF); 
 			this.addChild(_aboveHighscoreT);
 		}
@@ -171,8 +174,8 @@ package component
         //-----------------------------------------------------------------------------
 		// set highsore
 		//-----------------------------------------------------------------------------
-		public function set highscore(highscore:String):void {
-			this._highscore = highscore;
+		public function set highscore(highscoreValue:String):void {
+			this._highscore = highscoreValue;
 		} 
 		//-----------------------------------------------------------------------------
 		// get highscore
