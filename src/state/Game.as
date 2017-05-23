@@ -159,7 +159,11 @@ package state
 				hitPowerup();
 				checkBattery();
 			//	updateHUDPowerup();
-				if(m_robot.obstacle || m_robot2.obstacle) checkhitObstacle();
+				if(m_robot.obstacle || m_robot2.obstacle) 
+				{
+					m_hud.bomb = 0;
+					checkhitObstacle();
+				}
 				checkWrongSide();
 				testWhichPowerup();
 			}
