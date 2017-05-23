@@ -6,7 +6,7 @@ package component
 	{
 		private var _battery2:Battery_mc;
 		private var _battery2Lvl:int;
-		private var _bomb:int; // 1 or 2
+		private var _bomb:int; 	// 1 or 2
 		private var _wrong:int; // 1 or 2
 		/*
 		*	ICONS
@@ -16,6 +16,13 @@ package component
 		
 		private var _wrongIcon1:WrongIcon_mc;
 		private var _wrongIcon2:WrongIcon_mc;
+		/*
+		* 	flags
+		*/
+		private var _ownedBomb1:Boolean; 	// player 1
+		private var _ownedBomb2:Boolean; 	// player2
+		private var _ownedWrong1:Boolean; 	// player 1			
+		private var _ownedWrong2:Boolean; 	// player 2
 		//------------------------------------------------------------------------
 		// 	Constructor
 		//------------------------------------------------------------------------
@@ -58,10 +65,7 @@ package component
 		// 	update hud icon for bomb
 		//------------------------------------------------------------------------
 		private function updateBomb():void {
-			switch (this.bomb) {
-				case 0:
-					deactivateIcon(_bombIcon1, _bombIcon2);
-				break;
+			switch (_bomb) {
 				case 1:
 					activateIcon(_bombIcon1);
 				break;
@@ -69,15 +73,14 @@ package component
 					activateIcon(_bombIcon2);
 				break;
 			}
+			if (_ownedBomb1 == false) { deactivateIcon(_bombIcon1); }
+			if (_ownedBomb2 == false) { deactivateIcon(_bombIcon2); }
 		}
 		//------------------------------------------------------------------------
 		// 	update hud symbol for wrong controls
 		//------------------------------------------------------------------------
 		private function updateWrong():void {
-			switch (this.wrong) {
-				case 0: 
-					deactivateIcon(_wrongIcon1, _wrongIcon2);
-				break;
+			switch (_wrong) {
 				case 1:
 					activateIcon(_wrongIcon1);
 				break;
@@ -85,6 +88,8 @@ package component
 					activateIcon(_wrongIcon2);
 				break;
 			}	
+			if (_ownedWrong1 == false) { deactivateIcon(_wrongIcon1); }
+			if (_ownedWrong2 == false) { deactivateIcon(_wrongIcon2); }
 		}
 		//------------------------------------------------------------------------
 		// 	init all icons used in HUD
@@ -131,9 +136,8 @@ package component
 		//------------------------------------------------------------------------
 		// 	deactivate icon
 		//------------------------------------------------------------------------
-		private function deactivateIcon(icon1:MovieClip, icon2:MovieClip = null):void {
-			icon1.gotoAndStop("deactivate");
-			if (icon2) { icon2.gotoAndStop("deactivate"); }
+		private function deactivateIcon(icon:MovieClip):void {
+			icon.gotoAndStop("deactivate");
 		}
 		//------------------------------------------------------------------------
 		// 	
@@ -159,28 +163,23 @@ package component
 		// set bomb status
 		//--------------------------------------
 		//---------------------------------------
-		public function set bomb(bomb:int):void {
+		public function bomb(bomb:int, owned:Boolean):void {
 			_bomb = bomb;
-		}
-		//-----------------------------------------------------------------------------
-		// get bomb status
-		//-----------------------------------------------------------------------------
-		public function get bomb():int {
-			return _bomb;
+			if (bomb == 1 && owned == true) { _ownedBomb1 = true; }
+			if (bomb == 1 && owned == false) { _ownedBomb1 = false; }
+			if (bomb == 2 && owned == true) { _ownedBomb2 = true; }
+			if (bomb == 2 && owned == false) { _ownedBomb2 = false; }
 		}
 		//-----------------------------------------------------------------------------
 		// set wrong way sabotage status
 		//--------------------------------------
 		//---------------------------------------
-		public function set wrong(wrong:int):void {
+		public function wrong(wrong:int, owned:Boolean):void {
 			_wrong = wrong;
-		}
-		//-----------------------------------------------------------------------------
-		// get wrong way sabotage status
-		//-----------------------------------------------------------------------------
-		public function get wrong():int {
-			//trace("get wrong");
-			return this._wrong;
+			if (wrong == 1 && owned == true) { _ownedWrong1 = true; }
+			if (wrong == 1 && owned == false) { _ownedWrong1 = false; }
+			if (wrong == 2 && owned == true) { _ownedWrong2 = true; }
+			if (wrong == 2 && owned == false) { _ownedWrong2 = false; }
 		}
 		//------------------------------------------------------------------------
 		// dispose battery 2
