@@ -458,7 +458,7 @@ package state
 			
 			m_layer4.addChild(m_bomb);
 			
-			Session.timer.create(5000, initBomb);
+			Session.timer.create(7000, initBomb);
 		}
 		
 		private function checkhitBomb():void
