@@ -3,6 +3,7 @@ package entity
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	
 	import se.lnu.stickossdk.fx.Flicker;
@@ -39,7 +40,7 @@ package entity
 		
 		public var bomb:Boolean = false;
 		
-		
+		public var skin:MovieClip;
 		public var bombs:Vector.<Obstacle> = new Vector.<Obstacle>();
 
 		//------------------------------------------------------------------------
@@ -305,12 +306,13 @@ package entity
 			
 			_skin.gotoAndStop("front");
 			
-			//m_square.graphics.beginFill(0xCCFF00);
-			m_square.graphics.drawRect(8.25, 15.7, 18.55, 19.2);
+		//	m_square.graphics.beginFill(0xCCFF00);
+			m_square.graphics.drawRect(8.25, 15.7, 18.55, 17.5);
 			_skin.hitArea = m_square;
 			area = _skin.hitArea;
 			
 		//	_skin.opaqueBackground = 0xFFFFFF;
+			skin = _skin;
 			
 			this.addChild(_skin);
 			_skin.addChild(_skin.hitArea);

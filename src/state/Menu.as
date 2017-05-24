@@ -92,6 +92,17 @@ package state
 		override public function update():void {
 			updateMenu();
 			changeState();
+			emptyHighscore();
+
+		}
+		
+		private function emptyHighscore():void
+		{
+			if(Input.keyboard.justPressed("SPACE")) 
+			{
+				trace("space knapp i menu");
+				Session.highscore.resetTable(1);
+			}
 		}
 		//------------------------------------------------------------------------
 		// 	test method. places a maze.
