@@ -186,8 +186,7 @@ package state
 		
 		protected function bombHUD():void
 		{
-			//m_hud.bomb = 0;
-			//if(m_robot.bomb) m_hud.bomb(1, true);
+			
 			if(m_robot.bomb === false) 
 			{
 				trace("false1");
