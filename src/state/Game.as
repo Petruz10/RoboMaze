@@ -24,6 +24,7 @@ package state
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
+	import entity.Obstacle;
 
 	//------------------------------------------------------------------------
 	// Public class Game
@@ -47,6 +48,7 @@ package state
 		 */
 		private var m_powerUp:PowerUp;
 		private var m_powerUp2:PowerUp;
+	//	private var m_bombs:Vector.<Obstacle> = new Vector.<Obstacle>();
 		
 		/*
 		* variables for the robots 
@@ -763,61 +765,67 @@ package state
 		{
 			if(m_robot2.obstacle) 
 			{
-				if(m_robot.hitTestObject(m_robot2.obstacle))
-				{
-					
-					m_robot2.removeChild(m_robot2.obstacle);
-					
-		//			switch(whichPower)
-		//			{
-		//				case 0:
-							initBombSound();
-							m_robot.speed = 0;
-							m_flickr = new Flicker(m_robot, 1000); //obj, tid (hur länge), intervall
-							Session.effects.add(m_flickr);
-							Session.timer.create(1000, initSpeed);
-							
-		//					updateHUDPowerup();
-	/*						break;
+				for(var i:uint = 0; i<m_robot2.bombs.length; i++)
+				{	
+					if(m_robot.hitTestObject(m_robot2.bombs[i]))
+					{
+						m_robot2.removeChild(m_robot2.bombs[i]);
 						
-						case 1:
-							initWrongWaySound();
-							m_robot.wrongSide = true;
-							m_flickr = new Flicker(m_robot, 4000); //obj, tid (hur länge), intervall
-							Session.effects.add(m_flickr);
-							Session.timer.create(4000, setToFalse);
-							break;
-					}*/
+			//			switch(whichPower)
+			//			{
+			//				case 0:
+								initBombSound();
+								m_robot.speed = 0;
+								m_flickr = new Flicker(m_robot, 1000); //obj, tid (hur länge), intervall
+								Session.effects.add(m_flickr);
+								Session.timer.create(1000, initSpeed);
+								
+			//					updateHUDPowerup();
+		/*						break;
+							
+							case 1:
+								initWrongWaySound();
+								m_robot.wrongSide = true;
+								m_flickr = new Flicker(m_robot, 4000); //obj, tid (hur länge), intervall
+								Session.effects.add(m_flickr);
+								Session.timer.create(4000, setToFalse);
+								break;
+						}*/
+					}
 				}
 			}
 			
 			if(m_robot.obstacle)
 			{
-				if(m_robot2.hitTestObject(m_robot.obstacle)) 
+				for(var j:uint = 0; j<m_robot.bombs.length; j++)
 				{
-					
-					m_robot.removeChild(m_robot.obstacle);
-		//			switch(whichPower)
-		//			{
-		//				case 0:
-							initBombSound();
-							m_robot2.speed = 0;
-							m_flickr = new Flicker(m_robot2, 1000); //obj, tid (hur länge), intervall
-							Session.effects.add(m_flickr);
-							Session.timer.create(1000, initSpeed);
-							
-		//					updateHUDPowerup();
-	/*						break;
+					if(m_robot2.hitTestObject(m_robot.bombs[j])) 
+					{
+						
+						m_robot.removeChild(m_robot.bombs[j]);
+	//			switch(whichPower)
+	//			{
+	//				case 0:
+						initBombSound();
+						m_robot2.speed = 0;
+						m_flickr = new Flicker(m_robot2, 1000); //obj, tid (hur länge), intervall
+						Session.effects.add(m_flickr);
+						Session.timer.create(1000, initSpeed);
+						
+						//					updateHUDPowerup();
+						/*						break;
 						
 						case 1:
-							initWrongWaySound();
-							m_robot2.wrongSide = true;
-							m_flickr = new Flicker(m_robot2, 4000); //obj, tid (hur länge), intervall
-							Session.effects.add(m_flickr);
-							Session.timer.create(4000, setToFalse);
-							break;
-					}*/
+						initWrongWaySound();
+						m_robot2.wrongSide = true;
+						m_flickr = new Flicker(m_robot2, 4000); //obj, tid (hur länge), intervall
+						Session.effects.add(m_flickr);
+						Session.timer.create(4000, setToFalse);
+						break;
+						}*/
+					}
 				}
+				
 			}
 		}
 		/*
