@@ -3,6 +3,11 @@ package state
 	//------------------------------------------------------------------------
 	// 	Evertron SDK
 	//------------------------------------------------------------------------
+	import flash.display.DisplayObject;
+	import flash.display.Graphics;
+	import flash.display.Sprite;
+	import flash.geom.Matrix;
+	
 	import entity.MenuButton;
 	
 	import game.Multiplayer;
@@ -17,8 +22,7 @@ package state
 	
 	import state.Credits;
 	import state.Highscore;
-	import game.Multiplayer;
-	import game.Singleplayer;
+
 	//------------------------------------------------------------------------
 	//	Menu state
 	//------------------------------------------------------------------------
@@ -34,7 +38,11 @@ package state
 		/*
 		*
 		*/
-		private var _logo:MenuLogo_mc;
+		private var _background:Menu_Background_mc;
+		/*
+		*
+		*/
+		private var _logo:Menu_Logo_test_mc;
 		/*
 		* 	array representing links ( indexes )
 		*/
@@ -104,7 +112,7 @@ package state
 		// 	init state-layeres
 		//------------------------------------------------------------------------
 		private function initLayers():void {
-			//initBackground();
+			initBackground();
 			initOverlay();
 			initRobot();
 		}
@@ -112,7 +120,11 @@ package state
 		// 	init background
 		//------------------------------------------------------------------------
 		private function initBackground():void {
-
+			_background = new Menu_Background_mc();
+			_background.x = 0;
+			_background.y = 0;
+			_layerBackground = layers.add("BACKGROUND");
+			_layerBackground.addChild(_background);
 		}
 		//------------------------------------------------------------------------
 		// 	init Buttons
@@ -125,9 +137,9 @@ package state
 			//------------------------------------------------------------------------
 			//	logo
 			//------------------------------------------------------------------------
-			_logo = new MenuLogo_mc();
-			_logo.x = 0;
-			_logo.y = 0;
+			_logo = new Menu_Logo_test_mc();
+			_logo.x = 20;
+			_logo.y = 40;
 
 			_layerOverlay.addChild(_logo);
 			//------------------------------------------------------------------------
@@ -138,16 +150,16 @@ package state
 				_btn.x = 50;
 				switch (i) {
 					case 0:
-						_btn.y = 230;
+						_btn.y = 210;
 					break;
 					case 1:
-						_btn.y = 330;
+						_btn.y = 290;
 					break;
 					case 2:
-						_btn.y = 430;
+						_btn.y = 400;
 					break;
 					case 3:
-						_btn.y = 500;
+						_btn.y = 450;
 					break;
 				}
 				
@@ -158,10 +170,10 @@ package state
 		}
 		private function initRobot():void {
 			_robot = new Menu_Robot_mc();
-			_robot.y = 350;
-			_robot.x = 530;
-			_robot.scaleY = 2.3;
-			_robot.scaleX = 2.3;
+			_robot.y = 320;
+			_robot.x = 500;
+			_robot.scaleY = 2.6;
+			_robot.scaleX = 2.6;
 			_layerOverlay.addChild(_robot);
 		}
 		//------------------------------------------------------------------------
@@ -220,13 +232,21 @@ package state
 		// 	remove background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
-
+			_layerBackground.removeChild(_background);
+			_background = null;
+			_layerBackground = null;
 		}
 		//------------------------------------------------------------------------
 		// 	remove menu buttons
 		//------------------------------------------------------------------------
 		private function disposeOverlay():void {
-
+			var child:DisplayObject;
+			while (_layerOverlay.numChildren > 0) {
+				child = _layerOverlay.getChildAt(0);
+				_layerOverlay.removeChildAt(0);
+				child = null;
+			}
+			_layerOverlay = null;
 		}
 		//------------------------------------------------------------------------
 		// 	remove robot

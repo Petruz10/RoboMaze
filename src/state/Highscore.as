@@ -3,7 +3,9 @@ package state
 	//------------------------------------------------------------------------
 	// 	Evertron SDK
 	//------------------------------------------------------------------------
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.filters.DropShadowFilter;
 	import flash.media.Sound;
 	import flash.text.Font;
 	import flash.text.TextField;
@@ -19,10 +21,8 @@ package state
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
-	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.media.SoundObject;
-	import flash.display.DisplayObject;
-	import flash.filters.DropShadowFilter;
+	import se.lnu.stickossdk.system.Session;
 
 	//------------------------------------------------------------------------
 	// 	Highscore State
@@ -32,11 +32,12 @@ package state
 		*	background img.
 		*/
 		private var _layerBackground:DisplayStateLayer;
+		private var _background:Menu_Background_mc; // background graphics
 		/*
 		* 	layer for higscore display
 		*/
 		private var _layerHighscoreTable:DisplayStateLayer;
-		private var _header:ScreenTop_mc;
+		private var _header:Highscore_mc;
 		/*
 		*	overlay // robot
 		*/
@@ -162,10 +163,10 @@ package state
 			_score = _highscoreData.score;
 			_name = _highscoreData.name;
 
-		/*if((_score.length == 0) || (_score == null)) {
+		if((_score.length == 0) || (_score == null)) {
 				_score.push("00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00");
 				_name.push("michaela1","michaela2","michaela3","michaela4","michaela5","michaela6","michaela7","michaela8","michaela9","michaela10");
-			} */
+			} 
 		}
 		private function updateHighscore():void {
 			if (_score.length != 0) { initList(); } 
@@ -196,15 +197,20 @@ package state
 		// 	init background
 		//------------------------------------------------------------------------
 		private function initBackground():void {
-			_header = new ScreenTop_mc();
+			_background = new Menu_Background_mc();
+			_background.x = 0;
+			_background.y = 0;
+
 			_layerBackground = layers.add("HIGHSCORE_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
-			
-			_header.x = 0;
-			_header.y = 0;
-			_header.gotoAndStop("highscore");
-			
+
+			_header = new Highscore_mc();
+			_header.x = 20;
+			_header.y = 10;
+			_header.play();
+
+			_layerBackground.addChild(_background);
 			_layerBackground.addChild(_header);
 		}
 		//------------------------------------------------------------------------
@@ -329,8 +335,10 @@ package state
 		// 	dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
+			_layerBackground.removeChild(_background);
 			_layerBackground.removeChild(_header);
 			_layerBackground = null;
+			_background = null;
 			_header = null;
 		}
 		private function disposeOverlay():void {

@@ -19,6 +19,10 @@ package state
 		/*
 		* 	overlay // text // back btn etc.
 		*/
+		private var _background:Menu_Background_mc;
+		/*
+		*	back btn 
+		*/
 		private var _layerOverlay:DisplayStateLayer;
 		/*
 		*	back btn 
@@ -31,7 +35,7 @@ package state
 		/*
 		*
 		*/
-		private var _header:ScreenTop_mc;
+		private var _header:Credits_mc;
 		/*
 		*
 		*/
@@ -85,15 +89,19 @@ package state
 			initOverlay();
 		}
 		private function initBackground():void {
-			_header = new ScreenTop_mc();
+			_background = new Menu_Background_mc();
+			_background.x = 0;
+			_background.y = 0;
+
 			_layerBackground = layers.add("CREDITS_BG");
 			_layerBackground.x = 0;
 			_layerBackground.y = 0;
 			
-			_header.x = 0;
-			_header.y = 0;
-			_header.gotoAndStop("credits");
+			_header = new Credits_mc();
+			_header.x = 115;
+			_header.y = 10;
 			
+			_layerBackground.addChild(_background);
 			_layerBackground.addChild(_header);
 		}
 		//------------------------------------------------------------------------
@@ -131,7 +139,9 @@ package state
 		// dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
+			_layerBackground.removeChild(_background);
 			_layerBackground.removeChild(_header);
+			_background = null;
 			_header = null;
 			_layerBackground = null;
 		}
