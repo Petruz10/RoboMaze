@@ -38,6 +38,9 @@ package entity
 		public var activateWrongSide:Boolean = false;
 		
 		public var bomb:Boolean = false;
+		
+		
+		public var bombs:Vector.<Obstacle> = new Vector.<Obstacle>();
 
 		//------------------------------------------------------------------------
 		// private properties 
@@ -223,6 +226,8 @@ package entity
 					obstacle.y = _skin.y;
 					if(m_player == 0)obstacle.x = _skin.x + 400;
 					else if(m_player == 1)obstacle.x = _skin.x - 400;
+					
+					bombs.push(obstacle);
 					
 					this.addChild(obstacle);
 					bomb = false;
