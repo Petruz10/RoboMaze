@@ -187,14 +187,21 @@ package state
 		protected function bombHUD():void
 		{
 			//m_hud.bomb = 0;
-		//	if(m_robot.bomb) m_hud.bomb(1, true);
-			if(m_robot.bomb == false) m_hud.bomb(1, false);
-		//	trace("robot bomb 1 = ",m_robot.bomb);
+			//if(m_robot.bomb) m_hud.bomb(1, true);
+			if(m_robot.bomb === false) 
+			{
+				trace("false1");
+				m_hud.bomb(1, false);
+			}
+			else if(m_robot.bomb === true) {
+				trace("true 1");
+				m_hud.bomb(1, true);
+			}
+			trace("robot bomb 1 = ",m_robot.bomb);
 			
-	//		if(m_robot2.bomb) m_hud.bomb(2, true);
-			if(m_robot2.bomb == false) m_hud.bomb(2, false);
-		//	trace("robot bomb 2 = ",m_robot2.bomb);
-
+			if(m_robot2.bomb === false) m_hud.bomb(2, false);
+			else if(m_robot2.bomb)  m_hud.bomb(2, true);
+			
 		}
 		
 		/*
@@ -592,7 +599,7 @@ package state
 				switch(whichPower)
 				{
 					case 0:
-						m_hud.bomb(2, true);
+						//m_hud.bomb(2, true);
 						m_robot2.bomb = true;
 						break;
 					
@@ -613,7 +620,7 @@ package state
 				switch(whichPower)
 				{
 					case 0:
-						m_hud.bomb(1, true);
+						//m_hud.bomb(1, true);
 						m_robot.bomb = true;
 						break;
 					
@@ -626,7 +633,6 @@ package state
 			
 			if(m_powerUp.hitTestObject(m_robot2.area) || m_powerUp2.hitTestObject(m_robot.area))
 			{
-				trace("jag orkar inte");
 				initPowerupSound();
 				if(m_layer4)m_layer4.removeChildren();
 				
@@ -812,8 +818,8 @@ package state
 						Session.effects.add(m_flickr);
 						Session.timer.create(1000, initSpeed);
 						
-						//					updateHUDPowerup();
-						/*						break;
+	//					updateHUDPowerup();
+	/*					break;
 						
 						case 1:
 						initWrongWaySound();
