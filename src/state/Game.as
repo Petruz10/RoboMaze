@@ -185,11 +185,14 @@ package state
 		protected function bombHUD():void
 		{
 			//m_hud.bomb = 0;
-			if(m_robot.bomb) m_hud.bomb(1, true);
-			else if(!m_robot.bomb) m_hud.bomb(1, false);
+		//	if(m_robot.bomb) m_hud.bomb(1, true);
+			if(m_robot.bomb == false) m_hud.bomb(1, false);
+		//	trace("robot bomb 1 = ",m_robot.bomb);
 			
-			if(m_robot2.bomb) m_hud.bomb(2, true);
-			else if(m_robot2.bomb) m_hud.bomb(2, false);
+	//		if(m_robot2.bomb) m_hud.bomb(2, true);
+			if(m_robot2.bomb == false) m_hud.bomb(2, false);
+		//	trace("robot bomb 2 = ",m_robot2.bomb);
+
 		}
 		
 		/*
@@ -581,7 +584,7 @@ package state
 			
 			if(m_powerUp.hitTestObject(m_robot2.area)) 
 			{
-				if(m_robot2.powerUp >= 1) return;
+				if(m_robot2.powerUp == 1) return;
 				m_robot2.powerUp ++;
 				m_robotInt = 2;
 				switch(whichPower)
@@ -595,16 +598,15 @@ package state
 						m_hud.wrong(2, true);
 						break;
 				}
-				
 				testWhichPowerup();
 			}
 			
 			if(m_powerUp2.hitTestObject(m_robot.area)) 
 			{
-				if(m_robot.powerUp >= 1) return;
+				if(m_robot.powerUp == 1) return;
 				m_robot.powerUp ++;
 				m_robotInt = 1;
-				testWhichPowerup();
+				
 				
 				switch(whichPower)
 				{
@@ -617,17 +619,15 @@ package state
 						m_hud.wrong(1, true);
 						break;
 				}
-				
+				testWhichPowerup();
 			}
 			
 			if(m_powerUp.hitTestObject(m_robot2.area) || m_powerUp2.hitTestObject(m_robot.area))
 			{
+				trace("jag orkar inte");
 				initPowerupSound();
 				if(m_layer4)m_layer4.removeChildren();
 				
-	//			addPowerUp();
-	//			placePowerup();
-	//			updateHUDPowerup();
 				Session.timer.create(100, addPowerUp);
 				Session.timer.create(200, placePowerup);
 				Session.timer.create(7000, addChildPowerUp);
@@ -881,13 +881,6 @@ package state
 		{
 			m_robot2.speed = 3;
 			m_robot.speed = 3;
-			
-	//		m_powerUp = null;
-	//		m_powerUp2 = null;
-			
-			addPowerUp();
-			placePowerup();
-			Session.timer.create(7000, addChildPowerUp);
 		}
 		
 		/*
@@ -900,13 +893,6 @@ package state
 			
 			m_robot.activateWrongSide = false;
 			m_robot2.activateWrongSide = false;
-			
-	//		m_powerUp = null;
-	//		m_powerUp2 = null;
-			
-			addPowerUp();
-			placePowerup();
-			Session.timer.create(6000, addChildPowerUp);
 		}
 		
 		/*
