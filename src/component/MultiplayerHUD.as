@@ -67,16 +67,22 @@ package component
 		// 	update hud icon for bomb
 		//------------------------------------------------------------------------
 		private function updateBomb():void {
-			switch (_bomb) {
-				case 1:
+			switch (_ownedBomb1) {
+				case true:
 					activateIcon(_bombIcon1);
 				break;
-				case 2: 
-					activateIcon(_bombIcon2);
+				case false: 
+					deactivateIcon(_bombIcon1);
 				break;
 			}
-			if (_ownedBomb1 == false) { deactivateIcon(_bombIcon1); }
-			if (_ownedBomb2 == false) { deactivateIcon(_bombIcon2); }
+			switch (_ownedBomb2) {
+				case true:
+					activateIcon(_bombIcon2);
+				break;
+				case false: 
+					deactivateIcon(_bombIcon2);
+				break;
+			}
 		}
 		//------------------------------------------------------------------------
 		// 	update hud symbol for wrong controls
