@@ -163,11 +163,11 @@ package state
 			_score = _highscoreData.score;
 			_name = _highscoreData.name;
 
-		if((_score.length == 0) || (_score == null)) {
+	/*	if((_score.length == 0) || (_score == null)) {
 				_score.push("00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00");
 				_name.push("michaela1","michaela2","michaela3","michaela4","michaela5","michaela6","michaela7","michaela8","michaela9","michaela10");
-			} 
-		}
+			} */
+		} 
 		private function updateHighscore():void {
 			if (_score.length != 0) { initList(); } 
 		}
