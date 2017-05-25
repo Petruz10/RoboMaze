@@ -416,9 +416,11 @@ package state
 			{
 				m_sek++; 
 				m_gameTime = 0;
+				
+				if(m_sek == 40) initBomb();
+				
 				if(m_sek == 60)
 				{
-					initBomb();
 					m_sek = 0;
 					m_min ++;
 				}
