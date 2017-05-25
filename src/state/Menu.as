@@ -92,7 +92,7 @@ package state
 		override public function update():void {
 			updateMenu();
 			changeState();
-	//		emptyHighscore();
+		//	emptyHighscore();
 
 		}
 		
