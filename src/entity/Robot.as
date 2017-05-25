@@ -218,9 +218,7 @@ package entity
 		*/
 		private function addObstacle():void
 		{
-			powerUp --;
-			trace("obstacle type fucking robot",obstacleType);
-			
+			powerUp --;			
 			switch(obstacleType)
 			{
 				case 0:
@@ -239,9 +237,7 @@ package entity
 				case 1:
 					activateWrongSide = true;
 					break;
-			}
-			
-			//return;
+			}			
 		}
 		
 		/*
@@ -313,7 +309,6 @@ package entity
 			_skin.hitArea = m_square;
 			area = _skin.hitArea;
 			
-		//	_skin.opaqueBackground = 0xFFFFFF;
 			skin = _skin;
 			
 			this.addChild(_skin);

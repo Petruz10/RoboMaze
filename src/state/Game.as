@@ -4,6 +4,7 @@ package state
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import flash.display.MovieClip;
 	import flash.geom.Point;
 	import flash.net.SharedObject;
 	
@@ -73,19 +74,11 @@ package state
 		private var m_players:int;
 		private var m_hud;
 		
-		private var m_gameTime:Number = 0;
-		private var m_time:String;
-		
-		private var m_min:int = 0;
-		private var m_sek:Number = 0;
-		private var m_score:Number = 0;
-		
 		private var m_backgroundMusic:SoundObject;
 		private var m_bombSound:SoundObject;
 		private var m_wrongSound:SoundObject;
 		private var m_powerupSound:SoundObject;
 
-		
 		private var m_SharedObjPlayers:SharedObject;
 		private var m_win:SharedObject;
 		
@@ -100,6 +93,11 @@ package state
 		private var m_testObj:TestPlaceObj;
 		
 		private var m_robotInt:int;
+		
+		protected var timerFunc:Function;
+	
+		protected var highscore:Function;
+		protected var score:Number;
 		
 		//------------------------------------------------------------------------
 		// public properties 
@@ -117,15 +115,6 @@ package state
 		//------------------------------------------------------------------------
 		// public methods
 		//------------------------------------------------------------------------
-	/*	private function emptyHighscore():void
-		{
-			if(Input.keyboard.justPressed("SPACE")) 
-			{
-				trace("space knapp i menu");
-				Session.highscore.resetTable(1);
-			}
-		}
-		*/
 		/*
 		* the init function to start the Game state
 		*/
@@ -144,6 +133,7 @@ package state
 		*/
 		override public function update():void
 		{
+			if(m_robot.die) return;
 			switch(m_players)
 			{
 				case 1:
@@ -165,17 +155,11 @@ package state
 			{
 				hitPowerup();
 				checkBattery();
-			//	updateHUDPowerup();
 				if(m_robot.obstacle || m_robot2.obstacle)checkhitObstacle();
-			
-				//if(!m_robot.bomb) m_hud.bomb(1, false);
-			//	if(!m_robot2.bomb) m_hud.bomb(2, false);
-					
 				checkWrongSide();
-			//	testWhichPowerup();
 				bombHUD();
 			}
-			else updateHUDTime();
+			//else 
 		}
 		
 		/*
@@ -239,8 +223,6 @@ package state
 			m_layer3 = layers.add("battery layer");
 			m_layer2 = layers.add("robot layer");
 			
-			
-			
 			if(m_maze) m_layer.addChild(m_maze);
 			if(m_robot) m_layer2.addChild(m_robot);	
 			if(m_robot2) m_layer2.addChild(m_robot2);
@@ -287,7 +269,6 @@ package state
 					if(m_testObj.hitTestObject(m_children[i])) m_testObj.placeObj(); 
 				}
 			}
-
 			xArray.unshift(m_testObj.testObjX);
 			yArray.unshift(m_testObj.testObjY);
 			
@@ -308,7 +289,6 @@ package state
 		*/
 		private function checkLength():void
 		{
-
 			if(m_availableSpace.length < 60) findPoints();
 		}
 		
@@ -318,21 +298,21 @@ package state
 		private function initGame():void
 		{
 			m_layer5.removeChildren();
-			
 			startGame = true;
 			m_robot.initBattery();
 			initBattery();
 			
-			if(m_players == 2) 
+			switch(m_players) 
 			{
-				m_robot2.initBattery();
-				initBattery2();
-				Session.timer.create(1600, addChildPowerUp);
-				Session.timer.create(500, placePowerup);
-			}
-			else
-			{
-				initTimer();
+				case 2:
+					m_robot2.initBattery();
+					initBattery2();
+					Session.timer.create(1600, addChildPowerUp);
+					Session.timer.create(500, placePowerup);
+					break;
+				
+				case 1:
+					initTimer();
 			}
 			
 			findBatteryPlace();
@@ -343,7 +323,6 @@ package state
 		*/
 		private function findBatteryPlace():void
 		{
-			trace("batteri place");
 			var r:int;
 
 			r = Math.floor(Math.random() * m_availableSpace.length);
@@ -361,7 +340,7 @@ package state
 		*/
 		private function initTimer():void
 		{
-			Session.timer.create(1, updateTimer);
+			Session.timer.create(1, timerFunc);
 		}
 		
 		/*
@@ -369,7 +348,6 @@ package state
 		*/
 		private function initSound():void
 		{
-			trace("Game sound");
 			Session.sound.musicChannel.sources.add("game_bgmusic", BackgroundGame_mp3);
 			m_backgroundMusic = Session.sound.musicChannel.get("game_bgmusic");
 			m_backgroundMusic.volume = 0.3;
@@ -382,7 +360,6 @@ package state
 		private function initBattery():void
 		{
 			m_battery = new BatteryRefill();
-		//	m_battery.opaqueBackground = 0xFF2200;
 		}
 		
 		/*
@@ -391,57 +368,10 @@ package state
 		private function initBattery2():void
 		{
 			m_battery2 = new BatteryRefill();
-		//	m_battery2.opaqueBackground = 0xFF2200;
 		}
 		
-		/*
-		* function to update the timer and make it into real time,
-		* also sends the info to HUD
-		*/
-		private function updateTimer():void
+		protected function initBomb():void
 		{
-			checkBattery();
-			
-			var hundraSek:Number;
-			var min:String;
-			var sek:String;
-			var hundranull:String;
-			
-			m_score += 1.666666666666667;
-			
-			m_gameTime += 1.666666666666667;
-			hundraSek = Math.floor(m_gameTime);
-			
-			if(hundraSek == 98)
-			{
-				m_sek++; 
-				m_gameTime = 0;
-				
-				if(m_sek == 40) initBomb();
-				
-				if(m_sek == 60)
-				{
-					m_sek = 0;
-					m_min ++;
-				}
-			}
-		//	if(m_min == 1) 
-			
-			if(m_min < 10) min = "0"+ m_min;
-			else min = m_min.toString();
-			
-			if(m_sek < 10) sek = "0" + m_sek;
-			else sek = m_sek.toString();
-			
-			if(hundraSek < 10) hundranull = "0" + hundraSek;
-			else hundranull = hundraSek.toString();
-			
-			m_time = min+":"+ sek + ":" + hundranull;
-		}
-		
-		private function initBomb():void
-		{
-			trace("1 minut och börja lägga till bomber");
 			m_bomb = new Obstacle(0);
 			m_bombs.push(m_bomb);
 			
@@ -465,31 +395,31 @@ package state
 		
 		private function checkhitBomb():void
 		{
-		//	trace("checkhit bomb");
 			for(var i:uint = 0; i<m_bombs.length; i++)
 			{
 				if(m_robot.hitTestObject(m_bombs[i]))
 				{
-					trace("hit bomb");
 					m_layer4.removeChild(m_bombs[i]);
-					
-					initBombSound();
-					m_robot.speed = 0;
-					//gör om nedanstånde till ny funktion som jag återanvänder även för multiplayer
-					m_flickr = new Flicker(m_robot.skin, 1000); //obj, tid (hur länge), intervall
-					Session.effects.add(m_flickr);
-					Session.timer.create(1000, initSpeed);
-					
+					bombEffect(m_robot);
 				}
-				
 			}
+		}
+		
+		private function bombEffect(robot):void
+		{
+			initBombSound();
+			robot.speed = 0;
+			
+			m_flickr = new Flicker(robot.skin, 1000); //obj, tid (hur länge), intervall
+			Session.effects.add(m_flickr);
+			Session.timer.create(1000, initSpeed);
 		}
 		
 		/*
 		* function to see the battery level at the players,
 		* and if there is none left save who won in sharedObj
 		*/
-		private function checkBattery():void
+		protected function checkBattery():void
 		{
 			m_win = SharedObject.getLocal("playerwon");
 			
@@ -513,7 +443,11 @@ package state
 			else
 			{
 				if(m_robot.battery.HP > 0) initTimer();		
-				if(m_robot.battery.HP == 0) initHighScore();
+				if(m_robot.battery.HP == 0) 
+				{
+					m_robot.die = true;
+					highscore();
+				}
 				m_win.data.won = 0;
 			}
 			
@@ -523,21 +457,16 @@ package state
 		private function controlWhichPowerup():void
 		{
 			if(m_robotInt == 1) m_robot.obstacleType = whichPower;
-			
 			if(m_robotInt == 2) m_robot2.obstacleType = whichPower;
-			
-			
 		}
 		
 		private function bombHUD():void
 		{
 			if(m_robot.bomb === false) m_hud.bomb(1, false);
 			else if(m_robot.bomb) m_hud.bomb(1, true);
-			
-			
+						
 			if(m_robot2.bomb === false) m_hud.bomb(2, false);
 			else if(m_robot2.bomb)  m_hud.bomb(2, true);
-			
 		}
 		
 		/*
@@ -569,8 +498,6 @@ package state
 		*/
 		private function addBattery():void
 		{
-			trace("addChild batteri");
-			
 			m_layer3.addChild(m_battery);
 			if(m_battery2) m_layer3.addChild(m_battery2);
 		}
@@ -604,7 +531,6 @@ package state
 					
 					if(m_robot.hitBattery || m_robot2.hitBattery)
 					{
-						trace("hit");
 						m_layer3.removeChildren();
 						findBatteryPlace();
 						return;
@@ -628,23 +554,12 @@ package state
 		*/
 		private function hitPowerup():void
 		{
-			/*if(m_powerUp.hitTestObject(m_robot2.area) && m_powerUp2.hitTestObject(m_robot.area))
-			{
-				trace("bägge samtidigt");
-				m_layer4.removeChildren();
-				
-				addPowerUp();
-				placePowerup();
-				
-				
-				return;
-			}*/
-			
 			if(m_powerUp.hitTestObject(m_robot2.area)) 
 			{
 				if(m_robot2.powerUp == 1) return;
 				m_robot2.powerUp ++;
 				m_robotInt = 2;
+				
 				switch(whichPower)
 				{
 					case 0:
@@ -664,7 +579,6 @@ package state
 				m_robot.powerUp ++;
 				m_robotInt = 1;
 				
-				
 				switch(whichPower)
 				{
 					case 0:
@@ -681,12 +595,18 @@ package state
 			if(m_powerUp.hitTestObject(m_robot2.area) || m_powerUp2.hitTestObject(m_robot.area))
 			{
 				initPowerupSound();
-				if(m_layer4)m_layer4.removeChildren();
-				
-				Session.timer.create(100, addPowerUp);
-				Session.timer.create(200, placePowerup);
-				Session.timer.create(7000, addChildPowerUp);
+				newPowerup();
 			}
+		}
+		
+		private function newPowerup():void
+		{
+			if(m_layer4)m_layer4.removeChildren();
+			
+			Session.timer.create(100, addPowerUp);
+			Session.timer.create(200, placePowerup);
+			Session.timer.create(7000, addChildPowerUp);
+			
 		}
 		
 		private function initPowerupSound():void
@@ -781,14 +701,6 @@ package state
 		}
 		
 		/*
-		* function to update the time in HUD
-		*/
-		private function updateHUDTime():void
-		{
-			m_hud.time = m_time;
-		}
-		
-		/*
 		* function to see if a robot walks into a obstacle "sabotage grejs"
 		*/
 		private function checkhitObstacle():void
@@ -800,27 +712,7 @@ package state
 					if(m_robot.hitTestObject(m_robot2.bombs[i]))
 					{
 						m_robot2.removeChild(m_robot2.bombs[i]);
-						
-			//			switch(whichPower)
-			//			{
-			//				case 0:
-								initBombSound();
-								m_robot.speed = 0;
-								m_flickr = new Flicker(m_robot.skin, 1000); //obj, tid (hur länge), intervall
-								Session.effects.add(m_flickr);
-								Session.timer.create(1000, initSpeed);
-								
-			//					updateHUDPowerup();
-		/*						break;
-							
-							case 1:
-								initWrongWaySound();
-								m_robot.wrongSide = true;
-								m_flickr = new Flicker(m_robot, 4000); //obj, tid (hur länge), intervall
-								Session.effects.add(m_flickr);
-								Session.timer.create(4000, setToFalse);
-								break;
-						}*/
+						bombEffect(m_robot);	
 					}
 				}
 			}
@@ -831,28 +723,8 @@ package state
 				{
 					if(m_robot2.hitTestObject(m_robot.bombs[j])) 
 					{
-						
 						m_robot.removeChild(m_robot.bombs[j]);
-	//			switch(whichPower)
-	//			{
-	//				case 0:
-						initBombSound();
-						m_robot2.speed = 0;
-						m_flickr = new Flicker(m_robot2.skin, 1000); //obj, tid (hur länge), intervall
-						Session.effects.add(m_flickr);
-						Session.timer.create(1000, initSpeed);
-						
-	//					updateHUDPowerup();
-	/*					break;
-						
-						case 1:
-						initWrongWaySound();
-						m_robot2.wrongSide = true;
-						m_flickr = new Flicker(m_robot2, 4000); //obj, tid (hur länge), intervall
-						Session.effects.add(m_flickr);
-						Session.timer.create(4000, setToFalse);
-						break;
-						}*/
+						bombEffect(m_robot2);
 					}
 				}
 				
@@ -866,27 +738,26 @@ package state
 		{
 			if(m_robot.activateWrongSide)
 			{
-				initWrongWaySound();
 				m_robot.activateWrongSide = false;
-				m_robot2.wrongSide = true;
-				m_flickr = new Flicker(m_robot2.skin, 4000); //obj, tid (hur länge), intervall
-				Session.effects.add(m_flickr);
-				Session.timer.create(4000, setToFalse);
-				
+				wrongWayEffect(m_robot2);
 				m_hud.wrong(1, false);				
 			}
 			
 			if(m_robot2.activateWrongSide)
 			{
-				initWrongWaySound();
 				m_robot2.activateWrongSide = false;
-				m_robot.wrongSide = true;
-				m_flickr = new Flicker(m_robot.skin, 4000); //obj, tid (hur länge), intervall
-				Session.effects.add(m_flickr);
-				Session.timer.create(4000, setToFalse);
-				
+				wrongWayEffect(m_robot);
 				m_hud.wrong(2, false);
 			}
+		}
+		
+		private function wrongWayEffect(robot):void
+		{
+			initWrongWaySound();
+			robot.wrongSide = true;
+			m_flickr = new Flicker(robot.skin, 4000); 
+			Session.effects.add(m_flickr);
+			Session.timer.create(4000, setToFalse)
 		}
 		
 		private function initWrongWaySound():void
@@ -902,7 +773,6 @@ package state
 		*/
 		private function initBombSound():void
 		{
-			trace("bomb ljud!!");
 			Session.sound.musicChannel.sources.add("game_bombSound", RobotBomb_mp3);
 			m_bombSound = Session.sound.musicChannel.get("game_bombSound");
 			m_bombSound.volume = 0.2;
@@ -931,29 +801,9 @@ package state
 		}
 		
 		/*
-		* function to init the highscore
-		*/
-		private function initHighScore():void
-		{
-			var table:int = 1;
-			var score:int = m_score;
-			var range:int = 10;
-			
-			Session.highscore.smartSend(table, score, range, gameOver);
-		}
-		
-		/*
-		* function to set a timer before the gameover screen shows
-		*/
-		private function gameOver(e):void
-		{
-			Session.timer.create(1300, initGameOver);
-		}
-		
-		/*
 		* function to change the display state to GameOver
 		*/
-		private function initGameOver():void
+		protected function initGameOver():void
 		{
 			Session.application.displayState = new GameOver;
 		}
