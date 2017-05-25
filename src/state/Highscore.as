@@ -152,7 +152,7 @@ package state
 		private function initSound():void {
 			Session.sound.musicChannel.sources.add("highscore_credits", BackgroundCredits_mp3);
 			_backgroundMusic = Session.sound.musicChannel.get("highscore_credits");
-			_backgroundMusic.volume = 0.4;
+			_backgroundMusic.volume = 0.2;
 			_backgroundMusic.play(10);
 		}
 		//------------------------------------------------------------------------
