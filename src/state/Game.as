@@ -500,11 +500,13 @@ package state
 				{
 					Session.timer.create(1100, initGameOver);
 					m_win.data.won = 2;
+					m_robot2.die = true;
 				}
 				else if(m_robot2.battery.HP == 0)
 				{
 					Session.timer.create(1100, initGameOver);
 					m_win.data.won = 1;
+					m_robot.die = true;
 				}
 			}
 			else

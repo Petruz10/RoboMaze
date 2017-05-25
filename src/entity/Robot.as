@@ -42,6 +42,8 @@ package entity
 		
 		public var skin:MovieClip;
 		public var bombs:Vector.<Obstacle> = new Vector.<Obstacle>();
+		
+		public var die:Boolean = false;
 
 		//------------------------------------------------------------------------
 		// private properties 
@@ -106,7 +108,7 @@ package entity
 				if(Input.keyboard.anyPressed()) startGame = true; 
 			}
 
-			if(!battery) return;
+			if(!battery || die) return;
 				if(Input.keyboard.pressed(m_controls.PLAYER_LEFT)) this.moveLeft(); 
 				else if(Input.keyboard.pressed(m_controls.PLAYER_RIGHT)) this.moveRight();
 				else if(Input.keyboard.pressed(m_controls.PLAYER_DOWN)) this.moveDown(); 
