@@ -495,6 +495,7 @@ package state
 			
 			if (m_players == 2) 
 			{
+				if(m_robot.die || m_robot2.die) return;
 				
 				if(m_robot.battery.HP == 0)
 				{
