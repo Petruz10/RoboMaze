@@ -3,13 +3,11 @@ package game
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
-	import component.HUD;
-	import component.Maze;
+	import component.SingleplayerHUD;
+	import component.Maze;	
 	
 	import entity.Robot;
-	
 	import state.Game;
-	import component.SingleplayerHUD;
 	
 	import se.lnu.stickossdk.system.Session;
 

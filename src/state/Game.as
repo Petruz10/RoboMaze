@@ -158,8 +158,7 @@ package state
 				if(m_robot.obstacle || m_robot2.obstacle)checkhitObstacle();
 				checkWrongSide();
 				bombHUD();
-			}
-			//else 
+			} 
 		}
 		
 		/*
