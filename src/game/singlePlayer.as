@@ -61,7 +61,7 @@ package game
 			m_hud.time = m_time;
 		}
 		
-		/*
+		/**
 		* function to init a Timer that is used for the time measurment
 		*/
 		private function initTimer():void
@@ -69,7 +69,7 @@ package game
 			Session.timer.create(1, updateTimer);
 		}
 		
-		/*
+		/**
 		* function to update the timer and make it into real time,
 		* also sends the info to HUD
 		*/
@@ -113,14 +113,21 @@ package game
 			m_time = min+":"+ sek + ":" + hundranull;
 		}
 		
+		/**
+		* function to init the bomb
+		*/
 		private function initBomb():void
 		{
+			if(m_robot.die) return;
 			m_bomb = new Obstacle(0);
 			m_bombs.push(m_bomb);
 			
 			findBombPlace();
 		}
 		
+		/**
+		 * function to find an available space for the bomb
+		 */
 		private function findBombPlace():void
 		{
 			var r:int;
@@ -135,6 +142,9 @@ package game
 			Session.timer.create(7000, initBomb);
 		}
 		
+		/**
+		 * function to check if the player walks into a bomb
+		 */
 		private function checkhitBomb():void
 		{
 			for(var i:uint = 0; i<m_bombs.length; i++)
@@ -147,7 +157,7 @@ package game
 			}
 		}
 		
-		/*
+		/**
 		* function to init the highscore
 		*/
 		private function initHighScore():void
@@ -159,7 +169,7 @@ package game
 			Session.highscore.smartSend(table, scores, range, gameOver);
 		}
 		
-		/*
+		/**
 		* function to set a timer before the gameover screen shows
 		*/
 		private function gameOver(e):void
@@ -167,7 +177,7 @@ package game
 			Session.timer.create(1300, super.initGameOver);
 		}
 		
-		/*
+		/**
 		* init the tha avatar
 		*/
 		private function initAvatar():void
@@ -180,7 +190,7 @@ package game
 			super.addAvatar(m_robot);
 		}
 		
-		/*
+		/**
 		* init the maze
 		*/
 		private function initMaze():void
@@ -193,7 +203,7 @@ package game
 			super.addMaze(m_maze);
 		}
 		
-		/*
+		/**
 		* init the HUD
 		*/
 		private function initHUD():void

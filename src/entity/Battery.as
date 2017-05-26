@@ -29,7 +29,6 @@ package entity
 		
 		public function Battery(player:int)
 		{
-			trace("battery players", player);
 			super();
 			m_players = player;
 			HPtimer();
@@ -38,24 +37,19 @@ package entity
 		//------------------------------------------------------------------------
 		// private methods 
 		//------------------------------------------------------------------------
-		/*
+		/**
 		* function to set a  timer to when the battery should go down
 		*/
 		private function HPtimer():void
 		{
-			//m_timer = Session.timer.create(1300, removeHP);
-			//m_timer = Session.timer.create(100, removeHP);
 			switch(m_players)
 			{
 				case 1:
-				//	m_timer = Session.timer.create(85, removeHP);
 					m_timer = Session.timer.create(95, removeHP);
-				//	m_timer = Session.timer.create(100, removeHP);
 					break;
 				
 				case 2:
 					m_timer = Session.timer.create(100, removeHP);
-				//	m_timer = Session.timer.create(200, removeHP);
 					break;
 			}
 			
@@ -64,7 +58,7 @@ package entity
 		//------------------------------------------------------------------------
 		// private methods 
 		//------------------------------------------------------------------------
-		/*
+		/**
 		* function to remove battery 
 		*/
 		private function removeHP():void
@@ -84,7 +78,7 @@ package entity
 			}
 		}
 		
-		/*
+		/**
 		* function for the warning sound when the robot is about to die
 		*/
 		private function initWarningSound():void
@@ -96,7 +90,7 @@ package entity
 			m_warningSound.play();
 		}
 		
-		/*
+		/**
 		* function for the sound that plays when you die
 		*/
 		private function initDeadSound():void
@@ -107,6 +101,9 @@ package entity
 			m_deadSound.play();
 		}
 		
+		/**
+		 * function for the sound that plays when the robot shuts down
+		 */
 		private function initShutdownSound():void
 		{
 			trace("sound");
@@ -127,7 +124,6 @@ package entity
 		private function disposeTimer():void
 		{
 			m_timer = null;
-			trace("dispose battery timer");
 		}
 	}
 }

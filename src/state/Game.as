@@ -31,7 +31,7 @@ package state
 		//------------------------------------------------------------------------
 		// private properties 
 		//------------------------------------------------------------------------
-		/*
+		/**
 		* some variables for the different layers
 		*/
 		private var m_layer:DisplayStateLayer;
@@ -39,7 +39,7 @@ package state
 		private var m_layer3:DisplayStateLayer;
 		private var m_layer5:DisplayStateLayer;
 		
-		/*
+		/**
 		* the grapichal batteries
 		*/
 		private var m_battery:BatteryRefill;
@@ -82,14 +82,9 @@ package state
 		
 		protected var m_layer4:DisplayStateLayer;
 		protected var m_hud;
-		/*
-		* maze
-		*/
+	
 		protected var m_maze:Maze;
 
-		/*
-		* variables for the robots 
-		*/
 		protected var m_robot:Robot;
 		protected var m_robot2:Robot;
 	
@@ -106,7 +101,7 @@ package state
 		//------------------------------------------------------------------------
 		// public methods
 		//------------------------------------------------------------------------
-		/*
+		/**
 		* the init function to start the Game state
 		*/
 		override public function init():void
@@ -119,7 +114,7 @@ package state
 			initSound();
 		}
 		
-		/*
+		/**
 		* ovveride of the update function which goes every frame
 		*/
 		override public function update():void
@@ -142,7 +137,7 @@ package state
 			updateHUDBattery();
 		}
 		
-		/*
+		/**
 		* ovveride dispose, this function goes when the state changes
 		*/
 		override public function dispose():void
@@ -163,7 +158,7 @@ package state
 		//------------------------------------------------------------------------
 		// private methods
 		//------------------------------------------------------------------------
-		/*
+		/**
 		* function to show the instructions
 		*/
 		private function initInstructions():void
@@ -183,7 +178,7 @@ package state
 			m_layer5.addChild(m_instructions);
 		}
 		
-		/*
+		/**
 		* function to save in sharedobject if there is one or two players playing
 		*/
 		private function initSharedObject():void
@@ -194,7 +189,7 @@ package state
 	
 			return;
 		}
-		/*
+		/**
 		* function to init the layers
 		*/
 		private function initLayers():void
@@ -211,7 +206,7 @@ package state
 			m_layer.addChild(m_hud);
 		}
 		
-		/*
+		/**
 		* function to get all the childrens in the maze, aka walls
 		*/
 		private function getChildren():void
@@ -222,7 +217,7 @@ package state
 			}
 		}
 		
-		/*
+		/**
 		* instance the new testobject and add it to the stage, 
 		* the object that tests if there are any spots
 		*/
@@ -234,7 +229,7 @@ package state
 			m_layer.addChild(m_testObj);
 		}
 		
-		/*
+		/**
 		* function to fina the available spaces for the battery and powerups
 		*/
 		private function findPoints():void
@@ -265,7 +260,7 @@ package state
 			checkLength();
 		}
 		
-		/*
+		/**
 		* function to check the length of the Vector of available spaces
 		*/
 		private function checkLength():void
@@ -273,7 +268,7 @@ package state
 			if(m_availableSpace.length < 60) findPoints();
 		}
 		
-		/*
+		/**
 		* function to init the game
 		*/
 		private function initGame():void
@@ -299,7 +294,7 @@ package state
 			findBatteryPlace();
 		}
 		
-		/*
+		/**
 		* function to find a random place to place out the battery/batteries
 		*/
 		private function findBatteryPlace():void
@@ -316,7 +311,7 @@ package state
 			if(m_players == 2) m_battery2.placeBattery2(m_battery.x - 400,  m_battery.y);
 		}
 		
-		/*
+		/**
 		* function to play the background sound
 		*/
 		private function initSound():void
@@ -327,7 +322,7 @@ package state
 			m_backgroundMusic.play(int.MAX_VALUE); //loop av ljud "Henke hack"
 		}
 		
-		/*
+		/**
 		* function to instance a new grapichal battery
 		*/
 		private function initBattery():void
@@ -335,7 +330,7 @@ package state
 			m_battery = new BatteryRefill();
 		}
 		
-		/*
+		/**
 		* function to instance a new grapichal battery
 		*/
 		private function initBattery2():void
@@ -343,7 +338,7 @@ package state
 			m_battery2 = new BatteryRefill();
 		}
 		
-		/*
+		/**
 		* function to add the battery/batteries to tha stage
 		*/
 		private function addBattery():void
@@ -352,7 +347,7 @@ package state
 			if(m_battery2) m_layer3.addChild(m_battery2);
 		}
 		
-		/*
+		/**
 		* function to check if the robot walks into a wall
 		*/
 		private function hitTest():void
@@ -368,7 +363,7 @@ package state
 			}
 		}
 		
-		/*
+		/**
 		* function to see if anyone gets a battery
 		*/
 		private function hitBatteryScreen():void
@@ -399,7 +394,7 @@ package state
 			}
 		}
 		
-		/*
+		/**
 		* function to update the battery in the HUD
 		*/
 		private function updateHUDBattery():void
@@ -482,7 +477,7 @@ package state
 			}
 		}
 		
-		/*
+		/**
 		* function to play a bomb sound
 		*/
 		private function initBombSound():void
@@ -506,7 +501,7 @@ package state
 			Session.timer.create(1000, initSpeed);
 		}
 		
-		/*
+		/**
 		* function to see the battery level at the players,
 		* and if there is none left save who won in sharedObj
 		*/
@@ -560,7 +555,7 @@ package state
 			m_wrongSound.play();
 		}
 		
-		/*
+		/**
 		* function to set the speed of the robot to normal
 		*/
 		protected function initSpeed():void
@@ -569,7 +564,7 @@ package state
 			m_robot.speed = 3;
 		}
 		
-		/*
+		/**
 		* function to change the display state to GameOver
 		*/
 		protected function initGameOver():void
@@ -577,7 +572,7 @@ package state
 			Session.application.displayState = new GameOver;
 		}
 		
-		/*
+		/**
 		* function to get the maze
 		*/
 		protected function addMaze(maze:Maze):void
@@ -586,7 +581,7 @@ package state
 			getChildren();
 		}
 		
-		/*
+		/**
 		* function to get the first avatar
 		*/
 		protected function addAvatar(robot:Robot):void
@@ -594,7 +589,7 @@ package state
 			m_robot = robot;
 		}
 		
-		/*
+		/**
 		* function to get the second avatar
 		*/
 		protected function addMultiplayer(robot:Robot):void
@@ -602,7 +597,7 @@ package state
 			m_robot2 = robot;
 		}
 		
-		/*
+		/**
 		* function to get the HUD
 		*/
 		protected function addHUD(hud):void

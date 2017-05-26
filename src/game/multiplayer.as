@@ -54,7 +54,7 @@ package game
 		//------------------------------------------------------------------------
 		// private methods 
 		//------------------------------------------------------------------------
-		/*
+		/**
 		* Update the bomb icon i HUD
 		*/
 		private function bombHUD():void
@@ -66,7 +66,7 @@ package game
 			else if(m_robot2.bomb)  m_hud.bomb(2, true);
 		}
 		
-		/*
+		/**
 		* function to see if a robot walks into a obstacle "sabotage grejs"
 		*/
 		private function checkhitObstacle():void
@@ -97,7 +97,7 @@ package game
 			}
 		}
 		
-		/*
+		/**
 		* function to check if a player have wrongSide activated
 		*/
 		private function checkWrongSide():void
@@ -117,7 +117,7 @@ package game
 			}
 		}
 		
-		/*
+		/**
 		* function to add the powerups to the stage
 		*/
 		private function addChildPowerUp():void
@@ -126,7 +126,7 @@ package game
 			m_layer4.addChild(m_powerUp);
 		}
 		
-		/*
+		/**
 		* function to remove the powerups and set timer to add new ones
 		*/
 		private function newPowerup():void
@@ -138,7 +138,7 @@ package game
 			Session.timer.create(7000, addChildPowerUp);
 		}
 		
-		/*
+		/**
 		* randomize which powerup comes
 		*/
 		private function addPowerUp():void
@@ -150,7 +150,7 @@ package game
 			m_powerUp2 = new PowerUp(whichPower);
 		}
 		
-		/*
+		/**
 		* place the powerup on an acceptable place
 		*/
 		private function placePowerup():void
@@ -165,7 +165,7 @@ package game
 			m_powerUp2.placePowerup2(m_powerUp.x - 400,  m_powerUp.y);
 		}
 		
-		/*
+		/**
 		* function to check if anyone gets a powerup
 		*/
 		private function hitPowerup():void
@@ -215,7 +215,7 @@ package game
 			}
 		}
 		
-		/*
+		/**
 		* function to control which powerup the avatar have
 		*/
 		private function controlWhichPowerup():void
@@ -224,7 +224,7 @@ package game
 			if(m_robotInt == 2) m_robot2.obstacleType = whichPower;
 		}
 		
-		/*
+		/**
 		* function to set the robot back to normal
 		*/
 		private function setToFalse():void
@@ -236,7 +236,7 @@ package game
 			m_robot2.activateWrongSide = false;
 		}
 		
-		/*
+		/**
 		* function to init the wrongway effect
 		*/
 		private function wrongWayEffect(robot):void
@@ -248,7 +248,7 @@ package game
 			Session.timer.create(4000, setToFalse)
 		}
 				
-		/*
+		/**
 		* init the first avatar 
 		*/
 		private function initAvatar():void
@@ -261,7 +261,7 @@ package game
 			super.addAvatar(m_robot);
 		}
 		
-		/*
+		/**
 		* init the second avatar
 		*/
 		private function initAvatar2():void
@@ -274,7 +274,7 @@ package game
 			super.addMultiplayer(m_robot2);
 		}
 		
-		/*
+		/**
 		* init the maze
 		*/
 		private function initMaze():void
@@ -287,7 +287,7 @@ package game
 			super.addMaze(m_maze);
 		}
 		
-		/*
+		/**
 		* init the HUD
 		*/
 		private function initHUD():void

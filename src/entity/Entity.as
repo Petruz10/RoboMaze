@@ -38,7 +38,7 @@ package entity
 		//------------------------------------------------------------------------
 		// protected methods
 		//------------------------------------------------------------------------
-		/*
+		/**
 		* function to get a random x and y position
 		*/
 		protected function place(skin):void
@@ -50,7 +50,7 @@ package entity
 		//------------------------------------------------------------------------
 		// private methods
 		//------------------------------------------------------------------------
-		/*
+		/**
 		* function to get a random number
 		*/
 		private function randomNumberBetween(min:Number, max:Number):Number 
