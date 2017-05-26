@@ -3,14 +3,13 @@ package game
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import se.lnu.stickossdk.system.Session;
+	
 	import component.Maze;
 	import component.SingleplayerHUD;
 	
 	import entity.Obstacle;
 	import entity.Robot;
-	
-	import se.lnu.stickossdk.system.Session;
-	
 	import state.Game;
 
 
@@ -22,10 +21,6 @@ package game
 		//------------------------------------------------------------------------
 		// private properties 
 		//------------------------------------------------------------------------
-//		private var m_robot:Robot;
-		private var m_maze:Maze;
-		private var m_hud:SingleplayerHUD;
-		
 		private var m_min:int = 0;
 		private var m_sek:Number = 0;	
 		private var m_gameTime:Number = 0;
@@ -33,9 +28,7 @@ package game
 		
 		private var m_bomb:Obstacle;
 		private var m_bombs:Vector.<Obstacle> = new Vector.<Obstacle>();
-
-		
-		protected var _score:Number = 0;
+		private var m_score:Number = 0;
 		
 		//------------------------------------------------------------------------
 		// constructor
@@ -86,8 +79,7 @@ package game
 			var sek:String;
 			var hundranull:String;
 			
-			_score += 1.666666666666667;
-			//_score = score;
+			m_score += 1.666666666666667;
 			
 			m_gameTime += 1.666666666666667;
 			hundraSek = Math.floor(m_gameTime);
@@ -158,7 +150,7 @@ package game
 		public function initHighScore():void
 		{
 			var table:int = 1;
-			var scores:int = _score;
+			var scores:int = m_score;
 			var range:int = 10;
 						
 			Session.highscore.smartSend(table, scores, range, gameOver);
@@ -219,28 +211,22 @@ package game
 		//------------------------------------------------------------------------
 		override public function dispose():void
 		{
-			disposeAvatar();
-			disposeMaze(); 
-			disposeHUD();
+			super.dispose();
+			disposeBombs();
 		}
 		
-		private function disposeMaze():void
+		private function disposeBombs():void
 		{
-			m_maze = null;
-			trace("dispose maze");
+			for(var i:uint = 0; i<m_bombs.length; i++)
+			{
+				m_bombs[i] = null;
+			}
+			
+			m_bombs = null;
+			m_bomb = null;
+			trace("dispose bombs");
 		}
 		
-		private function disposeAvatar():void
-		{
-			m_robot = null;
-			trace("dispose avatar");
-		}
-		
-		private function disposeHUD():void
-		{
-			m_hud = null;
-			trace("dispose hud");
-		}
 
 	}
 }

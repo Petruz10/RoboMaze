@@ -13,8 +13,6 @@ package state
 	import component.SingleplayerInstruction;
 	
 	import entity.BatteryRefill;
-	import entity.Obstacle;
-	import entity.PowerUp;
 	import entity.Robot;
 	import entity.TestPlaceObj;
 	import entity.Tile;
@@ -41,13 +39,6 @@ package state
 		private var m_layer3:DisplayStateLayer;
 		private var m_layer5:DisplayStateLayer;
 		
-		private var m_bomb:Obstacle;
-		
-		/*
-		* maze
-		*/
-		private var m_maze:Maze;
-		
 		/*
 		* the grapichal batteries
 		*/
@@ -56,7 +47,7 @@ package state
 		
 		private var m_children:Vector.<Tile> = new Vector.<Tile>(); 
 		private var m_players:int;
-		private var m_hud;
+	
 		
 		private var m_backgroundMusic:SoundObject;
 		private var m_bombSound:SoundObject;
@@ -74,8 +65,6 @@ package state
 		private var yArray:Vector.<int> = new Vector.<int>(); 
 		private var m_testObj:TestPlaceObj;
 		
-		
-		
 		//------------------------------------------------------------------------
 		// protected properties 
 		//------------------------------------------------------------------------
@@ -92,16 +81,19 @@ package state
 		protected var m_availableSpace:Vector.<Point> = new Vector.<Point>(); 
 		
 		protected var m_layer4:DisplayStateLayer;
+		protected var m_hud;
+		/*
+		* maze
+		*/
+		protected var m_maze:Maze;
 
 		/*
 		* variables for the robots 
 		*/
 		protected var m_robot:Robot;
 		protected var m_robot2:Robot;
-		//------------------------------------------------------------------------
-		// public properties 
-		//------------------------------------------------------------------------
-		public var whichPower:Number;
+	
+		protected var whichPower:Number;
 				
 		//------------------------------------------------------------------------
 		// constructor
@@ -164,6 +156,8 @@ package state
 			disposeSharedObj();
 			disposeEffects();
 			disposeInstructions();
+			disposePlaceObj();
+			disposeFunctions();
 		}
 		
 		//------------------------------------------------------------------------
@@ -349,55 +343,6 @@ package state
 			m_battery2 = new BatteryRefill();
 		}
 		
-
-		protected function bombEffect(robot):void
-		{
-			initBombSound();
-			robot.speed = 0;
-			
-			m_flickr = new Flicker(robot.skin, 1000); //obj, tid (hur länge), intervall
-			Session.effects.add(m_flickr);
-			Session.timer.create(1000, initSpeed);
-		}
-		
-		/*
-		* function to see the battery level at the players,
-		* and if there is none left save who won in sharedObj
-		*/
-		protected function checkBattery():void
-		{
-			m_win = SharedObject.getLocal("playerwon");
-			
-			if (m_players == 2) 
-			{
-				if(m_robot.die || m_robot2.die) return;
-				
-				if(m_robot.battery.HP == 0)
-				{
-					Session.timer.create(1100, initGameOver);
-					m_win.data.won = 2;
-					m_robot2.die = true;
-				}
-				else if(m_robot2.battery.HP == 0)
-				{
-					Session.timer.create(1100, initGameOver);
-					m_win.data.won = 1;
-					m_robot.die = true;
-				}
-			}
-			else
-			{
-				if(m_robot.battery.HP > 0) initTimerfunc();		
-				if(m_robot.battery.HP == 0) 
-				{
-					m_robot.die = true;
-					highscore();
-				}
-				m_win.data.won = 0;
-			}
-			m_win.flush(); 
-		}
-		
 		/*
 		* function to add the battery/batteries to tha stage
 		*/
@@ -452,14 +397,6 @@ package state
 					}
 					break;		
 			}
-		}
-		
-		protected function initPowerupSound():void
-		{
-			Session.sound.musicChannel.sources.add("powerup_sound", RobotPickUp_mp3);
-			m_powerupSound = Session.sound.musicChannel.get("powerup_sound");
-			m_powerupSound.volume = 0.3;
-			m_powerupSound.play();
 		}
 		
 		/*
@@ -545,14 +482,6 @@ package state
 			}
 		}
 		
-		protected function initWrongWaySound():void
-		{
-			Session.sound.musicChannel.sources.add("game_wrongSound", RobotWrongWay_mp3);
-			m_wrongSound = Session.sound.musicChannel.get("game_wrongSound");
-			m_wrongSound.volume = 0.5;
-			m_wrongSound.play();
-		}
-		
 		/*
 		* function to play a bomb sound
 		*/
@@ -562,6 +491,73 @@ package state
 			m_bombSound = Session.sound.musicChannel.get("game_bombSound");
 			m_bombSound.volume = 0.2;
 			m_bombSound.play();
+		}
+
+		//------------------------------------------------------------------------
+		// protected methods
+		//------------------------------------------------------------------------
+		protected function bombEffect(robot):void
+		{
+			initBombSound();
+			robot.speed = 0;
+			
+			m_flickr = new Flicker(robot.skin, 1000); //obj, tid (hur länge), intervall
+			Session.effects.add(m_flickr);
+			Session.timer.create(1000, initSpeed);
+		}
+		
+		/*
+		* function to see the battery level at the players,
+		* and if there is none left save who won in sharedObj
+		*/
+		protected function checkBattery():void
+		{
+			m_win = SharedObject.getLocal("playerwon");
+			
+			if (m_players == 2) 
+			{
+				if(m_robot.die || m_robot2.die) return;
+				
+				if(m_robot.battery.HP == 0)
+				{
+					Session.timer.create(1100, initGameOver);
+					m_win.data.won = 2;
+					m_robot2.die = true;
+				}
+				else if(m_robot2.battery.HP == 0)
+				{
+					Session.timer.create(1100, initGameOver);
+					m_win.data.won = 1;
+					m_robot.die = true;
+				}
+			}
+			else
+			{
+				if(m_robot.battery.HP > 0) initTimerfunc();		
+				if(m_robot.battery.HP == 0) 
+				{
+					m_robot.die = true;
+					highscore();
+				}
+				m_win.data.won = 0;
+			}
+			m_win.flush(); 
+		}
+		
+		protected function initPowerupSound():void
+		{
+			Session.sound.musicChannel.sources.add("powerup_sound", RobotPickUp_mp3);
+			m_powerupSound = Session.sound.musicChannel.get("powerup_sound");
+			m_powerupSound.volume = 0.3;
+			m_powerupSound.play();
+		}
+		
+		protected function initWrongWaySound():void
+		{
+			Session.sound.musicChannel.sources.add("game_wrongSound", RobotWrongWay_mp3);
+			m_wrongSound = Session.sound.musicChannel.get("game_wrongSound");
+			m_wrongSound.volume = 0.5;
+			m_wrongSound.play();
 		}
 		
 		/*
@@ -580,10 +576,7 @@ package state
 		{
 			Session.application.displayState = new GameOver;
 		}
-
-		//------------------------------------------------------------------------
-		// protected methods
-		//------------------------------------------------------------------------
+		
 		/*
 		* function to get the maze
 		*/
@@ -596,9 +589,9 @@ package state
 		/*
 		* function to get the first avatar
 		*/
-		protected function addAvatar(avatar:Robot):void
+		protected function addAvatar(robot:Robot):void
 		{
-			m_robot = avatar;
+			m_robot = robot;
 		}
 		
 		/*
@@ -620,6 +613,32 @@ package state
 		//------------------------------------------------------------------------
 		// dispose methods
 		//------------------------------------------------------------------------
+		private function disposePlaceObj():void
+		{
+			for(var i:uint = 0; i<xArray.length; i++)
+			{
+				xArray[i] = null;
+			}
+			
+			for( var j:uint = 0; i<yArray.length; i++)
+			{
+				yArray[i] = null;
+			}
+			
+			xArray = null;
+			yArray = null;
+			m_testObj = null;
+		}
+		
+		private function disposeFunctions():void
+		{
+			timerFunc = null;
+			initTimerfunc = null;
+			addChildPowerupFunc = null;
+			placePowerupFunc = null;
+			highscore = null;
+		}
+		
 		private function disposeLayers():void
 		{
 			m_layer.removeChildren();
@@ -667,10 +686,7 @@ package state
 		}
 		
 		private function disposeHUD():void
-		{
-			m_hud.battery1Lvl = null;
-			if(m_hud.battery2Lvl) m_hud.battery2Lvl = null;
-			
+		{	
 			m_hud = null;
 		}
 		
@@ -679,7 +695,6 @@ package state
 			m_SharedObjPlayers = null;
 			m_win = null;
 		}
-		
 		
 		private function disposeEffects():void
 		{

@@ -3,16 +3,13 @@ package game
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
-	import component.Maze;
-	import component.MultiplayerHUD;
-	
-	import entity.PowerUp;
-	import entity.Robot;
-	
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.fx.Flicker;
-
 	
+	import component.Maze;
+	import component.MultiplayerHUD;
+	import entity.PowerUp;
+	import entity.Robot;
 	import state.Game;
 	
 	//------------------------------------------------------------------------
@@ -22,13 +19,13 @@ package game
 	{
 		//------------------------------------------------------------------------
 		// private properties 
-		//------------------------------------------------------------------------		
-		private var m_maze:Maze;	
-		private var m_hud:MultiplayerHUD;
-		
+		//------------------------------------------------------------------------				
 		private var m_powerUp:PowerUp;
 		private var m_powerUp2:PowerUp;
 		
+		//------------------------------------------------------------------------
+		// constructor
+		//------------------------------------------------------------------------
 		public function Multiplayer()
 		{
 			super(2);
@@ -48,7 +45,7 @@ package game
 			if(!m_robot.startGame && !m_robot2.startGame) return;
 			super.update();
 			hitPowerup();
-			checkBattery();
+			super.checkBattery();
 			if(m_robot.obstacle || m_robot2.obstacle) checkhitObstacle();
 			checkWrongSide();
 			bombHUD();
@@ -193,7 +190,7 @@ package game
 			
 			if(m_powerUp.hitTestObject(m_robot2.area) || m_powerUp2.hitTestObject(m_robot.area))
 			{
-				initPowerupSound();
+				super.initPowerupSound();
 				newPowerup();
 			}
 		}
@@ -215,7 +212,7 @@ package game
 		
 		private function wrongWayEffect(robot):void
 		{
-			initWrongWaySound();
+			super.initWrongWaySound();
 			robot.wrongSide = true;
 			m_flickr = new Flicker(robot.skin, 4000); 
 			Session.effects.add(m_flickr);
@@ -290,29 +287,8 @@ package game
 		//------------------------------------------------------------------------
 		override public function dispose():void
 		{
-			disposeAvatar();
-			disposeMaze();
-			disposeHUD();
+			super.dispose();
 			disposePowerup();
-		}
-		
-		private function disposeAvatar():void
-		{
-			m_robot = null;
-			m_robot2 = null;
-			trace("dispose Avatar");
-		}
-		
-		private function disposeMaze():void
-		{
-			m_maze = null;
-			trace("dispose maze");
-		}
-		
-		private function disposeHUD():void
-		{
-			m_hud = null;
-			trace("dispose hud");
 		}
 		
 		private function disposePowerup():void
