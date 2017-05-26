@@ -25,7 +25,6 @@ package highscore
 		public function HighscoreData()
 		{
 			Session.highscore.receive(1, 10, initHighscore);
-			trace("highscore data");
 		}
 		
 		//------------------------------------------------------------------------

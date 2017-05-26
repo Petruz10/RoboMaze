@@ -83,7 +83,6 @@ package entity
 		*/
 		private function initWarningSound():void
 		{
-			trace("WARNING ljud");
 			Session.sound.musicChannel.sources.add("game_warningSound", RobotWarning_mp3);
 			m_warningSound = Session.sound.musicChannel.get("game_warningSound");
 			m_warningSound.volume = 0.9;
@@ -106,7 +105,6 @@ package entity
 		 */
 		private function initShutdownSound():void
 		{
-			trace("sound");
 			Session.sound.musicChannel.sources.add("game_deadSound2", RobotShutdown_mp3);
 			m_deadSound2 = Session.sound.musicChannel.get("game_deadSound2");
 			m_deadSound2.volume = 0.9;
