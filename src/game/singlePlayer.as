@@ -3,13 +3,15 @@ package game
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import component.Maze;
 	import component.SingleplayerHUD;
-	import component.Maze;	
 	
+	import entity.Obstacle;
 	import entity.Robot;
-	import state.Game;
 	
 	import se.lnu.stickossdk.system.Session;
+	
+	import state.Game;
 
 
 	//------------------------------------------------------------------------
@@ -20,7 +22,7 @@ package game
 		//------------------------------------------------------------------------
 		// private properties 
 		//------------------------------------------------------------------------
-		private var m_robot:Robot;
+//		private var m_robot:Robot;
 		private var m_maze:Maze;
 		private var m_hud:SingleplayerHUD;
 		
@@ -28,6 +30,10 @@ package game
 		private var m_sek:Number = 0;	
 		private var m_gameTime:Number = 0;
 		private var m_time:String;
+		
+		private var m_bomb:Obstacle;
+		private var m_bombs:Vector.<Obstacle> = new Vector.<Obstacle>();
+
 		
 		protected var _score:Number = 0;
 		
@@ -42,6 +48,7 @@ package game
 			initAvatar();
 			initHUD();
 			
+			initTimerfunc = initTimer;
 			timerFunc = updateTimer;
 			highscore = initHighScore;			
 		}
@@ -50,6 +57,7 @@ package game
 		{
 			super.update();
 			updateHUDTime();
+			if(m_bomb) checkhitBomb();
 		}
 		
 		private function updateHUDTime():void
@@ -57,6 +65,9 @@ package game
 			m_hud.time = m_time;
 		}
 		
+		/*
+		* function to init a Timer that is used for the time measurment
+		*/
 		private function initTimer():void
 		{
 			Session.timer.create(1, updateTimer);
@@ -86,7 +97,7 @@ package game
 				m_sek++; 
 				m_gameTime = 0;
 				
-				if(m_sek == 40) super.initBomb();
+				if(m_sek == 40) initBomb();
 				
 				if(m_sek == 60)
 				{
@@ -105,6 +116,40 @@ package game
 			else hundranull = hundraSek.toString();
 			
 			m_time = min+":"+ sek + ":" + hundranull;
+		}
+		
+		private function initBomb():void
+		{
+			m_bomb = new Obstacle(0);
+			m_bombs.push(m_bomb);
+			
+			findBombPlace();
+		}
+		
+		private function findBombPlace():void
+		{
+			var r:int;
+			
+			r = Math.floor(Math.random() * m_availableSpace.length);
+			
+			m_bomb.x = m_availableSpace[r].x;
+			m_bomb.y = m_availableSpace[r].y;
+			
+			m_layer4.addChild(m_bomb);
+			
+			Session.timer.create(7000, initBomb);
+		}
+		
+		private function checkhitBomb():void
+		{
+			for(var i:uint = 0; i<m_bombs.length; i++)
+			{
+				if(m_robot.hitTestObject(m_bombs[i]))
+				{
+					m_layer4.removeChild(m_bombs[i]);
+					super.bombEffect(m_robot);
+				}
+			}
 		}
 		
 		/*

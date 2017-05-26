@@ -41,6 +41,12 @@ package game
 			
 			superPower();
 		}
+		
+		override public function update():void
+		{
+			super.update();
+			
+		}
 				
 		//------------------------------------------------------------------------
 		// private methods 

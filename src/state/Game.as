@@ -4,7 +4,6 @@ package state
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
-	import flash.display.MovieClip;
 	import flash.geom.Point;
 	import flash.net.SharedObject;
 	
@@ -23,7 +22,6 @@ package state
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.fx.Flicker;
-	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
 
@@ -41,7 +39,7 @@ package state
 		private var m_layer:DisplayStateLayer;
 		private var m_layer2:DisplayStateLayer;
 		private var m_layer3:DisplayStateLayer;
-		private var m_layer4:DisplayStateLayer;
+		protected var m_layer4:DisplayStateLayer;
 		private var m_layer5:DisplayStateLayer;
 	
 		/*
@@ -56,7 +54,7 @@ package state
 		/*
 		* variables for the robots 
 		*/
-		private var m_robot:Robot;
+		protected var m_robot:Robot;
 		private var m_robot2:Robot;
 		
 		/*
@@ -85,9 +83,9 @@ package state
 		private var m_flickr:Flicker;
 		private var m_instructions:Instruction;
 		
-		private var startGame:Boolean= false;
+		private var startGame:Boolean = false;
 						
-		private var m_availableSpace:Vector.<Point> = new Vector.<Point>(); 
+		protected var m_availableSpace:Vector.<Point> = new Vector.<Point>(); 
 		private var xArray:Vector.<int> = new Vector.<int>(); 
 		private var yArray:Vector.<int> = new Vector.<int>(); 
 		private var m_testObj:TestPlaceObj;
@@ -95,6 +93,7 @@ package state
 		private var m_robotInt:int;
 		
 		protected var timerFunc:Function;
+		protected var initTimerfunc:Function;
 	
 		protected var highscore:Function;
 		protected var score:Number;
@@ -149,7 +148,7 @@ package state
 			hitTest();
 			hitBattery();
 			updateHUDBattery();
-			if(m_bomb) checkhitBomb();
+			
 			
 			if(m_players == 2) 
 			{
@@ -311,7 +310,7 @@ package state
 					break;
 				
 				case 1:
-					initTimer();
+					initTimerfunc();
 			}
 			
 			findBatteryPlace();
@@ -332,14 +331,6 @@ package state
 			addBattery();
 			
 			if(m_players == 2) m_battery2.placeBattery2(m_battery.x - 400,  m_battery.y);
-		}
-		
-		/*
-		* function to init a Timer that is used for the time measurment
-		*/
-		private function initTimer():void
-		{
-			Session.timer.create(1, timerFunc);
 		}
 		
 		/*
@@ -369,42 +360,8 @@ package state
 			m_battery2 = new BatteryRefill();
 		}
 		
-		protected function initBomb():void
-		{
-			m_bomb = new Obstacle(0);
-			m_bombs.push(m_bomb);
-			
-			findBombPlace();
-		}
-		
-		//gör om find funktionerna för att returnera ett x och ett y värde
-		private function findBombPlace():void
-		{
-			var r:int;
-			
-			r = Math.floor(Math.random() * m_availableSpace.length);
-			
-			m_bomb.x = m_availableSpace[r].x;
-			m_bomb.y = m_availableSpace[r].y;
-			
-			m_layer4.addChild(m_bomb);
-			
-			Session.timer.create(7000, initBomb);
-		}
-		
-		private function checkhitBomb():void
-		{
-			for(var i:uint = 0; i<m_bombs.length; i++)
-			{
-				if(m_robot.hitTestObject(m_bombs[i]))
-				{
-					m_layer4.removeChild(m_bombs[i]);
-					bombEffect(m_robot);
-				}
-			}
-		}
-		
-		private function bombEffect(robot):void
+
+		protected function bombEffect(robot):void
 		{
 			initBombSound();
 			robot.speed = 0;
@@ -441,7 +398,7 @@ package state
 			}
 			else
 			{
-				if(m_robot.battery.HP > 0) initTimer();		
+				if(m_robot.battery.HP > 0) initTimerfunc();		
 				if(m_robot.battery.HP == 0) 
 				{
 					m_robot.die = true;
