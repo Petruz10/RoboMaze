@@ -53,6 +53,9 @@ package game
 			if(m_bomb) checkhitBomb();
 		}
 		
+		//------------------------------------------------------------------------
+		// private methods 
+		//------------------------------------------------------------------------
 		private function updateHUDTime():void
 		{
 			m_hud.time = m_time;
@@ -147,7 +150,7 @@ package game
 		/*
 		* function to init the highscore
 		*/
-		public function initHighScore():void
+		private function initHighScore():void
 		{
 			var table:int = 1;
 			var scores:int = m_score;
@@ -159,14 +162,11 @@ package game
 		/*
 		* function to set a timer before the gameover screen shows
 		*/
-		protected function gameOver(e):void
+		private function gameOver(e):void
 		{
 			Session.timer.create(1300, super.initGameOver);
 		}
 		
-		//------------------------------------------------------------------------
-		// private methods 
-		//------------------------------------------------------------------------
 		/*
 		* init the tha avatar
 		*/
@@ -224,9 +224,6 @@ package game
 			
 			m_bombs = null;
 			m_bomb = null;
-			trace("dispose bombs");
 		}
-		
-
 	}
 }

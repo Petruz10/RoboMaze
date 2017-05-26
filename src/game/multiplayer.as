@@ -34,7 +34,7 @@ package game
 			initMaze();
 			initHUD();
 			
-			superPower();
+			addPowerUp();
 			
 			addChildPowerupFunc = addChildPowerUp;
 			placePowerupFunc = placePowerup;
@@ -42,14 +42,28 @@ package game
 		
 		override public function update():void
 		{
-			if(!m_robot.startGame && !m_robot2.startGame) return;
 			super.update();
-			hitPowerup();
-			super.checkBattery();
+			if(!m_robot.startGame && !m_robot2.startGame) return;
 			if(m_robot.obstacle || m_robot2.obstacle) checkhitObstacle();
+			super.checkBattery();
+			hitPowerup();
 			checkWrongSide();
 			bombHUD();
+		}
+		
+		//------------------------------------------------------------------------
+		// private methods 
+		//------------------------------------------------------------------------
+		/*
+		* Update the bomb icon i HUD
+		*/
+		private function bombHUD():void
+		{
+			if(m_robot.bomb === false) m_hud.bomb(1, false);
+			else if(m_robot.bomb) m_hud.bomb(1, true);
 			
+			if(m_robot2.bomb === false) m_hud.bomb(2, false);
+			else if(m_robot2.bomb)  m_hud.bomb(2, true);
 		}
 		
 		/*
@@ -83,15 +97,9 @@ package game
 			}
 		}
 		
-		private function bombHUD():void
-		{
-			if(m_robot.bomb === false) m_hud.bomb(1, false);
-			else if(m_robot.bomb) m_hud.bomb(1, true);
-			
-			if(m_robot2.bomb === false) m_hud.bomb(2, false);
-			else if(m_robot2.bomb)  m_hud.bomb(2, true);
-		}
-		
+		/*
+		* function to check if a player have wrongSide activated
+		*/
 		private function checkWrongSide():void
 		{
 			if(m_robot.activateWrongSide)
@@ -109,12 +117,18 @@ package game
 			}
 		}
 		
+		/*
+		* function to add the powerups to the stage
+		*/
 		private function addChildPowerUp():void
 		{
 			m_layer4.addChild(m_powerUp2);
 			m_layer4.addChild(m_powerUp);
 		}
 		
+		/*
+		* function to remove the powerups and set timer to add new ones
+		*/
 		private function newPowerup():void
 		{
 			if(m_layer4)m_layer4.removeChildren();
@@ -124,7 +138,10 @@ package game
 			Session.timer.create(7000, addChildPowerUp);
 		}
 		
-		protected function addPowerUp():void
+		/*
+		* randomize which powerup comes
+		*/
+		private function addPowerUp():void
 		{
 			whichPower = Math.random();
 			whichPower = Math.round(whichPower);
@@ -133,6 +150,9 @@ package game
 			m_powerUp2 = new PowerUp(whichPower);
 		}
 		
+		/*
+		* place the powerup on an acceptable place
+		*/
 		private function placePowerup():void
 		{
 			var r:int;
@@ -195,12 +215,18 @@ package game
 			}
 		}
 		
+		/*
+		* function to control which powerup the avatar have
+		*/
 		private function controlWhichPowerup():void
 		{
 			if(m_robotInt == 1) m_robot.obstacleType = whichPower;
 			if(m_robotInt == 2) m_robot2.obstacleType = whichPower;
 		}
 		
+		/*
+		* function to set the robot back to normal
+		*/
 		private function setToFalse():void
 		{
 			m_robot.wrongSide = false;
@@ -210,6 +236,9 @@ package game
 			m_robot2.activateWrongSide = false;
 		}
 		
+		/*
+		* function to init the wrongway effect
+		*/
 		private function wrongWayEffect(robot):void
 		{
 			super.initWrongWaySound();
@@ -219,9 +248,6 @@ package game
 			Session.timer.create(4000, setToFalse)
 		}
 				
-		//------------------------------------------------------------------------
-		// private methods 
-		//------------------------------------------------------------------------
 		/*
 		* init the first avatar 
 		*/
@@ -272,14 +298,6 @@ package game
 			m_hud.y = 0;
 			
 			super.addHUD(m_hud);
-		}
-		
-		/*
-		* init the superpower
-		*/
-		private function superPower():void
-		{	
-			addPowerUp();
 		}
 		
 		//------------------------------------------------------------------------
