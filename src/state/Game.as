@@ -39,23 +39,9 @@ package state
 		private var m_layer:DisplayStateLayer;
 		private var m_layer2:DisplayStateLayer;
 		private var m_layer3:DisplayStateLayer;
-		protected var m_layer4:DisplayStateLayer;
 		private var m_layer5:DisplayStateLayer;
-	
-		/*
-		 * variables for powerups 
-		 */
-		private var m_powerUp:PowerUp;
-		private var m_powerUp2:PowerUp;
 		
 		private var m_bomb:Obstacle;
-		private var m_bombs:Vector.<Obstacle> = new Vector.<Obstacle>();
-		
-		/*
-		* variables for the robots 
-		*/
-		protected var m_robot:Robot;
-		private var m_robot2:Robot;
 		
 		/*
 		* maze
@@ -80,24 +66,38 @@ package state
 		private var m_SharedObjPlayers:SharedObject;
 		private var m_win:SharedObject;
 		
-		private var m_flickr:Flicker;
 		private var m_instructions:Instruction;
 		
 		private var startGame:Boolean = false;
 						
-		protected var m_availableSpace:Vector.<Point> = new Vector.<Point>(); 
 		private var xArray:Vector.<int> = new Vector.<int>(); 
 		private var yArray:Vector.<int> = new Vector.<int>(); 
 		private var m_testObj:TestPlaceObj;
 		
-		private var m_robotInt:int;
+		
+		
+		//------------------------------------------------------------------------
+		// protected properties 
+		//------------------------------------------------------------------------
+		protected var m_robotInt:int;
 		
 		protected var timerFunc:Function;
 		protected var initTimerfunc:Function;
-	
+		protected var addChildPowerupFunc:Function;
+		protected var placePowerupFunc:Function;
 		protected var highscore:Function;
-		protected var score:Number;
 		
+		protected var score:Number;
+		protected var m_flickr:Flicker;
+		protected var m_availableSpace:Vector.<Point> = new Vector.<Point>(); 
+		
+		protected var m_layer4:DisplayStateLayer;
+
+		/*
+		* variables for the robots 
+		*/
+		protected var m_robot:Robot;
+		protected var m_robot2:Robot;
 		//------------------------------------------------------------------------
 		// public properties 
 		//------------------------------------------------------------------------
@@ -146,18 +146,8 @@ package state
 			
 			if(!startGame) initGame();
 			hitTest();
-			hitBattery();
+			hitBatteryScreen();
 			updateHUDBattery();
-			
-			
-			if(m_players == 2) 
-			{
-				hitPowerup();
-				checkBattery();
-				if(m_robot.obstacle || m_robot2.obstacle)checkhitObstacle();
-				checkWrongSide();
-				bombHUD();
-			} 
 		}
 		
 		/*
@@ -174,7 +164,6 @@ package state
 			disposeSharedObj();
 			disposeEffects();
 			disposeInstructions();
-			if(m_players == 2) disposePowerUps();
 		}
 		
 		//------------------------------------------------------------------------
@@ -305,8 +294,8 @@ package state
 				case 2:
 					m_robot2.initBattery();
 					initBattery2();
-					Session.timer.create(1600, addChildPowerUp);
-					Session.timer.create(500, placePowerup);
+					Session.timer.create(1600, addChildPowerupFunc);
+					Session.timer.create(500, placePowerupFunc);
 					break;
 				
 				case 1:
@@ -406,47 +395,7 @@ package state
 				}
 				m_win.data.won = 0;
 			}
-			
 			m_win.flush(); 
-		}
-		
-		private function controlWhichPowerup():void
-		{
-			if(m_robotInt == 1) m_robot.obstacleType = whichPower;
-			if(m_robotInt == 2) m_robot2.obstacleType = whichPower;
-		}
-		
-		private function bombHUD():void
-		{
-			if(m_robot.bomb === false) m_hud.bomb(1, false);
-			else if(m_robot.bomb) m_hud.bomb(1, true);
-						
-			if(m_robot2.bomb === false) m_hud.bomb(2, false);
-			else if(m_robot2.bomb)  m_hud.bomb(2, true);
-		}
-		
-		/*
-		* function to find a randomplace for the powerups
-		*/
-		private function placePowerup():void
-		{
-			var r:int;
-			
-			r = Math.floor(Math.random() * m_availableSpace.length);
-			
-			m_powerUp.x = m_availableSpace[r].x;
-			m_powerUp.y = m_availableSpace[r].y;
-			
-			m_powerUp2.placePowerup2(m_powerUp.x - 400,  m_powerUp.y);
-		}
-		
-		/*
-		* function to add the powerups to the stage
-		*/
-		private function addChildPowerUp():void
-		{
-			m_layer4.addChild(m_powerUp2);
-			m_layer4.addChild(m_powerUp);
 		}
 		
 		/*
@@ -477,13 +426,13 @@ package state
 		/*
 		* function to see if anyone gets a battery
 		*/
-		private function hitBattery():void
+		private function hitBatteryScreen():void
 		{
 			switch(m_players)
 			{
 				case 2:
-					if(m_battery.hitTestObject(m_robot2)) m_robot2.hitBattery = true;
-					if(m_battery2.hitTestObject(m_robot)) m_robot.hitBattery = true;
+					if(m_battery.hitTestObject(m_robot2.area)) m_robot2.hitBattery = true;
+					if(m_battery2.hitTestObject(m_robot.area)) m_robot.hitBattery = true;
 					
 					if(m_robot.hitBattery || m_robot2.hitBattery)
 					{
@@ -505,67 +454,7 @@ package state
 			}
 		}
 		
-		/*
-		* function to check if anyone gets a powerup
-		*/
-		private function hitPowerup():void
-		{
-			if(m_powerUp.hitTestObject(m_robot2.area)) 
-			{
-				if(m_robot2.powerUp == 1) return;
-				m_robot2.powerUp ++;
-				m_robotInt = 2;
-				
-				switch(whichPower)
-				{
-					case 0:
-						m_robot2.bomb = true;
-						break;
-					
-					case 1:
-						m_hud.wrong(2, true);
-						break;
-				}
-				controlWhichPowerup();
-			}
-			
-			if(m_powerUp2.hitTestObject(m_robot.area)) 
-			{
-				if(m_robot.powerUp == 1) return;
-				m_robot.powerUp ++;
-				m_robotInt = 1;
-				
-				switch(whichPower)
-				{
-					case 0:
-						m_robot.bomb = true;
-						break;
-					
-					case 1:
-						m_hud.wrong(1, true);
-						break;
-				}
-				controlWhichPowerup();
-			}
-			
-			if(m_powerUp.hitTestObject(m_robot2.area) || m_powerUp2.hitTestObject(m_robot.area))
-			{
-				initPowerupSound();
-				newPowerup();
-			}
-		}
-		
-		private function newPowerup():void
-		{
-			if(m_layer4)m_layer4.removeChildren();
-			
-			Session.timer.create(100, addPowerUp);
-			Session.timer.create(200, placePowerup);
-			Session.timer.create(7000, addChildPowerUp);
-			
-		}
-		
-		private function initPowerupSound():void
+		protected function initPowerupSound():void
 		{
 			Session.sound.musicChannel.sources.add("powerup_sound", RobotPickUp_mp3);
 			m_powerupSound = Session.sound.musicChannel.get("powerup_sound");
@@ -656,67 +545,7 @@ package state
 			}
 		}
 		
-		/*
-		* function to see if a robot walks into a obstacle "sabotage grejs"
-		*/
-		private function checkhitObstacle():void
-		{
-			if(m_robot2.obstacle) 
-			{
-				for(var i:uint = 0; i<m_robot2.bombs.length; i++)
-				{	
-					if(m_robot.hitTestObject(m_robot2.bombs[i]))
-					{
-						m_robot2.removeChild(m_robot2.bombs[i]);
-						bombEffect(m_robot);	
-					}
-				}
-			}
-			
-			if(m_robot.obstacle)
-			{
-				for(var j:uint = 0; j<m_robot.bombs.length; j++)
-				{
-					if(m_robot2.hitTestObject(m_robot.bombs[j])) 
-					{
-						m_robot.removeChild(m_robot.bombs[j]);
-						bombEffect(m_robot2);
-					}
-				}
-				
-			}
-		}
-		
-		/*
-		* för aktivering av wrongSide så fort användaren klickar på knapp 1
-		*/
-		private function checkWrongSide():void
-		{
-			if(m_robot.activateWrongSide)
-			{
-				m_robot.activateWrongSide = false;
-				wrongWayEffect(m_robot2);
-				m_hud.wrong(1, false);				
-			}
-			
-			if(m_robot2.activateWrongSide)
-			{
-				m_robot2.activateWrongSide = false;
-				wrongWayEffect(m_robot);
-				m_hud.wrong(2, false);
-			}
-		}
-		
-		private function wrongWayEffect(robot):void
-		{
-			initWrongWaySound();
-			robot.wrongSide = true;
-			m_flickr = new Flicker(robot.skin, 4000); 
-			Session.effects.add(m_flickr);
-			Session.timer.create(4000, setToFalse)
-		}
-		
-		private function initWrongWaySound():void
+		protected function initWrongWaySound():void
 		{
 			Session.sound.musicChannel.sources.add("game_wrongSound", RobotWrongWay_mp3);
 			m_wrongSound = Session.sound.musicChannel.get("game_wrongSound");
@@ -738,22 +567,10 @@ package state
 		/*
 		* function to set the speed of the robot to normal
 		*/
-		private function initSpeed():void
+		protected function initSpeed():void
 		{
 			if(m_robot2) m_robot2.speed = 3;
 			m_robot.speed = 3;
-		}
-		
-		/*
-		* function to set the controls to normal
-		*/
-		private function setToFalse():void
-		{
-			m_robot.wrongSide = false;
-			m_robot2.wrongSide = false;
-			
-			m_robot.activateWrongSide = false;
-			m_robot2.activateWrongSide = false;
 		}
 		
 		/*
@@ -798,18 +615,6 @@ package state
 		protected function addHUD(hud):void
 		{
 			m_hud = hud;
-		}
-		
-		/*
-		* function to instance a random powerup
-		*/
-		protected function addPowerUp():void
-		{
-			whichPower = Math.random();
-			whichPower = Math.round(whichPower);
-			
-			m_powerUp = new PowerUp(whichPower);
-			m_powerUp2 = new PowerUp(whichPower);
 		}
 		
 		//------------------------------------------------------------------------
@@ -875,11 +680,6 @@ package state
 			m_win = null;
 		}
 		
-		private function disposePowerUps():void
-		{
-			m_powerUp = null;
-			m_powerUp2 = null;
-		}
 		
 		private function disposeEffects():void
 		{
