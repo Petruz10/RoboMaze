@@ -93,18 +93,13 @@ package state
 		override public function update():void {
 			updateMenu();
 			changeState();
-<<<<<<< HEAD
 	//		emptyHighscore();
 
 		}
 		
-=======
-		//	emptyHighscore();
-		}	
 		//------------------------------------------------------------------------
 		// 	test method - empty highscore
 		//------------------------------------------------------------------------
->>>>>>> origin/master
 		private function emptyHighscore():void
 		{
 			if(Input.keyboard.justPressed("SPACE")) 
