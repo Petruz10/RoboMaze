@@ -1,31 +1,32 @@
 package state
 {
 	//------------------------------------------------------------------------
-	// 	Evertron SDK
+	// 	Flash
 	//------------------------------------------------------------------------
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.filters.DropShadowFilter;
-	import flash.media.Sound;
-	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	
-	import entity.BackButton;
-	
-	import font.GameFont;
-	
-	import highscore.HighscoreData;
-	
+	//------------------------------------------------------------------------
+	// 	Evertron SDK
+	//------------------------------------------------------------------------
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
-
 	//------------------------------------------------------------------------
-	// 	Highscore State
+	// 	Project Imports
+	//------------------------------------------------------------------------
+	import entity.BackButton;
+	import font.GameFont;	
+	import highscore.HighscoreData;
+	//------------------------------------------------------------------------
+	// 		
+	//	HIGHSCORE STATE
+	//
 	//------------------------------------------------------------------------
 	public class Highscore extends DisplayState {
 		/*
@@ -49,7 +50,7 @@ package state
 		/*
 		* 	Evertron Controls
 		*/
-		private var _controls:EvertronControls = new EvertronControls();
+		private var _controls:EvertronControls;
 		/*
 		* 	highscore data
 		*/
@@ -95,6 +96,7 @@ package state
 		// 	init
 		//------------------------------------------------------------------------
 		override public function init():void {
+			initControls();
 			initShadowfilter();
 			initLayers();
 			initFont();
@@ -112,11 +114,21 @@ package state
 		// 	dispose
 		//------------------------------------------------------------------------
 		override public function dispose():void {
-			_controls = null;
+			disposeControls();
 			disposeBackground();
 			disposeHighscoreTable();
 			disposeOverlay();
+			disposeShadowfilter();
 		}
+		//------------------------------------------------------------------------
+		//	init controls
+		//------------------------------------------------------------------------
+		private function initControls():void {
+			_controls = new EvertronControls();
+		}
+		//------------------------------------------------------------------------
+		// 	init font
+		//------------------------------------------------------------------------
 		private function initFont():void {
 			_gameFont = new GameFont();
 		}
@@ -163,36 +175,13 @@ package state
 			_score = _highscoreData.score;
 			_name = _highscoreData.name;
 
-	/*	if((_score.length == 0) || (_score == null)) {
+			/*
+			if((_score.length == 0) || (_score == null)) {
 				_score.push("00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00", "00:00:00");
 				_name.push("michaela1","michaela2","michaela3","michaela4","michaela5","michaela6","michaela7","michaela8","michaela9","michaela10");
-			} */
+			} 
+			*/
 		} 
-		private function updateHighscore():void {
-			if (_score.length != 0) { initList(); } 
-		}
-		//------------------------------------------------------------------------
-		// 	move robot
-		//------------------------------------------------------------------------
-		private function updateRobot():void {
-			if (_robot) {
-				if (_robot.x <= -80) { 
-					_robotDirection = false; trace("false"); 
-				}
-				else if (_robot.x >= 880) { 
-					_robotDirection = true; trace("true"); 
-				}
-
-				if (_robotDirection == true) {
-					_robot.x--;
-					_robot.scaleX = -4;
-				}
-				else if (_robotDirection == false) {
-					_robot.x++;
-					_robot.scaleX = 4;
-				}
-			}	
-		}
 		//------------------------------------------------------------------------
 		// 	init background
 		//------------------------------------------------------------------------
@@ -300,12 +289,57 @@ package state
 			_layerOverlay.addChild(_robot);
 		}
 		//------------------------------------------------------------------------
+		// 	updateHighscore
+		//------------------------------------------------------------------------
+		private function updateHighscore():void {
+			if (_score.length != 0) { initList(); } 
+		}
+		//------------------------------------------------------------------------
+		// 	move robot
+		//------------------------------------------------------------------------
+		private function updateRobot():void {
+			if (_robot) {
+				if (_robot.x <= -80) { 
+					_robotDirection = false; trace("false"); 
+				}
+				else if (_robot.x >= 880) { 
+					_robotDirection = true; trace("true"); 
+				}
+				
+				if (_robotDirection == true) {
+					_robot.x--;
+					_robot.scaleX = -4;
+				}
+				else if (_robotDirection == false) {
+					_robot.x++;
+					_robot.scaleX = 4;
+				}
+			}	
+		}
+		//------------------------------------------------------------------------
 		// 	making sure that the player can return to menu
 		//------------------------------------------------------------------------
 		private function changeState():void {
 			if(Input.keyboard.justPressed(_controls.PLAYER_BUTTON_1) == true){
 				Session.application.displayState = new Menu; 
 			}
+		}
+		//------------------------------------------------------------------------
+		// 	
+		//	DISPOSE METHODS
+		//
+		//------------------------------------------------------------------------
+		//------------------------------------------------------------------------
+		// 	dispose controls
+		//------------------------------------------------------------------------
+		private function disposeControls():void {
+			_controls = null;
+		}
+		//------------------------------------------------------------------------
+		// 	dispose shadowfilter
+		//------------------------------------------------------------------------
+		private function disposeShadowfilter():void {
+			_shadow = null;
 		}
 		//------------------------------------------------------------------------
 		// 	dispose highscore table
@@ -341,6 +375,9 @@ package state
 			_background = null;
 			_header = null;
 		}
+		//------------------------------------------------------------------------
+		// 	dispose coverlay
+		//------------------------------------------------------------------------
 		private function disposeOverlay():void {
 			_layerOverlay.removeChild(_robot);
 			_robot = null;

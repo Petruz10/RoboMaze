@@ -1,40 +1,39 @@
 package entity
 {
 	//------------------------------------------------------------------------
-	// imports
+	// 	Flash
 	//------------------------------------------------------------------------
 	import flash.display.MovieClip;
-	
-	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
-	
 	//------------------------------------------------------------------------
-	// public class Entity
+	// 	Project Imports
+	//------------------------------------------------------------------------
+	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
+	//------------------------------------------------------------------------
+	// 
+	//	ENTITY - SUPER CLASS
+	//
 	//------------------------------------------------------------------------
 	public class Entity extends DisplayStateLayerSprite
 	{
 		//------------------------------------------------------------------------
-		// protected properties
+		// 	protected properties
 		//------------------------------------------------------------------------
 		protected var _skin:MovieClip;
-		
-		public function Entity()
-		{
+		//------------------------------------------------------------------------
+		// 	Constructor
+		//------------------------------------------------------------------------
+		public function Entity(){
 			
 		}
-		
 		//------------------------------------------------------------------------
 		// override methods
 		//------------------------------------------------------------------------
-		override public function init():void
-		{
+		override public function init():void {
 			
 		}
-		
-		override public function dispose():void
-		{
+		override public function dispose():void {
 			disposeSkin();
 		}
-		
 		//------------------------------------------------------------------------
 		// protected methods
 		//------------------------------------------------------------------------

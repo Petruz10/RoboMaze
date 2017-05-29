@@ -1,8 +1,13 @@
 package component
 {
+	//------------------------------------------------------------------------
+	//	Flash
+	//------------------------------------------------------------------------
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import flash.text.Font;
+	//------------------------------------------------------------------------
+	//	Project Imports
+	//------------------------------------------------------------------------
 	import font.GameFont;
 	import highscore.HighscoreData;
 
@@ -15,11 +20,11 @@ package component
 		*/
 		private var _highscore:String;
 		/*
-		*
+		*	highscore data
 		*/
 		private var _highscoreData:HighscoreData = new HighscoreData();
 		/*
-		*
+		*	vector containing highscore
 		*/
 		private var _highscoreVector:Vector.<String>;
 		/*
@@ -38,12 +43,9 @@ package component
 		*/
 		protected var _gameFont:GameFont;
 		/*
-		*
+		*	graphic representation of time
 		*/
 		protected var _timeT:TextField;
-		/*
-		*
-		*/
 		protected var _timeF:TextFormat;
         //------------------------------------------------------------------------
 		// 	Constructor
@@ -223,6 +225,7 @@ package component
 			if(_timeT != null){
 				this.removeChild(_timeT);
 				_timeT = null;
+				_timeF = null;
 			}
 		}
         //------------------------------------------------------------------------
@@ -233,6 +236,7 @@ package component
 			if(_highscoreT != null) {
 				this.removeChild(_highscoreT);
 				_highscoreT = null;
+				_highscoreF = null;
 			}
 		}
     }

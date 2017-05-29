@@ -1,9 +1,19 @@
 ﻿package component
 {
-	import entity.Tile;
+	//------------------------------------------------------------------------
+	// 	Flash
+	//------------------------------------------------------------------------
 	import flash.display.Sprite;
 	import flash.display.DisplayObject;
-
+	//------------------------------------------------------------------------
+	// 	Project Imports
+	//------------------------------------------------------------------------
+	import entity.Tile;
+	//------------------------------------------------------------------------
+	// 
+	//	MAZE
+	//
+	//------------------------------------------------------------------------
 	public class Maze extends Sprite {
 		/*
 		* maze design
@@ -11,48 +21,35 @@
 		private var _mazeArray:Array;
 		private var _multiMazeArray:Array; // mazes for multiplayer
 		/*
-		* 
-		*/
-		private const ONEPLAYER_MAZE_HEIGHT:int = 560; 	// total height 
-		/*
-		* 
-		*/
-		private const ONEPLAYER_MAZE_WIDTH:int = 800; 	// total width oneplayer maze.
-		/*
-		* 
-		*/
-		private const TWOPLAYER_MAZE_HEIGHT:int = 560; 	// total height 
-		/*
-		* 
-		*/
-		private const TWOPLAYER_MAZE_WIDTH:int = 400; 	// total width oneplayer maze.
-		/*
-		* 
+		* 	tile height
 		*/
 		private const TILE_HEIGHT:int = 40; // tile height
 		/*
-		* 
+		* 	tile width
 		*/
 		private const TILE_WIDTH:int = 40; // tile width
 		/*
-		* keeps track on how many mazes that is needed. one or two. 
+		* 	keeps track on how many mazes that is needed. one or two. 
 		*/
 		private var _mode:int; // game mode // oneplayer = 1, twoplayer = 2;
 		//------------------------------------------------------------------------
-		// Constructor
-		// @param mode:int // 1 or 2, singleplayer or multiplayer.
+		// 	Constructor
+		// 	@param mode:int // 1 or 2, singleplayer or multiplayer.
 		//------------------------------------------------------------------------
 		public function Maze(mode:int=2){
 			this._mode = mode;
 			init();
 		}
+		//------------------------------------------------------------------------
+		// 	init
+		//------------------------------------------------------------------------
 		public function init():void {
 			if (_mode == 1) { initSingleplayerMaze(); }
 			if (_mode == 2) { initMultiplayerMaze(); }
 			initTiles();	
 		}
 		//------------------------------------------------------------------------
-		// create Vector
+		// 	Singleplayer Maze
 		//------------------------------------------------------------------------
 		private function initSingleplayerMaze():void {
 				_mazeArray = [
@@ -71,6 +68,9 @@
 					[5,2,2,2,2,2,2,2,2,2,2,13,2,2,2,2,2,2,2,6]
 				];
 		} 
+		//------------------------------------------------------------------------
+		// 	Multiplayer Maze
+		//------------------------------------------------------------------------
 		private function initMultiplayerMaze():void {
 			var r:int;
 			_multiMazeArray = 
@@ -158,11 +158,7 @@
 		//------------------------------------------------------------------------
 		// fill object with tiles based on mazeArray
 		//------------------------------------------------------------------------
-		// https://gamedevelopment.tutsplus.com/tutorials/an-introduction-to-creating-a-tile-map-engine--gamedev-10900
 		private function initTiles():void {
-			/*
-			* the tile to add 
-			*/
 			var tile:Tile;
 				for (var i:int = 0; i <_mazeArray.length; i++ ){
 					for (var j:int = 0; j < _mazeArray[i].length; j++) {
@@ -200,10 +196,9 @@
 			_mazeArray = null;
 			var numCh:int = this.numChildren;
 			var tile:DisplayObject;
-
 			while (numCh > 0) {
-				this.removeChildAt(0);
 				tile = this.getChildAt(0);
+				this.removeChildAt(0);		
 				tile = null;
 			} 
 		}

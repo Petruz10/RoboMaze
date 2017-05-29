@@ -1,18 +1,13 @@
 package state
 {
 	//------------------------------------------------------------------------
-	// 	Evertron SDK
+	// 	Flash
 	//------------------------------------------------------------------------
 	import flash.display.MovieClip;
 	import flash.net.SharedObject;
-	
-	import entity.BackButton;
-	import entity.Button;
-	import entity.RetryButton;
-	
-	import game.Multiplayer;
-	import game.Singleplayer;
-	
+	//------------------------------------------------------------------------
+	// 	Evertron SDK
+	//------------------------------------------------------------------------
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
@@ -20,9 +15,17 @@ package state
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
 
-
 	//------------------------------------------------------------------------
-	// 	Game Over State
+	// 	Project Imports
+	//------------------------------------------------------------------------
+	import entity.BackButton;
+	import entity.RetryButton;
+	import game.Multiplayer;
+	import game.Singleplayer;
+	//------------------------------------------------------------------------
+	//
+	//	GAME OVER STATE
+	// 	
 	//------------------------------------------------------------------------
 	public class GameOver extends DisplayState {
 		/*
@@ -42,51 +45,51 @@ package state
 		*/
 		private var _menuIndex:int;
 		/*
-		*
+		*	graphics // menu button
 		*/
 		private var _menuBtn:BackButton;
 		/*
-		*
+		*	graphics // retry button
 		*/
 		private var _retryBtn:RetryButton;
 		/*
-		*
+		*	button array - retry or menu
 		*/
 		private var _menuIndexIndexArray:Array;
 		/*
-		* 1 = oneplayer game, 2 = twoplayer game
+		* 	1 = oneplayer game, 2 = twoplayer game
 		*/
 		private var _game:int;
 		/*
-		*
+		*	singleplayer
 		*/
 		private var _gameOverImg:GameOver_mc; // if singleplayer
 		/*
-		*
+		*	two player header 
 		*/
 		private var _winnerHeader:GameOver_winner_header_mc; // if multiplayer // winner banner
 		/*
-		*
+		*	two player header // shows winner
 		*/
 		private var _winner:GameOver_winner_mc;
 		/*
-		*
+		*	music
 		*/
 		private var _backgroundMusic:SoundObject;
 		/*
-		*
+		*	data about who won
 		*/
 		private var _victoryInfo:SharedObject;
 		/*
-		*
+		*	storage for winning player - from SharedObject
 		*/
 		private var _won:int; // winning player
 		/*
-		*
+		*	Animated robot
 		*/
 		private var _robot:MovieClip; 
-			/*
-		*
+		/*
+		*	Trophy 
 		*/
 		private var _trophy:Trophy_mc; 
 		//------------------------------------------------------------------------
@@ -98,10 +101,7 @@ package state
 		// init
 		//------------------------------------------------------------------------
 		override public function init():void {
-		
-			_victoryInfo = SharedObject.getLocal("playerwon");
-			_won = _victoryInfo.data.won; 
-	
+			initVictory();
 			initLayers();
 			initSound();
 			initSharedObj();
@@ -132,6 +132,13 @@ package state
 			_backgroundMusic.volume = 0.5;
 			_backgroundMusic.play();
 			
+		}	
+		//------------------------------------------------------------------------
+		// 	data about who won
+		//------------------------------------------------------------------------
+		private function initVictory():void {
+			_victoryInfo = SharedObject.getLocal("playerwon");
+			_won = _victoryInfo.data.won; 
 		}
 		//------------------------------------------------------------------------
 		// init layers
@@ -141,15 +148,14 @@ package state
 			initOverlay();
 		}
 		//------------------------------------------------------------------------
-		//
+		// init ShardOb // storage to control of single or multiplayer
 		//------------------------------------------------------------------------
-		private function initSharedObj():void
-		{
+		private function initSharedObj():void {
 			var players:SharedObject = SharedObject.getLocal("players");
 			_game = players.data.players;
 		}
 		//------------------------------------------------------------------------
-		//
+		//	init background
 		//------------------------------------------------------------------------
 		private function initBackground():void {
 			_layerBackground = layers.add("GAME_OVER_BG");
@@ -300,6 +306,7 @@ package state
 				_winner = null;
 				_robot = null;
 				_trophy = null;
+				_layerBackground = null;
 			}
 		}
 		//------------------------------------------------------------------------

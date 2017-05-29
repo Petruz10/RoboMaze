@@ -1,16 +1,23 @@
 package state
 {
-	import entity.BackButton;
-	import font.GameFont;
-
+	//------------------------------------------------------------------------
+	// 	Evertron SDK
+	//------------------------------------------------------------------------
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.system.Session;
 	import se.lnu.stickossdk.media.SoundObject;
-
-	
+	//------------------------------------------------------------------------
+	// 	Project Imports
+	//------------------------------------------------------------------------
+	import entity.BackButton;
+	//------------------------------------------------------------------------
+	// 	
+	//	CREDITS STATE
+	//
+	//------------------------------------------------------------------------
 	public class Credits extends DisplayState {
 		/*
 		* 	background layer
@@ -31,41 +38,37 @@ package state
 		/*
 		*	controls
 		*/
-		private var _controls:EvertronControls = new EvertronControls;
+		private var _controls:EvertronControls;
 		/*
-		*
+		*	header
 		*/
 		private var _header:Credits_mc;
 		/*
-		*
+		*	music
 		*/
 		private var _backgroundMusic:SoundObject;
-		/*
-		* font
-		*/
-		private var _font:GameFont;
 		//------------------------------------------------------------------------
-		// constructor
+		// 	constructor
 		//------------------------------------------------------------------------
 		public function Credits(){
 			super();
 		}
 		//------------------------------------------------------------------------
-		// init
+		// 	init
 		//------------------------------------------------------------------------
 		override public function init():void {
+			initControls();
 			initSound();
 			initLayers();
-			initFont();
 		}
 		//------------------------------------------------------------------------
-		// update
+		// 	update
 		//------------------------------------------------------------------------
 		override public function update():void {
 			changeState();
 		}
 		//------------------------------------------------------------------------
-		// dispose
+		// 	dispose
 		//------------------------------------------------------------------------
 		override public function dispose():void {
 			_controls = null;
@@ -73,7 +76,13 @@ package state
 			disposeOverlay();
 		}
 		//------------------------------------------------------------------------
-		// init sound
+		// 	init controls
+		//------------------------------------------------------------------------
+		private function initControls():void {
+			_controls = new EvertronControls();
+		}
+		//------------------------------------------------------------------------
+		// 	init sound
 		//------------------------------------------------------------------------
 		private function initSound():void {
 			Session.sound.musicChannel.sources.add("highscore_credits", BackgroundCredits_mp3);
@@ -82,7 +91,7 @@ package state
 			_backgroundMusic.play(10);
 		}
 		//------------------------------------------------------------------------
-		// init layers
+		// 	init layers
 		//------------------------------------------------------------------------
 		private function initLayers():void {
 			initBackground();
@@ -105,7 +114,7 @@ package state
 			_layerBackground.addChild(_header);
 		}
 		//------------------------------------------------------------------------
-		// init "menu" --> back btn
+		// 	init "menu" --> back btn
 		//------------------------------------------------------------------------
 		private function initOverlay():void {
 			var _creditsAnimation:CreditsRobot_mc = new CreditsRobot_mc();
@@ -124,11 +133,8 @@ package state
 			_layerOverlay.addChild(_creditsAnimation);
 			_layerOverlay.addChild(_menuBtn);
 		}
-		private function initFont():void {
-			_font = new GameFont();
-		}
 		//------------------------------------------------------------------------
-		// change state
+		// 	change state
 		//------------------------------------------------------------------------
 		private function changeState():void {
 			if(Input.keyboard.justPressed(_controls.PLAYER_BUTTON_1) == true){
@@ -136,7 +142,18 @@ package state
 			}
 		}
 		//------------------------------------------------------------------------
-		// dispose background
+		// 
+		//	DISPOSE METHODS
+		//
+		//------------------------------------------------------------------------
+		//------------------------------------------------------------------------
+		// 	dispose controls
+		//------------------------------------------------------------------------
+		private function disposeControls():void {
+			_controls = null;
+		}
+		//------------------------------------------------------------------------
+		// 	dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
 			_layerBackground.removeChild(_background);
@@ -146,7 +163,7 @@ package state
 			_layerBackground = null;
 		}
 		//------------------------------------------------------------------------
-		// dispose overlay
+		// 	dispose overlay
 		//------------------------------------------------------------------------
 		private function disposeOverlay():void {
 			_menuBtn = null;

@@ -1,14 +1,28 @@
 package state
-{
-	import flash.display.MovieClip;
-	
+{	
+	//------------------------------------------------------------------------
+	// 	Flash
+	//------------------------------------------------------------------------
+	import flash.display.DisplayObject;
+	//------------------------------------------------------------------------
+	// 	Evertron SDK
+	//------------------------------------------------------------------------
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
-	import se.lnu.stickossdk.system.Session;
-	
-	import state.Menu;
 	import se.lnu.stickossdk.media.SoundObject;
-	
+	import se.lnu.stickossdk.system.Session;
+	//------------------------------------------------------------------------
+	// 	Project Imports
+	//------------------------------------------------------------------------
+	import se.lnu.stickossdk.display.DisplayState;
+	import se.lnu.stickossdk.display.DisplayStateLayer;
+	import se.lnu.stickossdk.media.SoundObject;
+	import se.lnu.stickossdk.system.Session;
+	//------------------------------------------------------------------------
+	// 	
+	//	SPLASHSCREEN STATE
+	//
+	//------------------------------------------------------------------------
 	public class SplashScreen extends DisplayState {
 		/*
 		* 	how long the splashscreen will show
@@ -43,7 +57,7 @@ package state
 		*/
 		private var _names:SplashNames_mc;
 		/*
-		*
+		*	Music
 		*/
 		private var _backgroundMusic:SoundObject;
 		//------------------------------------------------------------------------
@@ -97,10 +111,11 @@ package state
 		// init layers
 		//------------------------------------------------------------------------
 		private function initLayers():void {
-			//initBackground();
 			initOverlay();
-
 		}
+		//------------------------------------------------------------------------
+		// init overlay
+		//------------------------------------------------------------------------
 		private function initOverlay():void {
 			_michaela = new MichaelaBot_mc;
 			_petra = new PetraBot_mc;
@@ -131,6 +146,18 @@ package state
 			_backgroundMusic = Session.sound.musicChannel.get("splashscreen");
 			_backgroundMusic.volume = 0.4;
 			_backgroundMusic.play();
+		}
+		//------------------------------------------------------------------------
+		// dispose overlay
+		//------------------------------------------------------------------------
+		private function disposeOverlay():void {
+			var child:DisplayObject;
+			while (_layerOverlay.numChildren > 0) {
+				child = _layerOverlay.getChildAt(0);
+				_layerOverlay.removeChildAt(0);
+				child = null;
+			}
+			_layerOverlay = null;
 		}
 	}
 }

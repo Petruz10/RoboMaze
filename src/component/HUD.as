@@ -1,16 +1,20 @@
 package component
 {	
-	import entity.Battery;
+	//------------------------------------------------------------------------
+	// 	Flash
+	//------------------------------------------------------------------------
 	import flash.display.MovieClip;
-	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
-	import flash.display.Shape;
 	import flash.filters.DropShadowFilter;
-	/*
-	*
-	* game HUD	
-	* super class
-	* 
-	*/ 
+	import flash.display.Shape;
+	//------------------------------------------------------------------------
+	// 	Evertron SDK
+	//------------------------------------------------------------------------
+	import se.lnu.stickossdk.display.DisplayStateLayerSprite;
+	//------------------------------------------------------------------------
+	// 	
+	//	GAME HUD - SUPER CLASS
+	//
+	//------------------------------------------------------------------------
 	public class HUD extends DisplayStateLayerSprite {
 		//------------------------------------------------------------------------
 		// 	PROTECTED
@@ -54,6 +58,7 @@ package component
 		// 	dispose
 		//------------------------------------------------------------------------
 		override public function dispose():void {
+			disposeShadowfilter();
 			disposeBackground();
 			disposeBattery();
 		}
@@ -164,6 +169,12 @@ package component
 					break;
 				default: b.gotoAndStop(1);
 			}
+		}
+		//------------------------------------------------------------------------
+		// 	dispose shadowfilter
+		//------------------------------------------------------------------------
+		protected function disposeShadowfilter():void {
+			_shadow = null;
 		}
 		//------------------------------------------------------------------------
 		// 	dispose background

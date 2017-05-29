@@ -1,21 +1,32 @@
 package component
-{	
-	import component.Instruction;
+{	//------------------------------------------------------------------------
+	// 	Flash
+	//------------------------------------------------------------------------
 	import flash.display.Shape;
-
-	/*
-	*
-	* Instruction Screen
-	* 
-	*/ 
+	//------------------------------------------------------------------------
+	//	Project Imports 
+	//------------------------------------------------------------------------
+	import component.Instruction;
+	//------------------------------------------------------------------------
+	// 
+	//	SINGLEPLAYER INSTRUCTIONS - SUB CLASS
+	//
+	//------------------------------------------------------------------------
 	public class SingleplayerInstruction extends Instruction {
+		/*
+		*	background graphics
+		*/
         private var _rectangle1:Shape;
         private var _rectangle2:Shape;
         private var _rectangle3:Shape;
-
+		/*
+		*	background graphics
+		*/
         private var _instTxt1:InstructionSingleplayer_joystick_mc;
         private var _instTxt2:InstructionSingleplayer_pickup_mc;
-
+		/*
+		*	animated graphics
+		*/
         private var _joystick:InstructionsJoystick_mc;
         private var _battery:BatteryRefill_mc;
 
