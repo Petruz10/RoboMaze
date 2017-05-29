@@ -1,30 +1,30 @@
 package state
 {	
 	//------------------------------------------------------------------------
-	// 	Evertron SDK
+	// 	Flash
 	//------------------------------------------------------------------------
 	import flash.display.DisplayObject;
-	import flash.display.Graphics;
-	import flash.display.Sprite;
-	import flash.geom.Matrix;
-	
-	import entity.MenuButton;
-	
-	import game.Multiplayer;
-	import game.Singleplayer;
-	
+	//------------------------------------------------------------------------
+	// 	Evertron SDK
+	//------------------------------------------------------------------------
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
-	
+	//------------------------------------------------------------------------
+	// 	Project imports
+	//------------------------------------------------------------------------
+	import game.Multiplayer;
+	import game.Singleplayer;
 	import state.Credits;
 	import state.Highscore;
-
+	import entity.MenuButton;
 	//------------------------------------------------------------------------
+	//	
 	//	Menu state
+	//
 	//------------------------------------------------------------------------
 	public class Menu extends DisplayState {			
 		/*
@@ -36,11 +36,11 @@ package state
 		*/
 		private var _layerOverlay:DisplayStateLayer;
 		/*
-		*
+		*	background fade
 		*/
 		private var _background:Menu_Background_mc;
 		/*
-		*
+		*	menu header
 		*/
 		private var _logo:Menu_Logo_test_mc;
 		/*
@@ -70,7 +70,7 @@ package state
 		/*
 		* 	Evertron controls
 		*/
-		private var _controls:EvertronControls = new EvertronControls();
+		private var _controls:EvertronControls;
 		/*
 		* 	music
 		*/ 
@@ -85,6 +85,7 @@ package state
 		// 	init
 		//------------------------------------------------------------------------
 		override public function init():void {
+			initControls();
 			initMenu();
 			initLayers();
 			initSound();
@@ -93,9 +94,10 @@ package state
 			updateMenu();
 			changeState();
 		//	emptyHighscore();
-
-		}
-		
+		}	
+		//------------------------------------------------------------------------
+		// 	test method - empty highscore
+		//------------------------------------------------------------------------
 		private function emptyHighscore():void
 		{
 			if(Input.keyboard.justPressed("SPACE")) 
@@ -105,12 +107,15 @@ package state
 			}
 		}
 		//------------------------------------------------------------------------
-		// 	test method. places a maze.
+		// 	on dispose
 		//------------------------------------------------------------------------
-		override public function dispose():void {
-			_controls = null;
+		override public function dispose():void {	
+			disposeControls();
 			disposeOverlay();
 			disposeBackground();
+		}
+		private function initControls():void {
+			_controls = new EvertronControls();
 		}
 		//------------------------------------------------------------------------
 		// 	init menu array
@@ -179,6 +184,9 @@ package state
 				toggleActivation();
 			}
 		}
+		//------------------------------------------------------------------------
+		// 	init animated meny robot
+		//------------------------------------------------------------------------
 		private function initRobot():void {
 			_robot = new Menu_Robot_mc();
 			_robot.y = 320;
@@ -240,7 +248,18 @@ package state
 			}
 		}
 		//------------------------------------------------------------------------
-		// 	remove background
+		// 	
+		//	DISPOSE METHODS
+		// 
+		//------------------------------------------------------------------------	
+		//------------------------------------------------------------------------
+		// 	dispose background
+		//------------------------------------------------------------------------
+		private function disposeControls():void {
+			_controls = null;
+		}
+		//------------------------------------------------------------------------
+		// 	dispose background
 		//------------------------------------------------------------------------
 		private function disposeBackground():void {
 			_layerBackground.removeChild(_background);
@@ -248,7 +267,7 @@ package state
 			_layerBackground = null;
 		}
 		//------------------------------------------------------------------------
-		// 	remove menu buttons
+		// 	dispose menu buttons
 		//------------------------------------------------------------------------
 		private function disposeOverlay():void {
 			var child:DisplayObject;
@@ -260,7 +279,7 @@ package state
 			_layerOverlay = null;
 		}
 		//------------------------------------------------------------------------
-		// 	remove robot
+		// 	dispose robot
 		//------------------------------------------------------------------------
 		private function disposeRobot():void {
 			_robot = null;

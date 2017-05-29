@@ -1,8 +1,15 @@
 package component
-{
+{	
+	//------------------------------------------------------------------------
+	// 	Flash
+	//------------------------------------------------------------------------
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
-
-
+	//------------------------------------------------------------------------
+	//
+	//	MULTIPLAYER HUD - SUB CLASS
+	// 	
+	//------------------------------------------------------------------------
 	public class MultiplayerHUD extends HUD
 	{
 		private var _battery2:Battery_mc;
@@ -30,6 +37,9 @@ package component
 		public function MultiplayerHUD() {
 
 		}
+		//------------------------------------------------------------------------
+		// 	init
+		//------------------------------------------------------------------------
 		override public function init():void {
 			super.init();
 			initBombIcons();
@@ -50,6 +60,7 @@ package component
 		override public function dispose():void {
 			super.dispose();
 			disposeBattery();
+			disposeIcons();
 		}
 		//------------------------------------------------------------------------
 		// 	init battery
@@ -156,11 +167,14 @@ package component
 		//
 		//------------------------------------------------------------------------
 		//------------------------------------------------------------------------
-		// 	set second battery lvl
+		// 	set time
 		//------------------------------------------------------------------------
 		public function set time(timePlayed:String):void{
 			var time:String = timePlayed;
 		}
+		//------------------------------------------------------------------------
+		// 	set second battery lvl
+		//------------------------------------------------------------------------
 		public function set battery2Lvl(batteryLvl:int):void {
 			this._battery2Lvl = batteryLvl;
 		}
@@ -172,14 +186,13 @@ package component
 		}
 		//-----------------------------------------------------------------------------
 		// set bomb status
-		//--------------------------------------
-		//---------------------------------------
+		//-----------------------------------------------------------------------------
 		public function bomb(bomb:int, owned:Boolean):void {
 			_bomb = bomb;
-			if (bomb == 1 && owned == true) { _ownedBomb1 = true; }
-			if (bomb == 1 && owned == false) { _ownedBomb1 = false; }
-			if (bomb == 2 && owned == true) { _ownedBomb2 = true; }
-			if (bomb == 2 && owned == false) { _ownedBomb2 = false; }
+			if (bomb == 1 && owned == true) 	{ _ownedBomb1 = true; }
+			if (bomb == 1 && owned == false) 	{ _ownedBomb1 = false; }
+			if (bomb == 2 && owned == true) 	{ _ownedBomb2 = true; }
+			if (bomb == 2 && owned == false) 	{ _ownedBomb2 = false; }
 		}
 		//-----------------------------------------------------------------------------
 		// set wrong way sabotage status
@@ -187,10 +200,10 @@ package component
 		//---------------------------------------
 		public function wrong(wrong:int, owned:Boolean):void {
 			_wrong = wrong;
-			if (wrong == 1 && owned == true) { _ownedWrong1 = true; }
-			if (wrong == 1 && owned == false) { _ownedWrong1 = false; }
-			if (wrong == 2 && owned == true) { _ownedWrong2 = true; }
-			if (wrong == 2 && owned == false) { _ownedWrong2 = false; }
+			if (wrong == 1 && owned == true) 	{ _ownedWrong1 = true; }
+			if (wrong == 1 && owned == false) 	{ _ownedWrong1 = false; }
+			if (wrong == 2 && owned == true) 	{ _ownedWrong2 = true; }
+			if (wrong == 2 && owned == false) 	{ _ownedWrong2 = false; }
 		}
 		//------------------------------------------------------------------------
 		// dispose battery 2
@@ -200,6 +213,17 @@ package component
 				super.disposeBattery();
 				this.removeChild(_battery2);
 				_battery2 = null;
+			}
+		}
+		//------------------------------------------------------------------------
+		// dispose hud icons
+		//------------------------------------------------------------------------
+		private function disposeIcons():void {
+			var child:DisplayObject;
+			while (this.numChildren > 0) {
+				child = this.getChildAt(0);
+				this.removeChildAt(0);
+				child = null;
 			}
 		}
 	}
