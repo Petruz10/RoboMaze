@@ -4,9 +4,11 @@ package state
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
+	import flash.display.MovieClip;
 	import flash.geom.Point;
 	import flash.net.SharedObject;
 	
+	import component.HUD;
 	import component.Instruction;
 	import component.Maze;
 	import component.MultiplayerInstruction;
@@ -48,7 +50,6 @@ package state
 		private var m_children:Vector.<Tile> = new Vector.<Tile>(); 
 		private var m_players:int;
 	
-		
 		private var m_backgroundMusic:SoundObject;
 		private var m_bombSound:SoundObject;
 		private var m_wrongSound:SoundObject;
@@ -58,7 +59,6 @@ package state
 		private var m_win:SharedObject;
 		
 		private var m_instructions:Instruction;
-		
 		private var startGame:Boolean = false;
 						
 		private var xArray:Vector.<int> = new Vector.<int>(); 

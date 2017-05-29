@@ -92,7 +92,7 @@ package state
 		override public function update():void {
 			updateMenu();
 			changeState();
-		//	emptyHighscore();
+	//		emptyHighscore();
 
 		}
 		
@@ -100,7 +100,7 @@ package state
 		{
 			if(Input.keyboard.justPressed("SPACE")) 
 			{
-				trace("space knapp i menu");
+				trace("space knapp i menu, töm highscore");
 				Session.highscore.resetTable(1);
 			}
 		}
