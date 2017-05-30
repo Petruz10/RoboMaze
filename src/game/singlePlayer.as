@@ -164,7 +164,7 @@ package game
 		private function initHighScore():void
 		{
 			var table:int = 1;
-			var scores:int = m_score;
+			var scores:Number = m_score;
 			var range:int = 10;
 						
 			Session.highscore.smartSend(table, scores, range, gameOver);
