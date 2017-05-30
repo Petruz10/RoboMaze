@@ -4,7 +4,6 @@ package state
 	//------------------------------------------------------------------------
 	// imports
 	//------------------------------------------------------------------------
-	import flash.display.MovieClip;
 	import flash.geom.Point;
 	import flash.net.SharedObject;
 	
