@@ -221,6 +221,7 @@ package component
 		//------------------------------------------------------------------------
 		// 	dispose time
 		//------------------------------------------------------------------------
+
 		protected function disposeTime():void {
 			if(_timeT != null){
 				this.removeChild(_timeT);
@@ -232,6 +233,7 @@ package component
 		//	dispose highscore
 		//------------------------------------------------------------------------
 		private function disposeHighscore():void {
+			_gameFont = null;
 			_highscoreVector = null;
 			_highscoreData.dispose();
 			if(_highscoreT != null) {

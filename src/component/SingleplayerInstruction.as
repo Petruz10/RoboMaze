@@ -112,6 +112,7 @@ package component
             this.addChild(_joystick);
             this.addChild(_battery);
         }
+		
         private function disposeStripes():void {
             this.removeChild(_rectangle1);
             this.removeChild(_rectangle2);
