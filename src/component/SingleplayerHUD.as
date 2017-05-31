@@ -239,6 +239,11 @@ package component
 				_highscoreT = null;
 				_highscoreF = null;
 			}
+			if(_aboveHighscoreT != null) {
+				this.removeChild(_aboveHighscoreT);
+				_aboveHighscoreT = null;
+				_aboveHighscoreF = null;
+			}
 		}
     }
 }
