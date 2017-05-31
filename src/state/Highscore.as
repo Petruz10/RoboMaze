@@ -347,18 +347,21 @@ package state
 		private function disposeHighscoreTable():void {
 			var textField:DisplayObject;
 
+			_score = null;
+			_name = null;
+
 			_highscoreData.dispose();
 
 			if (_container) {
-			while (_container.numChildren > 0) {
-				textField = _container.getChildAt(0);
-				_container.removeChildAt(0);
-				textField = null;
-			}
+				while (_container.numChildren > 0) {
+					textField = _container.getChildAt(0);
+					_container.removeChildAt(0);
+					textField = null;
+				}
 
-			if (_container.numChildren == 0) {
-				_layerHighscoreTable.removeChild(_container);
-			}
+				if (_container.numChildren == 0) {
+					_layerHighscoreTable.removeChild(_container);
+				}
 			}
 
 			_layerHighscoreTable.removeChild(_btn); 

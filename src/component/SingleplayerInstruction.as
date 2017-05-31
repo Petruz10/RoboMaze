@@ -44,6 +44,7 @@ package component
         }
         override public function dispose():void {
             super.dispose();
+            disposeStripes();
             disposeText();
             disposeAnimations();
         }

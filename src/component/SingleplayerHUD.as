@@ -215,7 +215,7 @@ package component
 				}
 			} 
 			else if (_highscoreVector.length == 0) {
-				trace("vector är 0");
+				//trace("vector är 0");
 			}
 		}
 		//------------------------------------------------------------------------
@@ -232,6 +232,7 @@ package component
 		//	dispose highscore
 		//------------------------------------------------------------------------
 		private function disposeHighscore():void {
+			_highscoreVector = null;
 			_highscoreData.dispose();
 			if(_highscoreT != null) {
 				this.removeChild(_highscoreT);

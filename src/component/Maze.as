@@ -154,6 +154,7 @@
 			
 			r = Math.floor(Math.random()*_multiMazeArray.length);
 			_mazeArray = _multiMazeArray[r];
+			_multiMazeArray = null;
 		}
 		//------------------------------------------------------------------------
 		// fill object with tiles based on mazeArray
