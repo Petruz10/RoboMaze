@@ -120,6 +120,7 @@ package state
 			disposeOverlay();
 			disposeShadowfilter();
 			disposeText();
+			disposeSound();
 		}
 		//------------------------------------------------------------------------
 		//	init controls
@@ -394,6 +395,11 @@ package state
 			_nameT = null;
 			_scoreT = null;
 			_highscoreF = null;
+		}
+		
+		private function disposeSound():void
+		{
+			_backgroundMusic = null;
 		}
 	}
 }

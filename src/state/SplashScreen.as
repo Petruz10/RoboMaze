@@ -85,6 +85,7 @@ package state
 		override public function dispose():void {
 
 			disposeOverlay();
+			disposeSound();
 		}
 		
 		//------------------------------------------------------------------------
@@ -154,6 +155,11 @@ package state
 				child = null;
 			}
 			_layerOverlay = null;
+		}
+		
+		private function disposeSound():void
+		{
+			_backgroundMusic = null;
 		}
 	}
 }

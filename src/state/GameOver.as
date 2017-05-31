@@ -118,6 +118,7 @@ package state
 			disposeControls();
 			disposeMenu();
 			disposeGameOver();
+			disposeSound();
 		}
 		private function initSound():void {
 			if (_won == 0) {
@@ -337,6 +338,11 @@ package state
 		{
 			_gameOverImg = null;
 			_victoryInfo = null;
+		}
+		
+		private function disposeSound():void
+		{
+			_backgroundMusic = null;
 		}
 	}
 }

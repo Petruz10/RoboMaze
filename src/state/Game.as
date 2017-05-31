@@ -604,6 +604,15 @@ package state
 			disposeInstructions();
 			disposePlaceObj();
 			disposeFunctions();
+			disposeSound();
+		}
+		
+		private function disposeSound():void
+		{
+			m_backgroundMusic = null;
+			m_bombSound = null;
+			m_wrongSound = null;
+			m_powerupSound = null;
 		}
 		
 		private function disposePlaceObj():void

@@ -74,6 +74,7 @@ package state
 			disposeControls();
 			disposeBackground();
 			disposeOverlay();
+			disposeSound();
 		}
 		//------------------------------------------------------------------------
 		// 	init controls
@@ -169,6 +170,11 @@ package state
 		private function disposeOverlay():void {
 			_menuBtn = null;
 			_layerOverlay = null;
+		}
+		
+		private function disposeSound():void
+		{
+			_backgroundMusic = null;
 		}
 	}
 }

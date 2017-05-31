@@ -93,6 +93,7 @@ package entity
 			disposeSkin();
 			disposeGameOver();
 			disposeObstacle();
+			disposeSound();
 		}
 		
 		//------------------------------------------------------------------------
@@ -328,6 +329,11 @@ package entity
 		//------------------------------------------------------------------------
 		// dispose methods
 		//------------------------------------------------------------------------
+		private function disposeSound():void
+		{
+			m_refillSound = null;
+		}
+		
 		private function disposeSkin():void
 		{
 			m_controls = null;

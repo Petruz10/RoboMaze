@@ -117,6 +117,7 @@ package state
 			disposeOverlay();
 			disposeBackground();
 			disposeBtn();
+			disposeSound();
 		}
 		private function initControls():void {
 			_controls = new EvertronControls();
@@ -307,6 +308,11 @@ package state
 		private function disposeRobot():void {
 			if(_layerOverlay)_layerOverlay.removeChild(_robot);
 			_robot = null;
+		}
+		
+		private function disposeSound():void
+		{
+			_backgroundMusic = null;
 		}
 }
 }

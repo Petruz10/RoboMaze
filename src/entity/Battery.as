@@ -117,6 +117,14 @@ package entity
 		override public function dispose():void
 		{
 			disposeTimer();
+			disposeSound();
+		}
+		
+		private function disposeSound():void
+		{
+			m_warningSound = null;
+			m_deadSound = null;
+			m_deadSound2 = null;
 		}
 		
 		private function disposeTimer():void
