@@ -195,6 +195,7 @@
 		//------------------------------------------------------------------------
 		private function disposeTiles():void {
 			_mazeArray = null;
+			_multiMazeArray = null;
 			var numCh:int = this.numChildren;
 			var tile:DisplayObject;
 			for (var i:int = 0; i < numCh; i++) {

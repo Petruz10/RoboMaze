@@ -71,7 +71,7 @@ package state
 		// 	dispose
 		//------------------------------------------------------------------------
 		override public function dispose():void {
-			_controls = null;
+			disposeControls();
 			disposeBackground();
 			disposeOverlay();
 		}
@@ -152,6 +152,7 @@ package state
 		private function disposeControls():void {
 			_controls = null;
 		}
+		
 		//------------------------------------------------------------------------
 		// 	dispose background
 		//------------------------------------------------------------------------

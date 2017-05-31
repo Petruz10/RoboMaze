@@ -83,14 +83,10 @@ package state
 		// dispose
 		//------------------------------------------------------------------------
 		override public function dispose():void {
-			_layerOverlay.removeChild(_michaela);
-			_layerOverlay.removeChild(_petra);
 
-			_michaela = null;
-			_petra = null;
-
-			_layerOverlay = null;
+			disposeOverlay();
 		}
+		
 		//------------------------------------------------------------------------
 		// update counter
 		//------------------------------------------------------------------------

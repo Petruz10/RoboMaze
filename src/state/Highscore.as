@@ -119,6 +119,7 @@ package state
 			disposeHighscoreTable();
 			disposeOverlay();
 			disposeShadowfilter();
+			disposeText();
 		}
 		//------------------------------------------------------------------------
 		//	init controls
@@ -351,6 +352,7 @@ package state
 			_name = null;
 
 			_highscoreData.dispose();
+			_highscoreData = null;
 
 			if (_container) {
 				while (_container.numChildren > 0) {
@@ -384,6 +386,14 @@ package state
 		private function disposeOverlay():void {
 			_layerOverlay.removeChild(_robot);
 			_robot = null;
+		}
+		
+		private function disposeText():void
+		{
+			_gameFont = null;
+			_nameT = null;
+			_scoreT = null;
+			_highscoreF = null;
 		}
 	}
 }

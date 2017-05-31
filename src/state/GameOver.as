@@ -5,23 +5,19 @@ package state
 	//------------------------------------------------------------------------
 	import flash.display.MovieClip;
 	import flash.net.SharedObject;
-	//------------------------------------------------------------------------
-	// 	Evertron SDK
-	//------------------------------------------------------------------------
+	
+	import entity.BackButton;
+	import entity.RetryButton;
+	
+	import game.Multiplayer;
+	import game.Singleplayer;
+	
 	import se.lnu.stickossdk.display.DisplayState;
 	import se.lnu.stickossdk.display.DisplayStateLayer;
 	import se.lnu.stickossdk.input.EvertronControls;
 	import se.lnu.stickossdk.input.Input;
 	import se.lnu.stickossdk.media.SoundObject;
 	import se.lnu.stickossdk.system.Session;
-
-	//------------------------------------------------------------------------
-	// 	Project Imports
-	//------------------------------------------------------------------------
-	import entity.BackButton;
-	import entity.RetryButton;
-	import game.Multiplayer;
-	import game.Singleplayer;
 	//------------------------------------------------------------------------
 	//
 	//	GAME OVER STATE
@@ -119,6 +115,9 @@ package state
 		override public function dispose():void {
 			disposeBackground();
             disposeOverlay();
+			disposeControls();
+			disposeMenu();
+			disposeGameOver();
 		}
 		private function initSound():void {
 			if (_won == 0) {
@@ -318,6 +317,26 @@ package state
 			_retryBtn = null;
 			_menuBtn = null;
 			_layerOverlay = null;
+		}
+		
+		private function disposeControls():void
+		{
+			_controls = null;
+		}
+		
+		private function disposeMenu():void
+		{
+			for(var i:uint; i<_menuIndexIndexArray.length; i++)
+			{
+				_menuIndexIndexArray[i] = null;
+			}	
+			_menuIndexIndexArray = null;
+		}
+		
+		private function disposeGameOver():void
+		{
+			_gameOverImg = null;
+			_victoryInfo = null;
 		}
 	}
 }

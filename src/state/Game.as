@@ -135,24 +135,6 @@ package state
 			updateHUDBattery();
 		}
 		
-		/**
-		* ovveride dispose, this function goes when the state changes
-		*/
-		override public function dispose():void
-		{
-			disposeMaze();
-			disposeAvatar();
-			disposeChildren();
-			disposeLayers();	
-			disposeBattery()
-			disposeHUD();
-			disposeSharedObj();
-			disposeEffects();
-			disposeInstructions();
-			disposePlaceObj();
-			disposeFunctions();
-		}
-		
 		//------------------------------------------------------------------------
 		// private methods
 		//------------------------------------------------------------------------
@@ -605,7 +587,25 @@ package state
 		
 		//------------------------------------------------------------------------
 		// dispose methods
-		//------------------------------------------------------------------------
+		//------------------------------------------------------------------------	
+		/**
+		 * ovveride dispose, this function goes when the state changes
+		 */
+		override public function dispose():void
+		{
+			disposeMaze();
+			disposeAvatar();
+			disposeChildren();
+			disposeLayers();	
+			disposeBattery()
+			disposeHUD();
+			disposeSharedObj();
+			disposeEffects();
+			disposeInstructions();
+			disposePlaceObj();
+			disposeFunctions();
+		}
+		
 		private function disposePlaceObj():void
 		{
 			for(var i:uint = 0; i<xArray.length; i++)

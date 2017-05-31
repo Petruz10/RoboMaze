@@ -113,8 +113,10 @@ package state
 		//------------------------------------------------------------------------
 		override public function dispose():void {	
 			disposeControls();
+			disposeRobot();
 			disposeOverlay();
 			disposeBackground();
+			disposeBtn();
 		}
 		private function initControls():void {
 			_controls = new EvertronControls();
@@ -253,7 +255,26 @@ package state
 		// 	
 		//	DISPOSE METHODS
 		// 
-		//------------------------------------------------------------------------	
+		//------------------------------------------------------------------------		
+		private function disposeBtn():void
+		{
+			for(var i:uint = 0; i< _menuBtnIndexArray.length; i++)
+			{
+				_menuBtnIndexArray[i] = null;
+			}
+			
+			for(var j:uint = 0; j<_btnArray.length; j++)
+			{
+				_btnArray[j] = null;
+			}
+			
+			_menuBtnIndexArray = null;
+			_btnArray = null;
+			_btn = null;
+			choosenBtn = null;
+			_logo = null;
+		}
+
 		//------------------------------------------------------------------------
 		// 	dispose background
 		//------------------------------------------------------------------------
@@ -284,8 +305,8 @@ package state
 		// 	dispose robot
 		//------------------------------------------------------------------------
 		private function disposeRobot():void {
+			if(_layerOverlay)_layerOverlay.removeChild(_robot);
 			_robot = null;
-			_layerOverlay.removeChild(_robot);
 		}
 }
 }
