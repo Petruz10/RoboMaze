@@ -334,20 +334,26 @@ package entity
 			m_square = null;
 			_skin.hitArea = null;
 			_skin = null;
+			skin = null;
 			battery = null;
+			area = null;
 			
 			trace("dispose Robot");
 		}
 		
 		private function disposeObstacle():void
 		{
+			for(var i:uint = 0; i<bombs.length; i++)
+			{
+				bombs[i] = null;
+			}
+			bombs = null;
 			obstacle = null;
 		}
 		
 		private function disposeGameOver():void
 		{
 			m_flickr = null;
-			trace("dispose gameOver, flickr effekt");
 		}
 
 	}

@@ -1,7 +1,5 @@
 package entity
 {
-	import flash.media.Sound;
-
 	public class Button extends Entity {
 		
 		public function Button()	{	
