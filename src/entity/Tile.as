@@ -126,5 +126,20 @@ package entity
 			matrix.translate(rect.left + (rect.width / 2), rect.top + (rect.height / 2));
 			_skin.transform.matrix = matrix;
 		}
+		
+		//------------------------------------------------------------------------
+		// dispose methods
+		//------------------------------------------------------------------------
+		
+		override public function dispose():void
+		{
+			super.dispose();
+			disposeSkin();
+		}
+		
+		private function disposeSkin():void
+		{
+			_skin = null;
+		}
 	}
 }
