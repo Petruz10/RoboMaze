@@ -205,6 +205,7 @@ package component
 			if (wrong == 2 && owned == true) 	{ _ownedWrong2 = true; }
 			if (wrong == 2 && owned == false) 	{ _ownedWrong2 = false; }
 		}
+
 		//------------------------------------------------------------------------
 		// dispose battery 2
 		//------------------------------------------------------------------------

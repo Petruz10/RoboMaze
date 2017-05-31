@@ -61,6 +61,7 @@ package component
             super.dispose();
             disposeText();
             disposeAnimations();
+			disposeStripes();
         }
 		//------------------------------------------------------------------------
 		//	init stripes // background graphics
@@ -144,6 +145,7 @@ package component
             this.addChild(_buttons);
             this.addChild(_sabotage);
         }
+		
 		//------------------------------------------------------------------------
 		//	dispose stripes // background graphics
 		//------------------------------------------------------------------------
