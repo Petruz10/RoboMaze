@@ -154,7 +154,7 @@
 			
 			r = Math.floor(Math.random()*_multiMazeArray.length);
 			_mazeArray = _multiMazeArray[r];
-			_multiMazeArray = null;
+			_multiMazeArray
 		}
 		//------------------------------------------------------------------------
 		// fill object with tiles based on mazeArray
@@ -197,11 +197,11 @@
 			_mazeArray = null;
 			var numCh:int = this.numChildren;
 			var tile:DisplayObject;
-			while (numCh > 0) {
-				tile = this.getChildAt(0);
-				this.removeChildAt(0);		
+			for (var i:int = 0; i < numCh; i++) {
+				tile = this.getChildAt(i);
 				tile = null;
-			} 
+			}
+			this.removeChildren();
 		}
 	}
 }

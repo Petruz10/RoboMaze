@@ -658,6 +658,8 @@ package state
 		
 		private function disposeMaze():void
 		{
+			trace("disposeMaze");
+			m_maze.dispose();
 			m_maze = null;
 			for(var i:uint = 0; i<m_availableSpace.length; i++)
 			{
