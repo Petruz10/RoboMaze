@@ -143,6 +143,9 @@ package game
 		*/
 		private function addPowerUp():void
 		{
+			if(m_powerUp) m_powerUp = null;
+			if(m_powerUp2) m_powerUp2 = null;
+			
 			whichPower = Math.random();
 			whichPower = Math.round(whichPower);
 			

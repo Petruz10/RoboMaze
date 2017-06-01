@@ -32,6 +32,7 @@ package entity
 			
 		}
 		override public function dispose():void {
+			super.dispose();
 			disposeSkin();
 		}
 		//------------------------------------------------------------------------
