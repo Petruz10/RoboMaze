@@ -140,9 +140,9 @@ package state
 		//------------------------------------------------------------------------
 		private function initSound():void {
 			Session.sound.musicChannel.sources.add("splashscreen", Background_Splashscreen_mp3);
-			_backgroundMusic = Session.sound.musicChannel.get("splashscreen");
-			_backgroundMusic.volume = 0.2;
+			_backgroundMusic = Session.sound.musicChannel.get("splashscreen");		
 			_backgroundMusic.play();
+			_backgroundMusic.volume = 0.2;
 		}
 		//------------------------------------------------------------------------
 		// dispose overlay

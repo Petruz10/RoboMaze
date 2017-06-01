@@ -298,8 +298,9 @@ package state
 		{
 			Session.sound.musicChannel.sources.add("game_bgmusic", BackgroundGame_mp3);
 			m_backgroundMusic = Session.sound.musicChannel.get("game_bgmusic");
-			m_backgroundMusic.volume = 0.3;
+
 			m_backgroundMusic.play(int.MAX_VALUE); //loop av ljud "Henke hack"
+			m_backgroundMusic.volume = 0.4;
 		}
 		
 		/**
@@ -463,9 +464,9 @@ package state
 		private function initBombSound():void
 		{
 			Session.sound.musicChannel.sources.add("game_bombSound", RobotBomb_mp3);
-			m_bombSound = Session.sound.musicChannel.get("game_bombSound");
-			m_bombSound.volume = 0.2;
+			m_bombSound = Session.sound.musicChannel.get("game_bombSound");	
 			m_bombSound.play();
+			m_bombSound.volume = 0.4;
 		}
 
 		//------------------------------------------------------------------------
@@ -523,16 +524,16 @@ package state
 		{
 			Session.sound.musicChannel.sources.add("powerup_sound", RobotPickUp_mp3);
 			m_powerupSound = Session.sound.musicChannel.get("powerup_sound");
-			m_powerupSound.volume = 0.3;
 			m_powerupSound.play();
+			m_powerupSound.volume = 0.4;
 		}
 		
 		protected function initWrongWaySound():void
 		{
 			Session.sound.musicChannel.sources.add("game_wrongSound", RobotWrongWay_mp3);
 			m_wrongSound = Session.sound.musicChannel.get("game_wrongSound");
-			m_wrongSound.volume = 0.5;
 			m_wrongSound.play();
+			m_wrongSound.volume = 0.5;
 		}
 		
 		/**
@@ -667,7 +668,6 @@ package state
 		
 		private function disposeMaze():void
 		{
-			trace("disposeMaze");
 			m_maze.dispose();
 			m_maze = null;
 			for(var i:uint = 0; i<m_availableSpace.length; i++)

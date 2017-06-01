@@ -85,8 +85,9 @@ package entity
 		{
 			Session.sound.musicChannel.sources.add("game_warningSound", RobotWarning_mp3);
 			m_warningSound = Session.sound.musicChannel.get("game_warningSound");
-			m_warningSound.volume = 0.9;
+
 			m_warningSound.play();
+			m_warningSound.volume = 0.5;
 		}
 		
 		/**
@@ -96,8 +97,8 @@ package entity
 		{
 			Session.sound.musicChannel.sources.add("game_deadSound", RobotDeath_mp3);
 			m_deadSound = Session.sound.musicChannel.get("game_deadSound");
-			m_deadSound.volume = 0.3;
 			m_deadSound.play();
+			m_deadSound.volume = 0.5;
 		}
 		
 		/**
@@ -107,8 +108,8 @@ package entity
 		{
 			Session.sound.musicChannel.sources.add("game_deadSound2", RobotShutdown_mp3);
 			m_deadSound2 = Session.sound.musicChannel.get("game_deadSound2");
-			m_deadSound2.volume = 0.9;
 			m_deadSound2.play();
+			m_deadSound2.volume = 0.8;
 		}
 		
 		//------------------------------------------------------------------------

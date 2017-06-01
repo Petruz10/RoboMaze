@@ -205,9 +205,9 @@ package state
 		//------------------------------------------------------------------------
 		private function initSound():void {
 			Session.sound.musicChannel.sources.add("menu_bgmusic", BackgroundMenu_mp3);
-			_backgroundMusic = Session.sound.musicChannel.get("menu_bgmusic");
-			_backgroundMusic.volume = 0.4;
+			_backgroundMusic = Session.sound.musicChannel.get("menu_bgmusic");	
 			_backgroundMusic.play();
+			_backgroundMusic.volume = 0.5;
 		}
 		//------------------------------------------------------------------------
 		// 	updates menu. default choice = 0 <--- singleplayer
