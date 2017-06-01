@@ -120,6 +120,8 @@ package game
 		private function initBomb():void
 		{
 			if(m_robot.die) return;
+			if(m_bomb) m_bomb = null;
+			
 			m_bomb = new Obstacle(0);
 			m_bombs.push(m_bomb);
 			
